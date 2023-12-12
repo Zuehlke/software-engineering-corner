@@ -6,7 +6,6 @@ tags: web-development, angular, design-patterns, software-architecture, refactor
 cover: https://cdn.hashnode.com/res/hashnode/image/stock/unsplash/QI3VFt5YOlg/upload/1ad02a99eb473f317da5c464673eb90d.jpeg?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp
 publishAs: timouti
 hideFromHashnodeCommunity: false
-ignorePost: true
 ---
 
 Tables are part of nearly every web application nowadays. We use them to display search results, to report financial statistics and sales, or to manage orders, inventory, and users.
