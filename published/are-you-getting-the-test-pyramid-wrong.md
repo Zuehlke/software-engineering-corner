@@ -4,7 +4,6 @@ subtitle: Why do many developers often write unit tests that are hard to maintai
 tags: software-testing, test-driven-development, testing, tdd, unit-testing
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1697726994015/J1s4TfZO9.jpg?auto=format
 domain: software-engineering-corner.hashnode.dev
-slug: are-you-getting-the-test-pyramid-wrong
 hideFromHashnodeCommunity: false
 publishAs: alantai
 ---
