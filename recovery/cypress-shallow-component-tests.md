@@ -21,7 +21,7 @@ Angular 17 releases new built-in control flows transferring more logic to the co
 Consequently, the urge to validate component templates and interactions is on the rise, 
 potentially surpassing the significance of unit tests.
 
-Fortunately, Cypress offers a solution in the form of "component tests," applicable to Angular, React, Vue, and Svelte. 
+Fortunately, Cypress offers a solution in the form of "component tests" applicable to Angular, React, Vue, and Svelte. 
 For the sake of simplicity, we will delve into Angular component tests in this article.
 
 ### Cypress Component Tests
@@ -50,7 +50,20 @@ MockClass. However, in the context of Angular standalone components, where impor
 integral part of the component itself, overriding child components via `MountConfig` encounters limitations.
 
 ### Overriding Standalone Child Component
-The easiest solution involves mocking components with third-party libraries like `ng-mocks`. 
+The easiest solution involves mocking components with third-party libraries like `ng-mocks`. Thereby, you just need to 
+call the `MockComponent` function providing the child component to be mocked. 
+```typescript
+beforeEach(() => {
+  cy.mount(MyComponent, {
+      imports: [
+          MockComponent(MyChildComponent),
+          RouterTestingModule,
+          HttpClientTestingModule,
+      ], 
+      providers: [{ provide: MyService, useClass: MyMockService }]
+  });
+});
+```
 Alternatively, a native approach is viable if third-party solutions are not an option in your project.
 
 First, we need to understand that the `cy.mount` is essentially just a wrapper around Angular's `TestBed.configureTestingModule`.
