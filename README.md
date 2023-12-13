@@ -15,7 +15,7 @@ When you are ready you can then open a pull request to this repository and set s
 
 We recognized that there are some things which are important in the frontmatter of the articles:
 
-1. Please add a `ignorePost: true` to the frontmatter. We will remove this when we publish the article.
+1. Please add a `saveAsDraft: true` to the frontmatter. We will remove this when we publish the article.
 2. Please add a `hideFromHashnodeCommunity: false` to the frontmatter. This makes the blog post searchable from within Hashnode.
 3. Use your **Hashnode** username for `publishAs`. You can see it in the [Hashnode user settings](https://hashnode.com/settings).
 4. Use tags which are listed here [https://github.com/Hashnode/support/blob/main/misc/tags.json](https://github.com/Hashnode/support/blob/main/misc/tags.json) (use the **slug**) or ensure they exist via the Hashnode search (select "tags"). If you do it wrong, Hashnode may fail to import the article.
