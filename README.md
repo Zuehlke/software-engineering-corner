@@ -1,6 +1,6 @@
 # engineering-posts
 
-Repository for our Zuehlke dev blog: [https://software-engineering-corner.hashnode.dev](https://software-engineering-corner.hashnode.dev)
+Repository for our Zuehlke dev blog: [https://software-engineering-corner.zuehlke.com](https://software-engineering-corner.zuehlke.com)
 
 ## How to add a blog post
 
