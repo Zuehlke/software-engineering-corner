@@ -1,6 +1,6 @@
 ---
 title: From Borderlands to Cornerlands - Why border-radius is wrong?
-domain: software-engineering-corner.hashnode.dev
+domain: software-engineering-corner.zuehlke.com
 tags: web-development, css, css3
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1701859904085/Txlm1bi%5FG.jpg?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp
 publishAs: juliocastrodev

@@ -1,7 +1,7 @@
 ---
 title: One Table to Rule them All
 subtitle: Leveraging the Builder Pattern to Craft Maintainable HTML Tables
-domain: software-engineering-corner.hashnode.dev
+domain: software-engineering-corner.zuehlke.com
 tags: web-development, angular, design-patterns, software-architecture, refactoring
 cover: https://cdn.hashnode.com/res/hashnode/image/stock/unsplash/QI3VFt5YOlg/upload/1ad02a99eb473f317da5c464673eb90d.jpeg?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp
 publishAs: timouti
