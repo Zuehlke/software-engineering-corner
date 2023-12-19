@@ -1,4 +1,4 @@
-# engineering-posts
+# software-engineering-corner
 
 Repository for our Zuehlke dev blog: [https://software-engineering-corner.zuehlke.com](https://software-engineering-corner.zuehlke.com)
 
