@@ -7,7 +7,6 @@ cover: https://cdn.hashnode.com/res/hashnode/image/stock/unsplash/QI3VFt5YOlg/up
 publishAs: timouti
 hideFromHashnodeCommunity: false
 saveAsDraft: true
-slug: blog-one-table-to-rule-them-all
 ---
 
 Tables are part of nearly every web application nowadays. We use them to display search results, to report financial statistics and sales, or to manage orders, inventory, and users.

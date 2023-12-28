@@ -6,7 +6,6 @@ cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1701859904085/Txlm1bi
 publishAs: juliocastrodev
 hideFromHashnodeCommunity: false
 saveAsDraft: true
-slug: blog-from-borderlands-to-cornerlands-why-border-radius-is-wrong
 ---
 
 Why isn't my `div` centered? Why does it overflow? Why do I always have to override a lot of rules to make CSS less unpredictable?

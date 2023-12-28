@@ -7,7 +7,6 @@ cover: https://cdn.hashnode.com/res/hashnode/image/stock/unsplash/nXKNn2L4fDw/up
 publishAs: timouti
 hideFromHashnodeCommunity: false
 saveAsDraft: true
-slug: blog-shallow-component-tests-in-cypress-with-angular-standalone-components
 ---
 
 We're all familiar with the testing pyramid principle, advocating for an abundance of unit tests and 
