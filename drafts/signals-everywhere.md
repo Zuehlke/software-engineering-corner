@@ -1,0 +1,162 @@
+---
+title: Signals, Signals everywhere
+subtitle: "Or: how web development converges"
+domain: software-engineering-corner.zuehlke.com
+tags: signals
+cover:
+publishAs: culas
+hideFromHashnodeCommunity: false
+saveAsDraft: true
+---
+
+After decades of JavaScript wild west exploration with countless frameworks and libraries left in the dust, the recent emergence of Signals is the best thing to happen since ES5.
+If you're unsure about what Signals are and why they're important, it's time to learn.
+**Every web developer should know and understand the concept of Signals** to build interactive experiences on the web going forward.
+
+### The Problem
+
+All JavaScript frameworks essentially try to solve one single challenge at their core: **"keeping the UI in sync with the state"** (see [The deepest reason why modern JavaScript frameworks exist](https://medium.com/dailyjs/the-deepest-reason-why-modern-javascript-frameworks-exist-933b86ebc445)).
+One way or another, we need to update our visual interface every time the state changes, something React describes as `UI = fn(state)`.
+
+Vanilla JavaScript only gives us rudimentary, imperative APIs to achieve that.
+The complexity of an interactive website rapidly grows beyond what is reaonably maintainable without the use of third party libraries and frameworks.
+They can provide structured ways to declaratively define our views, manage state and leave the synching itself to the frameworks.
+Each new framework had proposed a new or slightly different way to make our UI reactive, while still providing good developer ergonomics (or "developer experience", DX).
+Angular uses a conservative change detection algorithm, while React introduced a virtual DOM for petter performance.
+Svelte went yet another way and uses a compiler to analyse dependencies at build time.
+
+All these approaches have their own advantages and drawbacks.
+In any case, learning a new framework meant learning completely new concepts.
+In-depth Angular knowledge is only vaguely transferrable to writing React applications.
+
+Signals could change this forever and have already done so.
+
+### The Conquest of Signals
+
+Solid, released in 2021, combined the best of different frameworks.
+It leverages the power of a compiler like Svelte.
+They've adopted React's philosophy of unidirectional data flow and composition.
+But for one significant feature, Solid's creator Ryan Carniato went further back in time for inspiration: Knockout.
+
+Released back in 2010, Knockout presented a reactivity concept they called "observables".
+They are described as **"special JavaScript objects that can notify subscribers about changes, and can automatically detect dependencies"** in the [documentation](https://knockoutjs.com/documentation/observables.html).
+The examples might look suprisingly familiar for their age:
+
+```js
+function AppViewModel() {
+    this.firstName = ko.observable('Bob');
+    this.lastName = ko.observable('Smith');
+    this.fullName = ko.pureComputed(function() {
+        return this.firstName() + " " + this.lastName();
+    }, this);
+}
+```
+
+Compare this to Signals in Solid:
+
+```js
+function App() {
+    const [firstName, setFirstName] = createSignal('Bob');
+    const [lastName, setLastName] = createSignal('Smith');
+    const fullName = createMemo(() => `${firstName()} ${lastName()}`);
+}
+```
+
+If we only look at the surface, it seems like the progress of web development in over a decade has been insignificant.
+Which of course is not true.
+But using fine-grained reactivity is certainly a comeback – and it's a strong one.
+Aside from React, all major frameworks have introduced Signals or a similar concept in the last few years.
+
+As Ryan Carniato described in his article [The Quest for ReactiveScript](https://dev.to/this-is-learning/the-quest-for-reactivescript-3ka3) in 2021, there are commonly three types of reactivity:
+
+- Reactive State: Signal, Observable, Ref
+- Derived Values: Memo, Computed
+- Side Effects: Effect, Watch, Reaction, Autorun
+
+The following table is an overview of how the implementation of these types are called in their respective framework.
+
+| Framework | Signals since | Reactive State | Derived Values | Side Effect |
+|-|-|-|-|-|
+| Knockout | 2010 | observable | pureComputed | computed |
+| Solid | 2018 | createSignal | createMemo | createEffect |
+| Vue | 2020 | ref / reactive | computed | watch / watchEffect |
+| Preact | 2022 | signal | computed | effect |
+| Qwik | 2022 | useSignal / useStore | useComputed$ / useResource$ | useTask$ |
+| Angular | 2023 | signal | computed | effect |
+| Svelte* | 2018? | writable / readable | derived | – (reactive statements) |
+| Svelte 5 | 2024? | $state | $derived | $effect |
+
+<small>* not technically like signals, subject to change</small>
+
+Solid made Signals the talk of town and has done the web community a big favour.
+For the first time we have a robust, coherent, somewhat standardised approach for reactive user interfaces across multiple frameworks.
+The web is converging a little.
+**Signals have become transferrable knowledge**, making it easier and faster to learn a different technology.
+Which brings us – finally – to the question: what are they?
+
+### Signals explained
+
+The core idea is unchanged from Knockout's definition of observables: "special objects, which notify subscribers and can detect dependencies".
+A Signal gives you a getter and a setter, while other state solutions (like React's `useState`) give you the value and a setter.
+Having a getter means you can **pass the reference** to the Signal, preserving its reactivity.
+Calling the getter is secretly subscribing to the value in an ergonomic way, letting the library deal with managing the subscriptions and cleaning up.
+
+Whether you get two separate functions like in Solid or a single object with a `.value` property (Preact, Qwik, …) doesn't matter.
+Those are implementation details and don't change what's happening underneath.
+
+These source Signals can be used to construct new ones, building a reactive chain of Signals.
+**The secret key to all of this are the side effects though.**
+Without them, nothing would ever happen.
+Just having a reactive value doesn't _do_ anything.
+It's just hanging there until someone asks for it's value.
+That's exactly what effects do.
+They make the (Signals) world go round.
+Every time one of the sources changes, it produced a side effect.
+This could be fetching data from an API or … updating the UI.
+
+### Pure Signals Magic
+
+If you think about your declarative view template as an effect of the Signals used inside, the pieces fall in place.
+It's – ironically – the essence of React's `UI = fn(state)`.
+Let's rephrase it as **`UI = effect(signal)`** and it's obvious.
+We could strip away all the comfort of UI frameworks and limit ourselves to Signals, building our reactive UI.
+The following example uses the Preact Signals core library, which can be used without Preact or any other dependencies.
+
+```html
+<html>
+  <body></body>
+  <script type="module">
+    import { signal, effect } from "https://cdn.jsdelivr.net/npm/@preact/signals-core@1.5.1/+esm";
+
+    const count = signal(0);
+
+    const button = document.createElement("button");
+    button.innerText = "click me";
+    const paragraph = document.createElement("p");
+    document.body.append(button, paragraph);
+
+    button.addEventListener("click", () => count.value += 1);
+
+    effect(() => (paragraph.innerText = count.value));
+  </script>
+</html>
+```
+
+This is powerful stuff.
+We use plain JavaScript to create our elements and leverage Signals to keep them up-to-date with the state.
+The outcome of above example is pretty much the same as the [official Preact Signals example](https://preactjs.com/guide/v10/signals#introduction).
+
+### Conclusion and Outlook
+
+With reactivity "solved", the core concern of JavaScript frameworks going forward will be the declarative templating.
+The main purpose "keeping the UI in sync with the state" **holds no longer true** for them.
+It will be more about ergonomics, developer experience, offering higher level features (e.g. routing) and integration with the server.
+Those aspects have already been the drivers for the so-called meta frameworks like Next.js, Remix, Nuxt and SvelteKit.
+I predict that their underlying frameworks get less important over time.
+Choosing for example Svelte over Angular is mostly going to be based on preferences.
+Alternatively, you decide for a meta framework, which has made the choice for you.
+
+Web development is as exciting as ever.
+How do you think will Signals influence the future of building for the web?
+Am I overrating them?
+What does this mean for React's long-running dominance?
