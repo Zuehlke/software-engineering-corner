@@ -6,7 +6,6 @@ tags: angular, components, testing
 cover: https://cdn.hashnode.com/res/hashnode/image/stock/unsplash/nXKNn2L4fDw/upload/150adf478d431d819cf7f88e3eaa92f7.jpeg?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp
 publishAs: timouti
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 We're all familiar with the testing pyramid principle, advocating for an abundance of unit tests and 
