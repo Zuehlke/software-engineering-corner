@@ -13,7 +13,7 @@ After decades of JavaScript Wild West exploration with countless frameworks and 
 If you're unsure about what Signals are and why they're important, it's time to learn.
 **Every web developer should know and understand the concept of Signals** to build interactive experiences on the web going forward.
 
-### The Problem
+## The Problem
 
 All JavaScript frameworks essentially try to solve one single challenge at their core: **"keeping the UI in sync with the state"** (see [The deepest reason why modern JavaScript frameworks exist](https://medium.com/dailyjs/the-deepest-reason-why-modern-javascript-frameworks-exist-933b86ebc445)).
 One way or another, we need to update our visual interface every time the state changes, something React describes as `UI = fn(state)`.
@@ -31,7 +31,7 @@ In-depth Angular knowledge is only vaguely transferrable to writing React applic
 
 Signals could change this forever and have already done so.
 
-### The Conquest of Signals
+## The Conquest of Signals
 
 Solid, released in 2021, combined the best of different frameworks.
 It leverages the power of a compiler like Svelte.
@@ -94,7 +94,7 @@ The web is converging a little.
 **Signals have become transferrable knowledge**, making it easier and faster to learn a different technology.
 Which brings us – finally – to the question: what are they?
 
-### Signals explained
+## Signals explained
 
 The core idea is unchanged from Knockout's definition of observables: "special objects, which notify subscribers and can detect dependencies".
 A Signal gives you a getter and a setter, while other state solutions (like React's `useState`) give you the value and a setter.
@@ -114,7 +114,7 @@ They make the (Signals) world go round.
 Every time one of the sources changes, it produces a side effect.
 This could be fetching data from an API or … updating the UI.
 
-### Pure Signals Magic
+## Pure Signals Magic
 
 If you think about your declarative view template as an effect of the Signals used inside, the pieces fall in place.
 It's – ironically – the essence of React's `UI = fn(state)`.
@@ -146,7 +146,7 @@ This is powerful stuff.
 We use plain JavaScript to create our elements and leverage Signals to keep them up-to-date with the state.
 The outcome of the above example is pretty much the same as the [official Preact Signals example](https://preactjs.com/guide/v10/signals#introduction).
 
-### Conclusion and Outlook
+## Conclusion and Outlook
 
 With reactivity "solved", the core concern of JavaScript UI frameworks going forward will be declarative templating.
 The main purpose "keeping the UI in sync with the state" **holds no longer true** for them.
