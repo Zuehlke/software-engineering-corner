@@ -1,6 +1,6 @@
 ---
 title: Signals, Signals everywhere
-subtitle: "Or: dawn of a new era as web frameworks converge"
+subtitle: "Or: Dawn of a new era as Web Frameworks converge"
 domain: software-engineering-corner.zuehlke.com
 tags: signals
 cover:
@@ -102,7 +102,7 @@ Having a getter means you can **pass the reference** to the Signal, preserving i
 Calling the getter is secretly subscribing to the value in an ergonomic way, letting the library deal with managing the subscriptions and cleaning up.
 
 Whether you get two separate functions like in Solid or a single object with a `.value` property (Preact, Qwik, …) doesn't matter.
-Those are implementation details and don't change what's happening underneath.
+Those are implementation details and don't change what's happening behind the scenes.
 
 These source Signals can be used to construct new ones, building a reactive chain of Signals.
 **The secret key to all of this are the side effects though.**
@@ -116,7 +116,7 @@ This could be fetching data from an API or … updating the UI.
 
 ## Pure Signals Magic
 
-If you think about your declarative view template as an effect of the Signals used inside, the pieces fall in place.
+Once you **think about your declarative view template as an effect of the Signals used inside**, the pieces fall in place.
 It's – ironically – the essence of React's `UI = fn(state)`.
 Let's rephrase it as **`UI = effect(signal)`** and it's obvious.
 We could strip away all the comfort of UI frameworks and limit ourselves to Signals, building our reactive UI.
@@ -145,13 +145,14 @@ The following example uses the Preact Signals core library, which can be used wi
 This is powerful stuff.
 We use plain JavaScript to create our elements and leverage Signals to keep them up-to-date with the state.
 The outcome of the above example is pretty much the same as the [official Preact Signals example](https://preactjs.com/guide/v10/signals#introduction).
+Most of above code would be hidden by the framework underneath its templating language but it's roughly what happens internally (this is of course heavy simplified).
 
 ## Conclusion and Outlook
 
-With reactivity "solved", the core concern of JavaScript UI frameworks going forward will be declarative templating.
+With reactivity "solved", the core concern of JavaScript UI frameworks going forward will be declarative templating and developer experience.
 The main purpose "keeping the UI in sync with the state" **holds no longer true** for them.
-It will be more about ergonomics, developer experience, offering higher-level features (e.g. routing) and integration with the server.
-Those aspects have already been the drivers for the so-called meta frameworks like Next.js, Remix, Nuxt and SvelteKit.
+It will be more about ergonomics, offering higher-level features (e.g. routing) and integration with the server.
+Those aspects have already been the drivers for the so-called "meta-frameworks" like Next.js, Remix, Nuxt and SvelteKit.
 I predict that their underlying frameworks get less important over time.
 Choosing for example Svelte over Angular is mostly going to be based on preferences.
 Alternatively, you decide on a meta-framework, which has made the choice for you.
@@ -159,4 +160,5 @@ Alternatively, you decide on a meta-framework, which has made the choice for you
 Web development is as exciting as ever.
 How do you think will Signals influence the future of building for the web?
 Am I overrating them?
-What does this mean for React's long-running dominance?
+Did I get it completely wrong?
+What does this mean for React's long-running dominance, should they continue to refuse adding Signals?
