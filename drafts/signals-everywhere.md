@@ -11,25 +11,26 @@ saveAsDraft: true
 
 After decades of JavaScript Wild West exploration with countless frameworks and libraries left in the dust, the recent emergence of Signals is the best thing to happen since ES5.
 If you're unsure about what Signals are and why they're important, it's time to learn.
-**Every web developer should know and understand the concept of Signals** to build interactive experiences on the web going forward.
+**Every savvy web developer should know and understand Signals** to create interactive experiences on the web.
 
 ## The Problem
 
-All JavaScript frameworks essentially try to solve one single challenge at their core: **"keeping the UI in sync with the state"** (see [The deepest reason why modern JavaScript frameworks exist](https://medium.com/dailyjs/the-deepest-reason-why-modern-javascript-frameworks-exist-933b86ebc445)).
+All JavaScript frameworks essentially try to solve one single challenge at their core: it's all about **"keeping the UI in sync with the state"** (see [The deepest reason why modern JavaScript frameworks exist](https://medium.com/dailyjs/the-deepest-reason-why-modern-javascript-frameworks-exist-933b86ebc445)).
 One way or another, we need to update our visual interface every time the state changes, something React describes as `UI = fn(state)`.
 
 Vanilla JavaScript only gives us rudimentary, imperative APIs to achieve that.
 The complexity of an interactive website rapidly grows beyond what is reasonably maintainable without the use of third-party libraries and frameworks.
-They can provide structured ways to declaratively define our views, manage state, and we can leave the synching itself to the frameworks.
+They can provide structured ways to declaratively define our views, and manage state, and we can leave the synching itself to the frameworks.
 Each new framework proposed a new or slightly different way to make our UI reactive, while still providing good developer ergonomics (or "developer experience", DX).
 Angular uses a conservative change detection algorithm, while React introduced a virtual DOM for better performance.
-Svelte went yet another way and used a compiler to analyse dependencies at build time.
+And then there's Svelte, which uses a compiler to analyse dependencies at build time.
 
 All these approaches have their advantages and drawbacks.
-In any case, learning a new framework meant learning completely new concepts.
+In any case, learning a new framework can be tough as it means learning entirely new concepts.
 In-depth Angular knowledge is only vaguely transferrable to writing React applications.
 
-Signals could change this forever and have already done so.
+But now, with Signals, this could change forever! 
+They've already revolutionised the game.
 
 ## The Conquest of Signals
 
@@ -78,11 +79,11 @@ The following table is an overview of how the implementation of these types is c
 | Framework | Signals since | Reactive State | Derived Values | Side Effect |
 |-|-|-|-|-|
 | Knockout | 2010 | observable | pureComputed | computed |
-| Svelte | 2016 | writable / readable | derived | – (reactive statements) |
+| Svelte | 2016 | writable/readable | derived | – (reactive statements) |
 | Solid | 2018 | createSignal | createMemo | createEffect |
-| Vue | 2020 | ref / reactive | computed | watch / watchEffect |
+| Vue | 2020 | ref/reactive | computed | watch/watchEffect |
 | Preact | 2022 | signal | computed | effect |
-| Qwik | 2022 | useSignal / useStore | useComputed$ / useResource$ | useTask$ |
+| Qwik | 2022 | useSignal/useStore | useComputed$/useResource$ | useTask$ |
 | Angular | 2023 | signal | computed | effect |
 | Svelte 5 | 2024 | $state | $derived | $effect |
 
@@ -97,7 +98,7 @@ Which brings us – finally – to the question: what are they?
 The core idea is unchanged from Knockout's definition of observables: "special objects, which notify subscribers and can detect dependencies".
 A Signal gives you a getter and a setter, while other state solutions (like React's `useState`) give you the value and a setter.
 Having a getter means you can **pass the reference** to the Signal, preserving its reactivity.
-Calling the getter is secretly subscribing to the value in an ergonomic way, letting the library deal with managing the subscriptions and cleaning up.
+Calling the getter is secretly subscribing to the value ergonomically, letting the library deal with managing the subscriptions.
 
 Whether you get two separate functions like in Solid or a single object with a `.value` property (Preact, Qwik, …) doesn't matter.
 Those are implementation details and don't change what's happening behind the scenes.
@@ -118,8 +119,8 @@ This could be fetching data from an API or … updating the UI.
 
 Once you **think about your declarative view template as an effect of the Signals used inside**, the pieces fall in place.
 It's, ironically, the essence of React's `UI = fn(state)`.
-Let's rephrase it as **`UI = effect(signal)`** and it's obvious.
-We could strip away all the comfort of UI frameworks and limit ourselves to Signals, building our reactive UI.
+Let's rephrase it as **`UI = effect(signal)`** and it becomes clear.
+We could ditch all the comfort of fancy UI frameworks and stick to just Signals, building our reactive UI.
 The following example uses the Preact Signals core library, which can be used without Preact or any other dependencies.
 
 ```html
@@ -144,7 +145,7 @@ The following example uses the Preact Signals core library, which can be used wi
 This is powerful stuff.
 We use plain JavaScript to create our elements and leverage Signals to keep them up-to-date with the state.
 The outcome of the above example is pretty much the same as the [official Preact Signals example](https://preactjs.com/guide/v10/signals#introduction).
-Most of above code would be hidden by the framework underneath its templating language but it's roughly what happens internally (this is of course heavy simplified).
+Most of the above code would be hidden by the framework underneath its templating language but it's roughly what happens internally (this is of course heavily simplified).
 
 ## Conclusion and Outlook
 
@@ -157,10 +158,10 @@ Choosing for example Svelte over Angular is mostly going to be based on preferen
 Alternatively, you decide on a meta-framework, which has made the choice for you.
 
 Web development is as exciting as ever.
-How do you think will Signals influence the future of building for the web?
+How do you think will Signals influence the future of web development?
 Am I overrating them?
 Did I get it completely wrong?
-What does this mean for React's long-running dominance, should they continue to refuse adding Signals?
-Let me know in the comments.
+Do you think React's long-running dominance will continue, or do you think they should start adding Signals?
+I'd love to hear your thoughts!
 
-_Stay tuned for a follow-up article, where we will build our own homemade Signal! It will give us a better understanding why effects are so central._
+_Stay tuned for a follow-up article, where we will build our own homemade Signal! It will give us a better understanding of why effects are so central._
