@@ -1,9 +1,9 @@
 ---
 title: Signals, Signals everywhere
-subtitle: "Or: Dawn of a new era as Web Frameworks converge"
+subtitle: "An explainer in the dawn of a new era as Web Frameworks converge"
 domain: software-engineering-corner.zuehlke.com
-tags: signals
-cover:
+tags: signals, web-development, javascript, frontend-development, reactivity, explained
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1708268993236/6Qa2m8luN.jpg?auto=format
 publishAs: culas
 hideFromHashnodeCommunity: false
 saveAsDraft: true
@@ -163,4 +163,4 @@ Did I get it completely wrong?
 What does this mean for React's long-running dominance, should they continue to refuse adding Signals?
 Let me know in the comments.
 
-_Stay tuned for a follow-up article, where we will build our own homemade Signals!_
+_Stay tuned for a follow-up article, where we will build our own homemade Signal! It will give us a better understanding why effects are so central._
