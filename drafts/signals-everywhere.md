@@ -22,8 +22,7 @@ The complexity of an interactive website rapidly grows beyond what is reasonably
 They provide structured ways to declaratively define our views and manage state.
 The synchronisation itself we can leave to the frameworks.
 Each framework proposed a new or slightly different way to make our UI reactive, while still providing good developer experience.
-Angular uses a conservative change detection algorithm, while React introduced a virtual DOM for better performance.
-And then there's Svelte, which uses a compiler to analyse dependencies at build time.
+Angular uses a conservative change detection algorithm, React introduced the virtual DOM, and Svelte analyses dependencies at build time through a compiler.
 
 All these approaches have their advantages and drawbacks.
 In any case, learning a new framework can be tough as it means learning entirely new concepts.
@@ -96,24 +95,24 @@ Which brings us – finally – to the question: what are they?
 ## Signals explained
 
 The core idea is unchanged from Knockout's definition of observables: "special objects, which notify subscribers and can detect dependencies".
-A Signal gives you a getter and a setter, while other state solutions (like React's `useState`) give you the value and a setter.
-Having a getter means you can **pass the reference** to the Signal, preserving its reactivity.
+A Signal provides a getter and a setter, while other state solutions (like React's `useState`) return the value itself and a setter.
+Having a getter means we can **pass the Signal's reference** to other parts of our application, preserving its reactivity.
 Calling the getter is secretly subscribing to the value, letting the library deal with managing the subscriptions.
 
-Whether you get two separate functions like in Solid or a single object with a `.value` property (Preact, Qwik, …) doesn't matter.
+Whether there are two separate functions like in Solid or a single object with a `.value` property (Preact, Qwik, …) doesn't matter.
 Those are implementation details and don't change what's happening behind the scenes.
 
 Signals can be used to construct new ones, building a reactive chain.
 Instead of applying the same operations on a "raw" Signal in multiple places, we can offer the result itself as a reactive value.
 
-**The secret key to all of this is the side effects though.**
+**The secret key to all of this is the side effects, though.**
 Without them, nothing would ever happen.
 Just having a reactive value doesn't _do_ anything.
 It's just hanging there until someone asks for its value.
 That's exactly what effects do.
 They make the (Signals) world go round.
-Every time one of the sources changes, it produces a side effect.
-This could be fetching data from an API or … updating the UI.
+Every time one of its sources changes the effect runs, producing a side effect.
+That could be fetching data from an API or … updating the UI.
 
 ## Pure Signals Magic
 
