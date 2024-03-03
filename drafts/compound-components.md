@@ -25,7 +25,7 @@ We have a React application with which you can manage files. One feature is to d
 
 The dialog now looks like this:
 
-![Delete Dialog](https://cdn.hashnode.com/res/hashnode/image/upload/v1709464657673/ncZYIgmIa.png?auto=format)
+![Delete Dialog](https://cdn.hashnode.com/res/hashnode/image/upload/v1709470151176/qBBC62QhH.png?auto=format)
 
 The next requirement is to add a renaming dialog, where you can enter the new file name. The content of the dialog does not only consist of text but also contains an input field. We must be able to pass this to the dialog.
 Another requirement is to convert documents into images. The confirmation dialog should now have three buttons: "Cancel", "Convert to PNG" and "Convert to JPG". We now need to introduce a third button and make it configurable.
