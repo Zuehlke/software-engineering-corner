@@ -6,7 +6,6 @@ tags: signals, web-development, javascript, frontend-development, reactivity, ex
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1708268993236/6Qa2m8luN.jpg?auto=format
 publishAs: culas
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 After decades of JavaScript Wild West exploration with countless frameworks and libraries left in the dust, the recent emergence of Signals is the best thing to happen since ES5.
