@@ -1,9 +1,9 @@
 ---
-title: Building page transitions react router v6 & framer motion
-subtitle: And doing so the right way
+title: Building page transitions with react router v6 & framer motion
+subtitle: Setting up the basic building blocks to customize the UX
 domain: software-engineering-corner.hashnode.dev
-tags: web-development, react, css
-cover: image with blurry background (i.e. racecar)
+tags: react, react-router, ux, animations
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1709629630452/_-nGde1z0.jpg?auto=format
 publishAs: Salv
 hideFromHashnodeCommunity: false
 ignorePost: true
@@ -14,12 +14,12 @@ ignorePost: true
 # The goal
 Based on a properly layouted application, we want to have a simple & clean fade transition when navigating between the pages. Having a client side rendered application and not implementing that would be a bit of wasted potential.
 
-Both to handle the exit handling of the leaving page as well as the animation handling we will be using [framer motion](https://npmjs.com/package/framer-motion). Its quite powerfull for building sophisticated animations, so just using it for a fade transition between pages is an overkill - but it also provides the toolset to build much more elaborate animations. An alternative for handling the exit animation is [react transition group](https://www.npmjs.com/package/react-transition-group) which has a smaller footprint and leaves the animation for entering/leaving up to your implementation.
+Both to handle the exit handling of the leaving page as well as the animation handling we will be using [framer motion](https://npmjs.com/package/framer-motion). It's quite powerfull for building sophisticated animations, so just using it for a fade transition between pages is an overkill. It provides the toolset to build much more elaborate animations. An alternative for handling the exit animation is [react transition group](https://www.npmjs.com/package/react-transition-group), which has a smaller footprint and leaves the animation for entering/leaving up to your implementation.
 
 ## The baseline
-Lets assume we have already an existing, simple client side rendered react app that uses the [createBrowserRouter function](https://reactrouter.com/en/main/routers/create-browser-router) together with the [RouterProvider](https://reactrouter.com/en/main/routers/router-provider) component. Also the code base uses a [layout route](https://reactrouter.com/en/main/start/concepts#layout-routes) with a n `AppLayout` component.
+Let's assume we have already an existing, simple client side rendered react app that uses the [createBrowserRouter function](https://reactrouter.com/en/main/routers/create-browser-router) together with the [RouterProvider](https://reactrouter.com/en/main/routers/router-provider) component. Also the code base uses a [layout route](https://reactrouter.com/en/main/start/concepts#layout-routes) with an `AppLayout` component.
 
-A simple setup of a `RouterProvider` with the routes also using the `AppLayout` to layout the application. The Components mapped here in the children section of the routes are the effective contentful pages of the application.
+A simple setup of a `RouterProvider` with the routes also using the `AppLayout` to layout the application. The components mapped here in the children section of the routes are the effective contentful pages of the application.
 
 ```tsx
 const routes: RouteObject[] = [
@@ -73,8 +73,8 @@ First we need to add [framer motion](https://npmjs.com/package/framer-motion) - 
 `npm i framer-motion`
 
 ## Setting up the framer motion and transition 
-Adding the `AnimatePresence` component of framer motion will handle the case when components are added & removed from the react tree. It will call the children motion element's animate / exit transitions when the component is mounted / unmounted.
-So we need a `motion.div` element that will provide the animation settings, where we will just go for a simple opacity transition with a duretion of 0.5 seconds. Within the `motion.div` we will yet again have the router `Outlet`.
+Adding the `AnimatePresence` component of framer motion will handle handle the lifecycle of child components in the react tree. It will call the children motion element's animate / exit transitions when the component is mounted / unmounted.
+Next we need a `motion.div` element that will provide the animation configuration, where we will just go for a simple opacity transition with a duration of 0.5 seconds. Within the `motion.div` we will yet again have the router `Outlet`.
 
 ```tsx
 export const AppLayout = () => {
@@ -100,12 +100,12 @@ export const AppLayout = () => {
 };
 ```
 
-As the entering page and leaving page should be rendered during the transition at the same position in the browser, we added some (tailwind css)[https://tailwindcss.com/] classes to ensure that the new page will be rendered at the same spot as the old one.
+As the entering page and the leaving page should be rendered during the transition at the same position in the browser, adding (tailwind css)[https://tailwindcss.com/] classes will ensure that the new page will be rendered at the same spot as the old one (the new one on top of the old one).
 
 When testing this snippet, we will notice that there is only an initial rendering handled with an animation, but all page transitions happen immediately without animation.
 
 ### Components not properly mounted/unmounted
-Lets go about fixing that: First of all we need to ensure, that on all page transitions we need to force the rendering of a new `motion.div` instance. That can be achived by using the current location and apply it on the (key)[https://react.dev/reference/react/useState#resetting-state-with-a-key].
+Lets go about fixing that: First of all we need to ensure that on all page transitions will have a new `motion.div` instance (so`AnimatePresence` can handle the exit/enter of them). That can be achived by using the current location as indicator when to re-create it and apply as the (key)[https://react.dev/reference/react/useState#resetting-state-with-a-key] to the component.
 
 ```tsx
   const location = useLocation();
@@ -122,9 +122,9 @@ Now having that in place, it will re-create the motion component whenever the pa
   <span>{location.pathname}<span>
 ```
 
-But the actual content is still not rendered with the transition - why is that? Inspecting the rendered component in the dev tools of your browser will give you a clue: The `Outlet` component updates its content immediately whenever the route changes. What we built so far will result in temporarily rendering two `motion.div` elements with its content upon page navigation - the first div with a decreasing opacity, the second with an increasing opacity. But the `Outlet` component will update on both instances immediately, so the transition animation wont be understandable. 
+But the actual page is still not animated with the transition - why is that? Inspecting the rendered component in the dev tools of your browser will give you a clue: The `Outlet` component updates its content immediately whenever the route changes. What we built so far will result in temporarily rendering two `motion.div` elements with its content upon page navigation - the first div with a decreasing opacity, the second with an increasing opacity. But the `Outlet` component will update on both instances immediately, so the opacity transition animation wont have a visible effect, as both instances are on top of each other and have as opacity the sum of 1. 
 
-For example changing the `motion.div`s props will visible what happens:
+Changing the `motion.div`s props will visible what happens:
 ```tsx
               initial={{ left: -2000 }}
               animate={{ left: 0 }}
@@ -135,15 +135,15 @@ For example changing the `motion.div`s props will visible what happens:
 Now the old left-moving page immediately change its content to the new page while still moving outside the viewport. To prevent that, we will need to stabilize the `Outlet` component.
 
 #### Approach #1: Cloning the outlet and binding it with the path
-We can access outlet element through useOutlet and clone it within the `motion.div`. Here it's important to pass also the key property to the cloned element, so it will be re-created whenever the path changes.
+We can access outlet element through the (useOutlet)[https://reactrouter.com/en/main/hooks/use-outlet] hook and clone it within the `motion.div`. Here it's important to pass also the key property to the cloned element, so it will be re-created whenever the path changes.
 
 ```tsx
-   const element = useOutlet();
-  {element && React.cloneElement(element, { key: location.pathname })} */}
+   const outlet = useOutlet();
+  {outlet && React.cloneElement(outlet, { key: location.pathname })} */}
 ```
 
 #### Approach #2: Using a stable referenced Outlet
-Wrapping the Outlet into a separate child Component `StableOutlet` allows us to put the initial outlet output into a local state and never update it, returning its value. 
+Wrapping the `Outlet` into a separate child Component `StableOutlet` allows us to put the initial outlet output into a local state and never update it, returning its value. 
 
 ```tsx
 export const StableOutlet: React.FC = () => {
@@ -157,7 +157,7 @@ export const StableOutlet: React.FC = () => {
 Using that one inside the `motion.div` component instead of the `Outlet` will work now.
 
 ### Having a closer look
-Using the (react-dev-tool)[https://react.dev/learn/react-developer-tools] helps us to get a closer look on what is happening under the hood: The `AnimatePresence` component wraps the children components in a PresenceChild component, which will handle the animation and removal of the component at the end of the animation:
+Using the (react-dev-tools)[https://react.dev/learn/react-developer-tools] helps us to get a closer look on what is happening under the hood: The `AnimatePresence` component wraps the children components in a `PresenceChild` component, which will handle the animation and removal of the component at the end of the animation:
 
 ![DevTools hierarchy](https://cdn.hashnode.com/res/hashnode/image/upload/v1709625976339/kS7PNhbE4.png?auto=format)
 
@@ -167,6 +167,6 @@ If you increase the transition duration in the motion.div component, you are abl
 Once the exiting component has finished rendering, it will be removed from the react component tree and will be completely gone.
 
 ## Wrap up
-Handling page transitions has some pitfalls that need to be adressed to make them work properly. But doing so is not rocket science and gives a great opportunity to have a bit a closer look at how the different aspects of the react rendering mechanism, react router and the framer motion play together to achieve what we want.
+Handling page transitions has some pitfalls that need to be adressed to make them work as expected. But doing so is not rocket science and gives a great opportunity to have a closer look at how the different aspects of the react rendering mechanism, react router and the framer motion play together to achieve what we want.
 
 Having now the basics for the page transition in place, you can explore the full power of framer motion and go crazy building the most fancy page transition ever created by mankind!
