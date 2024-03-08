@@ -134,6 +134,9 @@ Changing the `motion.div`s props will make visible what happens:
               transition={{ duration: 3 }}
 ```
 
+![Router immediately changes](https://cdn.hashnode.com/res/hashnode/image/upload/v1709893607860/jIonQzlzW.gif?auto=format)
+
+
 Now the old left-moving page immediately changes its content to the new page while still moving outside the viewport. To prevent that, we will need to stabilize the `Outlet` component.
 
 #### Approach #1: Cloning the outlet and binding it with the path
