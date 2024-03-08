@@ -14,6 +14,8 @@ ignorePost: true
 # The goal
 Based on a properly layouted application, we want to have a simple & clean fade transition when navigating between the pages. Having a client-side rendered application and not implementing that would be a bit of wasted potential.
 
+![animated page transition with 1s duration](https://cdn.hashnode.com/res/hashnode/image/upload/v1709892988313/o6Dqpo0Wi.gif?auto=format)
+
 Both to handle the exit handling of the leaving page as well as the animation handling we will be using [framer motion](https://npmjs.com/package/framer-motion). It's quite powerful for building sophisticated animations, so just using it for a fade transition between pages is an overkill. It provides the toolset to build much more elaborate animations. An alternative for handling the exit animation is [react transition group](https://www.npmjs.com/package/react-transition-group), which has a smaller footprint and leaves the animation for entering/leaving up to your implementation.
 
 ## The baseline
