@@ -12,7 +12,7 @@ As frontend applications get bigger and bigger, they have to cover more and more
 
 ## Exploring the issue by the example of a dialog
 
-We have a React application with which you can manage files. One feature is to delete files, another is to duplicate a file. For both actions, the actions should be confirmed with a dialog. Since deleting is a destructive action, we also want to color the delete button in the dialog red. In such a case, we want to implement a dialog component that we can use for both actions. We, therefore, need various parameters to configure the dialog accordingly. The following code shows how the call of such a component could look like:
+We have a React application that can manage files. One feature is to delete files, another is to duplicate them. For both actions, the action should be confirmed with a dialog. Since deleting is a destructive action, we also want to color the delete button red. In such a case, we want to implement a dialog component that we can use for both scenarios. We, therefore, need various parameters to configure the dialog accordingly. The following code shows how the call of such a component could look like:
 
 ```typescript
 <Dialog
@@ -29,9 +29,9 @@ The dialog now looks like this:
 
 The next requirement is to add a renaming dialog, where you can enter the new file name. The content of the dialog does not only consist of text but also contains an input field. We must be able to pass this to the dialog.
 Another requirement is to convert documents into images. The confirmation dialog should now have three buttons: "Cancel", "Convert to PNG" and "Convert to JPG". We now need to introduce a third button and make it configurable.
-We are only at the beginning of our application and the number of parameters is already starting to get out of hand. There are still many requirements to come, apart from file management, which has other requirements for the dialog.
+We are only at the beginning of our application and the number of parameters is already starting to get out of hand and there are still many requirements to come.
 
-If we don't want a huge, confusing dialog component that is full of configuration parameters, we need to take a different approach. One approach that is often chosen is to implement different subtypes of dialogs. Instead of one dialog, you have multiple dialogs for different use cases. One example could be a ConfirmDialog, a dialog that is exclusively used for confirmations of actions.
+If we don't want a huge, confusing dialog component that is full of configuration parameters and conditions, we need to take a different approach. One approach that is often chosen is to implement different subtypes of dialogs. Instead of one dialog, you have multiple dialogs for different use cases. One example could be a ConfirmDialog, a dialog that is exclusively used for confirmations of actions.
 Having different dialogs, however, carries the risk that they drift apart and get various looks and feels. There are often so many dialogs that some developers don't know all of them and start introducing new dialogs, even though there is already a dialog for a similar requirement.
 
 This is where the compound component pattern comes to the rescue.
@@ -47,12 +47,12 @@ It always takes four steps to implement a compound component:
 4. Add child components as properties to the parent components
 
 All child components can be combined as desired and have a common context.
-The shared context is what makes the pattern so powerful. Not many React developers know and use the pattern. However, the pattern is often used in component libraries, as the components are used differently by different users and require a correspondingly high level of flexibility. A well-known example is the Headless UI library from tailwind labs.
-In the following chapter we implement a dialog with the compound component pattern. The example will show how the subcomponents are implemented and how the common context is created.
+The shared context is what makes the pattern so powerful. Not many React developers know and use the pattern. However, the pattern is often used in component libraries as they often require a high level of flexibility. A well-known example is the Headless UI library from tailwind labs.
+In the following chapter we implement a dialog with the compound component pattern. The example will show how the different components are implemented and how the common context is created.
 
 ## Implementing a Dialog with the Compound Component Pattern
 
-Let's first see what a Dialog looks like, what's common with all of them, and what has to be customizable.
+Let's first see what a dialog looks like, what's common with all of them, and what has to be customizable.
 
 ![Parts of a dialog](https://cdn.hashnode.com/res/hashnode/image/upload/v1709464693100/g5q_83GTB.png?auto=format)
 
@@ -65,11 +65,11 @@ Let's first see what a Dialog looks like, what's common with all of them, and wh
 Before we start, we want to define two principles:
 
 - The style of the component should be the same for all dialogs. The user of the component should not have to worry about it.
-- Closing the dialog by clicking on the background, the close button, or the action buttons is a concern of the dialog. The user of the dialog should not have to worry about the logic for opening or closing it.
+- The user of the dialog should not have to worry about the logic for opening or closing it.
 
 Now, let's start with the implementation:
 
-1. We implement the context of the Dialog. All child components will have access to the defined properties. In our example, we need to know if the dialog is open or closed and we need the actions to close or open an dialog.
+1. We implement the context of the Dialog. All child components will have access to the defined properties. In our example, we need to know if the dialog is open or closed and we need the actions to open and close it.
 
 ```typescript
 // Dialog.tsx
@@ -108,7 +108,7 @@ tconst Dialog = ({ children }: { children: ReactNode }) => {
 };
 ```
 
-3. Create child components. In our case, we have two levels of child components. The first level includes the component that opens the dialog (mostly a button) and the dialog itself. The second level is all children of the dialog, like the content or the footer.
+3. Create child components. In our case, we have two levels of child components. The first level includes the component that opens the dialog (mostly a button) and the dialog itself. The second level includes all children of the dialog, like the content or the footer.
 
 Our first child component is the Open component. We add the open action to the child of that component, so the caller only needs to define a UI element that should open the dialog, the open action itself will be triggered by the Open component.
 
@@ -172,7 +172,7 @@ const Footer = ({ children }: { children: ReactNode }) => {
 };
 ```
 
-The CancelButton component is a predefined Button that already includes the label (that can be overwritten) and the logic for closing the dialog.
+The CancelButton component is a predefined button that already includes the label (that can be overwritten) and the logic for closing the dialog.
 
 ```typescript
 // Dialog.tsx
@@ -188,7 +188,7 @@ const CancelButton = ({ label = "Cancel" }: { label?: string }) => {
 };
 ```
 
-The ActionButton is a Button that can be used to execute an action. After the action is executed, the Dialog will close automatically.
+The ActionButton is a button that can be used to execute an action. After the action is executed, the Dialog will close automatically.
 
 ```typescript
 // Dialog.tsx
@@ -245,7 +245,7 @@ We defined our dialog and can start using it. The following example shows an exa
 </Dialog>
 ```
 
-As you can see you are very flexible with the configuration of the dialog. You don't need to close or open the dialog yourself, it is handled for you. It is easy to add new buttons with different actions or to add your own components to the dialog. In the following GitHub repository, you will find an example with an input field, where the input will be used after the click of an action button: https://github.com/gabduss/customizable-modal
+You are very flexible with the configuration of the dialog. You don't need to close or open the dialog yourself, it is handled for you. It is easy to add new buttons with different actions or to add your own components to the dialog. In the following GitHub repository, you will find an additional example with an input field: https://github.com/gabduss/customizable-modal
 
 ## Conclusion
 
