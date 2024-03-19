@@ -106,10 +106,10 @@ export const AppLayout = () => {
 
 As the entering page and the leaving page should be rendered during the transition at the same position in the browser, adding (Tailwind CSS)[https://tailwindcss.com/] classes will ensure that the new page will be rendered at the same spot as the old one (the new one on top of the old one).
 
-When testing this snippet, we will notice that there is only an initial rendering animated, but all page transitions happen immediately without animation.
+When testing this snippet, we notice that only the first page load is animated. All subsequent navigations happen immediately without visible animations.
 
 ### Components not properly mounted/unmounted
-Let's go about fixing that: First of all, we need to ensure that all page transitions will have a new `motion.div` instance (so`AnimatePresence` can handle the exit/enter of them). That can be achieved by using the current location as an indicator of when to re-create it and apply as the (key)[https://react.dev/reference/react/useState#resetting-state-with-a-key] to the component.
+Let's go about fixing that: First of all, we need to ensure that all page transitions will have a new `motion.div` instance (so `AnimatePresence` can handle the exit/enter of them). That can be achieved by using the current location as an indicator of when to re-create it and apply as the (key)[https://react.dev/reference/react/useState#resetting-state-with-a-key] to the component.
 
 ```tsx
   const location = useLocation();
@@ -120,15 +120,15 @@ Let's go about fixing that: First of all, we need to ensure that all page transi
               >
 ```
 
-Now having that in place, it will re-create the motion component whenever the path changes (careful: Nested routing might need refinement). To test that this already works, you can render within the `motion.div` the current location pathname
+Now having that in place, it will re-create the motion component whenever the path changes (careful: Nested routing might need refinement). To test that this already works, you can render within the `motion.div` the current location pathname.
 
 ```tsx
   <span>{location.pathname}<span>
 ```
 
-But the actual page is still not animated with the transition - why is that? Inspecting the rendered component in the dev tools of your browser will give you a clue: The `Outlet` component updates its content immediately whenever the route changes. What we built so far will result in temporarily rendering two `motion.div` elements with its content upon page navigation - the first div with a decreasing opacity, the second with an increasing opacity. But the `Outlet` component will update on both instances immediately, so the opacity transition animation won't have a visible effect, as both instances are on top of each other and have as opacity the sum of 1. 
+But the actual page is still not animated with the transition - why is that? Inspecting the rendered component in the dev tools of your browser will give you a clue: The `Outlet` component updates its content immediately whenever the route changes. What we built so far will result in temporarily rendering two `motion.div` elements with their content upon page navigation - the first div with a decreasing opacity, the second with an increasing opacity. But the `Outlet` component will update on both instances immediately, so the opacity transition animation won't have a visible effect, as both instances are on top of each other and have as opacity the sum of 1. 
 
-Changing the `motion.div`s props will make visible what happens:
+Changing the `motion.div`'s props will make visible what happens:
 ```tsx
               initial={{ left: -2000 }}
               animate={{ left: 0 }}
