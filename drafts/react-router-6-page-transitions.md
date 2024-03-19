@@ -16,7 +16,9 @@ Based on an application with a proper layout, we want to have a simple and clean
 
 ![animated page transition with 1s duration](https://cdn.hashnode.com/res/hashnode/image/upload/v1709892988313/o6Dqpo0Wi.gif?auto=format)
 
-Both to handle the exit handling of the leaving page as well as the animation handling we will be using [framer motion](https://npmjs.com/package/framer-motion). It's quite powerful for building sophisticated animations, so just using it for a fade transition between pages is an overkill. It provides the toolset to build much more elaborate animations. An alternative for handling the exit animation is [react transition group](https://www.npmjs.com/package/react-transition-group), which has a smaller footprint and leaves the animation for entering/leaving up to your implementation.
+We will be using [framer motion](https://npmjs.com/package/framer-motion) to handle the animations upon navigating. It's quite powerful for building sophisticated animations, so just using it for a fade transition between pages is a bit of an overkill. It provides the toolset to build much more elaborate animations. 
+
+An alternative for handling the exit animation is [react transition group](https://www.npmjs.com/package/react-transition-group), which has a smaller footprint and leaves the CSS for the animation for entering/leaving up to you.
 
 ## The baseline
 Let's assume we have already an existing, simple client-side rendered react app that uses the [createBrowserRouter function](https://reactrouter.com/en/main/routers/create-browser-router) together with the [RouterProvider](https://reactrouter.com/en/main/routers/router-provider) component. Also, the code base uses a [layout route](https://reactrouter.com/en/main/start/concepts#layout-routes) with an `AppLayout` component.
@@ -69,7 +71,7 @@ export const App = () => {
 };
 ```
 
-## Adding framer motion to the solution
+### Adding framer motion to the solution
 First, we need to add [framer motion](https://npmjs.com/package/framer-motion) - it manages the transitions when mounting and unmounting react components as well as provides a great API to write animations. 
 
 `npm i framer-motion`
