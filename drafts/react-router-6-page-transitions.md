@@ -1,5 +1,5 @@
 ---
-title: Building page transitions with react-router v6 & framer motion
+title: Building page transitions with react-router v6 and framer motion
 subtitle: Setting up the basic building blocks to customize the UX
 domain: software-engineering-corner.hashnode.dev
 tags: react, react-router, ux, animations
@@ -12,7 +12,7 @@ ignorePost: true
 
 
 # The goal
-Based on a properly layouted application, we want to have a simple & clean fade transition when navigating between the pages. Having a client-side rendered application and not implementing that would be a bit of wasted potential.
+Based on an application with a proper layout, we want to have a simple and clean fade transition when navigating between the pages. Having a client-side rendered application and not implementing that would be a bit of wasted potential.
 
 ![animated page transition with 1s duration](https://cdn.hashnode.com/res/hashnode/image/upload/v1709892988313/o6Dqpo0Wi.gif?auto=format)
 
@@ -70,7 +70,7 @@ export const App = () => {
 ```
 
 ## Adding framer motion to the solution
-First, we need to add [framer motion](https://npmjs.com/package/framer-motion) - it manages the transitions when mounting & unmounting react components as well as provides a great API to write animations. 
+First, we need to add [framer motion](https://npmjs.com/package/framer-motion) - it manages the transitions when mounting and unmounting react components as well as provides a great API to write animations. 
 
 `npm i framer-motion`
 
@@ -167,7 +167,7 @@ Using the (react-dev-tools)[https://react.dev/learn/react-developer-tools] helps
 ![DevTools hierarchy](https://cdn.hashnode.com/res/hashnode/image/upload/v1709625976339/kS7PNhbE4.png?auto=format)
 
 If you increase the transition duration in the `motion.div` component, you can see both components rendered in parallel, where the first one is exiting and the second is entering:
-![Exit & Enter transitions](https://cdn.hashnode.com/res/hashnode/image/upload/v1709626466732/CIMsyjqLP.png?auto=format)
+![Exit and Enter transitions](https://cdn.hashnode.com/res/hashnode/image/upload/v1709626466732/CIMsyjqLP.png?auto=format)
 
 Once the exiting component has finished rendering, it will be removed from the react component tree and will be completely gone.
 
