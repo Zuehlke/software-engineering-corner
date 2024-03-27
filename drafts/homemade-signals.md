@@ -9,33 +9,35 @@ hideFromHashnodeCommunity: false
 saveAsDraft: true
 ---
 
-_First off: the code in this post is not meant to be used for production-level application but rather serves an educational purpose._
+_First off: the code in this post is not meant to be used for production-level application but serves an educational purpose._
 
 In [a previous blog post](https://software-engineering-corner.zuehlke.com/signals-signals-everywhere), we explored where Signals came from, what they are, and how they took over the frontend ecosystem.
-We already saw that they simplify keeping the UI in sync with the state in a straightforward way, even if we skip using any other libraries.
+We already saw that they simplify keeping the UI in sync with the state straightforwardly, even if we skip using any other libraries.
 But today, we're taking it one step further.
-We are building our own rudimentary Signals from scratch to understand the underlying mechanisms.
-This exercise has been extremely valuable for me.
+We are building rudimentary Signals from scratch to understand the underlying mechanisms.
+This exercise has been massively valuable for me.
 
 ## Quick Recap
 
 Let's do a quick recap.
-Signals have taken over the world of front-end frameworks.
+Signals have taken over the world of frontend frameworks.
 Just about every framework except React has hopped on board with this concept over the past two years, and it looks like they're to stay.
 
 JavaScript frameworks try to solve the challenge of keeping the UI consistent and up-to-date with the state.
-After exploring a wide range of solutions, it seems that most agree Signals are an essential piece of the puzzle.
+After exploring a wide range of solutions, it seems that most agree that Signals are an essential piece of the puzzle.
 They are special JS objects that can notify subscribers about changes.
 We can pass around a Signal without it losing reactivity.
 There are three types of reactivity: reactive state, derived values, and side effects.
 
 Effects are the powerhouses that make everything move, as they produce a side effect every time a source Signal changes.
-This allows frameworks to re-render relevant segments of the UI much more efficiently than elaborate change detectors or by comparing virtual DOM trees.
+That allows frameworks to re-render relevant segments of the UI much more efficiently than elaborate change detectors or by comparing virtual DOM trees.
+
+And now, off to building Signals ourselves.
 
 ## Basic Reactive State
 
 The first element we're implementing is the elementary building block: a Signal.
-This initial version is just going to be a simple wrapper around a value with accessor functions.
+This initial version is just a simple wrapper around a value with accessor functions.
 
 ```js
 function signal(initialValue) {
@@ -55,7 +57,7 @@ function signal(initialValue) {
 
 It doesn't notify anyone reading the value yet.
 But we can pass its reference around and always get the up-to-date value whenever we read it.
-This is so far only useful for primitive values since JavaScript passes them by value.
+That is so far only useful for primitive values since JavaScript otherwise passes them by value.
 
 ```js
 const counter = signal(0);
@@ -87,6 +89,8 @@ function computed(computation) {
 }
 ```
 
+So far we get the current value if we ask for it (pull principle), but nothing happens after a Signal changes.
+
 ## Fuel the Engine with Effects
 
 Side effects are essentially the part that makes Signals move and brings our applications to life.
@@ -106,7 +110,7 @@ But how are we now making everything reactive?
 We need some way to subscribe to changes in the source Signals without adding anything to the API.
 This eliminates the (often in examples used) option of a `subscribe` method, as it defeats the purpose of ergonomic, minimalistic reactive values.
 So we need to look at it from the other side.
-Whenever a Signal's value is requested, it has to somehow know who asks for it.
+Whenever a Signal's value is requested, it has to know who asks for it.
 JavaScript doesn't have any built-in mechanism to inspect the call stack, which means we track it ourselves.
 
 ```js
@@ -115,7 +119,7 @@ let caller;
 
 This global variable will keep track of the effect function currently running.
 Of course, the real solutions frameworks have found, are a little more sophisticated and safer than exposing a global variable.
-At a minimum, it'd be a top-level variable inside an ES module with the Signals logic inside.
+At a minimum, it'd be a top-level variable inside an ES module with the Signals logic.
 For simplicity's sake, let's run with this basic single-file version and add the necessary code to the signal and effect functions.
 
 ```js
@@ -151,7 +155,7 @@ Inside the getter, we now check whether the signal's value is accessed from an e
 It's our way of inspecting the call stack.
 We can then add the caller to the list of observers.
 Afterwards, `caller` gets unset and the reactive effect is set up.
-This whole process only works that easily because JavaScript is single-threaded and `caller` can't be changed by any parallel thread during the `effect` function.
+This whole process only works because JavaScript is single-threaded, and `caller` can't be changed by any parallel thread during the `effect` function.
 
 This rudimentary implementation also explains why an explicit read operation inside an effect is necessary.
 Without it, no subscribing would happen.
@@ -166,7 +170,7 @@ This causes them to re-evaluate all their dependencies and request the values (p
 Why is this relevant?
 The effect may not have called a Signal directly but rather used a computed reactive value.
 The source Signal's value would be of no use for the effect.
-By simply running the effect, all Signals (whether computed or not) and side effects are executed, resulting in consistent behaviour.
+By simply running the effect, all relevant Signals (whether computed or not) and side effects are executed, resulting in consistent behaviour.
 
 ## The Hard Bits
 
@@ -183,7 +187,7 @@ The main concept is effects, which are subscribed to the source Signals by lever
 Although the reality is more complex, this should be just enough to achieve an understanding of the mechanisms in play.
 Building my own Signals resulted in some lightbulb moments for me.
 [Maarten Bicknese's deep dive article about Signals](https://www.thisdot.co/blog/deep-dive-into-how-signals-work-in-solidjs) got me on the right path.
-Leave me a comment about what you thought about this article and where it might have helped you.
+Leave a comment about what you think about this experiment and where it might have helped you.
 
 ## Bonus: our own UI framework
 
@@ -192,4 +196,3 @@ I built a quick UI framework prototype based solely on Signals with a declarativ
 To my surprise, everything I tried just worked.
 Check out the full code including an example in my [GitHub Gist](https://gist.github.com/culas/96664bda9249a98f36c26bc79c1c2f62).
 The entire rendering is based on effects and only uses vanilla JavaScript.
-Let me know, if you would be interested in a walkthrough.
