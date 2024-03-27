@@ -9,34 +9,21 @@ hideFromHashnodeCommunity: false
 saveAsDraft: true
 ---
 
-Signals are the hot topic of today. Pretty much every major framework (except `React`...) is introducing them in one way or another. This is surprisingly also the case of Angular, which is making huge efforts to improve a lot of the pain points we've been experiencing for too many years. A few examples of this include standalone components, a new build system leveraging esbuild and our protagonist of today: signals. 
+Signals are the hot topic of today. Pretty much every major framework (except React...) is introducing them in one way or another. Surprisingly, this is also the case for Angular, which is making huge efforts to improve a lot of the pain points we've been experiencing for too many years. A few examples of this include standalone components, a new build system leveraging esbuild and our protagonist of today: signals. 
 
 If you want to learn more about what signals are and a few interesting historical details about them, reach out to our amazing previous article [Signals, Signals everywhere][signalsEverywhereArticle] by [Lucas Schnüriger][lucasProfile].
 
-The whole concept of signals is a pretty new topic in the Angular community. In fact, just a few weeks ago, [Angular 17.2][angular17.2] was released, introducing the possibility of using two-way binding along with signals. And not long before, [Angular 17.1][angular17.1] released a new API to specify `@Input()` while working with results as signals. 
+The whole concept of signals is a pretty new topic in the Angular community. In fact, just a few weeks ago, [Angular 17.2][angular17.2] was released, introducing the possibility of using two-way binding along with signals. And not long before, [Angular 17.1][angular17.1] released a new API to receive `@Input()` values as signals. 
 
-Wait a minute, really? Weren't those important APIs already available when the Angular team released the first stable version of signals? Isn't two-way binding or, even more, parent-to-child communication basic features of the framework? Yes, we could claim that but the Angular team is taking a gradual strategy to introduce all these new concepts into the framework. And that's probably a good thing, since they are learning and listening from the community during the process. You can also influence and give your opinion in the [open discussions][angularDiscussions].
+Wait a minute, really? Weren't those important APIs already available when the Angular team released the first stable version of signals? Isn't two-way binding or, even more, parent-to-child communication basic features of the framework? Yes, we could claim that, but the Angular team is gradually introducing all these new concepts into the framework. And that's probably a good thing, since they are learning and listening to the community during the process. You can also influence it and give your opinion in the [open discussions][angularDiscussions].
 
-In today's article, we'll experiment and push to the limit the current state of signals in the Angular framework. For that, we will implement an exciting Two-way binding mechanism to connect signals with Angular's router state and the browser url. Are you ready? 
+In today's article, we'll experiment and push the limits of the current state of signals in the Angular framework. For that, we will implement an exciting two-way binding mechanism to connect signals with Angular's router state and the browser URL. Are you ready? 
 
 ## The Challenge
 
-Let's start with a simple application:
+Let's start with a simple application, which you can generate with the CLI and then remove the boilerplate code.
 
-```ts
-@Component({
-  selector: "app-root",
-  standalone: true,
-  template: ` <h1>Signals Demo</h1> `,
-})
-export class AppComponent {}
-```
-
-![Initial application](https://cdn.hashnode.com/res/hashnode/image/upload/v1710536390017/q5rnF-2Oc.png?auto=format&w=500)
-
-This is pretty much what you get when you generate a new Angular application nowadays. But without all the boilerplate and some basic styles.
-
-Let's start by consuming query params in the traditional way: using `RxJS`:
+Once we have it, we are going to consume query params in the traditional way, using RxJS:
 
 ```ts
 @Component({
@@ -59,9 +46,9 @@ export class AppComponent {
 
 ![Consuming query params with RxJS](https://cdn.hashnode.com/res/hashnode/image/upload/v1710536464769/FbnjIrApA.gif?auto=format)
 
-Great! this works and it's not necessarily inconvenient since Angular is handling the tedious task of managing subscriptions when we use the `async` pipe. Now let's see how this would look like with signals:
+Great! This works and it's not necessarily inconvenient since Angular is handling the tedious task of managing subscriptions when we use the `async` pipe. Now let's see how this would look like with signals.
 
-At the moment of writing this article, Angular's router doesn't provide signals as results when we use its API. Most likely this will be introduced in future releases, but for now we have to do a workaround. We can pick the current responses from Angular's router, which are based on `RxJS`'s observables, and convert them by using the `toSignal` utility function:
+At the time of writing this article, Angular's router doesn't provide signals in its API. They will most likely get introduced in future releases, but for now we have to do a workaround. We can pick the current responses from Angular's router, which are based on RxJS's observables, and convert them to signals by using the `toSignal` utility function:
 
 ```ts
 @Component({
@@ -76,12 +63,14 @@ export class AppComponent {
   private activatedRoute = inject(ActivatedRoute);
 
   firstName = toSignal(
-    this.activatedRoute.queryParams.pipe(map((allQueryParams) => allQueryParams["firstName"]))
+    this.activatedRoute.queryParams.pipe(
+      map((allQueryParams) => allQueryParams["firstName"])
+    )
   );
 }
 ```
 
-This code will produce the exact same result as the `RxJS`-only approach. But now, notice that we don't need the `async` pipe anymore, or even to worry about managing subscriptions. The `firstName` signal will be connected to the `firstName` query param, and will be updated whenever there's a change on it. We can consume its value by just evaluating the signal and now we can use all the other interesting features like `computed`, `effect`, etc.
+This code will produce the exact same result as the RxJS-only approach. But now, notice that we don't need the `async` pipe anymore, or even to worry about managing subscriptions. The `firstName` signal will be connected to the `firstName` query param, and will be updated whenever there's a change on it. We can consume its value by just evaluating the signal and now we can use all the other interesting features like `computed`, `effect`, etc.
 
 Let's make the example a bit more interesting by adding a few more query params and extracting the logic of creating the signal to a private method:
 
@@ -116,7 +105,7 @@ export class AppComponent {
 
 ![Consuming query params with signals](https://cdn.hashnode.com/res/hashnode/image/upload/v1710536530242/EJ6p_x7xp.gif?auto=format)
 
-This is already pretty cool! We have a handy utility to consume query params. Notice how easily we combined the `firstName` and `lastName` signals to compute the `fullName` one, this would have been much more verbose and complicated using `RxJS`.
+This is already pretty cool! We have a handy utility function to consume query params. Notice how easily we combined the `firstName` and `lastName` signals to compute the `fullName`, this would have been much more verbose and complicated using RxJS.
 
 Let's add more features. Let's say we want a button to anonymise the user, meaning removing the values of `firstName` and `lastName`:
 
@@ -151,24 +140,16 @@ export class AppComponent {
 
 That's amazing! everything is working as expected, our signals are correctly getting the new `undefined` values and Angular is updating the UI accordingly.
 
-Let's take a closer look in this `anonymise` method: We are using Angular's router to navigate to the exact same page, that's the reason we are passing an empty array:
-
-```ts
-this.router.navigate([]);
-```
-
-We do this because we are only interested to change the values of the query params, not the route or anything else.
-
-In this case we want to unset the `firstName` and `lastName` query params, so we can anonymise the user. That's why we are passing `undefined` as their new values:
+Let's take a closer look at this `anonymise` method:
 
 ```ts
 const queryParams = { firstName: undefined, lastName: undefined };
 this.router.navigate([], { queryParams, queryParamsHandling: "merge" });
 ```
 
-The `queryParamsHandling: "merge"` option is basically telling Angular to perform an **update** of the query params. This is important because, in this case, we are not interested to lose the `age` query param whenever it's there.
+We want to modify the value of a certain query param through Angular's router API. This may surprise you but the easiest way is by triggering an "empty navigation" (notice the `[]`) and specifying the new query params in the configuration object.
 
-Finally, the UI gets updated successfully because after the router navigates, a new value will be emitted in the `activatedRoute.queryParams` observable, which we map and convert to the signals that we have in our component. So every time it emits a new value, our signals will be in sync.
+Finally, the UI gets updated successfully because, once the router finishes the navigation, a new value will be emitted in the `activatedRoute.queryParams` observable, which we map and convert to the signals that we have in our component. So every time it emits a new value, our signals will be in sync.
 
 This is very cool but we can do better:
 
@@ -180,7 +161,7 @@ anonymise() {
 }
 ```
 
-Notice that we already have in our component a `firstName` and `lastName` signals. Wouldn't be nicer if we can just **set** the new values of the query params by using the signals directly? Something like this:
+Notice that we already have the `firstName` and `lastName` signals in our component. Wouldn't it be nicer if we could just **set** the new values of the query params on the signals directly? Something like this:
 
 ```ts
 anonymise() {
@@ -191,11 +172,11 @@ anonymise() {
 
 That would be amazing, but unfortunately this doesn't work since the `toSignal` utility returns a read-only signal.
 
-But that doesn't mean we cannot do it ourselves. Let's build it!
+That doesn't mean we cannot do it ourselves though. Let's build it!
 
 ## Implementing Two-way binding between Signals and Query Params
 
-First let's create a handy `QueryParamsService` so we separate the query param handling logic from our component:
+First let's create a `QueryParamsService` so we separate the query param handling logic from our component:
 
 ```ts
 @Injectable({ providedIn: "root" })
@@ -239,7 +220,7 @@ export class AppComponent {
 }
 ```
 
-This small refactor will produce the same behavior as before except the anonymise feature, which we will implement in the nicer way as soon as we make our `get` method from `QueryParamService` return a writable signal.
+This small refactor will produce the same behavior as before, except for the anonymising feature which we will implement more adequately as soon as we make our `get` method from `QueryParamService` return a writable signal.
 
 This is a very interesting challenge. So let's start simple:
 
@@ -280,25 +261,7 @@ export class QueryParamService {
 }
 ```
 
-A signal-friendly idea could be to convert the `activatedRoute.queryParams` observable to a signal itself and then somehow synchronize it with `queryParamValue`:
-
-```ts
-@Injectable({ providedIn: "root" })
-export class QueryParamService {
-  private activatedRoute = inject(ActivatedRoute);
-  private allQueryParams = toSignal(this.activatedRoute.queryParams);
-
-  get(queryParamName: string) {
-    const queryParamValue = signal("");
-
-    // TODO: sync queryParamValue signal with allQueryParams signal
-
-    return queryParamValue;
-  }
-}
-```
-
-We need to update `queryParamValue` every time `allQueryParams` gets updated. We can achieve that with an effect:
+A signal-friendly idea could be to convert the `activatedRoute.queryParams` observable to a signal itself and then somehow synchronize it with `queryParamValue`. We can achieve that with an effect:
 
 ```ts
 @Injectable({ providedIn: "root" })
@@ -326,11 +289,11 @@ Since we are accessing the value of the `allQueryParams` signal in the effect, i
 
 Inside the effect, we are just updating the value of our `queryParamValue` signal. For that, notice that we need to pass the `allowSignalWrites: true` option. This is necessary because updating signals in effects could lead to infinite loops and unexpected and intricate situations in general. That's why Angular disables this possibility by default.
 
-However, in this scenario there's no danger to do it: The effect is only triggered when `allQueryParams` is updated, that refreshes our `queryParamValue` signal and it finishes there. No danger of triggering an infinite loop or unexpected situations.
+However, in this scenario there's no danger to it: The effect is only triggered when `allQueryParams` is updated, that refreshes our `queryParamValue` signal and it finishes there. No danger of triggering an infinite loop or unexpected situations.
 
 ![Using our partial solution to access query params](https://cdn.hashnode.com/res/hashnode/image/upload/v1710538037690/Nk-9yMBSk.gif?auto=format)
 
-With the current solution we achieve the same behavior as before. However, we are not yet able to implement the anonymise feature in the nicer way. Yes, now we are returning a writable signal but if we set or update its value there's going to be no effect in Angular's router state or in the browser url. We'll achieve that in a minute but before that let's improve a bit the current solution.
+With the current solution we achieve the same behavior as before. However, we are not yet able to implement the anonymise feature in the nicer way. Yes, now we are returning a writable signal but, if we set or update its value there's going to be no effect in Angular's router state or in the browser URL. We'll achieve that in a minute but first let's improve a bit the current solution.
 
 Notice that the effect will run every time the `allQueryParams` signal gets updated but that's too much. Remember that we are passing a `queryParamName` to our `get` method, meaning we are only interested in a specific query param in that context. For example, if we call the method with `age`, creating a signal linked to the `age` query param, then it doesn't make sense that its effect gets executed whenever the `firstName` or `lastName` query params get updated. Let's fix that:
 
@@ -367,7 +330,7 @@ const queryParamValue = signal(activatedRoute.snapshot.queryParams[queryParamNam
 
 But using the `activatedRouteValue` signal directly is a bit more concise. Apart from that, it's of course more interesting to initialize `queryParamValue` with something connected to `activatedRoute` and not just an empty string. So this is definitely a better solution than before.
 
-Coming back to our goal, the only missing part is connecting changes made to our writable `queryParamValue` signal to Angular's router state and the browser url. This way we would achieve the desired two-way binding. 
+Coming back to our goal, the only missing part is connecting changes made to our writable `queryParamValue` signal to Angular's router state and the browser URL. This way we would achieve the desired two-way binding. 
 
 Let's implement the missing part with another effect:
 
@@ -428,21 +391,19 @@ So this should be it, right? Well, unfortunately this doesn't work yet:
 
 ![Empty UI situation when using our almost ready solution](https://cdn.hashnode.com/res/hashnode/image/upload/v1710538597922/uDBmH5mo6.gif?auto=format)
 
-Apparently we have an empty state. Not only that, query params disappear from the browser url. What is going on?
+Apparently we have an empty state. Not only that, query params disappear from the browser URL. What is going on?
 
-Well, most of it is related to Angular's router start up logic. Initially, Angular only emits the actual or real values of the query params through the `activatedRoute.queryParams` observable **when the first navigation** is completed. 
+Well, most of it is related to Angular's router startup logic. Initially, Angular only emits the actual or real values of the query params through the `activatedRoute.queryParams` observable **when the first navigation** is completed. 
 
-This sounds surprising at first, specially when we try to access a query param that is initially provided in the browser url and, through Angular's router API, its starting value is `undefined`. Why doesn't Angular just pick whatever is initially in the browser url?
+This sounds surprising at first, specially when we try to access a query param that is initially provided in the browser URL and, through Angular's router API, its starting value is `undefined`. Why doesn't Angular just pick whatever is initially in the browser URL?
 
-To understand it better let's consider an example. Imagine that you visit `http://localhost:4200/home?firstName=Dave` and, in the component assigned to `/home`, you try to access `activatedRoute.snapshot.queryParams["firstName"]`, in its `ngOnInit` for example. Angular won't return `Dave` as you may expect. You will actually receive `undefined`. The reason is that Angular hasn't finished the initial navigation yet. During this period of time, if we access the `snapshot` or the current value of the `activatedRoute.queryParams` observable, we will get an empty object `{}`, that's why we received `undefined` when we try to access an specific query param during start up.
+If you think about it, this behavior makes sense, there could be logic configured that affects the initial and all navigations in general, `guards` could be a good example of that. This means, some query params could be added or removed during a navigation, not necessarily matching what was initially available in the browser URL. And because of this, Angular is only sure about the actual or correct values of the query params as soon as the current navigation finishes.
 
-If you think about it, this behavior makes sense, there could be logic configured that affects the initial and all navigations in general, `guards` could be a good example of that. This means, some query params could be added or removed during a navigation, not necessarily matching what was initially available in the browser url. And because of this, Angular is only sure about the actual or correct values of the query params as soon as the current navigation finishes.
+During startup, no navigation has been completed yet. The current query params object in the Angular router is empty `{}`. If we try to access any query param in this period of time, it will be `undefined`. This situation affects us in the initial value we provide to our `queryParamValue` signal. If we use the `get` method from the `QueryParamService` in components that are loaded during the initial navigation, then our `queryParamValue` signal will be initialized to `undefined`. This is technically not a big deal since it is connected to the `activatedRoute.queryParams` observable. So as soon as Angular emits the actual value of the query param, then the signal will be updated accordingly. But the problem would have already occurred by then.
 
-This whole situation affects us in the initial value we provide to our `queryParamValue` signal. If we use the `get` method from the `QueryParamService` in components that are loaded during the initial navigation, then our `queryParamValue` signal will be initialized to `undefined`. This is technically not a big deal since it is connected to the `activatedRoute.queryParams` observable. So as soon as Angular emits the actual value of the query param, then the signal will be updated accordingly.
+The actual issue with the empty UI is related to another not so intuitive behavior of Angular's router: Cancelling concurrent navigations. Maybe this surprises you but when we do `router.navigate`, this is actually an asynchronous operation, it returns a `Promise`, which is resolved whenever the navigation is completed.
 
-The issue with the empty UI is related to another not so intuitive behavior of Angular's router: Cancelling concurrent navigations. Maybe this surprises you but when we do `router.navigate`, this is actually an asynchronous operation, it returns a `Promise`, which is resolved whenever the navigation is completed.
-
-The problem is when we start or trigger a `router.navigate` when there's a navigation that is still on progress. When Angular detects this, it will **cancel the current navigation** and execute the new one instead, completely ignoring the previous one. How is this related to the empty UI problem? Let's take a look:
+The problem occurs when we trigger a `router.navigate` while a navigation is still in progress. When Angular detects this, it will **cancel the current navigation** and execute the new one instead, completely ignoring the previous one. How is this related to the empty UI problem? Let's take a look:
 
 ```ts
 get(queryParamName: string) {
@@ -466,106 +427,9 @@ The problem is in the second effect. Specifically during its first execution.
 
 Effects are executed as soon as they are defined, this is necessary so they can keep track of the signals that are used inside of them.
 
-When the second effect is initially executed, a navigation will be triggered, cancelling Angular's start up navigation and losing with it the actual values of the query params. 
+When the second effect is initially executed, a navigation will be triggered, but a navigation that has no data. Remember that, during the startup period of time, the `queryParamValue` signal is initialized to `undefined`. So this "empty" navigation will be triggered, cancelling Angular's startup navigation and taking over. This loses the actual values of the query params because the startup navigation is the one that contains all the data provided in the browser URL when we load the application for the first time.
 
-Let's try to understand it better with a specific example: Let's say we are visiting `http://localhost:4200?firstName=Dave&lastName=Doe&age=40`. And our `AppComponent` has the following code:
-
-```ts
-firstName = this.queryParamService.get("firstName");
-```
-
-Notice that it's only creating a single signal. In this case to track the `firstName` query param, but we will still experience the empty UI situation, affecting all query params in general.
-
-When `queryParamService.get("firstName")` is executed we create a writable `queryParamValue` signal linked to the `firstName` query param. During this process we define two effects and they get executed immediately to keep track of their corresponding signals as we have mentioned before. 
-
-Notice how we trigger a `router.navigate` in the second effect:
-
-```ts
-effect(() =>
-  this.router.navigate([], {
-    queryParams: { [queryParamName]: queryParamValue() },
-    queryParamsHandling: "merge",
-  })
-);
-```
-
-This navigation will be triggered right away. And since our `AppComponent` is rendered on start up, it will definitely conflict with Angular's initial navigation. 
-
-Therefore, Angular will cancel the current navigation. In this case, the initial one, the one that had this information: "navigate to `http://localhost:4200?firstName=Dave&lastName=Doe&age=40`" and will be replaced with "navigate to `http://localhost:4200/`", with no query params information at all. 
-
-As soon as this navigation finishes Angular could emit the actual query param values through the `activatedRoute.queryParams` observable, but there are no query params in `http://localhost:4200/`.
-
-
-The reason why there are no query params in this new navigation is in the `router.navigate` we are triggering in the effect:
-
-```ts
-  queryParams: { [queryParamName]: queryParamValue() },
-```
-
-In this example `queryParamName` is `"firstName"` and `queryParamValue()` is initially `undefined` for what we mentioned a bit above (you could think that we are accessing `activatedRoute.snapshot.queryParams["firstName"]` during the period of time in which the query params object is empty `{}`). 
-
-So the effect is triggering a navigation that has this information: "navigate to `http://localhost:4200?firstName=undefined`", since the value of `firstName` is `undefined` it's just removed from the query params. And notice that there's no information about the other query params at all.
-
-We could argue that we are indicating Angular to `merge` the query params in that `router.navigate` call. So no query params should be removed from the browser url.
-
-But again, Angular only emits a new value in the `activatedRoute.queryParams` observable as soon as the current navigation is completed. During start up, the query params object that Angular maintains is just an empty one `{}`. And, when the effect replaces the initial navigation with an "empty navigation", ultimately we will be indicating Angular to update the current query params object from `{}` with `{}`, resulting in, of course `{}`. After the navigation is completed, Angular just reflects the state of the query params in the browser url, and since it's `{}`, all query params are removed from the browser url. 
-
-Since there's a lot going on, let's try to visualize this cancelling navigation idea. We're going to add some debug code and simplify the usage in the `AppComponent`:
-
-```ts
-@Injectable({ providedIn: "root" })
-export class QueryParamService {
-  private activatedRoute = inject(ActivatedRoute);
-  private router = inject(Router);
-
-  private allQueryParams = toSignal(this.activatedRoute.queryParams);
-
-  constructor() {
-    // Notice that we log navigation events here
-    this.router.events.subscribe((e) => console.log(e));
-  }
-
-  // Same as before
-  get(queryParamName: string) {
-    const activatedRouteValue = computed(() => this.allQueryParams()?.[queryParamName]);
-    const queryParamValue = signal(activatedRouteValue());
-
-    effect(() => queryParamValue.set(activatedRouteValue()), { allowSignalWrites: true });
-
-    effect(() =>
-      this.router.navigate([], {
-        queryParams: { [queryParamName]: queryParamValue() },
-        queryParamsHandling: "merge",
-      })
-    );
-
-    return queryParamValue;
-  }
-}
-```
-
-```ts
-@Component({
-  selector: "app-root",
-  standalone: true,
-  template: `
-    <h1>Signals Demo</h1>
-    <p>Your first name is: {{ firstName() }}</p>
-  `,
-})
-export class AppComponent {
-  private queryParamService = inject(QueryParamService);
-
-  // Notice we only use the .get() method once
-  firstName = this.queryParamService.get("firstName");
-}
-```
-
-![Angular cancelling navigations](https://cdn.hashnode.com/res/hashnode/image/upload/v1710594428122/YXorJBf0j.gif?auto=format)
-
-Notice that when we visit the url in the browser, Angular triggers an initial navigation on start up, this initial navigation contains the query params actual values, those that are initially provided in the browser url. But, as soon as we execute the second effect inside the `queryParamService.get` method, a new empty navigation is triggered, which cancels the initial one, losing with it all query params data.
-
-This looks like a very tricky problem to solve. It would be convenient if Angular provided a way to synchronously navigate. However, this is impossible in general. Remember that we could configure things like guards or resolvers that will force the navigation to be an asynchronous operation.
+This sounds like a very tricky problem to solve. It would be convenient if Angular provided a way to synchronously navigate so we can forget about concurrent navigations cancelling each other. However, this is impossible in general. Remember that we could configure things like guards or resolvers that will force the navigation to be an asynchronous operation.
 
 For this reason, we somehow need to **wait** for the current navigation to complete in order to execute the one that we have in the second effect. Fortunately, we can take advantage of `async/await` when dealing with signals, we just have to be careful so we don't get unexpected situations, pretty similar to what we discussed with `allowSignalWrites: true`.
 
@@ -589,7 +453,7 @@ export class QueryParamService {
       const newValueToPushInRoute = queryParamValue();
 
       if (!this.router.navigated) return;
-      if (this.isRouterNavigating()) await this.waitUntilRouterIsIdle();
+      while (this.isRouterNavigating()) await this.waitUntilRouterIsIdle();
 
       this.router.navigate([], {
         queryParams: { [queryParamName]: newValueToPushInRoute },
@@ -623,7 +487,7 @@ effect(async () => {
   const newValueToPushInRoute = queryParamValue();
 
   if (!this.router.navigated) return;
-  if (this.isRouterNavigating()) await this.waitUntilRouterIsIdle();
+  while (this.isRouterNavigating()) await this.waitUntilRouterIsIdle();
 
   this.router.navigate([], {
     // If we would have accessed it here directly
@@ -634,18 +498,18 @@ effect(async () => {
 });
 ```
 
-Then we have the `if` conditions. The first one protects us from the empty UI situation we saw before:
+Then we have the conditions. The `if` protects us from the empty UI situation we saw before:
 
 ```ts
 if (!this.router.navigated) return;
 ```
 
-Basically `router.navigated` will be false while the initial navigation is still running. If that's the case, we are not interested in triggering a new `router.navigate`, because if we do so, we will remove all the query params, since during this period of time, our `queryParamValue` signal still has the start up value, meaning `undefined`.
+Basically `router.navigated` will be false while the initial navigation is still running. If that's the case, we are not interested in triggering a new `router.navigate`, because if we do so, we will remove all the query params, since during this period of time, our `queryParamValue` signal still has the startup value, meaning `undefined`.
 
-Finally, the second condition prevents us from triggering a navigation while one is still on going:
+Finally, the `while` loop prevents us from triggering a navigation while one is still on going:
 
 ```ts
-if (this.isRouterNavigating()) await this.waitUntilRouterIsIdle();
+while (this.isRouterNavigating()) await this.waitUntilRouterIsIdle();
 ```
 
 This way, we don't have to worry that Angular may cancel navigations. We achieve this by using two handy private methods. One to check if there's a navigation happening, taking advantage of `router.getCurrentNavigation`. And, if so, waiting until it finishes. 
@@ -665,7 +529,7 @@ private waitUntilRouterIsIdle(): Promise<unknown> {
 
 We simply use the `router.events` observable and filter until we find a `NavigationEnd` value. Then we just convert it to `Promise` using `firstValueFrom` so we can await it in the effect. Notice that there's also a `timeout` of 1s but we could think of a much more elaborated error handling in another iteration. 
 
-Once we have all the pieces ready, we made it! Now we have a nice utility that allow us to consume query params with signals. Not only that, those signals are writable and every time they are updated those values are propagated to Angular's router state and the browser url. 
+Once we have all the pieces ready, we made it! Now we have a nice utility that allow us to consume query params with signals. Not only that, those signals are writable and every time they are updated those values are propagated to Angular's router state and the browser URL. 
 
 Let's now see the nicer solution of the anonymise feature implemented with these signals. And perhaps a few more interesting use cases: 
 
