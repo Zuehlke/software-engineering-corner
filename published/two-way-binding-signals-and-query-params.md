@@ -6,7 +6,6 @@ tags: signals, web-development, javascript, typescript, frontend-development, re
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1710531988213/wpYOexURa.jpg?auto=format
 publishAs: juliocastrodev
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 Signals are the hot topic of today. Pretty much every major framework (except React...) is introducing them in one way or another. Surprisingly, this is also the case for Angular, which is making huge efforts to improve a lot of the pain points we've been experiencing for too many years. A few examples of this include standalone components, a new build system leveraging esbuild and our protagonist of today: signals. 
