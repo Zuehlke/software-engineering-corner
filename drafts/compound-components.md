@@ -8,7 +8,7 @@ hideFromHashnodeCommunity: false
 saveAsDraft: true
 ---
 
-As frontend applications get bigger and bigger, they have to cover more and more use cases and therefore their UI components need to get more flexible. This blog post describes how the requirements for a UI component increase throughout a typical project. We show what problems this entails and how they can be solved with the compound component pattern.
+As frontend applications continue to grow and have to cover more use cases, their UI components need to get more flexible. This blog post describes how the requirements for a UI component increase throughout a typical project. We show what problems this entails and how they can be solved with the compound component pattern.
 
 ## Exploring the issue by the example of a dialog
 
@@ -36,12 +36,12 @@ Having different dialogs, however, carries the risk that they drift apart and ge
 
 This is where the compound component pattern comes to the rescue.
 
-## The Compound Component Pattern
+## The compound component pattern
 
 The compound component pattern is a component composition pattern. The aim is to have many small components instead of one large component, all of which require far fewer configuration parameters.
 It always takes four steps to implement a compound component:
 
-1. Create a Context
+1. Create a context
 2. Create a parent component
 3. Create child components
 4. Add child components as properties to the parent components
@@ -50,7 +50,7 @@ All child components can be combined as desired and have a common context.
 The shared context is what makes the pattern so powerful. Not many React developers know and use the pattern. However, the pattern is often used in component libraries as they often require a high level of flexibility. A well-known example is the Headless UI library from tailwind labs.
 Let's get started with implementing a dialog component using the compound component pattern. The example will show how the different components are implemented and how the common context is created.
 
-## Implementing a Dialog with the Compound Component Pattern
+## Implementing a dialog with the compound component pattern
 
 Let's first see what a dialog looks like, what's common with all of them, and what has to be customizable.
 
@@ -69,7 +69,7 @@ Before we start, we want to define two principles:
 
 Now, let's start with the implementation:
 
-1. We implement the context of the Dialog. All child components will have access to the defined properties. In our example, we need to know if the dialog is open or closed and we need the actions to open and close it.
+1. We implement the context of the dialog. All child components will have access to the defined properties. In our example, we need to know if the dialog is open or closed and we need the actions to open and close it.
 
 ```typescript
 // Dialog.tsx
@@ -88,7 +88,7 @@ const DialogContext = createContext<DialogContextProps>({
 });
 ```
 
-2. We implement a parent component. All following components will be children of this parent component. It creates the Context provider and ensures that all children can have access to the same context data.
+2. We implement a parent component. All following components will be children of this parent component. It creates the context provider and ensures that all children can have access to the same context data.
 
 ```typescript
 // Dialog.tsx
@@ -158,7 +158,7 @@ const Window = ({ title, children }: { title?: string; children: ReactNode }) =>
 };
 ```
 
-The next component we need is the Footer component. This component ensures that all Footers look the same and that the elements within are aligned correctly.
+The next component we need is the Footer component. This component ensures that all footers look the same and that the elements within are aligned correctly.
 
 ```typescript
 // Dialog.tsx
@@ -188,7 +188,7 @@ const CancelButton = ({ label = "Cancel" }: { label?: string }) => {
 };
 ```
 
-The ActionButton is a button that can be used to execute an action. After the action is executed, the Dialog will close automatically.
+The ActionButton is a button that can be used to execute an action. After the action is executed, the dialog will close automatically.
 
 ```typescript
 // Dialog.tsx
@@ -245,8 +245,8 @@ We defined our dialog and can start using it. The following example shows an exa
 </Dialog>
 ```
 
-You are very flexible with the configuration of the dialog. You don't need to close or open the dialog yourself, it is handled for you. It is easy to add new buttons with different actions or to add your own components to the dialog. In the following GitHub repository, you will find an additional example with an input field: https://github.com/gabduss/customizable-modal
+The dialog offers great flexibility in configuration. You don't have to handle opening or closing the dialog manually. It is easy to add new buttons with different actions and to add your own components. For an additional example featuring an input field, please refer to the following GitHub repository: https://github.com/gabduss/customizable-modal
 
 ## Conclusion
 
-If you are implementing a React component that requires a lot of flexibility, consider using the compound component pattern. The pattern is particularly useful if you are implementing a component library that is used in different projects. Chances are that the different projects will want to use the components slightly differently. In these cases, the compound component pattern helps to give you the necessary flexibility.
+If you are implementing a React component that requires a lot of flexibility, consider using the compound component pattern. The pattern is particularly useful if you are implementing a component library that is used in different projects. Chances are that the different projects will want to use the components slightly differently. In these case, the compound component pattern helps you to give the necessary flexibility.
