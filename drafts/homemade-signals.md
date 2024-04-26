@@ -160,9 +160,43 @@ This whole process only works because JavaScript is single-threaded, and `caller
 This rudimentary implementation also explains why an explicit read operation inside an effect is necessary.
 Without it, no subscribing would happen.
 
+## Going for a Test Drive
+
+Let's put our code to the test by creating a very simple button, which increases the counter by one on each click.
+
+```js
+const counter = signal(0);
+
+const button = document.createElement('button');
+document.body.append(button);
+
+// this is our trigger which changes the Signal's value
+button.addEventListener('click', () => counter.value++);
+
+const updateButton = () => button.innerText = counter.value;
+
+// whenever counter changes, we update the button's text
+effect(updateButton);
+```
+
+When this code runs initially, it will create a simple HTML button and attach our click handler.
+Once the effect function runs, the following process initialises the reactivity:
+
+1. `updateButton` is internally assigned to `caller`
+2. `updateButton` is executed by the effect, which then calls the getter of our `counter` signal
+3. the getter sees the function in `caller` and adds it to the list of observers, then the Signal's value is returned
+4. `updateButton` assigns the received value to the button's inner text.
+5. the effect resets `caller`
+
+On each click, the Signal's setter will call each observer and thus re-execute `updateButton`.
+During subsequent calls of `updateButton`, `caller` is undefined.
+Therefore the function is not added again, but rather just receives the new value.
+
+See the full working code in a single HTML file in my [GitHub Gist](https://gist.github.com/culas/96664bda9249a98f36c26bc79c1c2f62#file-01-signal-html).
+
 ## Push and Pull
 
-Whenever a new value gets assigned to the Signal, it notifies all observing effects.
+Whenever a new value gets assigned to a Signal, it notifies all observing effects.
 Unlike Observables of RxJS and similar libraries, the Signal doesn't directly pass its new value to subscribers (push principle).
 Instead, it just triggers all the functions it was accessed from initially.
 This causes them to re-evaluate all their dependencies and request the values (pull principle).
@@ -194,5 +228,5 @@ Leave a comment about what you think about this experiment and where it might ha
 Because building my own Signals had me excited, I continued to see whether my explanation of `UI = effect(signal)` from the first article holds.
 I built a quick UI framework prototype based solely on Signals with a declarative, functional interface.
 To my surprise, everything I tried just worked.
-Check out the full code including an example in my [GitHub Gist](https://gist.github.com/culas/96664bda9249a98f36c26bc79c1c2f62).
+Check out the full code including an example in my [GitHub Gist](https://gist.github.com/culas/96664bda9249a98f36c26bc79c1c2f62#file-02-signal-framework-html).
 The entire rendering is based on effects and only uses vanilla JavaScript.
