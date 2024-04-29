@@ -45,7 +45,7 @@ We display personal information in our app and resolve the person's address from
 
 ![Degraded address information example](https://cdn.hashnode.com/res/hashnode/image/upload/v1709018312932/mDYMElQpY.png?auto=format)
 
-This way, the user knows that the system currently has a problem, but it is possible to continue working as long as no functionality using the address service needs to be used. Maybe it can be one later when it is working again.
+This way, the user knows that the system currently has a problem, but it is possible to continue working as long as no functionality using the address service needs to be used. Maybe it can be done later when it is working again.
 
 Another example could be a feature where several checks get executed. Let's say our software checks 'conflicts of interests' between multiple persons. It checks different constraints such as whether the persons are working in the same institution or have worked on a shared project etc. The data gets collected from different APIs and each check result gets displayed so that the user can decide whether a person is suitable or not. Now let's assume one of the services providing check-related data is currently not working. We can encapsulate this failure and still show the check results of all working services and we inform the user that a certain check could not be executed due to some failures.
 
