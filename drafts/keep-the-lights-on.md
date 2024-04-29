@@ -59,6 +59,6 @@ To end the article I would like to recommend you one of my favorite books about 
 
 ## Summary
 
-System downtime can cost a fortune or have legal impacts. But usually, we are focused on feature delivery. This ends with an error popup developed by the software engineers. Applications must be designed for errors as well, so we must include the whole team in that process. It is better to handle errors and degrade some functionalities instead of letting the application stop working.
+System downtime can cost a fortune or have legal impacts. But usually, we are focused on feature delivery. Leading to a general error popup developed by the software engineers. Applications must be designed for errors as well, so we must include the whole team in that process. It is better to handle errors and degrade some functionalities instead of letting the application stop working.
 
 What is your opinion? Share your thoughts down below in the comments section.
