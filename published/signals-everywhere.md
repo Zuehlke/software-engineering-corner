@@ -160,4 +160,4 @@ How do you think will Signals influence the future of web development?
 Do you think React's long-running dominance will continue, or do you think they should start adding Signals?
 I'd love to hear your thoughts!
 
-_Stay tuned for a follow-up article, where we will build our own homemade Signal! It will give us a better understanding of why effects are so central._
+_Check out the follow-up article, where we build our own [homemade Signals](https://software-engineering-corner.zuehlke.com/homemade-signals)! It gives us a better understanding of why effects are so central._
