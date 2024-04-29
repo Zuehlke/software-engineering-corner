@@ -29,7 +29,7 @@ We know all those little error popups thrown into our faces when an error has oc
 
 ![Error popup](https://cdn.hashnode.com/res/hashnode/image/upload/v1709015194811/a5FDzsOYk.png?auto=format)
 
-But why is it so in the most cases? I actually can't blame the developers, or at least not for implementing it. The problem is located way deeper in the system. The entire team, from the developers to POs, BAs and UX engineers, is focused on designing and delivering features. We all strive for a cool and user-friendly product, the timeline is short and features should rather be released yesterday than tomorrow. In addition, not all are aware of errors that can occur. At least I haven't seen any UX engineers thinking about it on their own. So nobody is thinking about it and providing the dead-end error dialog is the final resort the developers have.
+But why is this such a common pattern? I actually can't blame the developers, or at least not for implementing it. The problem is located way deeper in the system. The entire team, from the developers to POs, BAs and UX engineers, is focused on designing and delivering features. We all strive for a cool and user-friendly product, the timeline is short and features should rather be released yesterday than tomorrow. In addition, not all are aware of errors that can occur. At least I haven't seen any UX engineers thinking about it on their own. So nobody is thinking about it and providing the dead-end error dialog is the final resort the developers have.
 
 And that's why we need to sit together as a whole team. **Making everyone deeply aware of failures that can occur and bake error handling in**. We need to design error handling in the system and define how it should behave in every single scenario.
 
