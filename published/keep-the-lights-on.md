@@ -7,7 +7,6 @@ tags: web-development, microservices, software-architecture, frontend, web-compo
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1703247396853/r8H7Xfeks.jpg?auto=format
 publishAs: lehmamic
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 Error handling is rather neglected in software projects and is more of a minor matter. No wonder, as it is much better to concentrate on business value and features. Unfortunately, this can be very annoying for users. Even worse, it can end in disaster.
