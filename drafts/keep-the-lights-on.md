@@ -37,7 +37,7 @@ And that's why we need to sit together as a whole team. **Making everyone deeply
 
 I have been talking about the root cause of missing proper error handling. The question remains, what can we do to prevent these error dialogs? There are some cases when nothing works anymore but in many cases, we handle them and keep the application running.
 
-It is better to degrade the functionality of an application than let it stop working. It is important to inform the user about the misbehavior, but let him keep doing his work within the limits of what is still possible. This way the user can make its own decision on how to proceed.
+It is better to degrade the functionality of an application than let it stop working. It is important to inform the user about the misbehavior, but let them keep doing their work within the limits of what is still possible. This way the user can make their own decisions on how to proceed.
 
 Let's give some examples:
 
