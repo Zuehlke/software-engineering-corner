@@ -12,19 +12,17 @@ saveAsDraft: true
 _First off: the code in this post is not meant to be used for production-level application but serves an educational purpose._
 
 In [a previous blog post](https://software-engineering-corner.zuehlke.com/signals-signals-everywhere), we explored where Signals came from, what they are, and how they took over the frontend ecosystem.
-We already saw that they simplify keeping the UI in sync with the state straightforwardly, even if we skip using any other libraries.
+We already saw that they simplify keeping the UI in sync with the state, even if we skip using any other libraries.
 But today, we're taking it one step further.
 We are building rudimentary Signals from scratch to understand the underlying mechanisms.
 This exercise has been massively valuable for me.
 
 ## Quick Recap
 
-Let's do a quick recap.
 Signals have taken over the world of frontend frameworks.
-Just about every framework except React has hopped on board with this concept over the past two years, and it looks like they're to stay.
+Just about every framework except React has hopped on board with this concept over the past two years, and it looks like Signals are here to stay.
 
 JavaScript frameworks try to solve the challenge of keeping the UI consistent and up-to-date with the state.
-After exploring a wide range of solutions, it seems that most agree that Signals are an essential piece of the puzzle.
 They are special JS objects that can notify subscribers about changes.
 We can pass around a Signal without it losing reactivity.
 There are three types of reactivity: reactive state, derived values, and side effects.
@@ -60,9 +58,9 @@ But we can pass its reference around and always get the up-to-date value wheneve
 That is so far only useful for primitive values since JavaScript otherwise passes them by value.
 
 ```js
-const counter = signal(0);
+const counter = signal(5);
 counter.value += 1;
-console.log(counter.value); // 1
+console.log(counter.value); // 6
 ```
 
 ## Derived Values
@@ -71,8 +69,9 @@ Signals that are derived, or _computed_, from other Signals are an importation u
 We want to be able to use them like this:
 
 ```js
-const counter = signal(0);
+const counter = signal(5);
 const double = computed(()= => counter.value * 2);
+console.log(double.value); // 10
 ```
 
 Due to their calculated nature, we only need them to be readable, not writable.
@@ -105,19 +104,20 @@ function effect(fn) {
 effect(() => console.log(`${counter.value} * 2 = ${double.value}`));
 ```
 
-This would run the function once and print `0 * 2 = 0`.
+This would run the function once and print `5 * 2 = 10`.
 But how are we now making everything reactive?
 We need some way to subscribe to changes in the source Signals without adding anything to the API.
 This eliminates the (often in examples used) option of a `subscribe` method, as it defeats the purpose of ergonomic, minimalistic reactive values.
 So we need to look at it from the other side.
 Whenever a Signal's value is requested, it has to know who asks for it.
 JavaScript doesn't have any built-in mechanism to inspect the call stack, which means we track it ourselves.
+And that's a simple as this:
 
 ```js
 let caller;
 ```
 
-This global variable will keep track of the effect function currently running.
+This global variable `caller` will keep track of the effect function currently running.
 Of course, the real solutions frameworks have found, are a little more sophisticated and safer than exposing a global variable.
 At a minimum, it'd be a top-level variable inside an ES module with the Signals logic.
 For simplicity's sake, let's run with this basic single-file version and add the necessary code to the signal and effect functions.
@@ -156,6 +156,8 @@ It's our way of inspecting the call stack.
 We can then add the caller to the list of observers.
 Afterwards, `caller` gets unset and the reactive effect is set up.
 This whole process only works because JavaScript is single-threaded, and `caller` can't be changed by any parallel thread during the `effect` function.
+
+We don't have to change anything in `computed`, since computed Signals will just rerun the computation every time their value is accessed.
 
 This rudimentary implementation also explains why an explicit read operation inside an effect is necessary.
 Without it, no subscribing would happen.
