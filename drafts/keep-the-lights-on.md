@@ -23,7 +23,7 @@ Yes, of course, my examples are about very big, well-known companies. You might 
 
 ## Design for failure
 
-First I want to talk about the current situation. At this point, we might have realized that proper error handling is important. In reality, unfortunately, the realization usually looks very poor.
+First I want to talk about the current situation. At this point, we might have realized that proper error handling is important. In reality, unfortunately, the implementation usually looks very poor.
 
 We know all those little error popups thrown into our faces when an error has occurred in the application. Sadly, this is common practice in most applications. Exceptions bubble up to the frontend, get displayed in an error dialog and nothing works anymore. And be honest, most likely you implemented such an error dialog as well.
 
