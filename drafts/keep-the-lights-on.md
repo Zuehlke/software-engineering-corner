@@ -2,7 +2,7 @@
 title: Keep the lights on
 subtitle: Design your system for failures
 domain: software-engineering-corner.hashnode.dev
-slug: blog-one-table-to-rule-them-all
+slug: design-your-system-for-failures
 tags: web-development, microservices, software-architecture, frontend, web-components
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1703247396853/r8H7Xfeks.jpg?auto=format
 publishAs: lehmamic
@@ -53,7 +53,7 @@ Another example could be a feature where several checks get executed. Let's say 
 
 Again, this way the user can decide whether it's safe to still go on with this person or not.
 
-There are many ways how we can handle errors with feature degradation. It is not always easy to find a way, but I would argue that in most cases it is possible! Just be creative and involve people.
+There are many ways how we can handle errors with feature degradation. It is not always easy to find a way, but I would argue that in most cases it is possible! Just be creative and involve the entire team.
 
 To end the article I would like to recommend you one of my favorite books about failure handling: [Release It!](https://www.amazon.de/Release-Production-Ready-Software-Pragmatic-Programmers/dp/0978739213?language=en_GB&currency=EUR)
 
