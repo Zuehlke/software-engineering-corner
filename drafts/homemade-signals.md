@@ -194,7 +194,9 @@ On each click, the Signal's setter will call each observer and thus re-execute `
 During subsequent calls of `updateButton`, `caller` is undefined.
 Therefore the function is not added again, but rather just receives the new value.
 
-See the full working code in a single HTML file in my [GitHub Gist](https://gist.github.com/culas/96664bda9249a98f36c26bc79c1c2f62#file-01-signal-html).
+See the full working code in a single HTML file in my [GitHub Gist](https://gist.github.com/culas/96664bda9249a98f36c26bc79c1c2f62#file-01-signal-html) or try it out in the following Codepen.
+
+%[https://codepen.io/culas/embed/preview/MWRROyw?default-tab=js%2Cresult&editable=true&theme-id=dark]
 
 ## Push and Pull
 
