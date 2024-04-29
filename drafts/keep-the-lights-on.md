@@ -41,7 +41,7 @@ It is better to degrade the functionality of an application than let it stop wor
 
 Let's give some examples:
 
-We display personal information in our app and resolve the person's address from an external address service. When this service returns a failure or is unreachable we can display that information to the user.
+We display some personal information in our app and resolve the person's address from an external address service. When this service returns a failure or is unreachable we can display the information about the occurred failure to the user.
 
 ![Degraded address information example](https://cdn.hashnode.com/res/hashnode/image/upload/v1709018312932/mDYMElQpY.png?auto=format)
 
