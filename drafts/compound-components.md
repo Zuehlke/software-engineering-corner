@@ -58,7 +58,7 @@ Let's first see what a dialog looks like, what's common with all of them, and wh
 
 - Title: The title has always the same font style but the text has to be customizable
 - Close Button: The close button has to be identical
-- Content: the content can be completely different
+- Content: The content can be completely different
 - Footer: The footer has always the same style, but the buttons have to be customizable. Not only the the text have to be customizable but also the style, the triggered action, and the number of buttons.
 - Background: A click on the background should always close the dialog
 
