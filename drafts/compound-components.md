@@ -48,7 +48,7 @@ It always takes four steps to implement a compound component:
 
 All child components can be combined as desired and have a common context.
 The shared context is what makes the pattern so powerful. Not many React developers know and use the pattern. However, the pattern is often used in component libraries as they often require a high level of flexibility. A well-known example is the Headless UI library from tailwind labs.
-In the following chapter we implement a dialog with the compound component pattern. The example will show how the different components are implemented and how the common context is created.
+Let's get started with implementing a dialog component using the compound component pattern. The example will show how the different components are implemented and how the common context is created.
 
 ## Implementing a Dialog with the Compound Component Pattern
 
