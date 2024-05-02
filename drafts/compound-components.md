@@ -31,7 +31,7 @@ The next requirement is to add a renaming dialog, where you can enter the new fi
 Another requirement is to convert documents into images. The confirmation dialog should now have three buttons: "Cancel", "Convert to PNG" and "Convert to JPG". We now need to introduce a third button and make it configurable.
 We are only at the beginning of our application and the number of parameters is already starting to get out of hand and there are still many requirements to come.
 
-If we don't want a huge, confusing dialog component that is full of configuration parameters and conditions, we need to take a different approach. One approach that is often chosen is to implement different subtypes of dialogs. Instead of one dialog, you have multiple dialogs for different use cases. One example could be a ConfirmDialog, a dialog that is exclusively used for confirmations of actions.
+If we don't want a huge, confusing dialog component that is full of configuration parameters and conditions, we need to take a different approach. One approach that is often chosen, is to implement different subtypes of dialogs. Instead of one dialog, you have multiple dialogs for different use cases. One example could be a ConfirmDialog, a dialog that is exclusively used for confirmations of actions.
 Having different dialogs, however, carries the risk that they drift apart and get various looks and feels. There are often so many dialogs that some developers don't know all of them and start introducing new dialogs, even though there is already a dialog for a similar requirement.
 
 This is where the compound component pattern comes to the rescue.
