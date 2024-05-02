@@ -247,6 +247,8 @@ We defined our dialog and can start using it. The following example shows an exa
 
 The dialog offers great flexibility in configuration. You don't have to handle opening or closing the dialog manually. It is easy to add new buttons with different actions and to add your own components. For an additional example featuring an input field, please refer to the following GitHub repository: https://github.com/gabduss/customizable-modal
 
+The StackBlitz example can be found here: https://stackblitz.com/~/github.com/gabduss/customizable-modal
+
 ## Conclusion
 
 If you are implementing a React component that requires a lot of flexibility, consider using the compound component pattern. The pattern is particularly useful if you are implementing a component library that is used in different projects. Chances are that the different projects will want to use the components slightly differently. In these case, the compound component pattern helps you to give the necessary flexibility.
