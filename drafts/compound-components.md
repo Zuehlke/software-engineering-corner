@@ -2,7 +2,7 @@
 title: The Art of Component Composition - Leveraging Compound Components in React
 domain: software-engineering-corner.zuehlke.com
 tags: reactjs, components, patterns
-cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1709986147750/6D9yz4Rsi.png?auto=format
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1714648959962/esNeWYvB3.png?auto=format
 publishAs: gadu
 hideFromHashnodeCommunity: false
 saveAsDraft: true
@@ -56,11 +56,11 @@ Let's first see what a dialog looks like, what's common with all of them, and wh
 
 ![Parts of a dialog](https://cdn.hashnode.com/res/hashnode/image/upload/v1709464693100/g5q_83GTB.png?auto=format)
 
-- Title: The title has always the same font style but the text has to be customizable
-- Close Button: The close button has to be identical
-- Content: The content can be completely different
-- Footer: The footer has always the same style, but the buttons have to be customizable. Not only the the text have to be customizable but also the style, the triggered action, and the number of buttons.
-- Background: A click on the background should always close the dialog
+- **Title:** The title has always the same font style but the text has to be customizable
+- **Close Button:** The close button has to be identical
+- **Content:** The content can be completely different
+- **Footer:** The footer has always the same style, but the buttons have to be customizable. Not only the the text have to be customizable but also the style, the triggered action, and the number of buttons.
+- **Background:** A click on the background should always close the dialog
 
 Before we start, we want to define two principles:
 
