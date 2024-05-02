@@ -12,7 +12,7 @@ As frontend applications get bigger and bigger, they have to cover more and more
 
 ## Exploring the issue by the example of a dialog
 
-We have a React application that can manage files. One feature is to delete files, another is to duplicate them. For both actions, the action should be confirmed with a dialog. Since deleting is a destructive action, we also want to color the delete button red. In such a case, we want to implement a dialog component that we can use for both scenarios. We, therefore, need various parameters to configure the dialog accordingly. The following code shows how the call of such a component could look like:
+We have a React application that can manage files. One feature is to delete files, another is to duplicate them. For both actions, the action should be confirmed with a dialog. Since deleting is a destructive action, we also want to color the delete button red. In such a case, we want to implement a dialog component that we can use for both scenarios. We, therefore, need various parameters to configure the dialog accordingly. The Dialog Component could look like this:
 
 ```typescript
 <Dialog
