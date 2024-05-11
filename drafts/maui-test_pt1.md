@@ -156,7 +156,7 @@ public sealed class FileSystemCsvServiceTests
 }
 ```
 
-The first test above checks whether the method loads the correct number of countries. For this, a filesystem mock is needed. You can not access a file via the filesystem of .NET MAUI this will lead to an exception. The reason is that in the test environment, the platform of the filesystem is not determined. To circumvent this, I created a mock object and extracted it to a static class called MockHelper.
+The first test above checks whether the method loads the correct number of countries. For this, a filesystem mock is needed. You can not access a file via the filesystem of .NET MAUI this will lead to an exception. The reason is that, unlike UI tests, the test is run as a unit test without using the platform. To circumvent this, I created a mock object and extracted it to a static class called MockHelper.
 
 ``` C#
 namespace CatFinder.Tests
