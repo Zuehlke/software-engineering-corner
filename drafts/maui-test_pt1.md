@@ -318,8 +318,7 @@ Let us now test if the method navigates correctly to the DetailsPage.
  ```
 
 The test above has one crucial aspect to pay attention to if you want to use the Shell inside the tests, namely the app mock.
-The test setup does not configure the complete MAUI app. Therefore, crucial features like the Shell are only usable when you set them up yourself.
-Without mocking the app, you can not utilize the Shell navigation. If you try, you will run into an exception.
+The test setup does not configure the complete MAUI app. Therefore, platform dependent features like the Shell are only usable when you set them up yourself. Without mocking the app, you can not utilize the Shell navigation. If you try, you will run into an exception.
 
 ## Takeaways
 
