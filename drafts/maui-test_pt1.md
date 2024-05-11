@@ -75,7 +75,7 @@ global using static CatFinder.Tests.MockHelper;
 
 ## Testing of a service
 
-Let us now look at how we can test a service that uses the .NET MAUI filesystem.
+Let us now look at how we can test a service that uses the .NET MAUI [filesystem](https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/file-system-helpers?view=net-maui-8.0&tabs=android), the abstraction to files that MAUI provides to access files in the app package
 
 Consider the following class:
 
