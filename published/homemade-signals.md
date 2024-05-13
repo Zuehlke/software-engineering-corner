@@ -6,7 +6,6 @@ tags: signals, web-development, javascript, frontend-development, reactivity, gu
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1708269071670/uuXEcIHgR.jpg?auto=format
 publishAs: culas
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 _First off: the code in this post is not meant to be used for production-level application but serves an educational purpose._
