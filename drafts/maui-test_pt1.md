@@ -17,10 +17,10 @@ This blog post is the first part of a two-part series on testing a .NET MAUI app
 
 This chapter provides a practical guide to the setup process for testing a .NET MAUI project.
 
-1. Add a new test project. In my case, I used XUnit.
+1. Add a new test project. In our case, we used XUnit.
 2. Add a reference to the .NET MAUI project you want to test.
 3. Add a UseMauiEssentials element to the project file of the test project. This will give you access to the .NET MAUI APIs inside our tests.
-4. Install wanted NuGets. In my case, I added the FluentAssertions and Moq libraries.
+4. Install wanted NuGets. In our case, we added the FluentAssertions and Moq libraries.
 
 Your project file should look similar to this:
 
@@ -150,7 +150,7 @@ public sealed class FileSystemCsvServiceTests
 }
 ```
 
-The first test above checks whether the method loads the correct number of countries. For this, a filesystem mock is needed. You can not access a file via the filesystem of .NET MAUI this will lead to an exception. The reason is that, unlike UI tests, the test is run as a unit test without using the platform. To circumvent this, I created a mock object and extracted it to a static class called MockHelper.
+The first test above checks whether the method loads the correct number of countries. For this, a filesystem mock is needed. You can not access a file via the filesystem of .NET MAUI this will lead to an exception. The reason is that, unlike UI tests, the test is run as a unit test without using the platform. To circumvent this, we created a mock object and extracted it to a static class called MockHelper.
 
 ``` C#
 namespace CatFinder.Tests
@@ -175,7 +175,7 @@ namespace CatFinder.Tests
 
 The method above shows how to mock the IFileSystem interface of .NET MAUI. It utilizes the Moq library and provides an in-memory stream via the assembly method GetManifestResourceStream.
 
-Now, let us test whether the method throws the correct exception. I introduced another mock for this.
+Now, let us test whether the method throws the correct exception. We introduced another mock for this.
 
 ``` C#
    public static Mock<IFileSystem> GetWronglyConfiguredFileSystemMock()
@@ -209,7 +209,7 @@ Following the corresponding test method, which utilizes the wrongly configured m
     }
 ```
 
-At the end of this chapter, I emphasize the need for the IFileSystem mocks and the addition of the UseMauiEssentials element in the project file of the test. The mock is necessary to test any logic that performs IO operations. The IFileSystem abstracts the different application platforms. In a test environment, one must provide a custom implementation of this logic without a mock. The UseMauiEssentials element gives you access to the API of .NET MAUI.
+At the end of this chapter, we emphasize the need for the IFileSystem mocks and the addition of the UseMauiEssentials element in the project file of the test. The mock is necessary to test any logic that performs IO operations. The IFileSystem abstracts the different application platforms. In a test environment, one must provide a custom implementation of this logic without a mock. The UseMauiEssentials element gives you access to the API of .NET MAUI.
 
 Now, let us pivot our attention to the view model tests.
 
@@ -316,10 +316,10 @@ The test setup does not configure the complete MAUI app. Therefore, platform dep
 
 ## Takeaways
 
-In this blog post, I showed you how you can test a service and a view model in .NET MAUI. I want to emphasize three essential parts to test your services and view models successfully:
+In this blog post, we showed you how you can test a service and a view model in .NET MAUI. We want to emphasize three essential parts to test your services and view models successfully:
 
 1. Adding UseMauiEssentials in your test's project file. This will give you access to the API of .NET MAUI.
 2. The test environment can not access .NET MAUI's IFileSystem due to its platform-specific implementation. A possible solution is to use a mock to circumvent this.
 3. The test environment does not configure the whole .NET MAUI app. Here, you can approach the circumstance as you mentioned in point 2 with a mock.
 
-In the second part of this two-part series, I will cover how to test the UI of a .NET MAUI app.
+In the second part of this two-part series, we will cover how to test the UI of a .NET MAUI app.
