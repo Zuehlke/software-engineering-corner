@@ -6,18 +6,12 @@ cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1715274155168/4q4lrfJ
 publishAs: NiZarper
 hideFromHashnodeCommunity: false
 saveAsDraft: true
+enableToc: true
 ---
 
 # How to test a .NET MAUI App Part 1
 
 This blog post is the first part of a two-part series on testing a .NET MAUI application. This first post focuses on the service and view model layers, while the second will focus on the UI testing aspect.
-
-## Table Of Contents
-
-- Setup
-- Testing of a service
-- Testing of a view model
-- Takeaways
 
 ## Setup
 
