@@ -3,7 +3,7 @@ title: Pair programming mistakes I made, so you don't have to
 subtitle: Shared experiences on pair-programming
 domain: software-engineering-corner.zuehlke.com
 tags: pair-programming, software-development
-cover: https://cdn.hashnode.com/res/hashnode/image/stock/unsplash/nXKNn2L4fDw/upload/150adf478d431d819cf7f88e3eaa92f7.jpeg?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp
+cover: https://cdn.hashnode.com/res/hashnode/image/stock/unsplash/fSWOVc3e06w/upload/b8bb957592200affccfa861c7e85d67c.jpeg?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp
 publishAs: oliveramstutz
 hideFromHashnodeCommunity: false
 saveAsDraft: true
