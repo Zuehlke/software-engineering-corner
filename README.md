@@ -20,10 +20,27 @@ We recognized that there are some things which are important in the frontmatter 
 3. Use your **Hashnode** username for `publishAs`. You can see it in the [Hashnode user settings](https://hashnode.com/settings).
 4. Use tags which are listed here [https://github.com/Hashnode/support/blob/main/misc/tags.json](https://github.com/Hashnode/support/blob/main/misc/tags.json) (use the **slug**) or ensure they exist via the Hashnode search (select "tags"). If you do it wrong, Hashnode may fail to import the article.
 
+If you like to have a table of contents shown, you can add `enableToc: true`.
+Only use it for longer articles.
 
 ## Upload and use pictures
 
 To use pictures you can upload them with the Hashnode [uploader tool](https://hashnode.com/uploader). This will output a URL that you can include in your blog post.
+
+## Style
+
+### Point of View: I vs. We
+
+The use of "I" vs. "we" depends on whatever fits the context / type of article best.
+If it's about patterns/technologies/methods we regularly use and apply in customer projects, go with "we".
+In guides and walkthroughs "we" could also be applied, referring to author and reader, or a larger community (web devs, mobile engineers, technology sector, …).
+In general, only use "I" when talking about personal opinions, first-hand experiences, or when explicitly refering to you as the author.
+
+### Cover Image
+
+Look at previous articles on the blog page to get an idea of the desired style.
+Try to avoid overly complex imagery, text or diagrams, or screenshots.
+[Unsplash](https://unsplash.com) is a useful source for free high-quality images.
 
 ## Links
 
