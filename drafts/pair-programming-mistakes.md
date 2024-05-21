@@ -10,28 +10,25 @@ saveAsDraft: true
 ---
 
 
-# Navigating the Challenges of Pair Programming: Lessons from My Journey
+[//]: # (# Navigating the Challenges of Pair Programming: Lessons from My Journey)
 
 Pair programming is a powerful tool in the software development process, but like any tool, it comes with its own set of challenges. 
 From feeling overwhelmed by a partner’s pace to navigating the complexities of remote collaboration, I’ve experienced a range of obstacles in my pair programming journey. 
-But through trial and error, reflection, and a deep dive into the subject, I’ve discovered strategies to overcome these hurdles and to improve my pair programming quality. 
-In this blog post, I’ll share the mistakes I made along the way and the lessons I learned, so you can avoid these pitfalls and make the most of your pair programming sessions. 
+But through trial and error, reflection, and a deep dive into the subject, I’ve gained a better understanding of its intricacies. 
+In this blog post, I’ll share some of the mistakes I made along the way and the lessons I learned, so you can avoid these pitfalls and make the most of your pairing sessions. 
 Whether you’re a seasoned developer or a newcomer to the field, I hope my experiences can provide valuable insights to enhance your pair programming practice.
 Let’s get started!
 
 
 ## Pair programming mistakes I made, so you don't have to
 I recently had the feeling that I'm missing out a lot of potential when pair programming.
-Identifying the exact issue was not immediate, but there was a clear sense that things could be better. 
-This led to a deep dive into the subject, reflection on past sessions, and trials of different pair programming styles.
-In this blog, I’ll discuss some of the mistakes I made during this process, hoping to help you avoid the same pitfalls.
-
+Identifying the exact issue was not immediate, but there was a clear sense that things could be better.
 When I dived into the topic, I realized that it's following the [Bushnell's Law](https://en.wikipedia.org/wiki/Bushnell%27s_Law).
-While its easy to understand the main concepts like driver - navigator, it's a very difficult topic to master.
-If you're interested in the theory and different styles of pair-programming, I can highly recommend the article ["on pair programming" from martin fowler](https://martinfowler.com/articles/on-pair-programming.html). 
+While its easy to understand the main concepts like driver - navigator, it's a hard topic to master.
+If you're interested in the theory and different styles of pair programming, I can highly recommend the article ["on pair programming" from martin fowler](https://martinfowler.com/articles/on-pair-programming.html), it provides an excellent entry to the topic. 
 
 As a prelude, I see pair programming as people's business and it's therefore highly subjective.
-The following examples based on my own experiences and how I felt about it. 
+The following examples are based on my own experiences and how I feel about it. 
 
 
 ## Overwhelmed by the Driver's Pace
@@ -46,26 +43,23 @@ My unfamiliarity with him and the fear of appearing less competent held me back 
 This was further complicated by his eagerness to showcase his skills.
 
 Looking back, the solution to this problem is simpler than it seems.
-It’s about acknowledging the presence of [imposter syndrome](https://en.wikipedia.org/wiki/Impostor_syndrome) and fostering open communication.
 It’s crucial to remember that it’s okay not to know everything and that it’s perfectly fine to ask questions.
+It’s also about acknowledging the presence of [imposter syndrome](https://en.wikipedia.org/wiki/Impostor_syndrome) and fostering open communication.
 After all, pair programming is as much about learning as it is about coding.
 Effective communication forms the backbone of successful pair programming, making it a rewarding experience for both parties involved.
 
 ## The Trap of No Breaks
 Despite being aware of the importance of breaks and switch-ups, I often find myself falling into the trap of continuous pairing. 
-When I’m in the flow, time seems to slip away unnoticed, which also happens often when pairing.
+When [I’m in the flow](https://en.wikipedia.org/wiki/Flow_(psychology)), time and the need for rest seems to slip away unnoticed, which also happens often when pairing.
 The driver does not switch with the navigator after a committable segment, and we continue to push forward.
 
-Contrary to popular belief, being in the flow isn’t always advantageous. 
-As Uncle Bob points out, it can lead to fatigue and a decrease in productivity. 
-Our brains get tired, and we often find ourselves stuck on minor problems, a phenomenon known as the [XY problem](https://en.wikipedia.org/wiki/XY_problem).
-
-I noticed that in this continuous work state, the quality of communication rapidly decreases.
-We all start to think about our own problem and ignore our partner. 
+Contrary to popular belief, being in the flow isn’t always advantageous, since it can lead to fatigue and overworking.
+I noticed that when we are tired, the quality and quantity of our communication rapidly decreases.
+We all start to think about our own problem and ignore our partner, or we are stuck on the wrong problem, a phenomenon known as the [XY problem](https://en.wikipedia.org/wiki/XY_problem).
 This greatly reduces efficiency or even leads to us no longer being effective.
 
-The key to avoiding this trap is to remember to take regular breaks, switch roles and ensure effective communication at all times. 
-This not only helps to keep our minds fresh but also ensures that we are on the same page throughout the process.
+The key in avoiding this trap is to remember to take regular breaks, switch roles and ensure effective communication at all times. 
+This not only helps to keep our minds fresh but also ensures that we are on the same page throughout the whole session.
 
 ## Guiding a Junior
 I recently had the situation where I pair programmed with a junior developer who had just joined our team.
@@ -74,17 +68,18 @@ During our pairing session, I provided many tips and tricks to the junior, parti
 However, I noticed that our progress significantly slowed down.
 
 In retrospect, I realized that I had unintentionally overwhelmed him. 
-Eager to show his appreciation for my guidance, he tried to apply all my suggestions instantly. 
-His focus shifted entirely to mastering IDE shortcuts, diverting his attention away from the actual problem we were trying to solve.
-Pair programming is an excellent opportunity for knowledge sharing, but it’s crucial that this exchange happens in digestible bites, not all at once. 
-This is particularly important when pairing with someone who is eager to improve and prove themselves.
-I’ve since learned to prioritize establishing a trusting relationship where it’s okay to fail and not know everything.
-This approach is especially beneficial when working with someone new to the team, as it helps alleviate their nervousness and allows them to focus more on learning and problem-solving.
+Eager to show his appreciation for my provided tips and tricks, he tried to apply all my suggestions instantly. 
+His focus shifted entirely to mastering IDE shortcuts and therefore diverting his attention away from the actual problem we were trying to solve.
 
+Pair programming is an excellent opportunity for knowledge sharing, but it’s crucial that this exchange happens in digestible bites, not all at once.
+This is particularly important when pairing with someone who is eager to improve and prove themselves.
+In this particular example, I should have told him the IDE shortcuts at the end of our pairing session.
+Since then, I learned to prioritize establishing a trusting relationship where it’s okay to fail and not know everything.
+This approach is especially beneficial when working with someone new to the team, as it helps alleviate their nervousness and allows them to focus more on learning and problem-solving.
 
 ## Remote Pairing under Non-Ideal Conditions
 There was an instance when a colleague and I attempted to pair program remotely. 
-We experienced first minor but with time larger delay, which initially caused us frustration. 
+We experienced initially minor, but with time larger delay, which initially caused us frustration and irritation. 
 However, not wanting to constantly complain, we tried to cope with the situation.
 
 Unfortunately, the delay made it nearly impossible to follow the driver’s actions, and we eventually had to stop the pairing session. 
