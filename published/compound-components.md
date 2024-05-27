@@ -3,7 +3,7 @@ title: The Art of Component Composition - Leveraging Compound Components in Reac
 domain: software-engineering-corner.zuehlke.com
 tags: web-development, reactjs, components, patterns, design-patterns, software-architecture
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1714648959962/esNeWYvB3.png?auto=format
-publishAs: gadu
+publishAs: gabduss
 hideFromHashnodeCommunity: false
 ---
 
