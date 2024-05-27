@@ -1,11 +1,10 @@
 ---
 title: The Art of Component Composition - Leveraging Compound Components in React
 domain: software-engineering-corner.zuehlke.com
-tags: reactjs, components, patterns
+tags: web-development, reactjs, components, patterns, design-patterns, software-architecture
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1714648959962/esNeWYvB3.png?auto=format
 publishAs: gadu
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 As frontend applications continue to grow and have to cover more use cases, their UI components need to get more flexible. This blog post describes how the requirements for a UI component increase throughout a typical project. We show what problems this entails and how they can be solved with the compound component pattern.
