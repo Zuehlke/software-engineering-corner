@@ -20,7 +20,7 @@ Let’s get started!
 ## Pair programming mistakes I made, so you don't have to
 I recently had the feeling that I'm missing out a lot of potential when pair programming.
 Identifying the exact issue was not immediate, but there was a clear sense that things could be better.
-When I dived into the topic, I realized that it's following the [Bushnell's Law](https://en.wikipedia.org/wiki/Bushnell%27s_Law).
+When I dived into the topic, I realized that it's following the [Bushnell's Law](https://en.wikipedia.org/wiki/Bushnell%27s%5FLaw).
 While it's easy to understand the main concepts like driver - navigator, pair programming is a topic hard to master.
 If you're interested in the theory like different styles of pair programming, I can highly recommend the article ["on pair programming" from martin fowler's blog](https://martinfowler.com/articles/on-pair-programming.html), it provides an excellent entry to the topic. 
 
@@ -43,7 +43,7 @@ This was further complicated by his eagerness to showcase his skills.
 
 Looking back, the solution to this problem is simpler than it seems.
 It’s crucial to remember that it’s okay not to know everything and that it’s encouraged to ask questions.
-It’s also about acknowledging the presence of [imposter syndrome](https://en.wikipedia.org/wiki/Impostor_syndrome) and fostering open communication.
+It’s also about acknowledging the presence of [imposter syndrome](https://en.wikipedia.org/wiki/Impostor%5Fsyndrome) and fostering open communication.
 After all, pair programming is as much about learning as it is about coding.
 Effective communication forms the backbone of successful pair programming, making it a rewarding experience for both parties involved.
 
@@ -72,12 +72,12 @@ This approach is especially beneficial when working with someone new to the team
 
 ## The Trap of No Breaks
 Despite being aware of the importance of breaks and switch-ups, I often find myself falling into the trap of continuous pairing. 
-When [I’m in the flow](https://en.wikipedia.org/wiki/Flow_(psychology)#:~:text=The%20flow%20state,abilities.%22%5B4%5D), time and the need for rest seems to slip away unnoticed, which also happens often when pairing.
+When [I’m in the flow](https://en.wikipedia.org/wiki/Flow%5F(psychology)#:~:text=The%20flow%20state,abilities.%22%5B4%5D), time and the need for rest seems to slip away unnoticed, which also happens often when pairing.
 The driver does not switch with the navigator after a committable segment, and we continue to push forward.
 
-Contrary to popular belief, [being in the flow isn’t always advantageous](https://en.wikipedia.org/wiki/Flow_(psychology)#:~:text=In%20some%20cases,on%20attentional%20abilities.), since it can lead to fatigue and overworking.
+Contrary to popular belief, [being in the flow isn’t always advantageous](https://en.wikipedia.org/wiki/Flow%5F(psychology)#:~:text=In%20some%20cases,on%20attentional%20abilities.), since it can lead to fatigue and overworking.
 I noticed that when we are tired, the quality and quantity of our communication rapidly decreases.
-We all start to think about our own problem and ignore our partner, or we are stuck on the wrong problem, a phenomenon known as the [XY problem](https://en.wikipedia.org/wiki/XY_problem).
+We all start to think about our own problem and ignore our partner, or we are stuck on the wrong problem, a phenomenon known as the [XY problem](https://en.wikipedia.org/wiki/XY%5Fproblem).
 This significantly reduces our productivity and may even render us ineffective.
 
 ![Alt text (by mom)](https://cdn.hashnode.com/res/hashnode/image/upload/v1717162596435/FRNbO6MkS.png?auto=format)
@@ -91,7 +91,7 @@ There was an instance when a colleague and I attempted to pair program remotely.
 We experienced initially minor, but with time major delay, which caused us frustration and irritation. 
 However, not wanting to constantly complain, we tried to cope with the situation.
 
-![Alt text (by mom)](https://cdn.hashnode.com/res/hashnode/image/upload/v1717162575632/jl_2eYy7A.png?auto=format)
+![Alt text (by mom)](https://cdn.hashnode.com/res/hashnode/image/upload/v1717162575632/jl%5F2eYy7A.png?auto=format)
 
 Unfortunately, the delay made it nearly impossible to follow the driver’s actions, and we eventually had to stop the pairing session. 
 This experience underscored the importance of having an excellent setup and high-quality connection for remote pair programming. 
