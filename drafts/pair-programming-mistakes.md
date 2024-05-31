@@ -3,13 +3,11 @@ title: Navigating the Challenges of Pair Programming
 subtitle: Lessons from My Journey
 domain: software-engineering-corner.zuehlke.com
 tags: pair-programming, software-development
-cover: https://cdn.hashnode.com/res/hashnode/image/stock/unsplash/fSWOVc3e06w/upload/b8bb957592200affccfa861c7e85d67c.jpeg?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1717162463753/6mZkSMtlz.png?auto=format
 publishAs: oliveramstutz
 hideFromHashnodeCommunity: false
 saveAsDraft: true
 ---
-
-![Alt text (by mom)](pairProgrammingTitle.png)
 
 Pair programming is a powerful tool in the software development process, but like any tool, it comes with its own set of challenges. 
 From feeling overwhelmed by a partner’s pace to navigating the complexities of remote collaboration, I’ve experienced a range of obstacles in my pair programming journey. 
@@ -41,7 +39,7 @@ Since he was already a senior, he was swift in his actions, and I often found my
 My unfamiliarity with him and the fear of appearing less competent held me back from asking him to slow down.
 This was further complicated by his eagerness to showcase his skills.
 
-![Alt text (by mom)](overwhelmedBySenior.png)
+![Overwhelmed by my pairing partner.](https://cdn.hashnode.com/res/hashnode/image/upload/v1717162511151/JGYtq53Fe.png?auto=format)
 
 Looking back, the solution to this problem is simpler than it seems.
 It’s crucial to remember that it’s okay not to know everything and that it’s encouraged to ask questions.
@@ -56,7 +54,7 @@ As a more experienced developer, I took on the role of the navigator while the j
 During our pairing session, I provided many tips and tricks to the junior, particularly on how to navigate within the IDE.
 However, I noticed that our progress slowed down significantly during our working session.
 
-![Alt text (by mom)](overwhelmJunior.png)
+![Overwhelm pairing partner by too much information at once.](https://cdn.hashnode.com/res/hashnode/image/upload/v1717162545198/GpNEeu3tg.png?auto=format)
 
 In retrospect, I realized that I had unintentionally overwhelmed him.
 Eager to show his appreciation for my provided tips and tricks, he tried to apply all my suggestions instantly.
@@ -82,7 +80,7 @@ I noticed that when we are tired, the quality and quantity of our communication 
 We all start to think about our own problem and ignore our partner, or we are stuck on the wrong problem, a phenomenon known as the [XY problem](https://en.wikipedia.org/wiki/XY_problem).
 This significantly reduces our productivity and may even render us ineffective.
 
-![Alt text (by mom)](tired.png)
+![Alt text (by mom)](https://cdn.hashnode.com/res/hashnode/image/upload/v1717162596435/FRNbO6MkS.png?auto=format)
 
 The key in avoiding this trap is to remember to take regular breaks, switch roles and ensure effective communication at all times. 
 This not only helps to keep our minds fresh but also ensures that we are on the same page throughout the whole session.
@@ -93,7 +91,7 @@ There was an instance when a colleague and I attempted to pair program remotely.
 We experienced initially minor, but with time major delay, which caused us frustration and irritation. 
 However, not wanting to constantly complain, we tried to cope with the situation.
 
-![Alt text (by mom)](delay.png)
+![Alt text (by mom)](https://cdn.hashnode.com/res/hashnode/image/upload/v1717162575632/jl_2eYy7A.png?auto=format)
 
 Unfortunately, the delay made it nearly impossible to follow the driver’s actions, and we eventually had to stop the pairing session. 
 This experience underscored the importance of having an excellent setup and high-quality connection for remote pair programming. 
