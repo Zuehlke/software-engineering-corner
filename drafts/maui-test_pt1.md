@@ -2,7 +2,7 @@
 title: How to test a .NET MAUI App Part 1
 domain: software-engineering-corner.zuehlke.com
 tags: dotnet,mvvm,xaml,net-maui,csharp,xunit,testing,moq
-cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1715777034383/Fy2IIHjIw.png?auto=format
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1717407950103/iIGzEXJ1M.jpg?auto=format
 publishAs: NiZarper
 hideFromHashnodeCommunity: false
 saveAsDraft: true
