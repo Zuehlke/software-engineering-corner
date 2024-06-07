@@ -93,7 +93,7 @@ const DialogContext = createContext<DialogContextProps>({
 // Dialog.tsx
 
 // 2. Create a parent component
-tconst Dialog = ({ children }: { children: ReactNode }) => {
+const Dialog = ({ children }: { children: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const close = () => setIsOpen(false);
