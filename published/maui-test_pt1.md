@@ -5,7 +5,6 @@ tags: dotnet,mvvm,xaml,net-maui,csharp,xunit,testing,moq
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1717407950103/iIGzEXJ1M.jpg?auto=format
 publishAs: NiZarper
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 enableToc: true
 ---
 
