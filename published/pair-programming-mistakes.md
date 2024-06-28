@@ -6,7 +6,6 @@ tags: pair-programming, software-development
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1717162463753/6mZkSMtlz.png?auto=format
 publishAs: oliveramstutz
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 Pair programming is a powerful tool in the software development process, but like any tool, it comes with its own set of challenges.
