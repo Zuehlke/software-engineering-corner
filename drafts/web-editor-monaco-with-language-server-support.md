@@ -1,8 +1,8 @@
 ---
 title: Create a custom web editor using Monaco and Language Server Protocol (LSP)
 domain: software-engineering-corner.hashnode.dev
-tags: Web Editor, Monaco, Monaco Language Client
-cover: 
+tags: Web Editor, Monaco, Monaco Language Client, Language Server, LSP
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1719718605895/bv2LfyFWS.jpg?auto=format
 publishAs: cjayashantha, NipunaMarcusZuhlke
 hideFromHashnodeCommunity: false
 --- 
