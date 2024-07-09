@@ -1,3 +1,11 @@
+---
+title: Demystifying Concurrency: Essential Clarifications
+domain: software-engineering-corner.hashnode.dev
+tags: concurrency, asynchronous, async, multithreading, , opinion-pieces, programming, developer, learning, general-advice, software-development, programming-tips, software-engineering, computer-science
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1720101499557/b361e4ed-fbd9-429d-ae32-86930740c6ea.png?auto=format
+publishAs: tiju
+hideFromHashnodeCommunity: false
+--- 
 I often encounter situations where Software Engineers have differing mental models of concurrency. To make matters worse, there are terms that are used (almost) synonymously, like async and parallel. There is a wealth of content and numerous definitions on this topic, but I have yet to find a single explanation or definition that clearly delineates the differences. Most explanations only add to the confusion, and even the best ones remain somewhat unclear.
 
 ![concurrency cat](https://cdn.hashnode.com/res/hashnode/image/upload/v1720043156235/4a3cefd6-4d34-47f7-8ad4-9e991bc36525.jpeg align="center")
