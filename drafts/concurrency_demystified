@@ -1,14 +1,8 @@
----
-title: Demystifying Concurrency: Essential Clarifications
-domain: software-engineering-corner.hashnode.dev
-tags: concurrency, asynchronous, async, multithreading, , opinion-pieces, programming, developer, learning, general-advice, software-development, programming-tips, software-engineering, computer-science
-cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1720101499557/b361e4ed-fbd9-429d-ae32-86930740c6ea.png?auto=format
-publishAs: tiju
-hideFromHashnodeCommunity: false
---- 
 I often encounter situations where Software Engineers have differing mental models of concurrency. To make matters worse, there are terms that are used (almost) synonymously, like async and parallel. There is a wealth of content and numerous definitions on this topic, but I have yet to find a single explanation or definition that clearly delineates the differences. Most explanations only add to the confusion, and even the best ones remain somewhat unclear.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1720043156235/4a3cefd6-4d34-47f7-8ad4-9e991bc36525.jpeg align="center")
+![concurrency cat](https://cdn.hashnode.com/res/hashnode/image/upload/v1720043156235/4a3cefd6-4d34-47f7-8ad4-9e991bc36525.jpeg align="center")
+
+### Breaking Down Misconceptions: Towards a Unified Understanding of Concurrency
 
 There are reasons for this confusion. The most important one is probably that there are multiple incompatible mental models and definitions for these terms. Regardless of the incompatibility, they get mixed and matched without much thought.
 
@@ -16,13 +10,17 @@ There also appear to be various stages of understanding of these concepts. Most 
 
 This is unfortunate because having a common understanding of concurrency is crucial for building stable and performant software. I hope that I can help build a better common mental model with this article, or at least have something I can point to the next time I get drawn into a discussion about concurrency.
 
+### The Evolving Landscape of Concurrency
+
 One of the best resources that I found so far is the [**Concurrency in C# Cookbook**](https://learning.oreilly.com/library/view/concurrency-in-c/9781492054498/ch01.html#idm45458718736760) by Stephen Cleary. I think C# is uniquely positioned to be a baseline for this topic as it introduced the async/await keywords that have since been adopted in many other languages and therefore significantly shaped how we use and understand concurrency. But other languages are also heavily invested in these patterns and continue to evolve the field. Therefore, I try to be as language-agnostic as possible in this article.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1720084949983/7137b347-2846-458a-8137-d6d04dfbfada.png align="center")
+![async timeline](https://cdn.hashnode.com/res/hashnode/image/upload/v1720084949983/7137b347-2846-458a-8137-d6d04dfbfada.png align="center")
 
 Most popular languages are aligning on how to handle asynchrony with the async/await model. But there's still room for improvement. [**Structured Concurrency**](https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/) is an exciting topic first promoted by the Python community and now gaining traction with Swift and Java. Could this lead to a programming model as dominant as structured programming? Is there a natural evolution toward a unified approach to concurrency? This is exciting! Let's dive in and uncover the essence of concurrency.
 
-[![](https://cdn.hashnode.com/res/hashnode/image/upload/v1720083601709/872208b6-f5aa-438a-8aee-0bdbbbc4ca69.png align="center")](https://github.com/StephenCleary/Presentations/blob/main/Why-Async%20(Brief)/Why-Async%20-%2016.9.pptx)
+[![Archaeology of Asynchrony](https://cdn.hashnode.com/res/hashnode/image/upload/v1720083601709/872208b6-f5aa-438a-8aee-0bdbbbc4ca69.png align="center")](https://github.com/StephenCleary/Presentations/blob/main/Why-Async%20(Brief)/Why-Async%20-%2016.9.pptx)
+
+### Defining Concurrency: Methods and Misconceptions
 
 Stephen Cleary defines concurrency as "Doing more than one thing at a time."
 
@@ -44,9 +42,11 @@ There are multiple ways to achieve this:
     A declarative style of programming where the application reacts to events.
     
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1720020387249/e5094574-cb02-4c9e-bbfa-21c90527f118.png align="center")
+![Concurrency Stephen Cleary](https://cdn.hashnode.com/res/hashnode/image/upload/v1720020387249/e5094574-cb02-4c9e-bbfa-21c90527f118.png align="center")
 
 But even this definition has at least two problems. The first is that it is not clear enough, and the second is that it includes concepts like reactivity that does not really belong there.
+
+### A Tale of Two Models: Parallel vs. Asynchronous Programming
 
 So before I explain how I understand these terms and their connection, I would like to introduce it with a little story:
 
@@ -68,7 +68,9 @@ So before I explain how I understand these terms and their connection, I would l
 
 The next twist in this story would likely involve issues with race conditions and language-specific implementation details... But that is not the focus of this article. A better approach is to show a visualization of the mental model of concurrency as described in this story:
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1720521325970/90f2b757-3a2a-4acb-990b-fba36ac69f12.png align="center")
+### The Four Quadrants of Concurrency: A Visual Approach
+
+![The Four Quadrants of Concurrency](https://cdn.hashnode.com/res/hashnode/image/upload/v1720521325970/90f2b757-3a2a-4acb-990b-fba36ac69f12.png align="center")
 
 This visualization ist inspired from [Code Wala](https://codewala.net/2015/07/29/concurrency-vs-multi-threading-vs-asynchronous-programming-explained/). To make it clearer I added examples from the article into the quadrants.
 
@@ -85,11 +87,13 @@ It is crucial to understand that there are four distinct ways that code can be e
 
 Understanding these different execution modes is crucial for writing efficient and maintainable code, as it helps in selecting the right approach based on the nature of the tasks and the resources available.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1720048752061/bb0322a4-bd42-4274-aa9c-50846b0561d7.png align="center")
+![Single Threaded Concurrency?](https://cdn.hashnode.com/res/hashnode/image/upload/v1720048752061/bb0322a4-bd42-4274-aa9c-50846b0561d7.png align="center")
+
+### From Local to Global: The Rabbit Hole of Concurrency
 
 Concurrency is a complex topic. Each language, like C#, Java, JavaScript, Python, Rust, and Swift, has its own ways and patterns, which fill entire books. For example, understanding why `ConfigureAwait` exists in C# but not in JavaScript, or the benefits of [**Structured Concurrency**](https://www.thedevtavern.com/blog/posts/structured-concurrency-exceptions-and-cancellations/), are intricate subjects in their own right. However, it's important to first understand the basic concept of concurrency.
 
-It goes even deeper with distributed systems, where consensus algorithms like RAFT and Paxos, and tools like [ZooKeeper](https://zookeeper.apache.org/) become important. The model I propose helps categorize these systems. Making these distinctions correctly can prevent further confusion in this complex topic.
+It goes even deeper with distributed systems, where consensus algorithms like RAFT and Paxos, and tools like [ZooKeeper](https://zookeeper.apache.org/) become interesting. The model I propose helps categorize these systems. Making these distinctions correctly can prevent further confusion in this complex topic.
 
 # Conclusion
 
@@ -97,13 +101,13 @@ The frequent confusion surrounding concurrency among Software Engineers stems fr
 
 ### Asynchronous Programming
 
-![](https://codewala.net/wp-content/uploads/2015/07/async-single.png align="center")
+![async single](https://codewala.net/wp-content/uploads/2015/07/async-single.png align="center")
 
 Asynchronous programming involves executing tasks in a non-blocking manner. This means that a program can initiate a task, such as reading a file or making a network request, and continue with other work without waiting for the task to complete. It is like doing the laundry: you start the washing machine and, while waiting for it to finish, you use the time to cook. Asynchronous programming is particularly useful for I/O-bound tasks where waiting times are significant, allowing a program to handle multiple operations efficiently by switching between tasks during idle periods.
 
 ### Parallel Programming
 
-![](https://codewala.net/wp-content/uploads/2015/07/multithreaded.png align="center")
+![multithreaded](https://codewala.net/wp-content/uploads/2015/07/multithreaded.png align="center")
 
 Parallel programming is the simultaneous execution of multiple tasks, typically using multiple CPU cores. It is akin to having multiple people perform different tasks at the same time: one person does the laundry, another cooks, and a third cleans. Each task runs concurrently on different processors or cores, leveraging the available hardware to complete the work faster. Parallel programming is ideal for CPU-bound tasks that require substantial computational power, as it divides the workload across multiple processing units.
 
@@ -111,4 +115,6 @@ Parallel programming is the simultaneous execution of multiple tasks, typically 
 
 Concurrency refers to the management and execution of multiple tasks in a way that they appear to be happening simultaneously, even if they may not be executing at the exact same instant. It encompasses both asynchronous and parallel programming. Concurrency is like having multiple people who efficiently switch between tasks, ensuring that no time is wasted, whether by performing tasks simultaneously or by making the most of idle periods. Concurrency is about orchestrating multiple activities, regardless of whether they run at the same time or are interleaved
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1720521390262/3cba54bc-1f69-45a4-bf16-f499afaf4b07.png align="center")
+![Concurrency Mental Model](https://cdn.hashnode.com/res/hashnode/image/upload/v1720521390262/3cba54bc-1f69-45a4-bf16-f499afaf4b07.png align="center")
+
+.
