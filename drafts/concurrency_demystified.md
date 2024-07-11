@@ -1,5 +1,6 @@
 ---
-title: Demystifying Concurrency: Essential Clarifications
+title: Demystifying Concurrency
+subtitle: Essential Clarifications
 domain: software-engineering-corner.hashnode.dev
 tags: concurrency, asynchronous, async, multithreading, , opinion-pieces, programming, developer, learning, general-advice, software-development, programming-tips, software-engineering, computer-science
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1720101499557/b361e4ed-fbd9-429d-ae32-86930740c6ea.png?auto=format
