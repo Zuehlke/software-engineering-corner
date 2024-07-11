@@ -10,35 +10,39 @@ I often encounter situations where Software Engineers have differing mental mode
 
 ![concurrency cat](https://cdn.hashnode.com/res/hashnode/image/upload/v1720043156235/4a3cefd6-4d34-47f7-8ad4-9e991bc36525.jpeg align="center")
 
-### Breaking Down the Confusion: Towards a Unified Understanding of Concurrency
+### Breaking Down the Confusion: Towards a Common Understanding of Concurrency
 
 There are reasons for this confusion. The most important one is probably that there are multiple incompatible mental models and definitions for these terms in different contexts. Regardless of the incompatibility, they get mixed and matched without much thought.
 
-First, it is important to understand that these terms are used in several contexts. It's telling that the Wikipedia pages for [Concurrency (computer science)](https://en.wikipedia.org/wiki/Concurrency_(computer_science)) and [Asynchrony (computer programming)](https://en.wikipedia.org/wiki/Concurrency_(computer_science)) explicitly mention the context of computer science. However, even within computer science, there are different interpretations of concurrency. The most obvious contexts are programming languages and distributed systems. But there are other contexts as well, such as [Asynchronous circuits](https://en.wikipedia.org/wiki/Asynchronous_circuit).
+First, it is important to acknowledge that these terms are used in several contexts. It's telling that the Wikipedia pages for [Concurrency (computer science)](https://en.wikipedia.org/wiki/Concurrency_(computer_science)) and [Asynchrony (computer programming)](https://en.wikipedia.org/wiki/Concurrency_(computer_science)) explicitly mention the context of computer science. However, even within computer science, there are different interpretations of concurrency. The most obvious contexts are programming languages and distributed systems. But there are other contexts as well, such as [Asynchronous circuits](https://en.wikipedia.org/wiki/Asynchronous_circuit) and networking.
 
 [![](https://cdn.hashnode.com/res/hashnode/image/upload/v1720597890803/22affb01-7923-487e-961d-4352fb97404c.png align="center")](https://www.youtube.com/watch?v=x-MOtcat1iE)
 
-Most people first learn about concurrency in the context of optimizing execution time through parallelization strategies. This topic is so complex that it often overshadows the fact that asynchronous programming is fundamentally different. Even with this understanding, it's still easy to mix up the differences between concurrency and asynchronous programming.
+It does not help that concurrency is inherently a complex topic. Each language, like C#, Java, JavaScript, Python, Rust, and Swift, has its own ways and patterns, which fill entire books. Then there is reactivity, a closely related topic that can be almost as complex as concurrency. It is currently quite popular in the JavaScript UI framework community. Articles like [What the hell is Reactive Programming anyway?](https://dev.to/this-is-learning/what-the-hell-is-reactive-programming-anyway-31p5) with all the references mentioned, show how quickly you get into quite complicated topics. And the equally popular [Reactive Manifesto](https://www.reactivemanifesto.org/) demonstrates that it also extends into the distributed systems realm where the connections to concurrency get more obvious.
+
+Most people first learn about concurrency in the context of optimizing execution time through parallelization strategies in their programming classes. This topic is so complex on its own that it often overshadows the fact that asynchronous programming is fundamentally different. Even with this understanding, it's still easy to confuse the differences between concurrency and asynchronous programming.
 
 To add to the confusion, some popular sources contradict basic implementations in well-known languages. For example, take this recent video on YouTube:
 
 [![](https://cdn.hashnode.com/res/hashnode/image/upload/v1720600036172/359d125c-aa41-4f08-aeca-2c6bac04639b.png align="center")](https://www.youtube.com/watch?v=RlM9AfWf1WU)
 
-The most confusing and contradictory part is the third visualization of the preview image, which claims there can be parallel computing without concurrency. However, this is exactly the scenario that data structures with the prefix "concurrent" (e.g., [ConcurrentDictionary](https://learn.microsoft.com/en-us/dotnet/api/system.collections.concurrent.concurrentdictionary-2?view=net-8.0) in C# or [ConcurrentHashMap](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentHashMap.html) in Java) are optimized for.
+The most confusing and contradictory part is the third card of the preview image, which claims there is parallel computing without concurrency. However, this is exactly the scenario that data structures with the prefix "concurrent" (e.g., [ConcurrentDictionary](https://learn.microsoft.com/en-us/dotnet/api/system.collections.concurrent.concurrentdictionary-2?view=net-8.0) in C# or [ConcurrentHashMap](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentHashMap.html) in Java) are optimized for.
 
-Another example is the [Reactive Manifesto](https://www.reactivemanifesto.org/glossary#Asynchronous), which provides a popular definition of asynchrony. However, it does not define the concepts of concurrency and parallelism, even though these terms are used in the glossary.
+![actual_progress](https://imgs.xkcd.com/comics/actual_progress_2x.png align="center")
 
-All this is unfortunate because having a common understanding of concurrency is crucial for building stable and performant software. I hope that I can help build a better common mental model with this article, or at least have something I can point to the next time I get drawn into a discussion about concurrency.
+All this is unfortunate because having a shared understanding of concurrency is crucial for building stable and efficient software. I hope this article can help create a better common mental model or at least provide something I can reference in future discussions about concurrency. In this article, I want to propose a definition of concurrency specifically in the context of programming languages.
 
-So in this article I want to propose a definition for concurrency in the context of programming languages. I like to think that it is a definition that is close to the [least squares](https://en.wikipedia.org/wiki/Least_squares) definition of all the interpretations/definitions around programming. Fortunately, it is also applicable in other contexts I've encountered, such as distributed systems and even everyday tasks.
+![standards](https://imgs.xkcd.com/comics/standards_2x.png align="center")
 
-### The Evolving Landscape of Concurrency
+Having a solid mental model not only helps in communicating ideas more precisely but more importantly gives you the tools to understand what others are talking about and to identify misunderstandings. I like to think that I found a definition that is close to something like a [least squares](https://en.wikipedia.org/wiki/Least_squares) definition of all the interpretations/definitions around programming. I think I also have found a way to visualize it in an intuitive way. Fortunately, it is also applicable in other contexts I've encountered, such as distributed systems and even everyday tasks.
+
+### [The Evolving Landscape of Concurrency](https://imgs.xkcd.com/comics/standards_2x.png)
 
 One of the best resources I've found so far is the [**Concurrency in C# Cookbook**](https://learning.oreilly.com/library/view/concurrency-in-c/9781492054498/ch01.html#idm45458718736760) by Stephen Cleary. I think C# is uniquely positioned to be a baseline for this topic because it introduced the async/await keywords in a way that has since been adopted by many other languages and significantly shaped our understanding of concurrency. However, other languages are also heavily invested in these patterns and continue to evolve the field. Therefore, I aim to be as language-agnostic as possible in this article.
 
 ![async timeline](https://cdn.hashnode.com/res/hashnode/image/upload/v1720084949983/7137b347-2846-458a-8137-d6d04dfbfada.png align="center")
 
-Most popular languages are aligning on how to handle asynchrony with the async/await model. But there's still room for improvement. [**Structured Concurrency**](https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/) is an exciting topic first promoted by the Python community and now gaining traction with Swift and Java. Could this lead to a programming model as dominant as structured programming? Is there a natural evolution toward a unified approach to concurrency? This is exciting! Let's dive in and uncover the essence of concurrency.
+Most popular languages are adopting the async/await model to handle asynchrony, but there's still room for improvement. [**Structured Concurrency**](https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/) is an exciting concept first promoted by the Python community and now gaining traction with Swift and Java. Could this lead to a programming model as dominant as structured programming? Is there an ongoing evolution toward a unified approach to concurrency? If so, there could also be a convergence in the definitions of concurrency.
 
 [![Archaeology of Asynchrony](https://cdn.hashnode.com/res/hashnode/image/upload/v1720083601709/872208b6-f5aa-438a-8aee-0bdbbbc4ca69.png align="center")](https://github.com/StephenCleary/Presentations/blob/main/Why-Async%20(Brief)/Why-Async%20-%2016.9.pptx)
 
@@ -68,11 +72,11 @@ There are multiple ways to achieve this:
 
 But even this definition has at least two problems. First, it is not clear enough. Second, it includes concepts like reactivity that do not match the level of detail and introduce other topics not closely related to concurrency, making it seem out of place and adding unnecessary complexity.
 
-Defining concurrency seems not simple. One reason for this difficulty is the many concepts and approaches related to concurrency, each with different levels of details. These can complicate it even further. Therefore, it's important to use the right scope and level of abstraction when defining these terms.
+Defining concurrency seems not to be easy. One reason for this difficulty is the many concepts and approaches related to concurrency, each with different levels of details. These can complicate it even further. Therefore, it's important to use the right scope and level of abstraction when defining these terms.
 
 ### A Tale of Two Models: Parallel vs. Asynchronous Programming
 
-So before I explain how I understand these terms and their connection, I would like to introduce it with a little story:
+Before I share my definition of concurrency, I would like to introduce it with a little story:
 
 > John, a software developer at a tech startup, was puzzled by the difference between parallel and asynchronous programming. Seeking clarity, John approached his tech lead, Dr. Carter, one morning.
 > 
@@ -90,7 +94,7 @@ So before I explain how I understand these terms and their connection, I would l
 > 
 > Excited, John returned to his desk, ready to explore the power of concurrency, understanding how to leverage both parallel and asynchronous programming to make their applications faster and more efficient than ever.
 
-The next twist in this story would likely involve issues with race conditions and language-specific implementation details... But that is not the focus of this article. A better approach is to show a visualization of the mental model of concurrency as described in this story:
+The next twist in this story would likely involve issues with race conditions and language-specific implementation details... But that is not the focus of this article. A better approach is to show a visualization of the definition of concurrency as described in this story:
 
 ### The Four Quadrants of Concurrency: A Visual Approach
 
@@ -102,41 +106,27 @@ It is crucial to understand that there are four distinct ways that code can be e
 
 1. **Sequential and Synchronous (not Concurrent):** This is the most straightforward method of running code. Tasks are executed one after another, in a specific order. Each task must complete before the next one begins. This is how most people learn to code and how they typically conceptualize program execution. Imagine reading a book, chapter after chapter, without interruption.
     
+    ![singlethreaded](https://codewala.net/wp-content/uploads/2015/07/singlethreaded.png align="center")
+    
 2. **Sequential and Asynchronous (Concurrent):** In this mode, tasks are still executed one after another, but the program can initiate a task and move on to the next one without waiting for the previous task to complete. This allows for more efficient use of time, especially when dealing with I/O-bound tasks. Imagine that while heating up the water, a single person can simultaneously cut the vegetables.
+    
+    ![async-single](https://codewala.net/wp-content/uploads/2015/07/async-single.png align="center")
     
 3. **Parallel and Synchronous (Concurrent):** Here, multiple tasks are executed simultaneously. Each task runs independently at the same time, leveraging parallel processing to complete them faster. This approach is particularly effective for CPU-bound tasks that require significant computational power. Imagine a factory floor where every worker does the same work in parallel.
     
-4. **Parallel and Asynchronous (Concurrent):** This method combines the benefits of both parallel and asynchronous execution. Multiple tasks run simultaneously, and within each task, asynchronous operations can occur. This allows for highly efficient handling of both CPU-bound and I/O-bound tasks, optimizing the use of computational resources and time.Imagine a restaurant kitchen where cooks and washers work hand in hand to help each other be more efficient.
+    ![multithreaded](https://codewala.net/wp-content/uploads/2015/07/multithreaded.png align="center")
+    
+4. **Parallel and Asynchronous (Concurrent):** This method combines the benefits of both parallel and asynchronous execution. Multiple tasks run simultaneously, and within each task, asynchronous operations can occur. This allows for highly efficient handling of both CPU-bound and I/O-bound tasks, optimizing the use of computational resources and time. Imagine a restaurant kitchen where cooks and washers work hand in hand to help each other be more efficient.
+    
+    ![async-mutlithreaded](https://codewala.net/wp-content/uploads/2015/07/async-mutlithreaded.png align="center")
     
 
 Understanding these different execution modes is crucial for writing efficient and maintainable code, as it helps in selecting the right approach based on the nature of the tasks and the resources available.
 
 ![Single Threaded Concurrency?](https://cdn.hashnode.com/res/hashnode/image/upload/v1720048752061/bb0322a4-bd42-4274-aa9c-50846b0561d7.png align="center")
 
-### From Local to Global: The Rabbit Hole of Concurrency
-
-Concurrency is a complex topic. Each language, like C#, Java, JavaScript, Python, Rust, and Swift, has its own ways and patterns, which fill entire books. For example, understanding why `ConfigureAwait` exists in C# but not in JavaScript, or the benefits of [**Structured Concurrency**](https://www.thedevtavern.com/blog/posts/structured-concurrency-exceptions-and-cancellations/), are intricate subjects in their own right. However, it's important to first understand the basic concept of concurrency.
-
-It goes even deeper with distributed systems, where consensus algorithms like RAFT and Paxos, and tools like [ZooKeeper](https://zookeeper.apache.org/) become interesting. The model I propose also helps categorize these systems. Making these distinctions correctly can prevent further confusion in this complex topic.
-
 # Conclusion
 
-The frequent confusion surrounding concurrency among Software Engineers stems from differing mental models and definitions. Terms like "async" and "parallel" are often used interchangeably, further muddying the waters. Despite a wealth of content and definitions available, a clear, universally accepted explanation remains elusive, often leading to more confusion. Having a clear understanding of the basic concept is key to not getting lost in this already inherently complicated topic.
-
-### Asynchronous Programming
-
-![async single](https://codewala.net/wp-content/uploads/2015/07/async-single.png align="center")
-
-Asynchronous programming involves executing tasks in a non-blocking manner. This means that a program can initiate a task, such as reading a file or making a network request, and continue with other work without waiting for the task to complete. It is like doing the laundry: you start the washing machine and, while waiting for it to finish, you use the time to cook. Asynchronous programming is particularly useful for I/O-bound tasks where waiting times are significant, allowing a program to handle multiple operations efficiently by switching between tasks during idle periods.
-
-### Parallel Programming
-
-![multithreaded](https://codewala.net/wp-content/uploads/2015/07/multithreaded.png align="center")
-
-Parallel programming is the simultaneous execution of multiple tasks, typically using multiple CPU cores. It is akin to having multiple people perform different tasks at the same time: one person does the laundry, another cooks, and a third cleans. Each task runs concurrently on different processors or cores, leveraging the available hardware to complete the work faster. Parallel programming is ideal for CPU-bound tasks that require substantial computational power, as it divides the workload across multiple processing units.
-
-### Concurrency
-
-Concurrency refers to the management and execution of multiple tasks in a way that they appear to be happening simultaneously, even if they may not be executing at the exact same instant. It encompasses both asynchronous and parallel programming. Concurrency is like having multiple people who efficiently switch between tasks, ensuring that no time is wasted, whether by performing tasks simultaneously or by making the most of idle periods. Concurrency is about orchestrating multiple activities, regardless of whether they run at the same time or are interleaved
+The frequent confusion surrounding concurrency among Software Engineers stems from differing mental models and definitions. Terms like "async" and "parallel" are often used interchangeably, further muddying the waters. Despite a wealth of content and definitions available, a clear, universally accepted explanation remains elusive, often leading to more confusion. Having a solid mental model of the basic concept is key to not getting lost in this already inherently complicated topic.
 
 ![Concurrency Mental Model](https://cdn.hashnode.com/res/hashnode/image/upload/v1720521390262/3cba54bc-1f69-45a4-bf16-f499afaf4b07.png align="center")
