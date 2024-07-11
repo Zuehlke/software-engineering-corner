@@ -23,6 +23,8 @@ It does not help that concurrency is inherently a complex topic. Each language, 
 
 Most people first learn about concurrency in the context of optimizing execution time through parallelization strategies in their programming classes. This topic is so complex on its own that it often overshadows the fact that asynchronous programming is fundamentally different. Even with this understanding, it's still easy to confuse the differences between concurrency and asynchronous programming.
 
+Many attempts have been made to explain these concepts. A lot of good ones as well. But even when a good one gets attention, like the talk [**Concurrency is not parallelism - The Go Programming Language**](https://go.dev/blog/waza-talk), the misleading parts, such as the confusing title, also seem to stick with the public. In this case it has led many to mistakenly believe that concurrency and parallelism are somehow opposites, which the talk never intended to suggest.
+
 To add to the confusion, some popular sources contradict basic implementations in well-known languages. For example, take this recent video on YouTube:
 
 [![](https://cdn.hashnode.com/res/hashnode/image/upload/v1720600036172/359d125c-aa41-4f08-aeca-2c6bac04639b.png align="center")](https://www.youtube.com/watch?v=RlM9AfWf1WU)
