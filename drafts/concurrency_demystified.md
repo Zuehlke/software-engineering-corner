@@ -103,7 +103,7 @@ The next twist in this story would likely involve issues with race conditions an
 
 ![The Four Quadrants of Concurrency](https://cdn.hashnode.com/res/hashnode/image/upload/v1720521325970/90f2b757-3a2a-4acb-990b-fba36ac69f12.png align="center")
 
-This visualization ist inspired from [Code Wala](https://codewala.net/2015/07/29/concurrency-vs-multi-threading-vs-asynchronous-programming-explained/). To make it clearer I added examples from the article into the quadrants.
+This visualization ist inspired from [Code Wala](https://codewala.net/2015/07/29/concurrency-vs-multi-threading-vs-asynchronous-programming-explained/). To make it clearer I added examples from the article into the quadrants. It's probably a good time to compare it to the visualization by ByteByteGo that I included earlier in this article. It's similar to what they are trying to explain, but it has the advantage of not needing to negate anything and It emphasizes that there are two independent axes in concurrency.
 
 It is crucial to understand that there are four distinct ways that code can be executed based on causality:
 
