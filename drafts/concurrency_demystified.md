@@ -37,7 +37,7 @@ All this is unfortunate because having a shared understanding of concurrency is 
 
 Having a solid mental model not only helps in communicating ideas more precisely but more importantly gives you the tools to understand what others are talking about and to identify misunderstandings. I like to think that I found a definition that is close to something like a [least squares](https://en.wikipedia.org/wiki/Least_squares) definition of all the interpretations/definitions around programming. I think I also have found a way to visualize it in an intuitive way. Fortunately, it is also applicable in other contexts I've encountered, such as distributed systems and even everyday tasks.
 
-### [The Evolving Landscape of Concurrency](https://imgs.xkcd.com/comics/standards_2x.png)
+### The Evolving Landscape of Concurrency
 
 One of the best resources I've found so far is the [**Concurrency in C# Cookbook**](https://learning.oreilly.com/library/view/concurrency-in-c/9781492054498/ch01.html#idm45458718736760) by Stephen Cleary. I think C# is uniquely positioned to be a baseline for this topic because it introduced the async/await keywords in a way that has since been adopted by many other languages and significantly shaped our understanding of concurrency. However, other languages are also heavily invested in these patterns and continue to evolve the field. Therefore, I aim to be as language-agnostic as possible in this article.
 
