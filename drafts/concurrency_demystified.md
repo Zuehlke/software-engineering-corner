@@ -31,11 +31,11 @@ I think it does quite a good job at separating the different execution modes. Bu
 
 It does not help that concurrency is inherently a complex topic. Each language, like C#, Java, JavaScript, Python, Rust, and Swift, has its own ways and patterns, which fill entire books. Then there is reactivity, a closely related topic that can be almost as complex as concurrency. Articles like [What the hell is Reactive Programming anyway?](https://dev.to/this-is-learning/what-the-hell-is-reactive-programming-anyway-31p5) with all the references mentioned, show how quickly you get into quite complicated topics. And the popular [Reactive Manifesto](https://www.reactivemanifesto.org/) demonstrates that it also extends into the distributed systems realm where the connections to concurrency get more obvious.
 
-All this is unfortunate because having a shared understanding of concurrency is crucial for building stable and efficient software. I hope this article can help create a better common mental model or at least provide something I can reference in future discussions about concurrency. In this article, I want to propose a definition of concurrency specifically in the context of programming languages.
+All this is unfortunate because having a shared understanding of concurrency is crucial for building stable and efficient software. So later in this article, I want to propose a definition of concurrency specifically in the context of programming languages.
 
 ![standards](https://imgs.xkcd.com/comics/standards_2x.png align="center")
 
-Having a solid mental model not only helps in communicating ideas more precisely but more importantly gives you the tools to understand what others are talking about and to identify misunderstandings. I like to think that I found a definition that is close to something like a [least squares](https://en.wikipedia.org/wiki/Least_squares) definition of all the interpretations/definitions around programming. I think I also have found a way to visualize it in an intuitive way. Fortunately, it is also applicable in other contexts I've encountered, such as distributed systems and even everyday tasks.
+Having a solid mental model not only helps in communicating ideas more precisely but more importantly gives you the tools to understand what others are talking about and to identify misunderstandings.
 
 ### The Evolving Landscape of Concurrency
 
@@ -101,9 +101,11 @@ The next twist in this story would likely involve issues with race conditions an
 
 ![The Four Quadrants of Concurrency](https://cdn.hashnode.com/res/hashnode/image/upload/v1720521325970/90f2b757-3a2a-4acb-990b-fba36ac69f12.png align="center")
 
-This visualization ist inspired from [Code Wala](https://codewala.net/2015/07/29/concurrency-vs-multi-threading-vs-asynchronous-programming-explained/). To make it clearer I added examples from the article into the quadrants. Probably it's a good time to compare it to the visualization by ByteByteGo that I included earlier in this article. It's similar to what they are trying to explain, but it has the advantage of not needing to negate anything and It emphasizes that there are two independent axes in concurrency.
+This visualization is inspired by [Code Wala](https://codewala.net/2015/07/29/concurrency-vs-multi-threading-vs-asynchronous-programming-explained/). To make it clearer, I added examples from the article into the quadrants. It's a good time to compare it to the visualization by ByteByteGo that I included earlier in this article. It is similar to their explanation but has the advantage of not needing to negate anything and emphasizes that there are two independent axes in concurrency.
 
-Furthermore it includes async into the definition. This is something that is rearly/never seen in definitions/explenantions. Classics like [Clean Code: A Handbook of Agile Software Craftsmanship](https://learning.oreilly.com/library/view/clean-code-a/9780136083238/), [The Pragmatic Programmer: your journey to mastery](https://learning.oreilly.com/library/view/the-pragmatic-programmer/9780135956977/f_0054.xhtml) and [Concurrent Programming in Java](https://learning.oreilly.com/library/view/concurrent-programming-in/0201310090/pr01.html) (I checked a lot of other books and papers too) do not mention async once. But this concept is essential to get a complete picture of concurrency.
+Furthermore, it includes async in the definition. This is something rarely seen in definitions or explanations of concurrency. Classics like [Clean Code: A Handbook of Agile Software Craftsmanship](https://learning.oreilly.com/library/view/clean-code-a/9780136083238/), [The Pragmatic Programmer: Your Journey to Mastery](https://learning.oreilly.com/library/view/the-pragmatic-programmer/9780135956977/f_0054.xhtml), and [Concurrent Programming in Java](https://learning.oreilly.com/library/view/concurrent-programming-in/0201310090/pr01.html) (I checked many other books and papers too) do not mention async once. But this concept is essential to get a complete picture of concurrency.
+
+![Single Threaded Concurrency?](https://cdn.hashnode.com/res/hashnode/image/upload/v1720048752061/bb0322a4-bd42-4274-aa9c-50846b0561d7.png align="center")
 
 The key is to understand that there are four distinct ways that code can be executed based on causality:
 
@@ -125,8 +127,6 @@ The key is to understand that there are four distinct ways that code can be exec
     
 
 Understanding these different execution modes is crucial for writing efficient and maintainable code, as it helps in selecting the right approach based on the nature of the tasks and the resources available.
-
-![Single Threaded Concurrency?](https://cdn.hashnode.com/res/hashnode/image/upload/v1720048752061/bb0322a4-bd42-4274-aa9c-50846b0561d7.png align="center")
 
 # Conclusion
 
