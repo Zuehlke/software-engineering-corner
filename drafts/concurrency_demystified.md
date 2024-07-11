@@ -19,10 +19,6 @@ First, it is important to acknowledge that these terms are used in several conte
 
 [![](https://cdn.hashnode.com/res/hashnode/image/upload/v1720597890803/22affb01-7923-487e-961d-4352fb97404c.png align="center")](https://www.youtube.com/watch?v=x-MOtcat1iE)
 
-It does not help that concurrency is inherently a complex topic. Each language, like C#, Java, JavaScript, Python, Rust, and Swift, has its own ways and patterns, which fill entire books. Then there is reactivity, a closely related topic that can be almost as complex as concurrency. Articles like [What the hell is Reactive Programming anyway?](https://dev.to/this-is-learning/what-the-hell-is-reactive-programming-anyway-31p5) with all the references mentioned, show how quickly you get into quite complicated topics. And the equally popular [Reactive Manifesto](https://www.reactivemanifesto.org/) demonstrates that it also extends into the distributed systems realm where the connections to concurrency get more obvious.
-
-Most people first learn about concurrency in the context of optimizing execution time through parallelization strategies in their programming classes. This topic is so complex on its own that it often overshadows the fact that asynchronous programming is fundamentally different. Even with this understanding, it's still easy to confuse the differences between concurrency and asynchronous programming.
-
 Many attempts have been made to explain these concepts. A lot of good ones as well. But even when a good one gets attention, like the talk [**Concurrency is not parallelism - The Go Programming Language**](https://go.dev/blog/waza-talk), the misleading parts, such as the confusing title, also seem to stick with the public. In this case it has led many to mistakenly believe that concurrency and parallelism are somehow opposites, which the talk never intended to suggest.
 
 To add to the confusion, some popular sources contradict basic implementations in well-known languages. For example, take this recent video on YouTube:
@@ -32,6 +28,8 @@ To add to the confusion, some popular sources contradict basic implementations i
 The most confusing and contradictory part is the third card of the preview image, which claims there is parallel computing without concurrency. However, this is exactly the scenario that data structures with the prefix "concurrent" (e.g., [ConcurrentDictionary](https://learn.microsoft.com/en-us/dotnet/api/system.collections.concurrent.concurrentdictionary-2?view=net-8.0) in C# or [ConcurrentHashMap](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentHashMap.html) in Java) are optimized for.
 
 ![actual_progress](https://imgs.xkcd.com/comics/actual_progress_2x.png align="center")
+
+It does not help that concurrency is inherently a complex topic. Each language, like C#, Java, JavaScript, Python, Rust, and Swift, has its own ways and patterns, which fill entire books. Then there is reactivity, a closely related topic that can be almost as complex as concurrency. Articles like [What the hell is Reactive Programming anyway?](https://dev.to/this-is-learning/what-the-hell-is-reactive-programming-anyway-31p5) with all the references mentioned, show how quickly you get into quite complicated topics. And the equally popular [Reactive Manifesto](https://www.reactivemanifesto.org/) demonstrates that it also extends into the distributed systems realm where the connections to concurrency get more obvious.
 
 All this is unfortunate because having a shared understanding of concurrency is crucial for building stable and efficient software. I hope this article can help create a better common mental model or at least provide something I can reference in future discussions about concurrency. In this article, I want to propose a definition of concurrency specifically in the context of programming languages.
 
