@@ -59,13 +59,13 @@ Before I share my definition of concurrency, I would like to introduce it with a
 
 The next twist in this story would likely involve issues with race conditions and language-specific implementation details... But that is not the focus of this article. A better approach is to show a visualization of the definition of concurrency as described in this story:
 
-### The Four Quadrants of Concurrency: A Visual Approach
+### The Three Quadrants of Concurrency: A Visual Approach
 
 ![The Four Quadrants of Concurrency](https://cdn.hashnode.com/res/hashnode/image/upload/v1720521325970/90f2b757-3a2a-4acb-990b-fba36ac69f12.png align="center")
 
 This visualization is inspired by [Code Wala](https://codewala.net/2015/07/29/concurrency-vs-multi-threading-vs-asynchronous-programming-explained/). To make it clearer, I added examples from the article into the quadrants. It's a good time to compare it to the visualization by ByteByteGo that I included earlier in this article.
 
-My visualization emphasizes that there are two independent axes in concurrency. But more importantly, it includes async in the definition. This is something rarely seen in definitions or explanations of concurrency. Classics like [Clean Code: A Handbook of Agile Software Craftsmanship](https://learning.oreilly.com/library/view/clean-code-a/9780136083238/), [The Pragmatic Programmer: Your Journey to Mastery](https://learning.oreilly.com/library/view/the-pragmatic-programmer/9780135956977/f_0054.xhtml), and [Concurrent Programming in Java](https://learning.oreilly.com/library/view/concurrent-programming-in/0201310090/pr01.html) (I checked many other books and papers too) do not mention async once. There are reasons for that too but I think most of them are not relevant anymore and either way this concept is essential to get a complete picture of concurrency. There is no excuse to ignore async anymore in modern definitions of concurrency.
+My visualization emphasizes that there are two independent axes in concurrency. But more importantly, it includes async in the definition. This is something rarely seen in definitions or explanations of concurrency. Classics like [Clean Code: A Handbook of Agile Software Craftsmanship](https://learning.oreilly.com/library/view/clean-code-a/9780136083238/), [The Pragmatic Programmer: Your Journey to Mastery](https://learning.oreilly.com/library/view/the-pragmatic-programmer/9780135956977/f_0054.xhtml), and [Concurrent Programming in Java](https://learning.oreilly.com/library/view/concurrent-programming-in/0201310090/pr01.html) (I've checked many other books and papers) do not even mention async. While there were reasons for this omission a decade ago, they are no longer relevant. With the widespread adoption of async/await in most popular languages, ignoring async is no longer justifiable. In modern definitions of concurrency, including async is essential for a complete understanding.
 
 ![Single Threaded Concurrency?](https://cdn.hashnode.com/res/hashnode/image/upload/v1720048752061/bb0322a4-bd42-4274-aa9c-50846b0561d7.png align="center")
 
@@ -100,7 +100,7 @@ Most popular languages are adopting the async/await model to handle asynchrony, 
 
 [![Archaeology of Asynchrony](https://cdn.hashnode.com/res/hashnode/image/upload/v1720083601709/872208b6-f5aa-438a-8aee-0bdbbbc4ca69.png align="center")](https://github.com/StephenCleary/Presentations/blob/main/Why-Async%20(Brief)/Why-Async%20-%2016.9.pptx)
 
-I believe my definition of concurrency is quite future-proof, as it aids in understanding structured concurrency and has proven applicable in various contexts I've encountered, such as distributed systems and even everyday tasks.
+I believe my definition of concurrency is future-proof, as it aids in understanding structured concurrency and has proven applicable in various contexts I've encountered, such as distributed systems and even everyday tasks.
 
 # Conclusion
 
