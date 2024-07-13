@@ -25,55 +25,17 @@ To add to the confusion, some popular sources contradict basic implementations i
 
 [![](https://cdn.hashnode.com/res/hashnode/image/upload/v1720600036172/359d125c-aa41-4f08-aeca-2c6bac04639b.png align="center")](https://www.youtube.com/watch?v=RlM9AfWf1WU)
 
-I think it does quite a good job at separating the different execution modes. But there is a confusing and contradictory part in the third card of the preview image, which claims there is parallel computing without concurrency. However, this is exactly the scenario that data structures with the prefix "concurrent" (e.g., [ConcurrentDictionary](https://learn.microsoft.com/en-us/dotnet/api/system.collections.concurrent.concurrentdictionary-2?view=net-8.0) in C# or [ConcurrentHashMap](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentHashMap.html) in Java) are optimized for.
+I think it does a good job of separating the different execution modes. However, there is a confusing and contradictory part in the third card of the preview image, which claims there is parallel computing without concurrency. However, this is exactly the scenario that data structures with the prefix "concurrent" (e.g., [ConcurrentDictionary](https://learn.microsoft.com/en-us/dotnet/api/system.collections.concurrent.concurrentdictionary-2?view=net-8.0) in C# or [ConcurrentHashMap](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentHashMap.html) in Java) are optimized for. How much is this definition worth if it contradicts how concurrency is interpreted by multiple of the most popular languages?
 
 ![actual_progress](https://imgs.xkcd.com/comics/actual_progress_2x.png align="center")
 
 It does not help that concurrency is inherently a complex topic. Each language, like C#, Java, JavaScript, Python, Rust, and Swift, has its own ways and patterns, which fill entire books. Then there is reactivity, a closely related topic that can be almost as complex as concurrency. Articles like [What the hell is Reactive Programming anyway?](https://dev.to/this-is-learning/what-the-hell-is-reactive-programming-anyway-31p5) with all the references mentioned, show how quickly you get into quite complicated topics. And the popular [Reactive Manifesto](https://www.reactivemanifesto.org/) demonstrates that it also extends into the distributed systems realm where the connections to concurrency get more obvious.
 
-All this is unfortunate because having a shared understanding of concurrency is crucial for building stable and efficient software. So later in this article, I want to propose a definition of concurrency specifically in the context of programming languages.
+All this is unfortunate because having a shared understanding of concurrency is crucial for building stable and efficient software. So in this article, I want to propose a definition of concurrency specifically in the context of programming languages.
 
 ![standards](https://imgs.xkcd.com/comics/standards_2x.png align="center")
 
 Having a solid mental model not only helps in communicating ideas more precisely but more importantly gives you the tools to understand what others are talking about and to identify misunderstandings.
-
-### The Evolving Landscape of Concurrency
-
-One of the best resources I've found so far is the [**Concurrency in C# Cookbook**](https://learning.oreilly.com/library/view/concurrency-in-c/9781492054498/ch01.html#idm45458718736760) by Stephen Cleary. I think C# is uniquely positioned to be a baseline for this topic because it introduced the async/await keywords in a way that has since been adopted by many other languages and significantly shaped our understanding of concurrency. However, other languages are also heavily invested in these patterns and continue to evolve the field. Therefore, I aim to be as language-agnostic as possible in this article.
-
-![async timeline](https://cdn.hashnode.com/res/hashnode/image/upload/v1720084949983/7137b347-2846-458a-8137-d6d04dfbfada.png align="center")
-
-Most popular languages are adopting the async/await model to handle asynchrony, but there's still room for improvement. [**Structured Concurrency**](https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/) is an exciting concept first promoted by the Python community and now gaining traction with Swift and Java. Could this lead to a programming model as dominant as structured programming? Is there an ongoing evolution toward a unified approach to concurrency? If so, there could also be a convergence in the definitions of concurrency.
-
-[![Archaeology of Asynchrony](https://cdn.hashnode.com/res/hashnode/image/upload/v1720083601709/872208b6-f5aa-438a-8aee-0bdbbbc4ca69.png align="center")](https://github.com/StephenCleary/Presentations/blob/main/Why-Async%20(Brief)/Why-Async%20-%2016.9.pptx)
-
-### Defining Concurrency: Methods and Misconceptions
-
-In the [**Concurrency in C# Cookbook**](https://learning.oreilly.com/library/view/concurrency-in-c/9781492054498/ch01.html#idm45458718736760) Stephen Cleary defines concurrency as "Doing more than one thing at a time."
-
-There are multiple ways to achieve this:
-
-* **Multithreading**
-    
-    Doing lots of work by dividing it up among multiple threads that run concurrently.
-    
-* **Parallel processing**
-    
-    Doing lots of work by dividing it up among multiple threads that run concurrently.
-    
-* **Asynchronous programming**
-    
-    A form of concurrency that uses futures or callbacks to avoid unnecessary threads.
-    
-* **Reactive programming**  
-    A declarative style of programming where the application reacts to events.
-    
-
-![Concurrency Stephen Cleary](https://cdn.hashnode.com/res/hashnode/image/upload/v1720020387249/e5094574-cb02-4c9e-bbfa-21c90527f118.png align="center")
-
-But even this definition has at least two problems. First, it is not clear enough. Second, it includes concepts like reactivity that do not match the level of detail and introduce other topics not closely related to concurrency, making it seem out of place and adding unnecessary complexity.
-
-Defining concurrency seems not to be easy. One reason for this difficulty is the many concepts and approaches related to concurrency, each with different levels of details. These can complicate it even further. Therefore, it's important to use the right scope and level of abstraction when defining these terms.
 
 ### A Tale of Two Models: Parallel vs. Asynchronous Programming
 
@@ -101,9 +63,9 @@ The next twist in this story would likely involve issues with race conditions an
 
 ![The Four Quadrants of Concurrency](https://cdn.hashnode.com/res/hashnode/image/upload/v1720521325970/90f2b757-3a2a-4acb-990b-fba36ac69f12.png align="center")
 
-This visualization is inspired by [Code Wala](https://codewala.net/2015/07/29/concurrency-vs-multi-threading-vs-asynchronous-programming-explained/). To make it clearer, I added examples from the article into the quadrants. It's a good time to compare it to the visualization by ByteByteGo that I included earlier in this article. It is similar to their explanation but has the advantage of not needing to negate anything and emphasizes that there are two independent axes in concurrency.
+This visualization is inspired by [Code Wala](https://codewala.net/2015/07/29/concurrency-vs-multi-threading-vs-asynchronous-programming-explained/). To make it clearer, I added examples from the article into the quadrants. It's a good time to compare it to the visualization by ByteByteGo that I included earlier in this article.
 
-Furthermore, it includes async in the definition. This is something rarely seen in definitions or explanations of concurrency. Classics like [Clean Code: A Handbook of Agile Software Craftsmanship](https://learning.oreilly.com/library/view/clean-code-a/9780136083238/), [The Pragmatic Programmer: Your Journey to Mastery](https://learning.oreilly.com/library/view/the-pragmatic-programmer/9780135956977/f_0054.xhtml), and [Concurrent Programming in Java](https://learning.oreilly.com/library/view/concurrent-programming-in/0201310090/pr01.html) (I checked many other books and papers too) do not mention async once. But this concept is essential to get a complete picture of concurrency.
+My visualization emphasizes that there are two independent axes in concurrency. But more importantly, it includes async in the definition. This is something rarely seen in definitions or explanations of concurrency. Classics like [Clean Code: A Handbook of Agile Software Craftsmanship](https://learning.oreilly.com/library/view/clean-code-a/9780136083238/), [The Pragmatic Programmer: Your Journey to Mastery](https://learning.oreilly.com/library/view/the-pragmatic-programmer/9780135956977/f_0054.xhtml), and [Concurrent Programming in Java](https://learning.oreilly.com/library/view/concurrent-programming-in/0201310090/pr01.html) (I checked many other books and papers too) do not mention async once. There are reasons for that too but I think most of them are not relevant anymore and either way this concept is essential to get a complete picture of concurrency. There is no excuse to ignore async anymore in modern definitions of concurrency.
 
 ![Single Threaded Concurrency?](https://cdn.hashnode.com/res/hashnode/image/upload/v1720048752061/bb0322a4-bd42-4274-aa9c-50846b0561d7.png align="center")
 
@@ -127,6 +89,18 @@ The key is to understand that there are four distinct ways that code can be exec
     
 
 Understanding these different execution modes is crucial for writing efficient and maintainable code, as it helps in selecting the right approach based on the nature of the tasks and the resources available.
+
+### The Evolving Landscape of Concurrency
+
+One of the best resources I've found so far is the [**Concurrency in C# Cookbook**](https://learning.oreilly.com/library/view/concurrency-in-c/9781492054498/ch01.html#idm45458718736760) by Stephen Cleary. I think C# is uniquely positioned to be a baseline for this topic because it introduced the async/await keywords in a way that has since been adopted by many other languages and significantly shaped our understanding of concurrency. However, other languages are also heavily invested in these patterns and continue to evolve the field. Therefore, I tried to be as language-agnostic as possible in this article.
+
+![async timeline](https://cdn.hashnode.com/res/hashnode/image/upload/v1720084949983/7137b347-2846-458a-8137-d6d04dfbfada.png align="center")
+
+Most popular languages are adopting the async/await model to handle asynchrony, but there's still room for improvement. [**Structured Concurrency**](https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/) is an exciting concept first promoted by the Python community and now gaining traction with Swift and Java. Could this lead to a programming model as dominant as structured programming? Is there an ongoing evolution toward a unified approach to concurrency? If so, there could also be a convergence in the definitions of concurrency.
+
+[![Archaeology of Asynchrony](https://cdn.hashnode.com/res/hashnode/image/upload/v1720083601709/872208b6-f5aa-438a-8aee-0bdbbbc4ca69.png align="center")](https://github.com/StephenCleary/Presentations/blob/main/Why-Async%20(Brief)/Why-Async%20-%2016.9.pptx)
+
+I believe my definition of concurrency is quite future-proof, as it aids in understanding structured concurrency and has proven applicable in various contexts I've encountered, such as distributed systems and even everyday tasks.
 
 # Conclusion
 
