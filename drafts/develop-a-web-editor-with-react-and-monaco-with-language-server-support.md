@@ -1,5 +1,5 @@
 ---
-title: Develop a Web Editor for your DSL using React and Monaco Editor library
+title: Develop a Web Editor for your DSL using React and Monaco Editor library with Language Server support
 domain: software-engineering-corner.hashnode.dev
 tags: Web Editor, Monaco, Monaco Language Client, Language Server, LSP
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1720940174478/yjy4aJtIT.gif?auto=format
@@ -8,7 +8,7 @@ hideFromHashnodeCommunity: false
 --- 
 # Develop a Web Editor for your DSL using React and Monaco Editor library
 
-As of now all most all of the world services are moving to cloud and becoming digitalize. Even the countries which were behind this digital transformation are now being hurried in to digitalization because of the pandemic(I see this now as a trend in my country, Sri Lanka, as people are now seeking online services instead of going to a shop or service centers of businesses). Well this is not that relevant to the topic i’m gonna discuss here but.. well.. at least we are trying to move code editing tool we used to have in our local machine to be as a online service where many features like team collaboration, code review can be easily integrated.
+As of now all most all of the world services are moving to cloud and becoming digitalize. Even the countries which were behind this digital transformation was hurried in to digitalization because of the past pandemic. Well this is not that relevant to the topic i’m gonna discuss here but.. well.. at least we are trying to move code editing tool we used to have in our local machine to be a online service where many features like code editing and code review can be easily integrated in to more collaborative space.
 
 ### What is Monaco Editor?
 Monaco Editor is the code editor that powers Visual Studio Code, known for its performance, rich API, and extensive feature set. It offers:
