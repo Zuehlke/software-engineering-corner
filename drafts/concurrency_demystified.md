@@ -100,7 +100,7 @@ Most popular languages are adopting the async/await model to handle asynchrony, 
 
 [![Archaeology of Asynchrony](https://cdn.hashnode.com/res/hashnode/image/upload/v1720083601709/872208b6-f5aa-438a-8aee-0bdbbbc4ca69.png align="center")](https://github.com/StephenCleary/Presentations/blob/main/Why-Async%20(Brief)/Why-Async%20-%2016.9.pptx)
 
-I believe my definition of concurrency is future-proof, as it aids in understanding structured concurrency and has proven applicable in various contexts I've encountered, such as distributed systems and even everyday tasks.
+My definition of concurrency is aligned with the current convergence that seems to be happening, as it also aids in understanding structured concurrency and has proven applicable in various contexts I've encountered, such as distributed systems and even aligns with how GitHub actions use [concurrency](https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration#usage-limits).
 
 # Conclusion
 
