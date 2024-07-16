@@ -26,7 +26,6 @@ It also has built-in security features, console utility, and device model.
 #### View and change Page Content and Styles
 Sometimes, we want to change the style or content of a page and immediately see the visual response, for example, to update paddings or to pick a good-looking background color. 
 Using the Chrome Dev Tools, you can directly accomplish this from the browser, without page refreshes or re-compilation, either by targeting HTML elements using the built-in console or by selecting the element in the HTML panel.
-
 CSS prototyping is also possible. For this, you just need to select the element in the DOM tree and add declarations to it in the styles panel. 
 We can change font color, size, and type. We can change background and button colors, images, and so on.
 #### Debugging Javascript
@@ -46,11 +45,16 @@ The most common programming languages are all supported.
 A huge variety of extensions are available in the application. 
 The user interface is customizable and offers the possibility to split the view and work on two projects at the same time.
 
-### Noteworthy features
+### Some noteworthy features
 #### Command Palette
-The most important key combination is Shift+Command+P (Mac) or Ctrl + Shift+ P (Windows /Linux), which brings up the Command Palette. 
-From here, we have access to all functionality within VS Code, including keyboard shortcuts for the most common operations. 
-We can run editor commands, open files, search for symbols, or see a quick view of a file, all in the same interactive window.
+The most important key combination is Shift+Command+P (Mac) or Ctrl + Shift+ P (Windows /Linux), which brings up the Command Palette.
+From here, we have access to all functionality within VS Code, including keyboard shortcuts for the most common operations.
+For example, we can run editor commands, open files, search for symbols, or see a quick view of a file, all in the same interactive window. 
+VS Code already has many commands out of the box, like save file, format file, git commands, and many others. 
+But the list of possibilities doesn't end here.
+VS Code allows us to create new commands, and see them in this list of possible ones. 
+More extensions use this feature to expose their commands and enable their features.
+The commands typically are grouped by topic, for instance, all the commands that work with the terminal have the prefix Terminal, those that work with git have the prefix Git, and so on.
 
 #### Zen Mode
 Zen Mode is a distraction-free view. All extra toolboxes and bars in the window are removed, allowing developers to focus completely on the code.
@@ -59,21 +63,32 @@ Center-align the code possible as well, for an experience a view like a document
 The split view is helpful if we need to compare two files or want to see both of them at the same time.
 
 #### Tag wrapping
-Emmet is a set of plugins for text editors that allows for high-speed coding and editing in HTML, XML, XSLT, and other structured code formats via content assist. 
+Emmet is a set of plugins for text editors that allows for high-speed coding and editing in HTML, XML, XSLT, and other structured code formats via content assist.
 Emmet can save time and improve developer productivity by helping to type less and generate more code.
+For example, we can type "!" and press the enter key, and it will automatically generate the HTML snippet.
+Another possible use case is, that if we are working on a Navbar with a few Nav links inside it, a snippet of a Navbar can be generated automatically by using a few keystrokes.
+Whenever we write a valid tag, the Emmet abbreviation shows the preview of a code which is the final result in the editor.
+By using shorthand CSS properties, it would be easy to generate styles by using Emmet.
+Emmet comes in handy to write component snippets by just pressing a few keystrokes.
+Emmet provides an ES7 module system, React, Redux, GraphQL, and React-Native snippets.
 
 ## Sublime Text
 Another editor, the Sublime Text, is a good choice for beginners. It is an all-in-one text editor for code and markup. 
 As key features, we can mention the easy switch between files and functions, the Javascript and Typescript support, the Python API, the cross-platform functionality, and many more.
 
-### Main features
-
+### Some interesting features
 #### Customizability
-Sublime Text can be fully customized via plugins. 
-The integrated Package Manager allows us to find, install, upgrade, and remove plugins directly inside the editor, usually without restart. 
-We can download packages from Github, Bitbucket, and PackageControl.io. 
-PackageControl.io is Sublime's repository, where the community behind the code editor publishes loads of plugins to enhance its capabilities. 
+Sublime Text can be fully customized via plugins.
+The integrated Package Manager allows us to find, install, upgrade, and remove plugins directly inside the editor, usually without restart.
+We can download packages from Github, Bitbucket, and PackageControl.io.
+PackageControl.io is Sublime's repository, where the community behind the code editor publishes loads of plugins to enhance its capabilities.
 There are more than 3800 packages available.
+Let me list a few that can enhance productivity without the need for completeness. SideBarEnhancements, ColorPicker, BracketHighlihter, Terminal, PackageControl, Emmet, SublimeLinter, and AutoFileName are the most popular ones according to Google.
+
+#### Screens and panels
+Sublime Text can display text files in different ways. First, we can have several files ordered in tabs like in a browser window.
+That's the standard way. More than that, we can display up to four files at once in the form of a grid.
+Plus Sublime Text comes with other layout options like columns and rows as well as fullscreen and distraction-free editing modes.
 
 #### Power and stability
 Sublime is lightweight, starts fast, and crashes rarely.
@@ -89,11 +104,6 @@ The same feature can be used to reformat several lines of code simultaneously.
 #### Minimap
 Minimap is a small file overview in the upper right corner. 
 It is useful to get an idea of how large the open file is and also shows the current position while moving the scrollbar.
-
-#### Screens and panels
-Sublime Text can display text files in different ways. First, we can have several files ordered in tabs like in a browser window. 
-That's the standard way. More than that, we can display up to four files at once in the form of a grid. 
-Plus Sublime Text comes with other layout options like columns and rows as well as fullscreen and distraction-free editing modes.
 
 ## Marvel
 Next on the list is Marvel, but no, not the movies. Marvel is a wireframing tool to quickly and easily design projects. 
@@ -118,31 +128,23 @@ According to TechRadar, the best overall tool is Sketch, a toolkit for digital d
 It can create simple animations and clickable prototypes and supports cloud collaboration. The only downside is that it is only available for Mac.
 
 ### Feature overview
-#### Vector editing
-Sketch's vector tools are pixel-perfect and precise, specifically for high-quality graphic design. It makes it simpler to craft detailed icons and illustrations.
+- Sketch's vector tools are pixel-perfect and precise, specifically for high-quality graphic design. It makes it simpler to craft detailed icons and illustrations.
 
-#### Artboards
-Artboards allows designers to create multiple boards into a single sketch file, streamlining the web page and iOS app design process by organizing different screens and states efficiently. 
+- Artboards allow designers to create multiple boards into a single sketch file, streamlining the web page and iOS app design process by organizing different screens and states efficiently. 
 It also provides scrolling artboards that simulate the scrolling experience of web pages and iOS interfaces, helping create realistic prototypes and mockups.
 
-#### Symbols
-Symbols in Sketch enable reusable elements, such as buttons and icons, ensuring consistency across the designed web application or mobile design. 
+- Symbols in Sketch enable reusable elements, such as buttons and icons, ensuring consistency across the designed web application or mobile design. 
 At the same time, it allows rapid updates across multiple instances.
 
-#### CSS Export
-It is possible to generate CSS code from design elements directly, speeding up the transition from design to development.
+- CSS can be generated directly from design elements, speeding up the transition from design to development.
 
-#### Collaboration features
-Sketch supports real-time collaboration, which allows the team members to work together synchronously on the same sketch file and enhances workflow efficiency.
+- Sketch supports real-time collaboration, which allows the team members to work together synchronously on the same sketch file and enhances workflow efficiency.
 
-#### Plugins
-Its extensive plugin ecosystem is user-friendly and can fulfill specific design needs, from automating repetitive tasks to integrating with social media platforms.
+- The extensive plugin ecosystem is user-friendly and can fulfill specific design needs, from automating repetitive tasks to integrating with social media platforms.
 
-#### Export options
-Sketch's export options are robust, allowing designers to output designs in multiple formats, resolutions, and configurations, which is crucial when preparing designs for web pages, apps, and social media.
+- Sketch's export options are robust, allowing designers to output designs in multiple formats, resolutions, and configurations, which is crucial when preparing designs for web pages, apps, and social media.
 
-#### Integrations
-It integrates with other tools like InVision, Zeplin, and Jira. 
+- It integrates with other tools like InVision, Zeplin, and Jira. 
 It provides an API, which allows custom plugin development to expand its functionalities further. 
 A wide range of available add-ons can significantly extend the utility, enabling users to integrate with additional services and automate various aspects of the design flow.
 
