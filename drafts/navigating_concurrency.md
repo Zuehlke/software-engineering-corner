@@ -3,7 +3,7 @@ title: Navigating the Evolving Landscape of Concurrency
 subtitle: From async/await to Structured Concurrency
 domain: software-engineering-corner.hashnode.dev
 tags: concurrency, asynchronous, async, multithreading, , opinion-pieces, programming, developer, learning, general-advice, software-development, programming-tips, software-engineering, computer-science
-cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1720694369664/e0bd2284-3299-4eb9-be39-53646f913361.jpeg?auto=format
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1721214396092/931726f8-75c0-4f90-b985-2cfdc637c11c.jpeg
 publishAs: tiju
 hideFromHashnodeCommunity: false
 --- 
