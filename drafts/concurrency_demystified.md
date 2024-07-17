@@ -13,7 +13,7 @@ I often encounter situations where Software Engineers have differing mental mode
 
 ### Breaking Down the Confusion: Towards a Common Understanding of Concurrency
 
-There are reasons for this confusion. The most important one is probably that there are multiple incompatible mental models and definitions for these terms in different contexts. For example in the context of inter-service communication async is used to describe the **non blocking** nature of communication but in the context of programming languages it is used handle async task execution in a **sequentially blocking** manner. Regardless of these incompatibility, they get mixed and matched without much thought.
+There are reasons for this confusion. The most important one is probably that there are multiple incompatible mental models and definitions for these terms in different contexts. For example in the context of inter-service communication async is used to describe the **non blocking** nature of communication but in the context of programming languages it is used handle async task execution in a **sequentially blocking** manner. Regardless of these incompatibility, they get mixed and matched without much thought:
 
 [![](https://cdn.hashnode.com/res/hashnode/image/upload/v1720597890803/22affb01-7923-487e-961d-4352fb97404c.png align="center")](https://www.youtube.com/watch?v=x-MOtcat1iE)
 
@@ -61,7 +61,7 @@ The next twist in this story would likely involve issues with race conditions an
 
 ### The Three Quadrants of Concurrency: A Visual Approach
 
-![The Four Quadrants of Concurrency](https://cdn.hashnode.com/res/hashnode/image/upload/v1720521325970/90f2b757-3a2a-4acb-990b-fba36ac69f12.png align="center")
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1721204052382/54a74571-56c5-4d0d-87fc-5ea8e35ab9eb.png align="center")
 
 This visualization is inspired by [Code Wala](https://codewala.net/2015/07/29/concurrency-vs-multi-threading-vs-asynchronous-programming-explained/). To make it clearer, I added examples from the article into the quadrants. It's a good time to compare it to the visualization by ByteByteGo that I included earlier in this article.
 
@@ -106,4 +106,4 @@ My definition of concurrency is aligned with the current convergence that seems 
 
 The frequent confusion surrounding concurrency among Software Engineers stems from differing mental models and definitions. Terms like "async" and "parallel" are often used interchangeably, further muddying the waters. Despite a wealth of content and definitions available, a clear, universally accepted explanation remains elusive, often leading to more confusion. Having a solid mental model of the basic concept is key to not getting lost in this already inherently complicated topic.
 
-![Concurrency Mental Model](https://cdn.hashnode.com/res/hashnode/image/upload/v1720521390262/3cba54bc-1f69-45a4-bf16-f499afaf4b07.png align="center")
+![Concurrency Mental Model](https://cdn.hashnode.com/res/hashnode/image/upload/v1721204091692/53afe636-2de9-4fff-b11b-ca73065aa11a.png align="center")
