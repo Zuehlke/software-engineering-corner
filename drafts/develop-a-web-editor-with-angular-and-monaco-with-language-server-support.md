@@ -6,25 +6,29 @@ cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1719718605895/bv2LfyF
 publishAs: cjayashantha
 seriesSlug: editor-with-ls-support
 hideFromHashnodeCommunity: false
---- 
+---
 
 # Create a custom web editor using Monaco and Language Server Protocol (LSP)
 
 If you are developing a domain-specific language or custom language, chances are high that current editors might not support features such as syntax highlighting, diagnostics, and code autocompletion. To enable these features, you need a Language Server Protocol (LSP) and sometimes a custom editor. In this article, we will discuss how to develop a web editor and connect it to a language server using the WebSocket protocol.
 
+To read more about this topic, visit [Develop your own language server](https://software-engineering-corner.zuehlke.com/develop-your-own-language-server).
+
 ### What is Monaco Editor?
+
 Monaco Editor is the code editor that powers Visual Studio Code, known for its performance, rich API, and extensive feature set. It offers:
 
-- Syntax highlighting 
+- Syntax highlighting
 - IntelliSense (auto-completion)
 - Code navigation (go to definition, find references)
 - Multiple language support
 
 ### What is Language Server Protocol (LSP) ?
+
 LSP is a protocol used to provide language-specific features in a language-agnostic way. It decouples the editor from the language-specific logic, allowing you to support various languages with minimal effort. LSP offers:
 
 - Syntax checking
-- Auto-completions 
+- Auto-completions
 - Hover information
 - Code formatting
 - Refactorings
@@ -42,13 +46,14 @@ You can find the complete implementation of web editor in below GitHub repo belo
 [Angular Webeditor Implementation](https://github.com/cjayashantha/web-editor)
 
 ## Prerequisites
+
 Before start, we will be needing below items
 
 - node (v20.10.0)
 - npm (v10.2.3)
 - Basic knowledge of TypeScript
 - Basic knowledge of Angular
-- Java (v17) 
+- Java (v17)
 
 ## Architecture
 
@@ -65,6 +70,7 @@ ng new web-editor
 ```
 
 - Navigate to generated project folder
+
 ```shell
 cd web-editor
 ```
@@ -75,7 +81,7 @@ The latest version of Monaco Language Client at the time of writing this article
 
 We will be installing the following npm dependencies to add the Monaco Editor and language client.
 
-- [Monaco Language Client](https://www.npmjs.com/package/monaco-languageclient) 
+- [Monaco Language Client](https://www.npmjs.com/package/monaco-languageclient)
 - [Monaco Editor Wrapper](https://www.npmjs.com/package/monaco-editor-wrapper)
 - [VSCode WebSocket JSON RPC](https://www.npmjs.com/package/vscode-ws-jsonrpc)
 
@@ -84,6 +90,7 @@ npm i monaco-languageclient vscode-ws-jsonrpc monaco-editor-wrapper
 ```
 
 After installing all the dependencies, the `package.json` file will look like the example below
+
 ```json
 {
   "name": "web-editor",
@@ -145,6 +152,7 @@ _app.component.html_
 We will add the following styles to make the editor take up the full height and width of the screen.
 
 _app.component.scss_
+
 ```scss
 .editor {
   height: 100vh;
@@ -155,24 +163,20 @@ _app.component.scss_
 _app.component.ts_
 
 ```typescript
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import {
-  MonacoEditorLanguageClientWrapper,
-  UserConfig,
-} from 'monaco-editor-wrapper';
-import { lsConfig } from './configs/ls.config';
+import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
+import { RouterOutlet } from "@angular/router";
+import { MonacoEditorLanguageClientWrapper, UserConfig } from "monaco-editor-wrapper";
+import { lsConfig } from "./configs/ls.config";
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   standalone: true,
   imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  templateUrl: "./app.component.html",
+  styleUrl: "./app.component.scss",
 })
 export class AppComponent implements AfterViewInit {
-  
-  @ViewChild('editor')
+  @ViewChild("editor")
   editorElement!: ElementRef;
 
   async ngAfterViewInit(): Promise<void> {
@@ -187,26 +191,27 @@ export class AppComponent implements AfterViewInit {
 }
 ```
 
-In the line `wrapper.initAndStart`, you can see that we are passing `lsConfig` as a parameter to initialize the editor. 
+In the line `wrapper.initAndStart`, you can see that we are passing `lsConfig` as a parameter to initialize the editor.
 
 Below is the minimal configuration that should be passed to the method to connect to the language server using WebSocket.
 
 _ls.config.ts_
+
 ```typescript
-import { UserConfig } from 'monaco-editor-wrapper';
+import { UserConfig } from "monaco-editor-wrapper";
 
-export const LANG_ID = 'hello';
-export const LANG_EXTENSION = 'hello';
+export const LANG_ID = "hello";
+export const LANG_EXTENSION = "hello";
 
-const LS_WS_URL = 'ws://localhost:8080/ls';
+const LS_WS_URL = "ws://localhost:8080/ls";
 
 export const lsConfig: UserConfig = {
   wrapperConfig: {
     editorAppConfig: {
-      $type: 'classic',
+      $type: "classic",
       codeResources: {
         main: {
-          text: '',
+          text: "",
           fileExt: LANG_EXTENSION,
         },
       },
@@ -222,17 +227,17 @@ export const lsConfig: UserConfig = {
   languageClientConfig: {
     languageId: LANG_ID,
     options: {
-      $type: 'WebSocketUrl',
+      $type: "WebSocketUrl",
       url: LS_WS_URL,
       startOptions: {
         onCall: () => {
-          console.log('Connected to socket.');
+          console.log("Connected to socket.");
         },
         reportStatus: true,
       },
       stopOptions: {
         onCall: () => {
-          console.log('Disconnected from socket.');
+          console.log("Disconnected from socket.");
         },
         reportStatus: true,
       },
@@ -241,31 +246,86 @@ export const lsConfig: UserConfig = {
 };
 ```
 
-### Step 4: Introduce Syntax Highlighting 
+### Step 4: Introduce Syntax Highlighting
 
 To enable syntax highlighting in the Monaco editor, we need to provide language syntax definitions. You can read more about this in the following [link](https://microsoft.github.io/monaco-editor/monarch.html). We will add an example configuration to support syntax highlighting.
 
 ```typescript
-import * as monaco from 'monaco-editor';
-
+import * as monaco from "monaco-editor";
 
 export const syntaxDefinitions: monaco.languages.IMonarchLanguage = {
-  typeKeywords: [
-    'boolean', 'double', 'byte', 'int', 'short', 'char', 'void', 'long', 'float'
-  ],
+  typeKeywords: ["boolean", "double", "byte", "int", "short", "char", "void", "long", "float"],
 
   keywords: [
-    'abstract', 'continue', 'for', 'new', 'switch', 'assert', 'goto', 'do',
-    'if', 'private', 'this', 'break', 'protected', 'throw', 'else', 'public',
-    'enum', 'return', 'catch', 'try', 'interface', 'static', 'class',
-    'finally', 'const', 'super', 'while', 'true', 'false'
+    "abstract",
+    "continue",
+    "for",
+    "new",
+    "switch",
+    "assert",
+    "goto",
+    "do",
+    "if",
+    "private",
+    "this",
+    "break",
+    "protected",
+    "throw",
+    "else",
+    "public",
+    "enum",
+    "return",
+    "catch",
+    "try",
+    "interface",
+    "static",
+    "class",
+    "finally",
+    "const",
+    "super",
+    "while",
+    "true",
+    "false",
   ],
 
   operators: [
-    '=', '>', '<', '!', '~', '?', ':', '==', '<=', '>=', '!=',
-    '&&', '||', '++', '--', '+', '-', '*', '/', '&', '|', '^', '%',
-    '<<', '>>', '>>>', '+=', '-=', '*=', '/=', '&=', '|=', '^=',
-    '%=', '<<=', '>>=', '>>>='
+    "=",
+    ">",
+    "<",
+    "!",
+    "~",
+    "?",
+    ":",
+    "==",
+    "<=",
+    ">=",
+    "!=",
+    "&&",
+    "||",
+    "++",
+    "--",
+    "+",
+    "-",
+    "*",
+    "/",
+    "&",
+    "|",
+    "^",
+    "%",
+    "<<",
+    ">>",
+    ">>>",
+    "+=",
+    "-=",
+    "*=",
+    "/=",
+    "&=",
+    "|=",
+    "^=",
+    "%=",
+    "<<=",
+    ">>=",
+    ">>>=",
   ],
 
   // we include these common regular expressions
@@ -274,19 +334,19 @@ export const syntaxDefinitions: monaco.languages.IMonarchLanguage = {
   tokenizer: {
     root: [
       // identifiers and keywords
-      [/[a-z_$][\w$]*/, { cases: { '@typeKeywords': 'keyword',
-                                   '@keywords': 'keyword',
-                                   '@default': 'identifier' } }],
-      [/[A-Z][\w\$]*/, 'type.identifier' ],  // to show class names nicely
+      [
+        /[a-z_$][\w$]*/,
+        { cases: { "@typeKeywords": "keyword", "@keywords": "keyword", "@default": "identifier" } },
+      ],
+      [/[A-Z][\w\$]*/, "type.identifier"], // to show class names nicely
 
       // whitespace
-      { include: '@whitespace' },
+      { include: "@whitespace" },
 
       // delimiters and operators
-      [/[{}()\[\]]/, '@brackets'],
-      [/[<>](?!@symbols)/, '@brackets'],
-      [/@symbols/, { cases: { '@operators': 'operator',
-                              '@default'  : '' } } ],
+      [/[{}()\[\]]/, "@brackets"],
+      [/[<>](?!@symbols)/, "@brackets"],
+      [/@symbols/, { cases: { "@operators": "operator", "@default": "" } }],
 
       // @ annotations.
       // As an example, we emit a debugging log message on these tokens.
@@ -294,51 +354,52 @@ export const syntaxDefinitions: monaco.languages.IMonarchLanguage = {
       // [/@\s*[a-zA-Z_\$][\w\$]*/, { token: 'annotation', log: 'annotation token: $0' }],
 
       // numbers
-      [/\d*\.\d+([eE][\-+]?\d+)?/, 'number.float'],
-      [/0[xX][0-9a-fA-F]+/, 'number.hex'],
-      [/\d+/, 'number'],
+      [/\d*\.\d+([eE][\-+]?\d+)?/, "number.float"],
+      [/0[xX][0-9a-fA-F]+/, "number.hex"],
+      [/\d+/, "number"],
 
       // delimiter: after number because of .\d floats
-      [/[;,.]/, 'delimiter'],
+      [/[;,.]/, "delimiter"],
 
       // strings
-      [/"([^"\\]|\\.)*$/, 'string.invalid' ],  // non-teminated string
-      [/"/,  { token: 'string.quote', bracket: '@open', next: '@string' } ],
+      [/"([^"\\]|\\.)*$/, "string.invalid"], // non-teminated string
+      [/"/, { token: "string.quote", bracket: "@open", next: "@string" }],
 
       // characters
-      [/'[^\\']'/, 'string'],
+      [/'[^\\']'/, "string"],
       // [/(')(@escapes)(')/, ['string','string.escape','string']],
-      [/'/, 'string.invalid']
+      [/'/, "string.invalid"],
     ],
 
     comment: [
-      [/[^\/*]+/, 'comment' ],
-      [/\/\*/,    'comment', '@push' ],    // nested comment
-      ["\\*/",    'comment', '@pop'  ],
-      [/[\/*]/,   'comment' ]
+      [/[^\/*]+/, "comment"],
+      [/\/\*/, "comment", "@push"], // nested comment
+      ["\\*/", "comment", "@pop"],
+      [/[\/*]/, "comment"],
     ],
 
     string: [
-      [/[^\\"]+/,  'string'],
+      [/[^\\"]+/, "string"],
       // [/@escapes/, 'string.escape'],
-      [/\\./,      'string.escape.invalid'],
-      [/"/,        { token: 'string.quote', bracket: '@close', next: '@pop' } ]
+      [/\\./, "string.escape.invalid"],
+      [/"/, { token: "string.quote", bracket: "@close", next: "@pop" }],
     ],
 
     whitespace: [
-      [/[ \t\r\n]+/, 'white'],
-      [/\/\*/,       'comment', '@comment' ],
-      [/\/\/.*$/,    'comment'],
+      [/[ \t\r\n]+/, "white"],
+      [/\/\*/, "comment", "@comment"],
+      [/\/\/.*$/, "comment"],
     ],
   },
 };
 ```
 
 Then we need to update the `languageDef` section in the `ls.config.ts` file by setting the `syntaxDefinitions` into the `monarchLanguage` property as shown below:
+
 ```typescript
   languageDef: {
     languageExtensionConfig: {
-      id: LANG_ID, 
+      id: LANG_ID,
       extensions: [LANG_EXTENSION],
     },
     monarchLanguage: syntaxDefinitions,
@@ -348,21 +409,22 @@ Then we need to update the `languageDef` section in the `ls.config.ts` file by s
 After adding the language syntax definitions, the final configuration file will look like the example below:
 
 _ls.config.ts_
+
 ```typescript
-import { UserConfig } from 'monaco-editor-wrapper';
+import { UserConfig } from "monaco-editor-wrapper";
 
-export const LANG_ID = 'hello';
-export const LANG_EXTENSION = 'hello';
+export const LANG_ID = "hello";
+export const LANG_EXTENSION = "hello";
 
-const LS_WS_URL = 'ws://localhost:8080/ls';
+const LS_WS_URL = "ws://localhost:8080/ls";
 
 export const lsConfig: UserConfig = {
   wrapperConfig: {
     editorAppConfig: {
-      $type: 'classic',
+      $type: "classic",
       codeResources: {
         main: {
-          text: '',
+          text: "",
           fileExt: LANG_EXTENSION,
         },
       },
@@ -379,17 +441,17 @@ export const lsConfig: UserConfig = {
   languageClientConfig: {
     languageId: LANG_ID,
     options: {
-      $type: 'WebSocketUrl',
+      $type: "WebSocketUrl",
       url: LS_WS_URL,
       startOptions: {
         onCall: () => {
-          console.log('Connected to socket.');
+          console.log("Connected to socket.");
         },
         reportStatus: true,
       },
       stopOptions: {
         onCall: () => {
-          console.log('Disconnected from socket.');
+          console.log("Disconnected from socket.");
         },
         reportStatus: true,
       },
@@ -418,8 +480,10 @@ below is the final look.
 
 Happy Coding!
 
-**Next** 
+**Next**
+
 - [Develop a Web Editor With React and Monaco with Language Server support](https://software-engineering-corner.zuehlke.com/develop-a-web-editor-with-react-and-monaco-with-language-server-support)
 
 **Previous**
+
 - [Develop your own language server](https://software-engineering-corner.zuehlke.com/develop-your-own-language-server)
