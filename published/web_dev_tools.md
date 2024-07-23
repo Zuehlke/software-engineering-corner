@@ -6,7 +6,6 @@ tags: web-development, learning, webdev, software-development
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1720188778562/-x_swn6Tg.jpg?auto=format
 publishAs: erdelyilivia
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 # What are Web Development Tools?
