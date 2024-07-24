@@ -1,4 +1,5 @@
 ---
+---
 title: Demystifying Concurrency
 subtitle: Essential Clarifications
 domain: software-engineering-corner.hashnode.dev
@@ -30,8 +31,7 @@ I think it does a good job of separating the different execution modes. However,
 
 ![actual_progress](https://imgs.xkcd.com/comics/actual_progress_2x.png align="center")
 
-It does not help that concurrency is inherently a complex topic. Each language, like C#, Java, JavaScript, Python, Rust, and Swift, has its ways and patterns, which fill entire books. 
-Then there is reactivity, a closely related topic that can be almost as complex as concurrency. Articles like [What the hell is Reactive Programming anyway?](https://dev.to/this-is-learning/what-the-hell-is-reactive-programming-anyway-31p5) with all the references mentioned, show how quickly you get into quite complicated topics. And the popular [Reactive Manifesto](https://www.reactivemanifesto.org/) demonstrates that it also extends into the distributed systems realm where the connections to concurrency get more obvious.
+It does not help that concurrency is inherently a complex topic. Each language, like C#, Java, JavaScript, Python, Rust, and Swift, has its ways and patterns, which fill entire books. Then there is reactivity, a closely related topic that can be almost as complex as concurrency. Articles like [What the hell is Reactive Programming anyway?](https://dev.to/this-is-learning/what-the-hell-is-reactive-programming-anyway-31p5) with all the references mentioned, show how quickly you get into quite complicated topics. And the popular [Reactive Manifesto](https://www.reactivemanifesto.org/) demonstrates that it also extends into the distributed systems realm where the connections to concurrency get more obvious.
 
 All this is unfortunate because having a shared understanding of concurrency is crucial for building stable and efficient software. So in this article, I want to propose a definition of concurrency specifically in the context of programming languages.
 
@@ -67,7 +67,7 @@ What I want to emphasize is that there are different types of concurrency. It do
 > 
 > [Stephen Cleary](https://www.oreilly.com/library/view/concurrency-in-c/9781492054498/ch01.html#idm45458718736760)
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1721204052382/54a74571-56c5-4d0d-87fc-5ea8e35ab9eb.png align="center")
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1721823446684/ee616e5f-38f9-4a3f-ab4c-1c49d20cbb3a.png align="center")
 
 This visualization is inspired by [Code Wala](https://codewala.net/2015/07/29/concurrency-vs-multi-threading-vs-asynchronous-programming-explained/). To make it clearer, I added examples from the article into the quadrants. It's a good time to compare it to the visualization by ByteByteGo that I included earlier in this article.
 
