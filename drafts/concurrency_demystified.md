@@ -105,12 +105,14 @@ Most popular languages are adopting the async/await model to handle asynchrony, 
 
 [![Archaeology of Asynchrony](https://cdn.hashnode.com/res/hashnode/image/upload/v1720083601709/872208b6-f5aa-438a-8aee-0bdbbbc4ca69.png align="center")](https://github.com/StephenCleary/Presentations/blob/main/Why-Async%20(Brief)/Why-Async%20-%2016.9.pptx)
 
-My definition of concurrency is aligned with the current convergence, as it aids in understanding structured concurrency and has proven applicable in various contexts I've encountered, such as distributed systems and even aligns how GitHub actions use [concurrency](https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration#usage-limits).
+My definition of concurrency is aligned with the current convergence, as it aids in understanding structured concurrency and has proven applicable in various contexts I've encountered, such as distributed systems and even aligns with the other domains for example how GitHub actions use the term [concurrency](https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration#usage-limits).
 
 # Conclusion
 
 ![](https://www.thinkindependent.com.au/wp-content/uploads/2017/03/Aint-what-you-dont-know-Image-Mark-Twain-1200x480.jpg align="center")
 
 Concurrency involves multiple flavors, including parallel programming, where tasks run simultaneously on multiple CPU cores, and asynchronous programming, where tasks are executed in a time-shared fashion, taking turns to progress during idle periods without waiting for one task to complete before starting another.
+
+Concurrency is about managing multiple tasks at the same time, whether they're running simultaneously or not.
 
 ![Concurrency Mental Model](https://cdn.hashnode.com/res/hashnode/image/upload/v1721204091692/53afe636-2de9-4fff-b11b-ca73065aa11a.png align="center")
