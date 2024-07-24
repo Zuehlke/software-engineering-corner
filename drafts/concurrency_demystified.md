@@ -14,7 +14,7 @@ I often encounter situations where Software Engineers have differing mental mode
 
 ### Breaking Down the Confusion: Towards a Common Understanding of Concurrency
 
-There are reasons for this confusion. The most important one is probably that there are multiple incompatible mental models and definitions for these terms in different contexts. For example in the context of inter-service communication async is used to describe the **non blocking** nature of communication but in the context of programming languages it is used handle async task execution in a **sequentially blocking** manner. Regardless of these incompatibility, they get mixed and matched without much thought:
+There are reasons for this confusion. The most important one is probably that there are multiple incompatible mental models and definitions for these terms in different contexts. For example, in the context of inter-service communication, async is used to describe the **non-blocking** nature of communication. But, in the context of programming languages, it is used to handle async task execution in a **sequentially blocking** manner. Regardless of this incompatibility, they get mixed and matched without much thought:
 
 [![](https://cdn.hashnode.com/res/hashnode/image/upload/v1720597890803/22affb01-7923-487e-961d-4352fb97404c.png align="center")](https://www.youtube.com/watch?v=x-MOtcat1iE)
 
