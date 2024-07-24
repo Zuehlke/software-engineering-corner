@@ -2,13 +2,13 @@
 title: Demystifying Concurrency
 subtitle: Essential Clarifications
 domain: software-engineering-corner.hashnode.dev
-tags: concurrency, asynchronous, async, multithreading, , opinion-pieces, programming, developer, learning, general-advice, software-development, programming-tips, software-engineering, computer-science
+tags: concurrency, asynchronous, async, multithreading, opinion-pieces, programming, developer, learning, general-advice, software-development, programming-tips, software-engineering, computer-science
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1721214359400/b5d75350-8c3f-4392-840b-a96520ab9f94.jpeg
 publishAs: tiju
 hideFromHashnodeCommunity: false
 saveAsDraft: true
 --- 
-I often encounter situations where Software Engineers have differing mental models of concurrency. To make matters worse, there are terms that are used (almost) synonymously, like async and parallel. But also definitions for [Data parallelism](https://en.wikipedia.org/wiki/Data_parallelism) and [Task parallelism](https://en.wikipedia.org/wiki/Task_parallelism), [Implicit parallelism](https://en.wikipedia.org/wiki/Implicit_parallelism) and [Explicit parallelism](https://en.wikipedia.org/wiki/Explicit_parallelism) that hint to multiple kinds of concurrency. There is a wealth of content and numerous definitions on this topic, but I have yet to find a single explanation or definition that clearly delineates the differences. Most explanations only add to the confusion, and even the best ones remain somewhat unclear.
+I often encounter situations where Software Engineers have differing mental models of concurrency. To make matters worse, there are terms that are used (almost) synonymously, like async and parallel. But also definitions for [Data parallelism](https://en.wikipedia.org/wiki/Data_parallelism) and [Task parallelism](https://en.wikipedia.org/wiki/Task_parallelism), [Implicit parallelism](https://en.wikipedia.org/wiki/Implicit_parallelism) and [Explicit parallelism](https://en.wikipedia.org/wiki/Explicit_parallelism) that seem to suggest that there are multiple kinds of concurrency. There is a wealth of content and numerous definitions on this topic, but I have yet to find a single explanation or definition that clearly delineates the differences. Most explanations only add to the confusion, and even the best ones remain somewhat unclear.
 
 ![concurrency cat](https://cdn.hashnode.com/res/hashnode/image/upload/v1720043156235/4a3cefd6-4d34-47f7-8ad4-9e991bc36525.jpeg align="center")
 
@@ -71,7 +71,7 @@ What I want to emphasize is that there are different types of concurrency. It do
 
 This visualization is inspired by [Code Wala](https://codewala.net/2015/07/29/concurrency-vs-multi-threading-vs-asynchronous-programming-explained/). To make it clearer, I added examples from the article into the quadrants. It's a good time to compare it to the visualization by ByteByteGo that I included earlier in this article.
 
-My visualization emphasizes that there are two independent axes in concurrency: one differentiating between sequential and parallel, and the other between synchronous and asynchronous. More importantly, it includes async, which is often missing in definitions or explanations of concurrency. Classics like [Clean Code: A Handbook of Agile Software Craftsmanship](https://learning.oreilly.com/library/view/clean-code-a/9780136083238/), [The Pragmatic Programmer: Your Journey to Mastery](https://learning.oreilly.com/library/view/the-pragmatic-programmer/9780135956977/f_0054.xhtml), and [Concurrent Programming in Java](https://learning.oreilly.com/library/view/concurrent-programming-in/0201310090/pr01.html) (I've checked many other books and papers) do not even mention async. While there were reasons for this omission a decade ago, they are no longer relevant. With the widespread adoption of async/await in most popular languages, ignoring async is no longer justifiable. In modern definitions of concurrency, including async is essential for a complete understanding.
+I propose that concurrency includes everything highlighted in blue. My visualization shows the two main aspects of concurrency: one axis separates sequential from parallel, and the other axis separates synchronous from asynchronous. More importantly, it includes async, which is often missing in definitions or explanations of concurrency. Classics like [Clean Code: A Handbook of Agile Software Craftsmanship](https://learning.oreilly.com/library/view/clean-code-a/9780136083238/), [The Pragmatic Programmer: Your Journey to Mastery](https://learning.oreilly.com/library/view/the-pragmatic-programmer/9780135956977/f_0054.xhtml), and [Concurrent Programming in Java](https://learning.oreilly.com/library/view/concurrent-programming-in/0201310090/pr01.html) (I've checked many other books and papers) do not even mention async. While there were reasons for this omission a decade ago, they are no longer relevant. With the widespread adoption of async/await in most popular languages, ignoring async is no longer justifiable. In modern definitions of concurrency, including async is essential for a complete understanding.
 
 ![Single Threaded Concurrency?](https://cdn.hashnode.com/res/hashnode/image/upload/v1721202007780/4636cc34-a6c7-4ce0-be47-632f8f136ef1.png align="center")
 
@@ -106,9 +106,11 @@ Most popular languages are adopting the async/await model to handle asynchrony, 
 
 [![Archaeology of Asynchrony](https://cdn.hashnode.com/res/hashnode/image/upload/v1720083601709/872208b6-f5aa-438a-8aee-0bdbbbc4ca69.png align="center")](https://github.com/StephenCleary/Presentations/blob/main/Why-Async%20(Brief)/Why-Async%20-%2016.9.pptx)
 
-My definition of concurrency is aligned with the current convergence that seems to be happening, as it also aids in understanding structured concurrency and has proven applicable in various contexts I've encountered, such as distributed systems and even aligns with how GitHub actions use [concurrency](https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration#usage-limits).
+My definition of concurrency is aligned with the current convergence, as it aids in understanding structured concurrency and has proven applicable in various contexts I've encountered, such as distributed systems and even aligns how GitHub actions use [concurrency](https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration#usage-limits).
 
 # Conclusion
+
+![](https://www.thinkindependent.com.au/wp-content/uploads/2017/03/Aint-what-you-dont-know-Image-Mark-Twain-1200x480.jpg align="center")
 
 The frequent confusion surrounding concurrency among Software Engineers stems from differing mental models and definitions. Terms like "async" and "parallel" are often used interchangeably, further muddying the waters. Despite a wealth of content and definitions available, a clear, universally accepted explanation remains elusive, often leading to more confusion. Having a solid mental model of the basic concept is key to not getting lost in this already inherently complicated topic.
 
