@@ -20,7 +20,7 @@ with TypeScript and Tailwind CSS, but the principles apply to any React project.
 Let's start with the example everyone is probably familiar with: a button! The following `Button`
 component serves as our starting point:
 
-```tsx
+```typescript
 import React from "react";
 import { ComponentPropsWithRef } from "react";
 
@@ -40,7 +40,7 @@ background with some padding. This button works perfectly as a save button for e
 new feature we have to add a red delete button. The easiest and quickest method of achieving our
 goal would be to extend our `Button` component to allow `className` overwrites:
 
-```tsx
+```typescript
 import React from "react";
 import { ComponentPropsWithRef } from "react";
 import { type ClassValue, clsx } from "clsx";
@@ -72,7 +72,7 @@ being applied by removing `'p-2'` in our example, resulting in only `'p-1'`.
 
 Now, to achieve our goal of a button with a red background:
 
-```tsx
+```typescript
 <Button className="bg-red">Delete</Button>
 ```
 
@@ -92,7 +92,7 @@ One could be tempted to create a seperate component for each variant, e.g. `Succ
 First of all, the variants no longer automatically share the same functionality and base styling. Of
 course, we can fix that by creating a shared button which is used by all the variants:
 
-```tsx
+```typescript
 import React from "react";
 import { ComponentPropsWithRef } from "react";
 import { type ClassValue, clsx } from "clsx";
@@ -134,7 +134,7 @@ render tree to the previous one. If a node in this tree changes, then it will be
 DOM and replaced by the new one. It's important to note that not the DOM structure is relevant, but
 really Reacts internal tree representation. This means that if we have the following code:
 
-```tsx
+```typescript
 const RandomButton = () => {
   const someCondition = Math.random() < 0.5;
   const children = "Click me!";
@@ -155,12 +155,12 @@ This is not really a problem with a button, but imagine an accordion or an input
 
 There must be a better option, right?
 
-## Method 3: Variant Prop
+## Method 3: Using Props
 
 If we just update the props of a component, it remains in the DOM and keeps all its state. Great! A
 first attempt might look like this:
 
-```tsx
+```typescript
 import React from "react";
 import { ComponentPropsWithRef } from "react";
 import { type ClassValue, clsx } from "clsx";
@@ -200,7 +200,7 @@ offers a very simple, yet powerful API (it's literally just one function) to ach
 
 Our button can be rewritten (including our new `size` variant) as follows:
 
-```tsx
+```typescript
 import React from "react";
 import { ComponentPropsWithRef } from "react";
 import { type ClassValue, clsx } from "clsx";
@@ -271,7 +271,7 @@ sense.
 Another advantage of using `cva` is how easy it is to create compound variants. If we wanted to apply
 certain styles only when the button is both `destructive` and `large`, we can simply extend our `cva` method call:
 
-```tsx
+```typescript
 const buttonVariants = cva("text-md", {
   variants: {
     intent: {
