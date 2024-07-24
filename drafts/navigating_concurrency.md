@@ -6,6 +6,7 @@ tags: concurrency, asynchronous, async, multithreading, , opinion-pieces, progra
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1721214396092/931726f8-75c0-4f90-b985-2cfdc637c11c.jpeg
 publishAs: tiju
 hideFromHashnodeCommunity: false
+saveAsDraft: true
 --- 
 
 As described in my previous article - Demystifying Concurrency: Essential Clarifications, concurrency is evolving - it is clear that programming languages are converging on the async/await task-based pattern for handling idle time. Even new experimental languages like [Roc](https://www.roc-lang.org/tutorial#the-!-suffix) and [Gleam](https://hexdocs.pm/gleam_otp/gleam/otp/task.html#await) are adopting and improving this pattern.
