@@ -30,11 +30,10 @@ I think it does a good job of separating the different execution modes. However,
 
 ![actual_progress](https://imgs.xkcd.com/comics/actual_progress_2x.png align="center")
 
-It does not help that concurrency is inherently a complex topic. Each language, like C#, Java, JavaScript, Python, Rust, and Swift, has its own ways and patterns, which fill entire books. Then there is reactivity, a closely related topic that can be almost as complex as concurrency. Articles like [What the hell is Reactive Programming anyway?](https://dev.to/this-is-learning/what-the-hell-is-reactive-programming-anyway-31p5) with all the references mentioned, show how quickly you get into quite complicated topics. And the popular [Reactive Manifesto](https://www.reactivemanifesto.org/) demonstrates that it also extends into the distributed systems realm where the connections to concurrency get more obvious.
+It does not help that concurrency is inherently a complex topic. Each language, like C#, Java, JavaScript, Python, Rust, and Swift, has its ways and patterns, which fill entire books. 
+Then there is reactivity, a closely related topic that can be almost as complex as concurrency. Articles like [What the hell is Reactive Programming anyway?](https://dev.to/this-is-learning/what-the-hell-is-reactive-programming-anyway-31p5) with all the references mentioned, show how quickly you get into quite complicated topics. And the popular [Reactive Manifesto](https://www.reactivemanifesto.org/) demonstrates that it also extends into the distributed systems realm where the connections to concurrency get more obvious.
 
 All this is unfortunate because having a shared understanding of concurrency is crucial for building stable and efficient software. So in this article, I want to propose a definition of concurrency specifically in the context of programming languages.
-
-![standards](https://imgs.xkcd.com/comics/standards_2x.png align="center")
 
 Having a solid mental model not only helps in communicating ideas more precisely but more importantly gives you the tools to understand what others are talking about and to identify misunderstandings.
 
@@ -62,15 +61,21 @@ The next twist in this story would likely involve issues with race conditions an
 
 ### The Three Quadrants of Concurrency: A Visual Approach
 
+What I want to emphasize is that there are different types of concurrency. It doesn't matter if the work is happening at the same time or if tasks are taking turns to make progress. The best and simplest definition I found is:
+
+> "Concurrency: Doing more than one thing at a time."
+> 
+> [Stephen Cleary](https://www.oreilly.com/library/view/concurrency-in-c/9781492054498/ch01.html#idm45458718736760)
+
 ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1721204052382/54a74571-56c5-4d0d-87fc-5ea8e35ab9eb.png align="center")
 
 This visualization is inspired by [Code Wala](https://codewala.net/2015/07/29/concurrency-vs-multi-threading-vs-asynchronous-programming-explained/). To make it clearer, I added examples from the article into the quadrants. It's a good time to compare it to the visualization by ByteByteGo that I included earlier in this article.
 
-My visualization emphasizes that there are two independent axes in concurrency. But more importantly, it includes async in the definition. This is something rarely seen in definitions or explanations of concurrency. Classics like [Clean Code: A Handbook of Agile Software Craftsmanship](https://learning.oreilly.com/library/view/clean-code-a/9780136083238/), [The Pragmatic Programmer: Your Journey to Mastery](https://learning.oreilly.com/library/view/the-pragmatic-programmer/9780135956977/f_0054.xhtml), and [Concurrent Programming in Java](https://learning.oreilly.com/library/view/concurrent-programming-in/0201310090/pr01.html) (I've checked many other books and papers) do not even mention async. While there were reasons for this omission a decade ago, they are no longer relevant. With the widespread adoption of async/await in most popular languages, ignoring async is no longer justifiable. In modern definitions of concurrency, including async is essential for a complete understanding.
+My visualization emphasizes that there are two independent axes in concurrency: one differentiating between sequential and parallel, and the other between synchronous and asynchronous. More importantly, it includes async, which is often missing in definitions or explanations of concurrency. Classics like [Clean Code: A Handbook of Agile Software Craftsmanship](https://learning.oreilly.com/library/view/clean-code-a/9780136083238/), [The Pragmatic Programmer: Your Journey to Mastery](https://learning.oreilly.com/library/view/the-pragmatic-programmer/9780135956977/f_0054.xhtml), and [Concurrent Programming in Java](https://learning.oreilly.com/library/view/concurrent-programming-in/0201310090/pr01.html) (I've checked many other books and papers) do not even mention async. While there were reasons for this omission a decade ago, they are no longer relevant. With the widespread adoption of async/await in most popular languages, ignoring async is no longer justifiable. In modern definitions of concurrency, including async is essential for a complete understanding.
 
 ![Single Threaded Concurrency?](https://cdn.hashnode.com/res/hashnode/image/upload/v1721202007780/4636cc34-a6c7-4ce0-be47-632f8f136ef1.png align="center")
 
-The key is to understand that there are four distinct ways that code can be executed based on causality:
+The key is to understand that there are four distinct ways that code can be executed based on causality and **only the first one is not concurrent**:
 
 1. **Sequential and Synchronous (not Concurrent):** This is the most straightforward method of running code. Tasks are executed one after another, in a specific order. Each task must complete before the next one begins. This is how most people learn to code and how they typically conceptualize program execution. Imagine reading a book, chapter after chapter, without interruption.
     
