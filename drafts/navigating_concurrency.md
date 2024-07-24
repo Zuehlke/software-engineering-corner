@@ -8,7 +8,7 @@ publishAs: tiju
 hideFromHashnodeCommunity: false
 --- 
 
-As described in Demystifying Concurrency: Essential Clarifications, concurrency is evolving. It is clear that programming languages are converging on the async/await Task-based pattern for handling idle time. Even new experimental languages like [Roc](https://www.roc-lang.org/tutorial#the-!-suffix) and [Gleam](https://hexdocs.pm/gleam_otp/gleam/otp/task.html#await) are adopting and improving this pattern.
+As described in my previous article - Demystifying Concurrency: Essential Clarifications, concurrency is evolving - it is clear that programming languages are converging on the async/await task-based pattern for handling idle time. Even new experimental languages like [Roc](https://www.roc-lang.org/tutorial#the-!-suffix) and [Gleam](https://hexdocs.pm/gleam_otp/gleam/otp/task.html#await) are adopting and improving this pattern.
 
 ![async timeline](https://cdn.hashnode.com/res/hashnode/image/upload/v1720084949983/7137b347-2846-458a-8137-d6d04dfbfada.png align="center")
 
