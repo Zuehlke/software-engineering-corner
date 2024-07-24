@@ -1,5 +1,4 @@
 ---
----
 title: Demystifying Concurrency
 subtitle: Essential Clarifications
 domain: software-engineering-corner.hashnode.dev
