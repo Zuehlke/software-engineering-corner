@@ -112,6 +112,6 @@ My definition of concurrency is aligned with the current convergence, as it aids
 
 ![](https://www.thinkindependent.com.au/wp-content/uploads/2017/03/Aint-what-you-dont-know-Image-Mark-Twain-1200x480.jpg align="center")
 
-The frequent confusion surrounding concurrency among Software Engineers stems from differing mental models and definitions. Terms like "async" and "parallel" are often used interchangeably, further muddying the waters. Despite a wealth of content and definitions available, a clear, universally accepted explanation remains elusive, often leading to more confusion. Having a solid mental model of the basic concept is key to not getting lost in this already inherently complicated topic.
+Concurrency involves multiple flavors, including parallel programming, where tasks run simultaneously on multiple CPU cores, and asynchronous programming, where tasks are executed in a time-shared fashion, taking turns to progress during idle periods without waiting for one task to complete before starting another.
 
 ![Concurrency Mental Model](https://cdn.hashnode.com/res/hashnode/image/upload/v1721204091692/53afe636-2de9-4fff-b11b-ca73065aa11a.png align="center")
