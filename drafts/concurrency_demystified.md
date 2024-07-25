@@ -20,13 +20,13 @@ There are reasons for this confusion. The most important one is probably that th
 
 It's telling that the Wikipedia pages for [Concurrency (computer science)](https://en.wikipedia.org/wiki/Concurrency_(computer_science)) and [Asynchrony (computer programming)](https://en.wikipedia.org/wiki/Concurrency_(computer_science)) explicitly mention their context. However, even within computer science, there are different interpretations of concurrency. The most obvious contexts are programming languages and distributed systems. But there are other contexts as well, such as [Asynchronous circuits](https://en.wikipedia.org/wiki/Asynchronous_circuit) and networking.
 
-Many attempts have been made to explain the intricacies of concurrency, asynchrony, and parallel programming, with many good ones among them. However, even when a good explanation gets attention, like the talk [**Concurrency is not parallelism - The Go Programming Language**](https://go.dev/blog/waza-talk), the misleading parts, such as the confusing title, also stick with the public. This has led many to mistakenly believe that concurrency and parallelism are somehow opposites, which the talk never intended to suggest.
+Many attempts have been made to explain the intricacies of concurrency, asynchrony, and parallel programming. And there are even good ones among them. However, even when a good explanation gets attention, like the talk [**Concurrency is not parallelism - The Go Programming Language**](https://go.dev/blog/waza-talk), the misleading parts, such as the confusing title, also stick with the public. This has led many to mistakenly believe that concurrency and parallelism are somehow opposites, which the talk never intended to suggest.
 
 To add to the confusion, some popular sources contradict basic implementations in well-known languages. For example, take this recent video on YouTube from ByteByteGo:
 
 [![](https://cdn.hashnode.com/res/hashnode/image/upload/v1720600036172/359d125c-aa41-4f08-aeca-2c6bac04639b.png align="center")](https://www.youtube.com/watch?v=RlM9AfWf1WU)
 
-I think it does a good job of separating the different execution modes. However, there is a confusing and contradictory part in the third card of the preview image, which claims there is parallel computing without concurrency. However, this is exactly the scenario that data structures with the prefix "concurrent" (e.g., [ConcurrentDictionary](https://learn.microsoft.com/en-us/dotnet/api/system.collections.concurrent.concurrentdictionary-2?view=net-8.0) in C# or [ConcurrentHashMap](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentHashMap.html) in Java) are optimized for. How much is this definition worth if it contradicts how concurrency is interpreted by some of the most popular languages?
+I think it does a good job of separating the different execution modes. However, there is a confusing and contradictory part in the third card of the preview image, which claims there is parallel computing without concurrency. This is exactly the scenario that data structures with the prefix "concurrent" (e.g., [ConcurrentDictionary](https://learn.microsoft.com/en-us/dotnet/api/system.collections.concurrent.concurrentdictionary-2?view=net-8.0) in C# or [ConcurrentHashMap](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentHashMap.html) in Java) are optimized for. How much is this definition worth if it contradicts how concurrency is interpreted by some of the most popular languages?
 
 ![actual_progress](https://imgs.xkcd.com/comics/actual_progress_2x.png align="center")
 
@@ -66,7 +66,7 @@ What I want to emphasize is that there are different types of concurrency. It do
 > 
 > [Stephen Cleary](https://www.oreilly.com/library/view/concurrency-in-c/9781492054498/ch01.html#idm45458718736760)
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1721823446684/ee616e5f-38f9-4a3f-ab4c-1c49d20cbb3a.png align="center")
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1721941456507/525ffe6e-7526-4c20-b671-601c950457ae.png align="center")
 
 This visualization is inspired by [Code Wala](https://codewala.net/2015/07/29/concurrency-vs-multi-threading-vs-asynchronous-programming-explained/). To make it clearer, I added examples from the article into the quadrants. It's a good time to compare it to the visualization by ByteByteGo that I included earlier in this article.
 
@@ -115,4 +115,4 @@ Concurrency involves multiple flavors, including parallel programming, where tas
 
 Concurrency is about managing multiple tasks at the same time, whether they're running simultaneously or not.
 
-![Concurrency Mental Model](https://cdn.hashnode.com/res/hashnode/image/upload/v1721204091692/53afe636-2de9-4fff-b11b-ca73065aa11a.png align="center")
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1721941973270/c3516530-4567-4993-a8c0-d0aa408d5e20.png align="center")
