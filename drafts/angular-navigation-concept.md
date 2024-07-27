@@ -81,6 +81,7 @@ The `canceledNavigationResolution` defines what should happen, when a navigation
 ![Replace cancel navigation resolution](https://cdn.hashnode.com/res/hashnode/image/upload/v1722065513474/2O3ePgS4x.png?auto=format)
 - With `computed (we use)` the Angular router tries to restore the state from before the cancelled navigation.
 This will leave the browser stack intact.
+![Compute cancel navigation resolution](https://cdn.hashnode.com/res/hashnode/image/upload/v1722069229276/5UVJe5ylq.png?auto=format)
 
 ## How we skip pages
 Now that we know how the Angular router works, we can get to work.
@@ -142,12 +143,14 @@ export const guard = (childRoute) => {
     // since we only want to run the logic for the leaf routes, we just allow it as long as it is not a leaf route
     return true;
   }
-  const navigationService = inject(NavigationService);
   const data = childRoute.data;
-  if (navigationService.isNavigatingToFlowSourcePage()) {
-    const isFlowSourcePage = (data['flowSourcePage'] as boolean) ?? false;
-    if (isFlowSourcePage) {
-      navigationService.navigatedToFlowSourcePage();
+  if(!data) {
+    return true;
+  }
+  const navigationService = inject(NavigationService);
+  if (navigationService.isNavigatingToTarget()) {
+    if(navigationService.isNavigationTarget(data)) {
+      navigationService.navigatedToTarget();
       return true;
     }
     navigationService.navigateAfterSkipped();
@@ -161,24 +164,35 @@ And the `navigationService` does the following:
 ```ts
 import { Location } from '@angular/common';
 
+type NavigationTarget = 'flow-source-page';
+
 @Injectable({ providedIn: 'root' })
 export class NavigationService {
-  private skip = -1;
-  private navigatingToFlowSourcePage = false;
-  constructor(private location: Location, private router: Router) {}
+  private location = inject(Location);
+  private router = inject(Router);
   
-  navigateToFlowSourcePage() {
+  private skip = -1;
+  private navigationTarget?: NavigationTarget;
+  
+  navigateTo(target: NavigationTarget) {
     this.skip = -1;
-    this.navigatingToFlowSourcePage = true;
+    this.navigationTarget = target;
     this.location.historyGo(this.skip);
   }
-
-  isNavigatingToFlowSourcePage() {
-    return this.navigatingToFlowSourcePage;
+  
+  isNavigatingToTarget() {
+    return !this.navigationTarget;
   }
 
-  navigatedToFlowSourcePage() {
-    this.navigatingToFlowSourcePage = false;
+  isNavigationTarget(routeData: Data) {
+    if(this.navigationTarget === 'flow-source-page') {
+      return (routeData['flowSourcePage'] as boolean) ?? false;
+    }
+    throw new Error('isNavigationTarget should never be called when navigationTarget is undefined');
+  }
+
+  navigatedToTarget() {
+    this.navigationTarget = undefined;
     this.skip = -1;
   }
 
@@ -206,7 +220,202 @@ So we can infer, that `NavigationSkipped` is dispatched at the very end when we 
 ![Computed in action](https://cdn.hashnode.com/res/hashnode/image/upload/v1722068727369/6SYDEYFNA.png?auto=format)
 
 ## How to skip finished flows
+Having implemented the previous solution, it is actually quite easy.
+We have to detect a finished flow and if we detect one, we can just trigger the `navigateTo('flow-source-page')` function.
+To detect if a flow is finished, we simply look at the URL of the previous page.
+If the previous URL starts with a predefined string, then the navigation is allowed.
+```ts
+{
+    path: '/flow/a',
+    component: FlowAComponent,
+    pathMatch: 'full',
+    data: { flowBasePath: 'flow' }
+}
+```
+We define this predefined string in the routes.
+Let us look at an example.
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1722071295528/TaspIfzJU.png?auto=format)
+In this case the previous URL **must** start with `/flow`.
+So navigating from `/detail/a` to `/flow/b` will trigger `navigateTo('flow-source-page)`.
 
+```ts
+export const flowPageActivationGuard: CanActivateFn = (route) => {
+  const router = inject(Router);
+  const navigationService = inject(NavigationService);
+
+  const flowBasePath = route.data.flowBasePath as string;
+  if (!flowBasePath) {
+    throw new Error("'flowBasePath' is not defined but must be provided via routes!");
+  }
+
+  // the path from which the navigation to this route originated
+  const originUrl = router.routerState.snapshot.url;
+
+  // the navigation from/to flow pages is only allowed from another flow page
+  const isFlowPageActivationAllowed = originUrl.includes(flowBasePath);
+  // if a navigation request outside a flow targets a flow page, we navigate to the latest flowSourcePage, instead of the requested page
+  if (!isFlowPageActivationAllowed) {
+    navigationService.navigateTo('flow-source-page');
+    return false;
+  }
+  return isFlowPageActivationAllowed;
+};
+```
+
+You might have already seen, that the navigation from `/start` to `/flow/a` would also trigger the redirect.
+To fix this issue, we added a flow start page, which has the same URL, but is not protected by the guard.
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1722071659339/TzTs5_dJc.png?auto=format)
+It automatically redirects on `ngOnInit`.
+This also came in handy for flows, where there might be different start screens, dependening on the account setup.
+
+But again, we introduced another issue.
+Right now if we want to do `location.back()` on `/flow/a`, we will never reach `/start` since `/flow/start` does the automatic redirect.
+You might think doing `replaceUrl: true` would solve the problem.
+Yes it solves the `location.back()` problem.
+But imagine you navigate back from `/flow/a` to `/start` and then you want to navigate forward again using the browser buttons.
+This will not work, since the next page is `/flow/a` and this one is protected by the guard.
+
+So we had to dig deep and find a solution for this.
+The solution we landed on is in my opinion a bit of a hack.
+We flag those flow start pages with a `backSkip: true` attribute.
+```ts
+{
+    path: '/flow/start',
+    component: FlowStartComponent,
+    pathMatch: 'full',
+    data: { backSkip: true }
+}
+```
+But the question is how do we detect if it is a back navigation or not?
+Well we had to dig deep.
+And deep we dug. We landed on a solution, that is very Angular specific.
+```ts
+// TODO: verify that this is correct
+type NavigationType = 'back' | 'forward' | 'imperative';
+
+@Injectable({ providedIn: 'root' })
+export class NavigationDirectionService {
+  private window = inject(WINDOW);
+  private router = inject(Router);
+  
+  private currentPageId = 0;
+  
+  constructor() {
+    this.setupListener();
+  }
+  
+  getNavigationType() {
+    if(this.router.getCurrentNavigation().trigger !== 'popstate') {
+      return 'imperative';
+    }
+    if(this.currentPageId < this.getRouterPageId()) {
+      return 'back';
+    }
+    return 'forward';
+  }
+  
+  private getRouterPageId() {
+    return this.window.history.state.ɵrouterPageId;
+  }
+  
+  private setupListener() {
+    this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(()=>{
+      this.currentPageId = this.getRouterPageId();
+    })
+  }
+}
+```
+
+Now you might ask what the f*ck is `ɵrouterPageId`.
+Well Angular keeps track of the current router page id.
+You can check it out [in the Angular state manager](https://github.com/angular/angular/blob/main/packages/router/src/statemanager/state_manager.ts#L220).
+I will not go too much into detail, because honestly I think I understand what happens there, but I am not entirely sure.
+But important to know is, the `ɵrouterPageId` is updated during the `RoutesRecognized` event, which is called before `GuardsCheck`.
+
+**So how can we use this to our advantage?**
+
+Since we have the `currentPageId` we just compare it to the already updated `ɵrouterPageId`.
+If it `ɵrouterPageId` is smaller than `currentPageId`, we know it is a back navigation.
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1722076281194/vqj69u35t.png?auto=format)
+
+However, important to note is, this only works with `popstate`.
+Imperative navigations (navigations that were made with `router.navigate`) will always be forward navigations.
+
+Alright, now we know how to detect back navigations.
+We can now update the `guard` from before.
+```ts
+export const guard = (childRoute) => {
+  ...
+  if (navigationSerivce.isBackNavigation() && (data['backSkip'] as boolean) ?? false) {
+    navigationService.navigateAfterSkipped();
+    return false;
+  }
+  return true;
+}
+
+@Injectable({ providedIn: 'root' })
+export class NavigationService {
+  private navigationDirectionService = inject(NavigationDirectionService);
+  ...
+  isBackNavigation() {
+    return this.navigationDirectionService.getNavigationType() === 'back';
+  }
+}
+```
+
+And just like this, our second requirement is fulfilled.
+Super simple right?
+
+## Navigate back to hub pages
+This is the simplest of all requirements.
+We already have the logic, to navigate to flow source pages.
+Let us use this code and extend it to work with hub pages.
+
+```ts
+import { Location } from '@angular/common';
+
+type NavigationTarget = 'flow-source-page' | 'hub-page';
+
+@Injectable({ providedIn: 'root' })
+export class NavigationService {
+  ...
+  
+  isNavigationTarget(routeData: Data) {
+    if(this.navigationTarget === 'flow-source-page') {
+      return (routeData['flowSourcePage'] as boolean) ?? false;
+    }
+    if(this.navigatedToTarget() === 'hub-page') {
+      return (routeData['hubPage'] as boolean) ?? false;
+    }
+    throw new Error('isNavigationTarget should never be called when navigationTarget is undefined');
+  }
+  
+  ...
+}
+```
+
+Then we just have to mark the hub pages in the route data.
+```ts
+{
+    path: '/hubpage',
+    component: HubPageComponent,
+    pathMatch: 'full',
+    data: { hubPage: true }
+}
+```
+
+And to trigger the navigation to the hub page, we just have to call `navigationService.navigateTo('hub-page')`.
+It just works.
+
+# Conclusion
 
 # Known Issues
-We did not find a solution to one problem. 
+Remember how `NavigationSkipped` works?
+Well yeah me too, and we have one big problem because of it.
+Let us have a look at this example.
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1722077740906/XsuS1iHDB.png?auto=format)
+We want to navigate from the last `/a` to the `hub page`.
+But we get stuck at the first `/a`.
+The reason for this is, it is the same URL, and our config says we should ignore those cases.
+Meaning, the guards are not called anymore and only `NavigationSkipped` is dispatched.
+So far i have not found a solution to this problem.
