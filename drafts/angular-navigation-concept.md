@@ -40,7 +40,7 @@ And our app has some interesting requirements.
 This means when a flow is finished, the user is not allowed to navigate back into it.
 So somehow those flow pages need to be skipped during the back navigation.
 ![Visualization of skipping flow pages](https://cdn.hashnode.com/res/hashnode/image/upload/v1722059744888/mdVaUkM3A.png?auto=format)
-- When a user cancels during this flow, he should be navigated back to the page where the flow was started from.
+- When a user cancels during a flow, he should be navigated back to the page where the flow was started from.
 ![Visualization of canceling flows](https://cdn.hashnode.com/res/hashnode/image/upload/v1722059816861/jupymtMEm.png?auto=format)
 - For some reason, the menu is grayed out on certain detail pages.
 What should happen, when you click on the grayed out menu, you should be redirected to a page where it is active again.
@@ -101,10 +101,111 @@ To put this into words, when we want to navigate back, we have to check on every
 If it should be skipped, we go one more page back and do it all over again.
 
 Now let us remind what our requirements are:
-- Navigate over finished flows
 - Navigate back to flow source pages on cancel
+- Navigate over finished flows
 - Navigate back to a hub page where the menu is active
 
+## How to skip to the flow source page
+Having the concept from before in our mind, how do we decide whether a page is a flow source page?
+The easiest solution we found was setting a boolean in the data of the route itself.
+```ts
+{
+    path: '/',
+    component: Component,
+    pathMatch: 'full',
+    data: { flowSourcePage: true }
+}
+```
+This means, every time a new page is added, which starts a flow, this `flowSourcePage` boolean needs to be added to the new route.
+
+The other difficulty is, where do we add the logic, which decides if we need to skip pages or just navigate back.
+The best way we came up with, was adding a global canActivateChildren guard.
+This guard will run every time a navigation is done.
+```ts
+export const appRoutes: Routes = [
+  {
+    path: '',
+    canActivateChildren: [guard],
+    children: [
+      ...all routes
+    ]
+  }
+]
+```
+The guard can now override navigation requests and initiate the iteration.
+It should look something like this:
+```ts
+export const guard = (childRoute) => {
+  if (childRoute.component === null) {
+    // our app relies heavily on nested routes
+    // so the canActivateChildren is being called multiple times per navigation
+    // since we only want to run the logic for the leaf routes, we just allow it as long as it is not a leaf route
+    return true;
+  }
+  const navigationService = inject(NavigationService);
+  const data = childRoute.data;
+  if (navigationService.isNavigatingToFlowSourcePage()) {
+    const isFlowSourcePage = (data['flowSourcePage'] as boolean) ?? false;
+    if (isFlowSourcePage) {
+      navigationService.navigatedToFlowSourcePage();
+      return true;
+    }
+    navigationService.navigateAfterSkipped();
+    return false;
+  }
+  return true;
+}
+```
+
+And the `navigationService` does the following:
+```ts
+import { Location } from '@angular/common';
+
+@Injectable({ providedIn: 'root' })
+export class NavigationService {
+  private skip = -1;
+  private navigatingToFlowSourcePage = false;
+  constructor(private location: Location, private router: Router) {}
+  
+  navigateToFlowSourcePage() {
+    this.skip = -1;
+    this.navigatingToFlowSourcePage = true;
+    this.location.historyGo(this.skip);
+  }
+
+  isNavigatingToFlowSourcePage() {
+    return this.navigatingToFlowSourcePage;
+  }
+
+  navigatedToFlowSourcePage() {
+    this.navigatingToFlowSourcePage = false;
+    this.skip = -1;
+  }
+
+  navigateAfterSkipped() {
+    this.router.events
+      .pipe(
+        filter((e) => e instanceof NavigationSkipped),
+        take(1)
+      )
+      .subscribe(() => {
+        this.skip -= 1;
+        this.location.historyGo(this.skip);
+      });
+  }
+}
+```
+
+To cancel just `navigationService.navigateToFlowSourcePage()` has to be called.
+
+I think the only function that needs explaining is `navigateAfterSkipped`.
+The reason why `this.location.historyGo(this.skip);` can not be called immediately, is because a navigation is already in progress.
+And the `computed` cancel handler of the Angular router is not finished yet.
+Remember from before `NavigationSkipped` is only dispatched if the url that should be activated is the same.
+So we can infer, that `NavigationSkipped` is dispatched at the very end when we are back on the original page, and exactly then we want to navigate further back.
+![Computed in action](https://cdn.hashnode.com/res/hashnode/image/upload/v1722068727369/6SYDEYFNA.png?auto=format)
+
+## How to skip finished flows
 
 
 # Known Issues
