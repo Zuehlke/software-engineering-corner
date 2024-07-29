@@ -1,8 +1,19 @@
-**Disclaimer: This is a general concept, but the code snippets and some issue we solved were Angular specific**
+---
+title: Advanced Routing
+domain: software-engineering-corner.hashnode.dev
+tags: javascript, web-development, frontend-development, angular
+cover: https://cdn.hashnode.com/res/hashnode/image/stock/unsplash/EOq4Dj33G_U/upload/72980e96faa8075e8392477062a3fd78.jpeg?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp&quot
+publishAs: mikaruch
+saveAsDraft: true
+hideFromHashnodeCommunity: false
+---
+
+**Disclaimer: This is a general concept, but the code snippets and some issue we solved were Angular specific.**
+
 # TLDR;
-As with almost everything, using the standards from the browsers, is resulting in the best and easiest implementation for our internal navigation.
-Previously we managed our own navigation stack within the stack, but it got out of sync when the native browser back/forward feature were used.
-Moving to `location.back()` helped us resolve this issue and made the implementation a lot simpler.
+As with almost everything, using the browser standards is resulting in the best and easiest implementation for our application routing.
+Previously we managed our own navigation page stack in memory, but it got out of sync when the native browser back/forward feature were used.
+Moving to `location.back()` and `location.go(-x)` helped us solve this issue and made the implementation a lot more streamlined.
 
 # What was our goal
 We have already refactored our navigation concept twice.
@@ -14,20 +25,18 @@ When someone did a back navigation, the page was just popped from our internal s
 But here also laid our issue, while our app knows that it was a back navigation, the browser pushed the new page on the native browser stack instead.
 This happened, since under the hood we just called `router.navigate(['/a'], { state: { isBackNavigation: true } })`.
 
-We quickly found out, that the stack gets out of sync quite quickly, since many people use the native back over the `back` button within the website.
+We quickly found out, that the stack gets out of sync quite quickly, since many people prefer using the native back button over the `back` button from within the website.
 
 ## Why refactor it a third time?
 The honest answer is, we did not necessarily need to do it.
 Yes we could not use Angular's scroll restoration feature and the state got out of sync.
-But since most of our users use the native app, where those sync issue never happen, it was not a big annoyance.
-
-_The issue does not happen in native apps, because there are no browser back and forward navigations. There we control everything ourselves_
+But we just built our own scroll restoration, and the syncing problem affected only browsers.
+Since we are mobile first, this did not really bother us either.
 
 Now you might ask, why did we still do it?
 To me, it just sounded fun and challenging, so I pushed for it.
-And I was in luck, our PO was on holidays, so no one objected.
-And of course, we have something called developers pride.
-And our pride was a bit hurt, since we still had bug with it.
+And I was in luck, our PO was on holidays, so no one was there to object.
+There is the developers pride as well, and our pride was a bit hurt, since we had the previously mentioned bugs.
 I do not know, it might just be a me thing though.
 
 Jokes aside for a moment, I was able to convince my peers, because it promises great simplification in our code, and we can start using certain Angular features again.
@@ -37,31 +46,32 @@ To come up with a better solution, we first had to understand what requirements 
 And our app has some interesting requirements.
 
 - We have a concept we call flows, in these flows the user mostly does some sort of mutation to his data.
-This means when a flow is finished, the user is not allowed to navigate back into it.
+This means when a flow is finished, the user is not allowed to navigate back into the flow.
 So somehow those flow pages need to be skipped during the back navigation.
 ![Visualization of skipping flow pages](https://cdn.hashnode.com/res/hashnode/image/upload/v1722059744888/mdVaUkM3A.png?auto=format)
-- When a user cancels during a flow, he should be navigated back to the page where the flow was started from.
+- When a user cancels a flow, he should be navigated back to the page where the flow was started from.
 ![Visualization of canceling flows](https://cdn.hashnode.com/res/hashnode/image/upload/v1722059816861/jupymtMEm.png?auto=format)
-- For some reason, the menu is grayed out on certain detail pages.
-What should happen, when you click on the grayed out menu, you should be redirected to a page where it is active again.
-Those pages are called hub pages.
+- And, for some reason, the menu is grayed out on detail pages.
+So when you click on the grayed out menu, you should be redirected to a page where it is active.
+Those pages where the menu is active are called hub pages.
 ![Visualization of navigating to the previous hub page](https://cdn.hashnode.com/res/hashnode/image/upload/v1722060612577/rZmlmL735.png?auto=format)
 
 ## Basic navigation
 The basic back and forward navigation is quite simple.
-We do the forward navigation as we do it normally.
+We do the forward navigation the same way we have always done it.
 ```ts
 router.navigate(['next']);
 ```
-And the back navigation simply does
+And for the back navigation we simply do
 ```ts
 location.back();
 ```
-This works perfectly, as long as there is no Angular guard stopping this navigation as it does for the flows.
+This works perfectly, as long as there is no Angular guard stopping the navigation.
 
 ## Theory about Angular Router
 To understand how we can skip pages, we first have to have a look at the Angular router events.
 When any navigation starts, the `NavigationStart` is dispatched.
+
 A `NavigationEnd` event is dispatched, when a navigation ended successfully.
 
 A `NavigationCancel` event is dispatched, when a navigation gets cancelled.
@@ -71,11 +81,11 @@ And a `NavigationSkipped` event is dispatched, when a navigation gets skipped (d
 This happens when the same URL should be loaded as the current.
 The behavior can be changed with following router configuration: `onSameUrlNavigation`.
 - `ignore (default/we use)`: The navigation will be skipped without calling `NavigationStart`
-- `reload`: If the same URL is loaded, the whole navigation process is done. It will end with `NavigationEnd` or `NavigationCancel`.
+- `reload`: If the same URL is loaded, the whole navigation process is executed starting with `NavigationStart`. It will end with `NavigationEnd` or `NavigationCancel`.
 
 ![Angular Navigation Events](https://cdn.hashnode.com/res/hashnode/image/upload/v1722062002425/LaxtWYtW4.png?auto=format)
 
-We had to adapt one more router config.
+We had to adapt following router config.
 The `canceledNavigationResolution` defines what should happen, when a navigation gets cancelled.
 - With `replace (default)` the cancelled navigation URL will be overriden with the origin.
 ![Replace cancel navigation resolution](https://cdn.hashnode.com/res/hashnode/image/upload/v1722065513474/2O3ePgS4x.png?auto=format)
@@ -86,7 +96,7 @@ This will leave the browser stack intact.
 ## How we skip pages
 Now that we know how the Angular router works, we can get to work.
 The theory is clear, if we want to get back to a page in the history, and we can not maintain our own page stack, we have to iterate over the previous pages.
-It should work like this:
+It should work like the following:
 ```ts
 location.back();
 canActivate(-2);
@@ -121,7 +131,7 @@ This means, every time a new page is added, which starts a flow, this `flowSourc
 
 The other difficulty is, where do we add the logic, which decides if we need to skip pages or just navigate back.
 The best way we came up with, was adding a global canActivateChildren guard.
-This guard will run every time a navigation is done.
+This guard will run every time a navigation is executed.
 ```ts
 export const appRoutes: Routes = [
   {
@@ -210,13 +220,13 @@ export class NavigationService {
 }
 ```
 
-To cancel just `navigationService.navigateToFlowSourcePage()` has to be called.
+To cancel `navigationService.navigateToFlowSourcePage()` has to be called.
 
 I think the only function that needs explaining is `navigateAfterSkipped`.
-The reason why `this.location.historyGo(this.skip);` can not be called immediately, is because a navigation is already in progress.
+The reason why `this.location.historyGo(this.skip);` can not be called immediately, is because a navigation is at that point still in progress.
 And the `computed` cancel handler of the Angular router is not finished yet.
-Remember from before `NavigationSkipped` is only dispatched if the url that should be activated is the same.
-So we can infer, that `NavigationSkipped` is dispatched at the very end when we are back on the original page, and exactly then we want to navigate further back.
+Remember from before `NavigationSkipped` is only dispatched if the url that should be activated is the same as the current.
+So now we know, that `NavigationSkipped` is dispatched at the very end when we are back on the original page, and exactly then we want to navigate further back.
 ![Computed in action](https://cdn.hashnode.com/res/hashnode/image/upload/v1722068727369/6SYDEYFNA.png?auto=format)
 
 ## How to skip finished flows
@@ -224,6 +234,7 @@ Having implemented the previous solution, it is actually quite easy.
 We have to detect a finished flow and if we detect one, we can just trigger the `navigateTo('flow-source-page')` function.
 To detect if a flow is finished, we simply look at the URL of the previous page.
 If the previous URL starts with a predefined string, then the navigation is allowed.
+The predefined string is added in the data of the route.
 ```ts
 {
     path: '/flow/a',
@@ -232,9 +243,8 @@ If the previous URL starts with a predefined string, then the navigation is allo
     data: { flowBasePath: 'flow' }
 }
 ```
-We define this predefined string in the routes.
 Let us look at an example.
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1722071295528/TaspIfzJU.png?auto=format)
+![Example of trying to navigate to a finished flow](https://cdn.hashnode.com/res/hashnode/image/upload/v1722071295528/TaspIfzJU.png?auto=format)
 In this case the previous URL **must** start with `/flow`.
 So navigating from `/detail/a` to `/flow/b` will trigger `navigateTo('flow-source-page)`.
 
@@ -256,7 +266,6 @@ export const flowPageActivationGuard: CanActivateFn = (route) => {
   // if a navigation request outside a flow targets a flow page, we navigate to the latest flowSourcePage, instead of the requested page
   if (!isFlowPageActivationAllowed) {
     navigationService.navigateTo('flow-source-page');
-    return false;
   }
   return isFlowPageActivationAllowed;
 };
@@ -264,19 +273,19 @@ export const flowPageActivationGuard: CanActivateFn = (route) => {
 
 You might have already seen, that the navigation from `/start` to `/flow/a` would also trigger the redirect.
 To fix this issue, we added a flow start page, which has the same URL, but is not protected by the guard.
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1722071659339/TzTs5_dJc.png?auto=format)
+![Flow Start Page](https://cdn.hashnode.com/res/hashnode/image/upload/v1722071659339/TzTs5_dJc.png?auto=format)
 It automatically redirects on `ngOnInit`.
-This also came in handy for flows, where there might be different start screens, dependening on the account setup.
+This also came in handy for flows, where there might be different start screens, depending on the users account setup.
 
 But again, we introduced another issue.
-Right now if we want to do `location.back()` on `/flow/a`, we will never reach `/start` since `/flow/start` does the automatic redirect.
+Right now if we want to do `location.back()` on `/flow/a`, we will never reach `/start` page, since `/flow/start` automatically redirects to `/flow/a`.
 You might think doing `replaceUrl: true` would solve the problem.
 Yes it solves the `location.back()` problem.
 But imagine you navigate back from `/flow/a` to `/start` and then you want to navigate forward again using the browser buttons.
 This will not work, since the next page is `/flow/a` and this one is protected by the guard.
 
 So we had to dig deep and find a solution for this.
-The solution we landed on is in my opinion a bit of a hack.
+The solution we landed on is in my opinion a bit of a hack, but it works.
 We flag those flow start pages with a `backSkip: true` attribute.
 ```ts
 {
@@ -287,7 +296,7 @@ We flag those flow start pages with a `backSkip: true` attribute.
 }
 ```
 But the question is how do we detect if it is a back navigation or not?
-Well we had to dig deep.
+Well now we had to dig even deeper.
 And deep we dug. We landed on a solution, that is very Angular specific.
 ```ts
 // TODO: verify that this is correct
@@ -331,12 +340,13 @@ Well Angular keeps track of the current router page id.
 You can check it out [in the Angular state manager](https://github.com/angular/angular/blob/main/packages/router/src/statemanager/state_manager.ts#L220).
 I will not go too much into detail, because honestly I think I understand what happens there, but I am not entirely sure.
 But important to know is, the `ɵrouterPageId` is updated during the `RoutesRecognized` event, which is called before `GuardsCheck`.
+This means, if we check the direction in a guard, we have the new page id in `ɵrouterPageId` and the old one in `currentPageId`.
 
 **So how can we use this to our advantage?**
 
 Since we have the `currentPageId` we just compare it to the already updated `ɵrouterPageId`.
 If it `ɵrouterPageId` is smaller than `currentPageId`, we know it is a back navigation.
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1722076281194/vqj69u35t.png?auto=format)
+![How to detect the navigation direction](https://cdn.hashnode.com/res/hashnode/image/upload/v1722076281194/vqj69u35t.png?auto=format)
 
 However, important to note is, this only works with `popstate`.
 Imperative navigations (navigations that were made with `router.navigate`) will always be forward navigations.
@@ -405,17 +415,22 @@ Then we just have to mark the hub pages in the route data.
 ```
 
 And to trigger the navigation to the hub page, we just have to call `navigationService.navigateTo('hub-page')`.
-It just works.
+And that is it, we did it and it works almost flawless.
 
-# Conclusion
 
 # Known Issues
 Remember how `NavigationSkipped` works?
 Well yeah me too, and we have one big problem because of it.
 Let us have a look at this example.
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1722077740906/XsuS1iHDB.png?auto=format)
+![Navigation that breaks our navigation concept](https://cdn.hashnode.com/res/hashnode/image/upload/v1722077740906/XsuS1iHDB.png?auto=format)
 We want to navigate from the last `/a` to the `hub page`.
 But we get stuck at the first `/a`.
 The reason for this is, it is the same URL, and our config says we should ignore those cases.
 Meaning, the guards are not called anymore and only `NavigationSkipped` is dispatched.
-So far i have not found a solution to this problem.
+So far I have not found a solution to this problem.
+
+# Conclusion
+I am not sure if what I did here can be solved easier.
+I just know, that we were able to make our implementation with this new concept much easier and more streamlined.
+In the end we use the Angular router to our advantage and let it do a lot of the work, we just use the platform.
+Let me know in the comments, if there are other and better approaches of solving these requirements.
