@@ -6,6 +6,7 @@ cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1719718605895/bv2LfyF
 publishAs: cjayashantha
 seriesSlug: editor-with-ls-support
 hideFromHashnodeCommunity: false
+saveAsDraft: true
 ---
 
 # Create a custom web editor using Monaco and Language Server Protocol (LSP)

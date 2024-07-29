@@ -6,24 +6,28 @@ cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1720940174478/yjy4aJt
 publishAs: NipunaMarcusZuhlke
 seriesSlug: editor-with-ls-support
 hideFromHashnodeCommunity: false
---- 
+saveAsDraft: true
+---
+
 # Develop a Web Editor for your DSL using React and Monaco Editor library
 
 As of now all most all of the world services are moving to cloud and becoming digitalize. Even the countries which were behind this digital transformation was hurried in to digitalization because of the past pandemic. Well this is not that relevant to the topic i’m gonna discuss here but.. well.. at least we are trying to move code editing tool we used to have in our local machine to be a online service where many features like code editing and code review can be easily integrated in to more collaborative space.
 
 ### What is Monaco Editor?
+
 Monaco Editor is the code editor that powers Visual Studio Code, known for its performance, rich API, and extensive feature set. It offers:
 
-- Syntax highlighting 
+- Syntax highlighting
 - IntelliSense (auto-completion)
 - Code navigation (go to definition, find references)
 - Multiple language support
 
 ### What is Language Server Protocol (LSP) ?
+
 LSP is a protocol used to provide language-specific features in a language-agnostic way. It decouples the editor from the language-specific logic, allowing you to support various languages with minimal effort. LSP offers:
 
 - Syntax checking
-- Auto-completions 
+- Auto-completions
 - Hover information
 - Code formatting
 - Refactorings
@@ -39,15 +43,17 @@ Also the Language Server that is used for this example is available in this repo
 [HelloLS Websocket Launcher](https://github.com/NipunaMarcus/hellols/tree/websocket-launcher)
 
 ### Prerequisites
+
 Before start, we will be needing below items
 
 - node (v20.10.0)
 - npm (v10.2.3)
 - Basic knowledge of TypeScript
 - Basic knowledge of React
-- Java (v17) 
+- Java (v17)
 
 ## Architecture
+
 Architecture of the Web Editor will be as below.
 
 ![Architecture](https://cdn.hashnode.com/res/hashnode/image/upload/v1717742534914/GzLBzavNE.png?auto=format)
@@ -56,15 +62,16 @@ You can follow below steps to implement the Web editor.
 
 ### Step 1: Create new React project
 
-To do this you can use few methods and the simplest one whould be 
+To do this you can use few methods and the simplest one whould be
 use [create react app](https://create-react-app.dev/) tool.
 
 But who likes doing things easily right, so let's do it the good old hard way.
-Let's first create a node app. You can use the below command. 
+Let's first create a node app. You can use the below command.
 
 ```shell
 npm init
 ```
+
 This will generate the package.json for the module ( learn more about it [here](https://docs.npmjs.com/cli/v8/commands/npm-init#examples)). As for the file structure you can create as below.
 
 ![File Structure](https://cdn.hashnode.com/res/hashnode/image/upload/v1718590023215/43PvPy3Pf.png?auto=format)
@@ -72,54 +79,57 @@ This will generate the package.json for the module ( learn more about it [here](
 Above structure will be our first file and folder structure for the project.
 
 ### Step 2: Install Monaco related dependencies and setup the app.
+
 Let's have a look at the package.json.
 
 ```json
 {
-    "name": "web-editor",
-    "version": "0.0.1",
-    "license": "MIT",
-    "scripts": {
-        "build": "tsc & vite build",
-        "dev": "vite"
-    },
-    "devDependencies": {
-        "@types/react": "^18.2.43",
-        "@types/react-dom": "^18.2.17",
-        "@vitejs/plugin-react": "^4.3.0",
-        "typescript": "^5.4.5",
-        "vite": "^5.2.11"
-    },
-    "dependencies": {
-        "monaco-editor": "0.36.1",
-        "monaco-languageclient": "5.0.1",
-        "react": "^17.0.2",
-        "react-dom": "^17.0.2",
-        "react-monaco-editor": "^0.52.0",
-        "vscode-ws-jsonrpc":"^3.3.1",
-        "vscode-languageclient": "8.0.2"
-    }
+  "name": "web-editor",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc & vite build",
+    "dev": "vite"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.3.0",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11"
+  },
+  "dependencies": {
+    "monaco-editor": "0.36.1",
+    "monaco-languageclient": "5.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-monaco-editor": "^0.52.0",
+    "vscode-ws-jsonrpc": "^3.3.1",
+    "vscode-languageclient": "8.0.2"
+  }
 }
 ```
+
 If you look at the `Dev Dependencies` you can see that we are using react 18, typescript and packager will be Vite.
 
 if you look at the `Dependencies` you can see that there are five dependencies which are related to Monaco Editor implementation.
 
-* [monaco-editor](https://www.npmjs.com/package/monaco-editor): Core library for Monaco.
-* [monaco-languageclient](https://www.npmjs.com/package/monaco-languageclient): Language Server client impl for Monaco.
-* [react-monaco-editor](https://www.npmjs.com/package/react-monaco-editor)
-* [vscode-ws-jsonrpc](https://www.npmjs.com/package/vscode-ws-jsonrpc): Websocket-JsonRPC interface by vscode.
-* [vscode-languageclient](https://www.npmjs.com/package/vscode-languageclient): interface between monaco languageclient and vscode base language client which will map json rpc messages.
+- [monaco-editor](https://www.npmjs.com/package/monaco-editor): Core library for Monaco.
+- [monaco-languageclient](https://www.npmjs.com/package/monaco-languageclient): Language Server client impl for Monaco.
+- [react-monaco-editor](https://www.npmjs.com/package/react-monaco-editor)
+- [vscode-ws-jsonrpc](https://www.npmjs.com/package/vscode-ws-jsonrpc): Websocket-JsonRPC interface by vscode.
+- [vscode-languageclient](https://www.npmjs.com/package/vscode-languageclient): interface between monaco languageclient and vscode base language client which will map json rpc messages.
 
 Next lets create the files needed for the `Vite` builder and `TypeScripts`. For these I'm not going to explain in detail as these are pretty much common knowledge for `Vite` and `TypeScript`. You can find related files here.
-* [vite.config.ts](https://github.com/NipunaMarcus/web-editor/blob/websocket-ls/vite.config.ts)
-* [tsconfig.json](https://github.com/NipunaMarcus/web-editor/blob/websocket-ls/tsconfig.json)
+
+- [vite.config.ts](https://github.com/NipunaMarcus/web-editor/blob/websocket-ls/vite.config.ts)
+- [tsconfig.json](https://github.com/NipunaMarcus/web-editor/blob/websocket-ls/tsconfig.json)
 
 Now the basic setting up of the application is done let's move to next step.
 
 ### Step 3: Implement websocket client
 
-After implementation folder structure in source root `src` will look similar to below. 
+After implementation folder structure in source root `src` will look similar to below.
 
 ![Updated Project](https://cdn.hashnode.com/res/hashnode/image/upload/v1718606152263/_RsMPwEhX.png?auto=format)
 
@@ -131,41 +141,42 @@ import { CloseAction, ErrorAction } from "vscode-languageclient";
 import { MonacoLanguageClient } from "monaco-languageclient";
 import { HELLO_LANG_ID } from "../editor/constants";
 
-const LS_WS_URL = 'ws://localhost:8080/ls'
+const LS_WS_URL = "ws://localhost:8080/ls";
 export function connectToLs() {
-    return new Promise((resolve, reject) => {
-        const webSocket = new WebSocket(LS_WS_URL);
+  return new Promise((resolve, reject) => {
+    const webSocket = new WebSocket(LS_WS_URL);
 
-        webSocket.onopen = () => {
-            console.log('LS WebSocket connection Open');
-            const socket = toSocket(webSocket);
-            const reader = new WebSocketMessageReader(socket);
-            const writer = new WebSocketMessageWriter(socket);
-            const languageClient = new MonacoLanguageClient({
-                name: `${HELLO_LANG_ID} Language Client`,
-                clientOptions: {
-                    documentSelector: [HELLO_LANG_ID],
-                    errorHandler: {
-                        error: () => ({ action: ErrorAction.Continue }),
-                        closed: () => ({ action: CloseAction.DoNotRestart })
-                    }
-                },
-                connectionProvider: {
-                    get: () => Promise.resolve({reader, writer}),
-                },
-            });
+    webSocket.onopen = () => {
+      console.log("LS WebSocket connection Open");
+      const socket = toSocket(webSocket);
+      const reader = new WebSocketMessageReader(socket);
+      const writer = new WebSocketMessageWriter(socket);
+      const languageClient = new MonacoLanguageClient({
+        name: `${HELLO_LANG_ID} Language Client`,
+        clientOptions: {
+          documentSelector: [HELLO_LANG_ID],
+          errorHandler: {
+            error: () => ({ action: ErrorAction.Continue }),
+            closed: () => ({ action: CloseAction.DoNotRestart }),
+          },
+        },
+        connectionProvider: {
+          get: () => Promise.resolve({ reader, writer }),
+        },
+      });
 
-            languageClient.start();
-            resolve(languageClient);
-        }
+      languageClient.start();
+      resolve(languageClient);
+    };
 
-        webSocket.onerror = (error) => {
-            console.log('LS WebSocket connection Open');
-            reject(error);
-        }
-    });
+    webSocket.onerror = (error) => {
+      console.log("LS WebSocket connection Open");
+      reject(error);
+    };
+  });
 }
 ```
+
 here if you look at the connectToLs() function you can see that we have Opened a WebSocket connection for the LS_WS_URL.
 
 ```typescript
@@ -179,19 +190,20 @@ const socket = toSocket(webSocket);
 const reader = new WebSocketMessageReader(socket);
 const writer = new WebSocketMessageWriter(socket);
 const languageClient = new MonacoLanguageClient({
-    name: `${HELLO_LANG_ID} Language Client`,
-    clientOptions: {
-        documentSelector: [HELLO_LANG_ID],
-        errorHandler: {
-            error: () => ({ action: ErrorAction.Continue }),
-            closed: () => ({ action: CloseAction.DoNotRestart })
-        }
+  name: `${HELLO_LANG_ID} Language Client`,
+  clientOptions: {
+    documentSelector: [HELLO_LANG_ID],
+    errorHandler: {
+      error: () => ({ action: ErrorAction.Continue }),
+      closed: () => ({ action: CloseAction.DoNotRestart }),
     },
-    connectionProvider: {
-        get: () => Promise.resolve({reader, writer}),
-    },
- });
+  },
+  connectionProvider: {
+    get: () => Promise.resolve({ reader, writer }),
+  },
+});
 ```
+
 Then once we have define the LanguageClient with appropriate reader and writer we can start the Language Client as below.
 
 ```typescript
@@ -203,6 +215,7 @@ Then the Most important question is where do we initialize the WebSocket connect
 So initialization of the WebSocket can be done inside the EditorDidMount() callback function which explained in the next step.
 
 ### Step 4: Implement the code editor
+
 let's look at the `editor` component.
 
 ```typescript
@@ -212,33 +225,34 @@ import { HELLO_LANG_ID, MONACO_OPTIONS } from "./constants";
 import { createModel, registerLanguage } from "./util";
 
 export function Editor() {
-    const editorDidMount: EditorDidMount = (editor) => {
-        registerLanguage();
-        const model = createModel();
-        editor.setModel(model);
-        connectToLs();
-        editor.focus();
-    };
+  const editorDidMount: EditorDidMount = (editor) => {
+    registerLanguage();
+    const model = createModel();
+    editor.setModel(model);
+    connectToLs();
+    editor.focus();
+  };
 
-    return (
-        <div>
-            <div>
-                <h3>Web Editor</h3>
-            </div>
-            <div>
-                <MonacoEditor
-                    width="100%"
-                    height="80vh"
-                    language={HELLO_LANG_ID}
-                    theme="vs"
-                    options={MONACO_OPTIONS}
-                    editorDidMount={editorDidMount}
-                />
-            </div>
-        </div>
-    );
+  return (
+    <div>
+      <div>
+        <h3>Web Editor</h3>
+      </div>
+      <div>
+        <MonacoEditor
+          width="100%"
+          height="80vh"
+          language={HELLO_LANG_ID}
+          theme="vs"
+          options={MONACO_OPTIONS}
+          editorDidMount={editorDidMount}
+        />
+      </div>
+    </div>
+  );
 }
 ```
+
 Above is the minimal configurations for the basic Monaco Editor with Language Server support.
 
 If you check the component function you can see that it returning `<MonacoEditor />` component. So there are few props you need to pass into the MonacoEditor component to get it working and among those you have very basic props which are `width` `height` `language` `theme` `options` and `editorDidMount`.
@@ -257,50 +271,59 @@ If we look in to `editorDidMount` callback implementation you can see there are 
 
 ```typescript
 const editorDidMount: EditorDidMount = (editor) => {
-    registerLanguage();
-    const model = createModel();
-    editor.setModel(model);
-    connectToLs();
-    editor.focus();
+  registerLanguage();
+  const model = createModel();
+  editor.setModel(model);
+  connectToLs();
+  editor.focus();
 };
 ```
+
 Let's go through those called functions one by one.
 
 **registerLanguage()**: This function will perform a crucial configuration for the Monaco editor which is registering our Custom Language.
+
 ```typescript
 export const registerLanguage = () => {
-    monaco.languages.register({
-        id: HELLO_LANG_ID,
-        aliases: [HELLO_LANG_ID],
-        extensions: [HELLO_LANG_EXTENSION]
-    });
-}
+  monaco.languages.register({
+    id: HELLO_LANG_ID,
+    aliases: [HELLO_LANG_ID],
+    extensions: [HELLO_LANG_EXTENSION],
+  });
+};
 ```
+
 This will tell Monaco editor to not to rely on defined languages and treat all source as a custom language. If developer didn’t do this Monaco editor won’t send messages using Monaco Language Client.
 
 **createModel()**: This will create a new Monaco Editor model with a file URI. If we didn’t create this model Monaco will use the default model which uses a in memory file URI which will cause issues when comes to LS.
+
 ```typescript
-export const createModel = (): monaco.editor.ITextModel => monaco.editor.createModel(
-    '',
+export const createModel = (): monaco.editor.ITextModel =>
+  monaco.editor.createModel(
+    "",
     HELLO_LANG_ID,
-    monaco.Uri.parse(
-        `file:///hello-${Math.random()}${HELLO_LANG_EXTENSION}`
-    )
-);
+    monaco.Uri.parse(`file:///hello-${Math.random()}${HELLO_LANG_EXTENSION}`)
+  );
 ```
+
 this is just a mock file URI that has been added but in case you have actual file URI please add that path. Our WebEditor is not implemented to actually handle files on the file system.
 
 Next set the created editor model to mounted editor as below.
+
 ```typescript
 editor.setModel(model);
 ```
+
 After preparing the Monaco Editor, the next step is to connect the Monaco Language Client to WebSocket. This is where we call the connectToLs().
+
 ```typescript
 connectToLs();
 ```
+
 That's it for the implementation
 
 ### Step 5: Starting up the language server and web editor
+
 Well That’s it. Now it should be ready to go.
 
 You can build the Frontend using below command
@@ -308,28 +331,35 @@ You can build the Frontend using below command
 ```shell
 npm run build
 ```
+
 And you can run the Frontend using below command
+
 ```shell
 npm run dev
 ```
+
 to start the language server use below command
 
 ```shell
 java -jar target/hellols-0.0.1-SNAPSHOT.jar
 ```
+
 Here is the final look.
 
 ![React Web Editor](https://cdn.hashnode.com/res/hashnode/image/upload/v1719713207751/GDUJ_Rq1a.jpeg?auto=format)
 
 ## Important Facts
-* Make sure you run the backend ( The Language Server ) and then run the frontend as WebSocket client is initialize as soon as the Monaco Editor mount to the DOM.
-* If you are bumping the Monaco library versions or any related library version make sure you bump surrounding libraries to compatible versions.
-* Check the LSP4J version and Monaco-LanguageClient version implements the same LSP specification.
+
+- Make sure you run the backend ( The Language Server ) and then run the frontend as WebSocket client is initialize as soon as the Monaco Editor mount to the DOM.
+- If you are bumping the Monaco library versions or any related library version make sure you bump surrounding libraries to compatible versions.
+- Check the LSP4J version and Monaco-LanguageClient version implements the same LSP specification.
 
 Happy Coding!
 
-**Next** 
+**Next**
+
 - [Develop a Web Editor With Angular and Monaco with Language Server support](https://software-engineering-corner.zuehlke.com/develop-a-web-editor-with-angular-and-monaco-with-language-server-support)
 
 **Previous**
+
 - [Develop your own language server](https://software-engineering-corner.zuehlke.com/develop-your-own-language-server)

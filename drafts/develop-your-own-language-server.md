@@ -6,20 +6,23 @@ cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1720939748891/bKimfsP
 publishAs: NipunaMarcusZuhlke
 seriesSlug: editor-with-ls-support
 hideFromHashnodeCommunity: false
---- 
+saveAsDraft: true
+---
 
 # Develop your own Language Server
 
 If you have ever worked with an IDE for programming languages like Java or C#, you have probably experience that how easy it is to write program with auto-completion feature ( some might know it as intellisense ) provided by the IDE which help you to type code faster and select suitable functions to complete your task, or find the usage of the particular function, or go to the implementation of a function just by clicking on it or rename a method safely without having to change everywhere it is used, by yourself. As most of the IDEs support multiple languages these language features are injected into the IDE via the language plugin which is written by the language developers or IDE developers (or whoever love that language).
 
 ## So where is this so-called language server fit in?
+
 If you are a developer (Obviously) you might have a favorite IDE that you always use. And it is really easy if you can develop software from different languages on top of the same IDE that you like. So various developers choose IDEs that they like and stick to it. Because of that language developers always trying to add language feature support for all most all the IDEs and that is hard because every IDE has their own way (Architecturally) of supporting languages features. So it is very difficult for the language developers to support every IDE because they need a big effort to develop language plugin for each. It will be really easy if they have a protocol for supporting language features which are supported by every IDE. So Microsoft came up with an idea of [Language Server Protocol(LSP)](https://microsoft.github.io/language-server-protocol/) when they developing the Visual Studio Code. Well for your information Language server is not a new concept it was there for a long time only it was not standardized. You can find more details about the language server in [Protocol History](https://github.com/Microsoft/language-server-protocol/wiki/Protocol-History). So the purpose of language server protocol is to save the language developer from the misery of writing different implementations to support the same language in various IDEs by developing just one implementation to support a language for all IDEs.
 
 ## What is Language Server Protocol (LSP) ?
+
 LSP is a protocol used to provide language-specific features in a language-agnostic way. It decouples the editor from the language-specific logic, allowing you to support various languages with minimal effort. LSP offers:
 
 - Syntax checking
-- Auto-completions 
+- Auto-completions
 - Hover information
 - Code formatting
 - Refactorings
@@ -38,9 +41,10 @@ Full Backend implementation can be found at the below GitHub repo
 > **Note**: Here the LSP4J version is bumped to 0.21.0. If you want you can go higher. Previously we were using LSP4J 0.9.0.
 
 ## Prerequisites
+
 Before start, we will be needing below installed in your local environment
 
-- Java (v17) 
+- Java (v17)
 - IDE of your choice that supports Java
 
 > **Note**: You can choose another language as well but you need to find LSP implementation for each of those languages and then implementation would be similar except for the websocket part as I'm going to use Springboot for that.
@@ -48,11 +52,12 @@ Before start, we will be needing below installed in your local environment
 Now you can follow along with below steps to impelement a basic Language Server.
 
 ### Step 1: Language Server Implementation
+
 For the Language server implementation here I'm using [LSP4J](https://github.com/eclipse-lsp4j/lsp4j). As you can see there are three classes available under the language-server module. So these three classes are added to implement the three main interfaces provided by LSP4J as to the breakdown given in the LSP specification to support general cases, language features, and workspace management.
 
-* HelloLanguageServer.java — This class implements the interface available in the LSP4J called LanguageServer which contains the general functionality of the language server such as initializing the language server, shutting down the language server and so on … Also if the LS needs to publish the diagnostics(compilation error and semantic errors) back to the Client (in our case VSCode plugin) LS needs to be client aware. To make the LS client aware we need to implement the LanguageClientAware interface which allows LS to get the language client instance.
-* HelloTextDocumentService.java — This class implements the interface available in the LSP4J called TextDocumentService which contains the language features and the text synchronization endpoints explained in the LSP spec.
-* HelloWorkspaceService.java — This class implements the interface available in the LSP4J called WorkspaceService which contains the workspace features such as workspace symbol and configuration changes…
+- HelloLanguageServer.java — This class implements the interface available in the LSP4J called LanguageServer which contains the general functionality of the language server such as initializing the language server, shutting down the language server and so on … Also if the LS needs to publish the diagnostics(compilation error and semantic errors) back to the Client (in our case VSCode plugin) LS needs to be client aware. To make the LS client aware we need to implement the LanguageClientAware interface which allows LS to get the language client instance.
+- HelloTextDocumentService.java — This class implements the interface available in the LSP4J called TextDocumentService which contains the language features and the text synchronization endpoints explained in the LSP spec.
+- HelloWorkspaceService.java — This class implements the interface available in the LSP4J called WorkspaceService which contains the workspace features such as workspace symbol and configuration changes…
 
 Let's get to the implementation.
 
@@ -60,7 +65,7 @@ If you look at the `pom.xml` of the project you can see that there is a dependen
 
 ```xml
 <dependency>
-    <groupId>org.eclipse.lsp4j</groupId>                  
+    <groupId>org.eclipse.lsp4j</groupId>
     <artifactId>org.eclipse.lsp4j</artifactId>
     <version>${lsp4j.version}</version>
 </dependency>
@@ -229,6 +234,7 @@ public class HelloTextDocumentService implements TextDocumentService {
 
 }
 ```
+
 If you have a look at the override methods you can see that implementing `TextDocumentService` class from LSP4J given us interfaces for all the language features except for workspace management. As I only implementing a sample completion I have implemented only the completion method keeping other methods returning empty.
 
 So if you look at the implementation I’m just creating a `CompletionItem` and filling it with what type of completion item is this and what is the text to be inserted and description and label of the completion item.
@@ -307,16 +313,20 @@ This is the class that handles the JSON RPC messages send from the WebEditor Web
 ### Step 3 - Build and Run the Language Server
 
 You can build the project using bellow command in your terminal as we are using Maven for the builder.
+
 ```shell
 mvn clean install
 ```
+
 to run the program, after building, you can use below command.
+
 ```shell
 java -jar target/hellols-0.0.1-SNAPSHOT.jar
 ```
 
 Happy Coding!
 
-**Next** 
+**Next**
+
 - [Develop a Web Editor With React and Monaco with Language Server support](https://software-engineering-corner.zuehlke.com/develop-a-web-editor-with-react-and-monaco-with-language-server-support)
 - [Develop a Web Editor With Angular And Monaco with Language Server support](https://software-engineering-corner.zuehlke.com/develop-a-web-editor-with-angular-and-monaco-with-language-server-support)
