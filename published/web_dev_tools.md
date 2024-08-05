@@ -2,7 +2,7 @@
 title: Web Development Tools
 subtitle: "Products that can support web developers"
 domain: software-engineering-corner.zuehlke.com
-tags: web-development, learning, webdev, software-development
+tags: web-development, learning, webdev, software-development, devtools
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1720188778562/-x_swn6Tg.jpg?auto=format
 publishAs: erdelyilivia
 hideFromHashnodeCommunity: false
