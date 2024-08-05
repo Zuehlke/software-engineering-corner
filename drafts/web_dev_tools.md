@@ -15,8 +15,8 @@ Finding the right tool can be tricky. There are multiple factors that we should 
 Complexity, security, scalability, cost, supported programming languages, and platform support are the factors recommended to check in advance.
 
 ## Chrome Developer Tools
-When we generally speak about dev tools, the first that comes into everybody’s mind is the Chrome Developer Tools.
-And that’s all right. That is one of the most known and used WebDevTools.
+When we generally speak about dev tools, the first that comes into everybody’s mind are the Chrome Developer Tools.
+And that’s all right. That is one of the most known and used web dev tools.
 The tool has a set of web editing and debugging utilities built into the Google Chrome browser.
 It helps view and update webpages and styles, debug Javascript code, and optimize websites from within the browser.
 It has a tool called Lighthouse, which can perform audits on web pages and auto-generate reports based on performance, accessibility, progressive web apps (PWA), and SEO. Chrome DevTool can also perform local overrides and has web design features, like its inspect element tool or color picker.
@@ -28,12 +28,14 @@ Sometimes, we want to change the style or content of a page and immediately see 
 Using the Chrome Dev Tools, you can directly accomplish this from the browser, without page refreshes or re-compilation, either by targeting HTML elements using the built-in console or by selecting the element in the HTML panel.
 CSS prototyping is also possible. For this, you just need to select the element in the DOM tree and add declarations to it in the styles panel. 
 We can change font color, size, and type. We can change background and button colors, images, and so on.
+
 #### Debugging Javascript
 The dev tools provide a solution for debugging a web application. 
 Hence, all our javascript code is accessible and can be debugged directly in the browser. 
 That allows us to quickly locate problems, dig deeper into code, and debug and test out new code directly in the browser. 
 It has all the classical features you need from a debugger, like stepping over or into function calls or seeing values of specific variables. 
 And everything without log statements. We can also edit code on the fly without switching to an editor or IDE.
+
 #### Running JS and viewing messages in the Console
 It is also possible to run code directly in the built-in console or send messages to the console for testing purposes. 
 When we quickly want to try some code snippets, method calls, or testing selectors, the console comes in handy.
@@ -47,7 +49,7 @@ The user interface is customizable and offers the possibility to split the view 
 
 ### Some noteworthy features
 #### Command Palette
-The most important key combination is Shift+Command+P (Mac) or Ctrl + Shift+ P (Windows /Linux), which brings up the Command Palette.
+The most important key combination is Shift+Command+P (Mac) or Ctrl+Shift+P (Windows /Linux), which brings up the Command Palette.
 From here, we have access to all functionality within VS Code, including keyboard shortcuts for the most common operations.
 For example, we can run editor commands, open files, search for symbols, or see a quick view of a file, all in the same interactive window. 
 VS Code already has many commands out of the box, like save file, format file, git commands, and many others. 
@@ -58,7 +60,8 @@ The commands typically are grouped by topic, for instance, all the commands that
 
 #### Zen Mode
 Zen Mode is a distraction-free view. All extra toolboxes and bars in the window are removed, allowing developers to focus completely on the code.
-Center-align the code possible as well, for an experience a view like a document editor.
+Center-align the code is possible as well, for an experience a view like a document editor.
+
 #### Split view
 The split view is helpful if we need to compare two files or want to see both of them at the same time.
 
@@ -129,24 +132,17 @@ It can create simple animations and clickable prototypes and supports cloud coll
 
 ### Feature overview
 - Sketch's vector tools are pixel-perfect and precise, specifically for high-quality graphic design. It makes it simpler to craft detailed icons and illustrations.
-
 - Artboards allow designers to create multiple boards into a single sketch file, streamlining the web page and iOS app design process by organizing different screens and states efficiently. 
 It also provides scrolling artboards that simulate the scrolling experience of web pages and iOS interfaces, helping create realistic prototypes and mockups.
-
 - Symbols in Sketch enable reusable elements, such as buttons and icons, ensuring consistency across the designed web application or mobile design. 
 At the same time, it allows rapid updates across multiple instances.
-
 - CSS can be generated directly from design elements, speeding up the transition from design to development.
-
 - Sketch supports real-time collaboration, which allows the team members to work together synchronously on the same sketch file and enhances workflow efficiency.
-
 - The extensive plugin ecosystem is user-friendly and can fulfill specific design needs, from automating repetitive tasks to integrating with social media platforms.
-
 - Sketch's export options are robust, allowing designers to output designs in multiple formats, resolutions, and configurations, which is crucial when preparing designs for web pages, apps, and social media.
-
 - It integrates with other tools like InVision, Zeplin, and Jira. 
-It provides an API, which allows custom plugin development to expand its functionalities further. 
-A wide range of available add-ons can significantly extend the utility, enabling users to integrate with additional services and automate various aspects of the design flow.
+- It provides an API, which allows custom plugin development to expand its functionalities further. 
+- A wide range of available add-ons can significantly extend the utility, enabling users to integrate with additional services and automate various aspects of the design flow.
 
 ## +1 Github
 We also have Github on the list. It is an open-source, cloud-based Git repository hosting service. 
