@@ -9,7 +9,7 @@ hideFromHashnodeCommunity: false
 saveAsDraft: true
 --- 
 
-Do you remember when Dr. Carter, in the previous article "Demystifying Concurrency: Essential Clarifications," explained the difference between `Async` and `Parallel`? I think this story ended before touching on a crucial point. Even if you understand the core concepts and therefore have a better base than most people, it's easy to get into trouble with the implementation details. Like most explanations, it gave the impression that understanding the core concepts would be enough to master concurrency. Most people know this isn't true. But as we already established, it's not easy to **not** get drawn into detailed, complicated rabbit holes that sometimes lead to even more confusion. So, let's dive deeper into the problem and try to find best practices for these issues.
+Do you remember when Dr. Carter, in the previous article "Demystifying Concurrency: Essential Clarifications," explained the difference between `Async` and `Parallel`? I think the story ended before addressing a crucial point. Even if you understand the core concepts and have a better grasp of concurrency than most people, it's easy to run into problems with the implementation details. Like many explanations, it suggested that understanding the core concepts would be enough to master concurrency. Most people know this isn't true. But as we've already established, it's not easy to avoid getting drawn into detailed, complicated rabbit holes that can lead to even more confusion. So, let's dive deeper into the problem and try to find the best practices for these issues.
 
 Let's start with the simplest part: the quadrant that does not include concurrency.
 
