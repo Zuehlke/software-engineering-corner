@@ -77,7 +77,7 @@ async Task GetOneAsync(List<string> result, string url)
 }
 ```
 
-Now that we are in C#, let's also dive into the `ConfigureAwait(false)` topic, as I have rarely seen a good explanation of it. There are talks that improve year after year, like [Correcting Common Async/Await Mistakes](https://www.youtube.com/watch?v=GQYd6MWKiLI) (let's hope it becomes excellent in a few years), but most explanations are quite poor. The common reason given for using `ConfigureAwait(false)` is that it reduces overhead, improves performance, and results in fewer or no deadlocks. While this is true, I have never seen a good visualization of it. First of all, it's important to understand that this configures where the continuation after the await gets executed. Intuitively, this would be preferable on the same context/thread as the initial task.
+Now that we are in C#, let's also dive into the `ConfigureAwait(false)` topic, as I have rarely seen a good explanation of it. There are talks that improve year after year, like [Correcting Common Async/Await Mistakes](https://www.youtube.com/watch?v=GQYd6MWKiLI) (let's hope it becomes excellent in a few years), but most explanations are quite bad or overly complicated. The common reason given for using `ConfigureAwait(false)` is that it reduces overhead, improves performance, and results in fewer or no deadlocks. While this is true, I have never seen a good visualization of it. First of all, it's important to understand that this configures where the continuation after the await gets executed. Intuitively, this would be preferable on the same context/thread as the initial task.
 
 In most cases, it doesn't really matter for performance reasons which thread you continue on.
 
@@ -87,7 +87,7 @@ But if you have another task that occupies the thread for a long time, this beco
 
 ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723413840141/6bfd1047-e956-4fc2-ba3a-0ceb0a34e7ea.png align="center")
 
-And that is also why it deadlocks when you block synchronously:
+And that is why it deadlocks when you block synchronously, because you block the same thread by waiting on the continuation:
 
 ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723413972567/8e47088a-1bef-4202-8a46-60039df50f58.png align="center")
 
