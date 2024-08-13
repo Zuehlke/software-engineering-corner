@@ -126,7 +126,7 @@ export const setupCounter = async (element: HTMLButtonElement) => {
 };
 ```
 
-I did leave out the await for `setCounter(0)`. Many might argue that this should add the EventListener immediately. But this is not true; it executes synchronously until it hits the Promise, even if it takes several function calls down the call stack. So the async boundary is at the red line, not the blue line:
+I did leave out the await for `setCounter(0)`. Many might argue that this should add the EventListener immediately. But this is not true; it executes synchronously until it hits the Promise, even if it would take several function calls down the call stack. If the Promise is only executed conditionally this will lead to codepaths that run completely synchronously. So the async boundary is at the red line, not the blue line:
 
 ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1723417533649/736e9b69-1c48-489b-b97c-7810477c553f.png align="center")
 
