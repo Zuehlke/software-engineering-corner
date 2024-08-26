@@ -52,7 +52,7 @@ print("End of test")
 4. We pretend the Bluetooth connection terminates and we remove all references to the `MessageLayer` 
 
 When you execute this code, you will see the following log output (or similar):
-```
+```text
 Sending: 0
 End of test
 Sending: 1
@@ -72,7 +72,7 @@ Now let’s talk about solutions.
 
 ## Solution #1: Cancel the task 
 The simplest option is to cancel the task from the outside before removing the reference to the `MessageLayer`. By adding `messageLayer?.task?.cancel()` before (4.) above we achieve the desired behaviour:
-```
+```text
 Sending: 1
 Deinit
 End of test
