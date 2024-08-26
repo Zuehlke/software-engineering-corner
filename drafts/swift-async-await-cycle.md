@@ -1,6 +1,6 @@
 ---
 title: The retain cycle of Swift async/await
-subtitle: How to inadvertantly extend object lifetime
+subtitle: How to inadvertently extend object lifetime
 domain: software-engineering-corner.hashnode.dev
 tags: swift, swift-concurrency, ios, macos, watchos, tvos, visionos, apple, vapor, bluetooth, concurrency, asynchronous, async, await, async-await, developer, learning, software-development, programming-tips, software-engineering, code, coding
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1724686396858/4k_l7bLPj.jpg?auto=format
