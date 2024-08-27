@@ -14,7 +14,7 @@ But first, some context: We were running a Swift/Vapor server which controls a g
 
 ![Real project setup](https://cdn.hashnode.com/res/hashnode/image/upload/v1724685658047/IBP4odcIg.png?auto=format)
 
-When executing tests in sequence (i.e. not individually), they would sometimes fail because of a communication failure. Curiously, most messages were still transmitted successfully. After some digging, we realised that on failure, the tests that executed *before* had one thing in common: they terminated the connection forcefully. This was fine by itself but led us to think that somehow the tests were not executed in isolation.
+When executing tests in sequence (i.e. not individually), they would sometimes fail because of a Bluetooth communication failure. Curiously, most messages were still transmitted successfully. After some digging, we realised that on failure, the tests that executed *before* had one thing in common: they terminated the connection forcefully. This was fine by itself but led us to think that somehow the tests were not executed in isolation.
 
 We were now looking at the server logs across test-executions and realised that we couldn’t match the failed transmission to calls made in the current test. So maybe it was a transmission from an earlier test… but why would it still be executing? At this point we narrowed the problem down to a single class/function. It looked something like the following (very simplified):
 
