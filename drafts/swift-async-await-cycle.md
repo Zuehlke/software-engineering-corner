@@ -10,7 +10,7 @@ saveAsDraft: true
 --- 
 In a recent project, we observed one of those bugs that lets every developer jubilate. It was only happening rarely and seemed to manifest in varying ways. 
 
-But first some context: We were running a Swift/Vapor server which controls a generic Zühlke Bluetooth emulation dongle (connected via USB) in order to emulate medical devices. This talks to an iOS app via Bluetooth (running on a real phone) that is under test by a custom (medical) XCTest-based test framework. In summary, quite some moving parts.
+But first, some context: We were running a Swift/Vapor server which controls a generic Zühlke Bluetooth emulation dongle (connected via USB) in order to emulate medical devices. This talks to an iOS app via Bluetooth (running on a real phone) that is under test by a custom (medical) XCTest-based test framework. In summary, quite some moving parts.
 
 ![Real project setup](https://cdn.hashnode.com/res/hashnode/image/upload/v1724685658047/IBP4odcIg.png?auto=format)
 
@@ -66,7 +66,7 @@ However, here we are simply in the middle of executing a method on the `MessageL
 
 ![Visualisation of the retain cycle](https://cdn.hashnode.com/res/hashnode/image/upload/v1724685726758/0b1QCVlR4.png?auto=format)
 
-In the real project, the `Task` iterated over an `AyncSequence` that acted as a message queue (that’s why we needed it in the first place) and the `sendMessage` method implemented a timeout mechanism that reported a failure after 750ms. Since the connection of the preceding test was force-terminated, the message-sending never finished, keeping the `MessageLayer`  alive, which in turn resulted in the timeout being triggered while the next test was already executing.
+In the real project, the `Task` iterated over an `AsyncSequence` that acted as a message queue (that’s why we needed it in the first place) and the `sendMessage` method implemented a timeout mechanism that reported a failure after 750ms. Since the connection of the preceding test was force-terminated, the message-sending never finished, keeping the `MessageLayer`  alive, which in turn resulted in the timeout being triggered while the next test was already executing.
 
 Now let’s talk about solutions.
 
@@ -119,4 +119,4 @@ The nice thing is that the background task management is completely self contain
 ## Wrap Up
 As you can see, it is quite simple to inadvertently extend the lifetime of objects with long-running async functions. We implemented solution #2 to solve our issue successfully. 
 
-We hope we saved you some hours of debugging and you enjoyed diving into this issue as much as we did. If you can avoid spawning a new `Task` all together, you never run into this problem. That’s obviously preferred. However, in case you cannot get around it, you now have a solution at hand.
+We hope we saved you some hours of debugging and that you enjoyed diving into this issue as much as we did. If you can avoid spawning a new `Task` altogether, you never run into this problem. That’s obviously preferred. However, in case you cannot get around it, you now have a solution at hand.
