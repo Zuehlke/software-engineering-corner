@@ -1,7 +1,7 @@
 ---
 title: Building observability into the NHS COVID-19 app backend serving 22 million users
 domain: software-engineering-corner.hashnode.dev
-tags: AWS, S3, CloudFront, DynamoDB, CloudWatch, Athena, NHS, COVID, COVID-19, logs, logging, structured, JSON, observability, dashboards, monitoring, traceability, telemetry, Java, Kotlin, engineering, DHSC, UK, government
+tags: AWS, Amazon S3, dynamodb, logging, json, monitoring, Java, Kotlin, engineering
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1725649342389/ngYMk-jc_.jpg?auto=format
 publishAs: KevZ
 hideFromHashnodeCommunity: false
