@@ -74,17 +74,14 @@ In the end, we concluded that a recent change to the wording and formatting of t
         "major": 4,
         "minor": 3,
         "patch": 0,
-        "sem_ver": "4.3
-        .0
-        "
+        "sem_ver": "4.3.0"
       },
       "os": "Android",
       "os_version": "29"
     },
   },
   "metadata": {
-    "timestamp": "2021-11-24T17:32:27.2
-    97448Z", 
+    "timestamp": "2021-11-24T17:32:27.297448Z", 
     "name":"TestResultNotFound",
     "category": "Info",
     "aws_request_id": "7b4ffa4e-04e0-4747-a2d9-e4d8e50a059e"
