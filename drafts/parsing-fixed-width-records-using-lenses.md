@@ -22,7 +22,7 @@ Let’s say you have a record that contains the following fields:
 
 A fixed-width record for this could look like:
 
-```
+```text
 000123Alice Doe           19840929
 000124Bob Doe             19840929
 ```
@@ -258,6 +258,68 @@ public record PersonRecord(Integer id, String name, LocalDate dob) {
     }
   }
 }
+```
+
+Another scenario we haven't covered yet is how to deal with collection of items in fixed-width records.
+How would we expand the employee record to include a list of projects they worked on?
+
+```text
+000123Alice Doe           1984092902Project A Project B 
+```
+
+Lists are typically prefixed with the number of items they contain, providing enough information to loop through the corresponding fixed-width columns.
+Introducing a `RepeatableFixedWidthLens<T>` will allow us to encapsulate the necessary logic for handling repeated fields.
+
+```java
+public class RepeatableFixedWidthLens<T> {
+  private final int columnWidth;
+  private final Function<ReadContext, T> reader;
+  private final BiConsumer<WriteContext, T> writer;
+
+  public RepeatableFixedWidthLens(
+      int columnWidth,
+      FixedWidthLens<T> lens
+  ) {
+    this(columnWidth, lens::apply, lens::apply);
+  }
+
+  public RepeatableFixedWidthLens(
+      int columnWidth,
+      Function<ReadContext, T> reader,
+      BiConsumer<WriteContext, T> writer
+  ) {
+    this.columnWidth = columnWidth;
+    this.reader = reader;
+    this.writer = writer;
+  }
+
+  public List<T> apply(ReadContext context) {
+    var numberOfItems = context.read(columnWidth);
+    var maxSize = numberOfItems.isBlank() ? 0 : Integer.parseInt(numberOfItems);
+    return Stream.generate(() -> reader.apply(context)).limit(maxSize).toList();
+  }
+
+  public void apply(WriteContext context, List<T> values) {
+    var numberOfItems = String.valueOf(values.size());
+    var padded = StringUtils.leftPad(numberOfItems, columnWidth, '0');
+    context.write(padded);
+    values.forEach(value -> writer.accept(context, value));
+  }
+}
+```
+
+This approach simplifies the process of parsing and writing lists within fixed-width formats while maintaining the same structured, type-safe approach we've used for individual fields.
+
+```java
+FixedWidthLens<String> projectLens = FixedWidthLens.stringify(10);
+
+RepeatableFixedWidthLens<String> projectsLens = new RepeatableFixedWidthLens<>(2, projectLens);
+
+WriteContext context = WriteContext.create();
+
+projectsLens.apply(context, List.of("Project A", "Project B"));
+
+System.out.println(context); // Output: "02Project A Project B "
 ```
 
 In this blog post, we explored the challenges and solutions for working with fixed-width records, particularly in the context of COBOL data formats.
