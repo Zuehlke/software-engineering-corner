@@ -220,7 +220,7 @@ When working with fixed-width columns, it's essential to preserve the order in w
 The sequence of columns is important because it ensures that the data is processed correctly and aligns with the expected structure.
 Any deviation from this order can lead to incorrect data interpretation or processing errors.
 
-In the code snippet below, the `Person` record and its associated `Schema` class highlights a pattern I used successfully in my projects.
+In the code snippet below, the `Person` record and its associated `Schema` class highlights a pattern we used successfully in our projects.
 Closely coupling the schema with the record has proven to be the most flexible and developer-friendly approach.
 This pattern provides a clear mapping between the fixed-width column schema and the data class, making data parsing and writing simpler.
 
