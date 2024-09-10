@@ -1,5 +1,5 @@
 ---
-title: Building observability into the NHS COVID-19 app backend serving 22 million users
+title: Building observability into the NHS COVID-19 app backend serving 17 million users
 domain: software-engineering-corner.hashnode.dev
 tags: AWS, Amazon S3, dynamodb, logging, json, monitoring, Java, Kotlin, engineering
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1725649342389/ngYMk-jc_.jpg?auto=format
@@ -17,7 +17,8 @@ DHSC partnered with Zühlke to innovate and build the NHS COVID-19 app as a resp
 Zühlke's expertise in technology and digital tools played a critical role in designing, developing, and launching the app in just 12 weeks. 
 The app aimed to reduce infection rates and alleviate pressure on the healthcare system. 
 This collaboration united a multidisciplinary team of policymakers, researchers, and engineers, while also working with Google and Apple to improve contact tracing capabilities. 
-The app averted 1 million cases of COVID-19, avoiding 44,000 hospitalisations and 10,000 deaths.
+The app averted ~1 million cases of COVID-19, avoiding ~44,000 hospitalisations and ~10,000 deaths (September 2020 - December 2020).
+See the article [The epidemiological impact of the NHS COVID-19 app](https://www.nature.com/articles/s41586-021-03606-z) published in Nature magazine.
 
 
 Zühlke built the COVID-19 mobile app's backend using Amazon Web Services (AWS) scalable infrastructure to ensure it could handle the traffic of a national launch. 
