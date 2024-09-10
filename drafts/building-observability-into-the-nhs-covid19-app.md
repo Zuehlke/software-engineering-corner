@@ -18,7 +18,7 @@ Zühlke's expertise in technology and digital tools played a critical role in de
 The app aimed to reduce infection rates and alleviate pressure on the healthcare system. 
 This collaboration united a multidisciplinary team of policymakers, researchers, and engineers, while also working with Google and Apple to improve contact tracing capabilities. 
 The app averted ~1 million cases of COVID-19, avoiding ~44,000 hospitalisations and ~10,000 deaths (September 2020 - December 2020).
-See the article [The epidemiological impact of the NHS COVID-19 app](https://www.nature.com/articles/s41586-021-03606-z) published in Nature magazine.
+See the study [The epidemiological impact of the NHS COVID-19 app](https://www.nature.com/articles/s41586-021-03606-z) published in Nature magazine.
 
 
 Zühlke built the COVID-19 mobile app's backend using Amazon Web Services (AWS) scalable infrastructure to ensure it could handle the traffic of a national launch. 
@@ -28,7 +28,7 @@ Speed and agility were crucial, as we had to update the mobile app overnight whe
 
 
 Operationally, the Zühlke engineering team needed to ensure the backend services were available, supporting the core features of the app and processing the incoming data to gather insights whilst preserving citizens' privacy. 
-In such a high-stakes environment, observability is crucial. 
+In such a high-stakes environment, observability is crucial.
 The engineering team needed the ability to gain deep insights into the app's operations, allowing them to identify and resolve issues while optimising performance swiftly. 
 The loss of public trust in the system would have been a catastrophic failure, driving down app usage and directly contributing to a surge in preventable deaths - undermining the purpose of the app and putting countless lives at risk.
 
