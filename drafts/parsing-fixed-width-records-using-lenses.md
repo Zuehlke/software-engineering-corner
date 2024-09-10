@@ -271,7 +271,7 @@ Lists are typically prefixed with the number of items they contain, providing en
 Introducing a `RepeatableFixedWidthLens<T>` will allow us to encapsulate the necessary logic for handling repeated fields.
 
 ```java
-public class RepeatableFixedWidthLens<T> {
+public final class RepeatableFixedWidthLens<T> {
   private final int columnWidth;
   private final Function<ReadContext, T> reader;
   private final BiConsumer<WriteContext, T> writer;
