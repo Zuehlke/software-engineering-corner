@@ -1,7 +1,7 @@
 ---
 title: Efficiently Parsing COBOL Fixed-Length Records with Functional Lenses
 domain: software-engineering-corner.hashnode.dev
-tags: functional-programming,java,mainframe
+tags: functional-programming,java,mainframe,cobol,ibm,legacy,legacy-systems,legacy-app-modernization
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1725967073596/zuzeoPioj.jpg?auto=format
 publishAs: KevZ
 hideFromHashnodeCommunity: false
