@@ -1,5 +1,5 @@
 ---
-title: Building observability into the NHS COVID-19 app backend serving 17 million users
+title: Building observability into the NHS COVID-19 app backend serving 16 million users
 domain: software-engineering-corner.hashnode.dev
 tags: AWS, Amazon S3, dynamodb, logging, json, monitoring, Java, Kotlin, engineering
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1725649342389/ngYMk-jc_.jpg?auto=format
