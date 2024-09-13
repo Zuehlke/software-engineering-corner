@@ -63,7 +63,7 @@ public interface ReadContext {
         pos += length;
         return str;
       }
-    }
+    };
   }
 }
 ```
