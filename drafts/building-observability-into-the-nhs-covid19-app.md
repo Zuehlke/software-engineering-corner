@@ -10,13 +10,13 @@ saveAsDraft: true
 
 When the COVID-19 pandemic swept the globe, it triggered a race to develop digital tools that could help manage and track the spread of the virus. 
 The Department of Health and Social Care (DHSC) oversees the UK's National Health Service (NHS), with the aim to help people live more independent, healthier lives for longer. 
-As the world entered lockdown, pressure mounted to speed up medtech innovation and the DHSC needed a partner capable of quickly developing a scalable, secure, and user-friendly contact tracing solution to help contain the spread of COVID-19 and protect lives.
+As the world entered lockdown, pressure mounted to speed up medtech innovation, so the DHSC needed a partner capable of quickly developing a scalable, secure, and user-friendly contact-tracing solution to help contain the spread of COVID-19 and protect lives.
 
 
 DHSC partnered with Zühlke to innovate and build the NHS COVID-19 app as a response to the global pandemic. 
-Zühlke's expertise in technology and digital tools played a critical role in designing, developing, and launching the app in just 12 weeks. 
+Zühlke's expertise in technology and digital tools played a critical role in designing, developing and launching the app in just 12 weeks. 
 The app aimed to reduce infection rates and alleviate pressure on the healthcare system. 
-This collaboration united a multidisciplinary team of policymakers, researchers, and engineers, while also working with Google and Apple to improve contact tracing capabilities. 
+This collaboration united a multidisciplinary team of policymakers, researchers, and engineers, while also working with Google and Apple to improve contact-tracing capabilities. 
 The app averted ~1 million cases of COVID-19, avoiding ~44,000 hospitalisations and ~10,000 deaths (September 2020 - December 2020).
 See the study [The epidemiological impact of the NHS COVID-19 app](https://www.nature.com/articles/s41586-021-03606-z) published in Nature magazine.
 
@@ -33,25 +33,25 @@ The engineering team needed the ability to gain deep insights into the app's ope
 The loss of public trust in the system would have been a catastrophic failure, driving down app usage and directly contributing to a surge in preventable deaths - undermining the purpose of the app and putting countless lives at risk.
 
 
-To tackle this operational challenge, we need to prioritise observability as a core feature, making it a first-class citizen in our system design. 
+To tackle this operational challenge, we needed to prioritise observability as a core feature, making it a first-class citizen in our system design. 
 
 
-We used Amazon CloudWatch to build dashboards and actively monitor the system, ensuring we can track performance metrics and operational health in real time. 
+We used Amazon CloudWatch to build dashboards and actively monitor the system, ensuring that we can track performance metrics and operational health in real time. 
 Setting up CloudWatch alarms enabled us to detect issues or anomalies, so we could address them before they affected users. 
 For example, AWS Lambda comes with several performance metrics, which serve as a great starting point. 
 You can build dashboards that plot how often a function is invoked, including both successful invocations and errors, as well as the time a function spends processing an event. 
-Whilst useful information, it doesn't provide you with any further insights about what your users are doing or experiencing. 
+This is useful information, but it doesn't provide you with any further insights about what your users are doing or experiencing. 
 When it comes to large distributed systems at scale the most important capability is to "dig" into the data - "slice and dice" it to examine it from different angles.
 
 
-In the past, and still true for older systems, a lot of random text is often logged to track a user's actions and experiences with the system. 
+In the past, and still this is true for older systems, a lot of random text is often logged to track a user's actions and experiences with the system. 
 People can read these logs, but computers struggle to understand and analyse them, making them less effective for building observable systems.
 
 
 Our Lambda functions emitted **Wide Events** instead of logging random strings. 
 A Wide Event is just a JSON document with a collection of key/value pairs. 
 Whenever we needed to record some information - whether it's the current state of the system, the result from an API call or a decision the system made given some input parameters - we would emit an event. 
-It's important to include as much information as possible in wide events. 
+It's important to include as much information as possible in wide events but avoid personally identifiable information! 
 This consists of any relevant data that might be useful later, even if you can't think of its importance now. 
 This approach helps to prepare for dealing with unforeseen circumstances that may arise during an incident investigation.
 
@@ -97,7 +97,7 @@ Furthermore, because the events are well-structured and machine-readable, creati
 
 In conclusion, we discovered that treating observability as a key feature and integral part of the system allowed us to proactively identify, diagnose, and resolve issues before they escalated into major problems for our users. 
 Wide Events enabled us to creatively form hypotheses about underlying causes and write queries to verify them. 
-The introduction of events also led to more meaningful conversations with stakeholders about metrics and business events they care about. 
+The introduction of events also led to more meaningful conversations with stakeholders about metrics and business events they cared about. 
 
 When treated as first-class citizens, events become part of user stories and find their way into unit and regression tests. 
 In turn, your monitoring dashboards remain reliable and are less likely to break.
