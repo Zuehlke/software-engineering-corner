@@ -319,7 +319,7 @@ WriteContext context = WriteContext.create();
 
 projectsLens.apply(context, List.of("Project A", "Project B"));
 
-System.out.println(context); // Output: "02Project A Project B "
+System.out.println(context); // Outputs: "02Project A Project B "
 ```
 
 In this blog post, we explored the challenges and solutions for working with fixed-width records, particularly in the context of COBOL data formats.
@@ -329,5 +329,5 @@ By utilising functional programming techniques such as lenses and leveraging a t
 We demonstrated how to define lenses for different data types, including strings, integers, and dates, and how to maintain clear and organised mappings between data classes and fixed-width schemas.
 The pattern of closely coupling the schema with the data class has proven to be highly effective, offering a developer-friendly approach that simplifies data handling and integration.
 
-By following this approach, developers can benefit from a well-structured solution that not only ensures data accuracy but also enhances code maintainability.
+By following this approach, developers can enjoy a well-structured solution that not only ensures data accuracy but also enhances code maintainability.
 Embracing these patterns can lead to more efficient and reliable handling of fixed-width records, paving the way for cleaner and more robust data processing solutions.
