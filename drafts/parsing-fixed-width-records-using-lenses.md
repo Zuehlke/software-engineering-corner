@@ -98,7 +98,7 @@ public interface WriteContext {
       public String toString() {
         return out.toString();
       }
-    }
+    };
   }
 }
 ```
