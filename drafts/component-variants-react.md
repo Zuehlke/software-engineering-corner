@@ -87,7 +87,7 @@ end up using this red button, should we decide on a darker red color.
 ## Method 2: Seperate Component
 
 One could be tempted to create a seperate component for each variant, e.g. `SuccessButton` and
-`SuccessButton`. However, this comes with some downsides:
+`DestructiveButton `. However, this comes with some downsides:
 
 First of all, the variants no longer automatically share the same functionality and base styling. Of
 course, we can fix that by creating a shared button which is used by all the variants:
