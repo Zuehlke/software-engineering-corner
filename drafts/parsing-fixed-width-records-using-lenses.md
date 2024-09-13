@@ -53,7 +53,7 @@ Before defining our lens, we need a data structure to keep track of the number o
 public interface ReadContext {
   String read(int length);
 
-  static of(String input) {
+  static ReadContext of(String input) {
     return new ReadContext() {
       private int pos = 0;
         
@@ -85,7 +85,7 @@ Likewise, we need a data structure for writing fixed-width records.
 public interface WriteContext {
   void write(String value);
 
-  static create() {
+  static WriteContext create() {
     return new WriteContext() {
       private final StringBuilder out = new StringBuilder();
       
