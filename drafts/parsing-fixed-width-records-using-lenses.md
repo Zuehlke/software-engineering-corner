@@ -160,8 +160,8 @@ Let's go ahead and define some factory methods for creating lenses that know how
 public static FixedWidthLens<String> stringify(int width) {
   return new FixedWidthLens<>(
     width,
-    { it -> it },
-    { it -> it },
+    it -> it,
+    it -> it,
     (text, length) -> StringUtils.rightPad(text, length));
 }
 
