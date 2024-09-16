@@ -6,7 +6,6 @@ cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1720939748891/bKimfsP
 publishAs: NipunaMarcusZuhlke
 seriesSlug: editor-with-ls-support
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 # Develop your own Language Server
