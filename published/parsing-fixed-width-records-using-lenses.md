@@ -5,7 +5,6 @@ tags: functional-programming,java,mainframe,cobol,ibm,legacy,legacy-systems,lega
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1725967073596/zuzeoPioj.jpg?auto=format
 publishAs: KevZ
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 I have been lucky enough to work on more than one project that required integration with legacy mainframe applications throughout my career at Zühlke.
