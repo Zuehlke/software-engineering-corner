@@ -4,7 +4,6 @@ domain: software-engineering-corner.hashnode.dev
 tags: Language Server Protocol, Java, LSP
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1720939748891/bKimfsPot.gif?auto=format
 publishAs: NipunaMarcusZuhlke
-seriesSlug: editor-with-ls-support
 hideFromHashnodeCommunity: false
 saveAsDraft: true
 ---
