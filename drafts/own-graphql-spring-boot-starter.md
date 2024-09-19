@@ -4,7 +4,6 @@ domain: software-engineering-corner.hashnode.dev
 tags: Java, Springboot, GraphQL
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1726474334943/vvF5pmFaI.jpg?auto=format
 publishAs: abeggchr
-seriesSlug: editor-with-ls-support
 hideFromHashnodeCommunity: false
 saveAsDraft: true
 ---
