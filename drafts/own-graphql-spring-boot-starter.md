@@ -18,7 +18,7 @@ The resulting code is available at [https://github.com/abeggchr/shared-graphql-s
 
 ## 1. Set up a Spring Boot application
 
-Create the Spring application which will later consume the starter. Start from where the Spring's ["Building a GraphQL service"](https://spring.io/guides/gs/graphql-server) finished and copy the `[completed](https://github.com/spring-guides/gs-graphql-server/tree/main/complete)` solution into our `application` folder.
+Create the Spring application which will later consume the starter. Start from where the Spring's ["Building a GraphQL service"](https://spring.io/guides/gs/graphql-server) left of and copy the [`completed`](https://github.com/spring-guides/gs-graphql-server/tree/main/complete) solution into our `application` folder.
 
 ```
 shared-graphql-spring-boot-starter
@@ -170,9 +170,9 @@ spring.graphql.schema.locations=classpath*:graphql/**/
 
 ## 8. Use the starter in the consuming application
 
-Once your starter is ready, publish it to a Maven repository (or use a local Maven install), and include it in a Spring Boot project.
+Once your starter is ready, publish it to a Maven repository (or use a local Maven install), and include it in the `build.gradle` file of the consuming application.
 
-```build.gradle
+```gradle
 implementation 'org.example:graphql-info-spring-boot-starter:1.0-SNAPSHOT'
 ```
 
@@ -188,10 +188,11 @@ query info {
 }
 ```
 
-## 11. Dynamically set the version
+## 11. Configuratively set the version
 
 You can allow users of your starter to customize the endpoint behavior via `application.properties`. For example, you can inject version number from the configuration like this:
 
+`GraphQLStarterAutoConfiguration.java`:
 ```java
 package org.example;
 
@@ -216,6 +217,7 @@ public class GraphQLStarterAutoConfiguration {
 }
 ```
 
+`GraphQLController.java`:
 ```java
 package org.example;
 
@@ -238,6 +240,7 @@ public class GraphQLController {
 }
 ```
 
+`application.properties`:
 ```properties
 info.app.version=1.0.0
 ```
