@@ -122,11 +122,11 @@ The original `Item` class in the exercise is a mutable data structure and bound-
 
 ```java
 if (items[i].quality < 50) {
-	items[i].quality = items[i].quality + 1;
+  items[i].quality = items[i].quality + 1;
 }
 
 if (items[i].quality > 0) {
-	items[i].quality = items[i].quality - 1;
+  items[i].quality = items[i].quality - 1;
 }
 ```
 
@@ -137,11 +137,11 @@ A record automatically generates the boilerplate code that’s typical for simpl
 
 ```java
 public record BoundedQuality(int value) {
-	public BoundedQuality {
-		if (value < 0 || value > 50) {
-			throw new IllegalArgumentException("quality must be between 0-50");
-		}
-	}
+  public BoundedQuality {
+    if (value < 0 || value > 50) {
+      throw new IllegalArgumentException("quality must be between 0-50");
+    }
+  }
 
   public static UnaryOperator<BoundedQuality> adjustQuality(int adjustment) {
     return it -> new BoundedQuality(Math.max(0, Math.min(50, it.value + adjustment)));
@@ -167,13 +167,13 @@ We can introduce yet another tiny type, how about a `FixedQuality`? Most likely 
 
 ```java
 public sealed interface Quality permits BoundedQuality, FixedQuality {
-	int value();
+  int value();
 }
 
 record BoundedQuality(int value) implements Quality { /* ... */ }
 
 record FixedQuality(int value) implements Quality { 
-	public static final FixedQuality EIGHTY = new FixedQuality(80);
+  public static final FixedQuality EIGHTY = new FixedQuality(80);
 }
 ```
 
