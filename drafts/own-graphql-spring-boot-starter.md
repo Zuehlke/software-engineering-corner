@@ -17,7 +17,7 @@ The resulting code is available at [https://github.com/abeggchr/shared-graphql-s
 
 ## 1. Set up a Spring Boot application
 
-Create the Spring application which will later consume the starter. Start from where the Spring's ["Building a GraphQL service"](https://spring.io/guides/gs/graphql-server) left of and copy the [`completed`](https://github.com/spring-guides/gs-graphql-server/tree/main/complete) solution into our `application` folder.
+Create the Spring application which will later consume the starter. Start from where the Spring's ["Building a GraphQL service"](https://spring.io/guides/gs/graphql-server) left off and copy the [`completed`](https://github.com/spring-guides/gs-graphql-server/tree/main/complete) solution into our `application` folder.
 
 ```
 shared-graphql-spring-boot-starter
