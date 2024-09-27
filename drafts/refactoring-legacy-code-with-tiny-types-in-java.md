@@ -1,5 +1,5 @@
 ---
-title: Refactoring Legacy Code using Tiny Types and Data-Oriented Programming in Java
+title: Refactoring Legacy Code using Tiny Types and Data Oriented Programming in Java
 domain: software-engineering-corner.hashnode.dev
 tags: functional-programming,java,legacy,legacy-systems,legacy-app-modernization
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1726831500748/c0V6Wtg-K.avif?auto=format
@@ -8,31 +8,27 @@ hideFromHashnodeCommunity: false
 saveAsDraft: true
 ---
 
-I love using **tiny types**, also called **micro types** or **value types**.
-The concept is straightforward: you wrap all primitives and strings in your code with a class, ensuring you never pass raw primitives around.
+Legacy systems are often very procedural and rely heavily on mutable state, which makes them difficult to maintain and extend.
+This reliance on mutable data structures can lead to issues like unintended side effects and bugs, especially when multiple parts of the system interact with shared state.
+The [Gilded Rose Kata](https://github.com/emilybache/GildedRose-Refactoring-Kata) is a perfect example of this: it’s messy, hard to refactor, and prone to bugs due to inadequate constraints on primitive values.
 
-The problem which we're trying to solve is to avoid illegal values entering your system.
-For this, it's best to use strongly typed values, which allows you to both lean on the compiler and improve the developer experience by engaging with IDE tooling.
-
-The [parse, don’t validate](https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/) mantra is all about parsing incoming data to a specific type, or failing in a controlled manner if the parsing fails.
-It’s about using trusted, safe, and typed data structures inside your code and making sure all incoming data is handled at the **edges** of your system.
-**Don’t pass incoming data deep into your code, parse it right away and fail fast if needed.**
-
-Let's explore the power of tiny types and data-oriented programming in Java using the **Gilded Rose Kata**.
-
-The [Gilded Rose Kata](https://github.com/emilybache/GildedRose-Refactoring-Kata) is a classic programming exercise that challenges developers to refactor a legacy codebase while maintaining its existing functionality.
+The Gilded Rose Kata is a programming exercise that challenges developers to refactor a legacy codebase while maintaining its existing functionality.
 The scenario revolves around a fictional shop, "Gilded Rose," that sells various items, each with distinct behaviours affecting their quality and value over time.
-
-In the Gilded Rose code, items have properties like `sellIn` (the number of days left to sell the item) and `quality` (the value or condition of the item), which deteriorate as time progresses.
+Items have properties such as `sellIn`, which represents the number of days left to sell the item, and `quality`, which reflects the value or condition of the item. Both properties deteriorate as time progresses.
 However, some items, like "*Aged Brie*" or "*Sulfuras, Hand of Ragnaros*" behave differently.
-The challenge is to refactor the existing code, which is messy and difficult to maintain, and ensure it handles all the edge cases without breaking any functionality.
 
-The kata is designed to help developers practice **refactoring** techniques, enhance **test-driven development (TDD)** skills, and improve their understanding of **clean code** principles.
-The exercise is a fantastic way to engage with legacy code and showcase how careful refactoring, thoughtful design, and modern programming approaches can breathe new life into an aging codebase.
+Tiny Types and Data Oriented Programming offer a solution to these challenges by encouraging a shift away from procedural and mutable designs.
+Tiny Types encapsulate primitive values, like `sellIn` and `quality`, in strongly typed classes, ensuring that the integrity of these values is preserved throughout the system.
+This reduces the risk of invalid states and eliminates the need for repetitive defensive checks. 
 
-The following code from the exercise is used to update the inventory.
-It iterates over a list of items and determines whether to adjust the `sellIn` and/or the `quality` property.
-As you can see, it's hard to read and difficult to change.
+Meanwhile, Data Oriented Programming promotes the separation of business logic from data, making the code easier to reason about and maintain.
+By modeling data as immutable records and using sealed interfaces to ensure exhaustive case handling, we can minimise side effects and ensure that all code paths are predictable and safe.
+Together, these techniques lead to a cleaner, more maintainable codebase where illegal states are unrepresentable, and extending functionality becomes straightforward.
+
+Let's explore both concepts in Java using the **Gilded Rose Kata**.
+
+The following code updates the inventory by iterating over a list of items and determining whether to adjust the `sellIn` or `quality` properties. 
+As you can see, it’s hard to read and difficult to change.
 
 ```java
 public void updateQuality() {
@@ -89,36 +85,24 @@ public void updateQuality() {
 }
 ```
 
-We need a safety net before we can start refactoring the legacy code.
-Instead of writing lots of small unit tests, a more broad "approval" test will give us the quickest feedback.
-Approval tests are a type of test where you verify that the output of your code matches an "approved" or expected result.
-Unlike traditional tests that assert specific values or behaviours, approval tests capture the output of a test run and compare it to a pre-approved baseline or "golden master."
-If the current output differs from the approved version, the test fails, allowing you to review and either approve the new output or fix the code.
+Before diving into refactoring the legacy code, it’s best to have some kind of safety net in place.
+Instead of writing tons of tiny unit tests, we can go for a broader 'approval' test that gives us quick feedback.
+Approval tests verify if the output from our code matches an 'approved' result.
+Unlike the usual tests that assert specific values or behaviors, these tests capture the output and compare it to a pre-approved baseline or 'golden master.'
+If the current output strays from what’s approved, the test fails, letting us decide whether to approve the new output or tweak the code.
 
+In the Gilded Rose Kata, we can implement an approval test by printing the `sellIn` and `quality` of each item to a file at the end of each day.
+This approach allows us to capture the state of our inventory over time and compare it against an expected output.
 
-```text
--------- day 0 --------  
-name, sellIn, quality  
-+5 Dexterity Vest, 10, 20  
-Aged Brie, 2, 0  
-Elixir of the Mongoose, 5, 7  
-Sulfuras, Hand of Ragnaros, 0, 80  
-Sulfuras, Hand of Ragnaros, -1, 80  
-Backstage passes to a TAFKAL80ETC concert, 15, 20  
-Backstage passes to a TAFKAL80ETC concert, 10, 49  
-Backstage passes to a TAFKAL80ETC concert, 5, 49  
-Conjured Mana Cake, 3, 6
-```
-
-Once setup, our approval test will ensure that the above output remains unchanged while we make changes to the code.
-At this stage, we're well-positioned to begin refactoring.
+Once setup, our approval test will verify that the output remains consistent as we modify the code.
+At this point, we are ready to start refactoring.
 
 The [Gilded Rose requirements](https://github.com/emilybache/GildedRose-Refactoring-Kata/blob/main/GildedRoseRequirements.md) state that:
 
 * The `Quality` of an item is never negative
 * The `Quality` of an item is never more than `50`
 
-The original `Item` class in the exercise is a mutable data structure and bound-checks are littered throughout the code base to ensure the above requirements are not violated.
+The original `Item` class in the exercise serves as a mutable data structure, and the codebase includes a great deal of bound-checks to ensure that the requirements aren't violated.
 
 ```java
 if (items[i].quality < 50) {
@@ -130,10 +114,10 @@ if (items[i].quality > 0) {
 }
 ```
 
-A much better design is to introduce a tiny type to encompass the constraints.
-In this instance we've used a Java Record.
-[Java Records](https://openjdk.org/jeps/395), introduced in Java 16, are a concise way to define immutable data classes.
-A record automatically generates the boilerplate code that’s typical for simple data-holding classes - such as constructors, getters, `equals()`, `hashCode()`, and `toString()` - while making the intent clear that the class is purely for storing data.
+A much better design involves introducing a tiny type to encompass the constraints.
+In this instance, we use a Java Record.
+[Java Records](https://openjdk.org/jeps/395), introduced in Java 16, provide a concise way to define immutable data classes.
+A record automatically generates the boilerplate code typical of simple data holding classes - such as constructors, getters, `equals()`, `hashCode()`, and `toString()` - while indicating that the class serves solely to store data.
 
 ```java
 public record BoundedQuality(int value) {
@@ -149,14 +133,13 @@ public record BoundedQuality(int value) {
 }
 ```
 
-Whenever a method receives a `BoundedQuality` we know for a fact that the integrity of the data is intact and we can stop adding defensive checks.
-Also, the `adjust` method allows us to manipulate the quality amount in a safe way.
-Furthermore, we fail fast if we're trying to create a `BoundedQuality`with invalid data, such as a negative amount.
+Whenever a method receives a `BoundedQuality`, we can confidently assert that the data's integrity remains intact, allowing us to remove unnecessary defensive checks.
+Additionally, the `adjust` method enables safe manipulation of the quality amount.
+Moreover, if we attempt to create a `BoundedQuality` with invalid data, such as a negative amount, the system fails fast.
 
-
-Before the introduction of our `BoundedQuality` type, both the `quality` and the `sellIn` amount where modelled as primitive integers.
-The compiler can't help us to distinguish between the two numbers, given they have the same type.
-This can lead to bugs when they accidentally get out-of-order when passed to a function such as `doSomething(int, int)`.
+Before we introduced the `BoundedQuality` type, we modeled both the `quality` and `sellIn` amounts as primitive integers.
+The compiler couldn’t help us distinguish between these two numbers since they share the same type.
+This situation could lead to bugs if we passed them out of order to a function like `doSomething(int, int)` by accident.
 
 But hang on! What do we do with this new requirement?
 
@@ -177,21 +160,19 @@ record FixedQuality(int value) implements Quality {
 }
 ```
 
-As you can see we're using a `sealed` interface, introduced with Java 17.
-[Sealed interfaces](https://openjdk.org/jeps/409) work well with Java's enhanced [pattern matching](https://openjdk.org/jeps/441), providing exhaustive case handling which the compiler will enforce.
-This leads us to another topic which I'd like to cover: [Data Oriented Programming in Java](https://www.infoq.com/articles/data-oriented-programming-java/) as explained in an InfoQ article by Brian Goetz.
+As you can see, we use a `sealed` interface introduced with Java 17.
+[Sealed interfaces](https://openjdk.org/jeps/409) complement Java's enhanced [pattern matching](https://openjdk.org/jeps/441) by providing exhaustive case handling that the compiler enforces.
+This discussion naturally leads us to another topic I'd like to cover: [Data Oriented Programming in Java](https://www.infoq.com/articles/data-oriented-programming-java/), as explained in an InfoQ article by Brian Goetz.
 
 > _Data-oriented programming_ encourages us to model data as (immutable) data, and keep the code that embodies the business logic of how we act on that data separately.
 Records, sealed classes, and pattern matching are designed to work together to support data-oriented programming.
 Using the combination of records and sealed classes also makes it easier to _make illegal states unrepresentable_, further improving safety and maintainability.
 
-In the spirit of making illegal states unrepresentable, let's start modelling our purchasable items from the shop.
-For example, we know that *"Sulfuras"* has a quality of `80` and it's quality can never change.
-We can model our legendary item as a Java Record because they're immutable by default and we can hard-code the quality.
+In the spirit of making illegal states unrepresentable, modeling our purchasable items from the shop begins here.
+For example, *"Sulfuras"* has a quality of `80` that never changes.
+We model our legendary item as a Java Record because these records are immutable by default, allowing us to hard-code the quality.
 
-
-Sealed interfaces lend itself also very nicely to create a lightweight type-hierarchy in case we want to lump all the legendary items together for processing.
-
+Sealed interfaces help with the creation of a lightweight type hierarchy, allowing us to group all the items together for processing.
 
 ```java
 public sealed interface PurchasableItem 
@@ -212,7 +193,9 @@ public record AgedBrie(
   @Override public String name() { return "Aged Brie"; }
 }
 
-public record Sulfuras(FixedSellIn sellIn) implements LegendaryItem {
+public record Sulfuras(
+  FixedSellIn sellIn
+) implements LegendaryItem {
 
   private static final FixedQuality quality = FixedQuality.of(80);
 
@@ -226,7 +209,9 @@ public record Sulfuras(FixedSellIn sellIn) implements LegendaryItem {
 // ...
 ```
 
-Using Java's pattern matching and [record patterns](https://openjdk.org/jeps/440) (as of Java 21+) our code for processing the purchasable items can be neatly separated into individual code paths.
+Here’s a reworded version of the sentence:
+
+By utilising Java's pattern matching and [record patterns](https://openjdk.org/jeps/440) (available in Java 21 and later), we can separate our code for processing purchasable items into distinct code paths.
 
 ```java
 PurchasableItem item = // ...
@@ -239,16 +224,16 @@ var updated = switch (item) {
 }
 ```
 
-Record patterns allows you to deconstruct records directly in patterns, enabling more expressive and concise ways to access the fields of a record.
-The compiler ensures that you handle all fields in the record pattern, which can help prevent bugs from incomplete data extraction.
+Record patterns let you deconstruct records right in the patterns, giving you a more expressive and concise way to access record fields.
+Plus, the compiler makes sure you handle all the fields in the record pattern, which helps catch bugs that might pop up from incomplete data extraction.
 
-In conclusion, Tiny Types and Data-Oriented Programming are a powerful combination to enhance code clarity, enforce stronger type safety, and ensure data integrity by preventing invalid states, all while keeping business logic separate from the data itself.
+In conclusion, Tiny Types and Data Oriented Programming make a powerful duo for boosting code clarity, enforcing stronger type safety, and ensuring data integrity by preventing invalid states—all while keeping business logic separate from the data itself.
 
-You can't go wrong if you follow these 4 principles (as outlined in the blog post by Brian Goetz):
+You can’t go wrong by sticking to these four principles as outlined in Brian Goetz's blog post:
 
-- **Model the data** Records should model data. Make each record model one thing, make it clear what each record models, and choose clear names for its components.
-- **Data is immutable.** Ensure your records and classes are immutable.
-- **Validate at the boundary.** Before injecting data into our system, we should ensure that it is valid.
-- **Make illegal states unrepresentable.** Records and sealed types make it easy to model our domains in such a way that erroneous states simply can't be represented. This is much better than having to check for validity all the time!
+- **Model the data.** Records should represent data. Each record should focus on one thing, make it obvious what each record models, and pick clear names for its components.
+- **Data is immutable.** Keep your records and classes immutable.
+- **Validate at the boundary.** Before you inject data into the system, make sure it’s valid.
+- **Make illegal states unrepresentable.** Use records and sealed types to model your domains so that erroneous states can’t exist. This beats checking for validity all the time!
 
-Full source code can be found on [GitHub](https://github.com/ToastShaman/gilded-rose-experiments/tree/add-tiny-types).
+You can find the full source code over on [GitHub](https://github.com/ToastShaman/gilded-rose-experiments/tree/add-tiny-types).
