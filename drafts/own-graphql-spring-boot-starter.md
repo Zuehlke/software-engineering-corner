@@ -24,7 +24,7 @@ shared-graphql-spring-boot-starter
 └ application
 ```
 
-Start the application, open `http://localhost:8080/graphiql?path=/graphql` and check that you can execute GraphQL queries like:
+Start the application, open `http://localhost:8080/graphiql?path=/graphql`, and check that you can execute GraphQL queries like:
 
 ```graphql
 query bookDetails {
