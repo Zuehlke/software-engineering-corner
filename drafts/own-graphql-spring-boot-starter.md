@@ -244,7 +244,7 @@ public class GraphQLController {
 info.app.version=1.0.0
 ```
 
-The graphql query `info` no returns the configured value `1.0.0`.
+The graphql query `info` now returns the configured value `1.0.0`.
 
 ## 12. Add parameters
 
