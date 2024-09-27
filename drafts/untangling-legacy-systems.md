@@ -2,7 +2,7 @@
 title: Untangling Legacy Systems
 domain: software-engineering-corner.hashnode.dev
 tags: legacy,legacy-systems,legacy-app-modernization
-cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1726833712279/s9pjCgvRc.avif?auto=format
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1727431394860/XZ6VWy5WU.jpg?auto=format
 publishAs: KevZ
 hideFromHashnodeCommunity: false
 saveAsDraft: true
