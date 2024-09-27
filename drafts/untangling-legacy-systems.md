@@ -108,7 +108,7 @@ Maintenance should focus on ensuring stability and handling any ongoing updates 
 No matter which approach you choose, a thorough understanding of the legacy system is essential.
 As outlined earlier in this article, factors such as evolving business needs, performance constraints, and the system’s architecture will influence your decision.
 It’s crucial to have a clear picture of the legacy system before proceeding with any modernisation effort.
-For further insights, you can refer to the factors discussed in [Legacy Modernization meets GenAI](https://martinfowler.com/articles/legacy-modernization-gen-ai.html), which provide a modern perspective on how to approach legacy transformation with today’s technologies.
+If you're looking for more ideas, the [Legacy Modernization meets GenAI](https://martinfowler.com/articles/legacy-modernization-gen-ai.html) article offers a fresh perspective on tackling legacy transformation using today’s technologies.
 
 If you’re struggling with modernising your legacy systems - don’t hesitate to reach out to me and [my colleagues at Zühlke](https://www.zuehlke.com/en/expertise/software-engineering).
 We are always ready to help with your digital transformation initiatives.
