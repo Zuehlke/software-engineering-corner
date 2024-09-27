@@ -292,6 +292,10 @@ To get more insight into the GraphQL schema loading and query mapping process, y
 logging.level.org.springframework.graphql=DEBUG
 ```
 
+## Summary
+
+We created a Spring Boot starter project which adds a GraphQL endpoint to the Spring application when used.
+The starter project can now be extended with additional functionality or more means to configure its functionality.
 
 Photo by <a href="https://unsplash.com/@itfeelslikefilm?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Janko Ferlič</a> on <a href="https://unsplash.com/photos/photo-of-library-with-turned-on-lights-sfL_QOnmy00?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
   
