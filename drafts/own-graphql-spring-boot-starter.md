@@ -149,7 +149,7 @@ Note that for older Spring versions, the `spring.factories` file was used for th
 
 Place the schema file in the `src/main/resources/graphql` folder. For example, create a `schema.graphqls` file:
 
-```graphqls
+```graphql
 extend type Query {
     info: String
 }
