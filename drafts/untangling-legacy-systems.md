@@ -18,10 +18,10 @@ While this is certainly true, not all legacy systems are the same. Sometimes, sy
 
 There are internal and external factors that can contribute to a system becoming “legacy”:
 
-•	changing business needs
-•	absence of vendor support
-•	changing user expectations 
-•	departure of the initial team that developed the software
+* changing business needs
+* absence of vendor support
+* changing user expectations 
+* departure of the initial team that developed the software
 
 To ensure a successful transformation, it's crucial to establish a shared vision and align on common objectives from the outset.
 The focus might vary across stakeholders, but potential areas of focus include expanding functionality, reducing cost, increasing scalability, reliability, maintainability, agility, flexibility, security, or stability.
