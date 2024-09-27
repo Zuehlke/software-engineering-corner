@@ -189,7 +189,32 @@ query info {
 
 ## 11. Configuratively set the version
 
-You can allow users of your starter to customize the endpoint behavior via `application.properties`. For example, you can inject version number from the configuration like this:
+You can allow users of your starter to customize the endpoint behavior via `application.properties`. For example, you can inject the version number from the `application.properties` by:
+
+1. creating a `@ConfigurationProperties` annotated class which defines the properties key (i.e. `info.app.version`)
+2. configuring the new class to be injectable by modifying `GraphQLStarterAutoConfiguration`
+2. configuring the version value in `application.properties` in the consuming application
+3. injecting the version value to the `GraphQLController`
+
+`GraphQLStarterProperties.java`
+```java
+package org.example;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+@ConfigurationProperties(value = "info.app")
+public class GraphQLStarterProperties {
+    private String version;
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+}
+```
 
 `GraphQLStarterAutoConfiguration.java`:
 ```java
@@ -216,6 +241,11 @@ public class GraphQLStarterAutoConfiguration {
 }
 ```
 
+`application.properties`:
+```properties
+info.app.version=1.0.0
+```
+
 `GraphQLController.java`:
 ```java
 package org.example;
@@ -237,11 +267,6 @@ public class GraphQLController {
         return "version=%s".formatted(this.properties.getVersion());
     }
 }
-```
-
-`application.properties`:
-```properties
-info.app.version=1.0.0
 ```
 
 The graphql query `info` now returns the configured value `1.0.0`.
