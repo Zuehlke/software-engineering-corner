@@ -274,7 +274,8 @@ The graphql query `info` now returns the configured value `1.0.0`.
 ## 12. Add parameters
 
 When you add additional query or mutation methods to the starters `schema.graqphql` and `GraphQLController`,
-you might run into parameter-related errors. In that case, adding the `-parameters` compiler argument helps, 
+you might run into parameter-related errors. 
+In that case, adding the `-parameters` compiler argument to the starters build script helps, 
 as described in the [Spring 6.x release notes]{https://github.com/spring-projects/spring-framework/wiki/Upgrading-to-Spring-Framework-6.x#parameter-name-retention}.
 
 ``` kotlin
