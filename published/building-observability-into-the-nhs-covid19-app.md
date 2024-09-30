@@ -5,7 +5,6 @@ tags: aws,amazon-s3,dynamodb,logging,json,monitoring,java,kotlin,engineering,tel
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1725649342389/ngYMk-jc_.jpg?auto=format
 publishAs: KevZ
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 When the COVID-19 pandemic swept the globe, it triggered a race to develop digital tools that could help manage and track the spread of the virus. 
