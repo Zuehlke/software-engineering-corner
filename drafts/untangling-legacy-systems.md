@@ -16,7 +16,7 @@ Dealing with outdated software and legacy systems can make you feel as though yo
 You most likely think of decade old machines running in someone’s basement or a long forgotten machine under a colleague’s desk.
 While this is certainly true, not all legacy systems are the same. Sometimes, systems can become legacy without any fault of their own. 
 
-There are internal and external factors that can contribute to a system becoming “legacy”:
+Several internal and external factors can cause a system to become “legacy”:
 
 * changing business needs
 * absence of vendor support
@@ -66,8 +66,8 @@ This is the first opportunity for you to measure the quality of software by coun
 Joking aside, it’s important to keep an open mind and understand that there’s probably a good reason why the code looks the way it does due to circumstances that are likely not documented.
 If you are extremely lucky, you might find Architecture Decision Records which document the design choices throughout the development of the system.
 I’d encourage you to adopt them for any new software you write.
-Alternatively, I find it useful to read the commit messages.
-Sometimes they yield clues as to what the developers were thinking at the time.
+Personally, I find it useful to read the commit messages.
+Sometimes they provide insights into what the developers were thinking back then.
 More importantly, you’ll also discover who worked on the system and you might be able to speak to the original developers.
 
 Static code analysis tools and especially those that are capable of visualising class hierarchies and dependencies between packages are invaluable to give you a sense of the size of the 'snake pit'.
@@ -89,7 +89,7 @@ As you learn more about the system it’s crucial to revisit previous assumption
 
 ## Where should you go from here? 
 
-Once you've gained a solid understanding of the legacy system, you can begin exploring different modernisation strategies.
+Once you've gained a solid understanding of the legacy system, you can begin exploring different modernization strategies.
 The path you choose will depend on factors like the system’s complexity, criticality, and the available resources.
 Common approaches include:
 
@@ -106,9 +106,15 @@ This is only viable when the system’s remaining value does not justify further
 Maintenance should focus on ensuring stability and handling any ongoing updates or security concerns.
 
 No matter which approach you choose, a thorough understanding of the legacy system is essential.
+In most cases, you’ll find that a combination of these strategies works best, as different parts of the system may require different approaches depending on their complexity, criticality, and integration points.
 As outlined earlier in this article, factors such as evolving business needs, performance constraints, and the system’s architecture will influence your decision.
-It’s crucial to have a clear picture of the legacy system before proceeding with any modernisation effort.
-If you're looking for more ideas, the [Legacy Modernization meets GenAI](https://martinfowler.com/articles/legacy-modernization-gen-ai.html) article offers a fresh perspective on tackling legacy transformation using today’s technologies.
+It’s crucial to have a clear picture of the legacy system before proceeding with any modernization effort.
+
+For a deeper exploration of how generative AI (GenAI) can assist in legacy modernisation, make sure to read Martin Fowler's article on [Legacy Modernization meets GenAI](https://martinfowler.com/articles/legacy-modernization-gen-ai.html).
+As highlighted by Martin Fowler, GenAI can play a crucial role in the discovery phase by automating tasks such as documentation and code analysis, thereby helping teams bridge the knowledge gap often associated with legacy systems.
+
+The landscape of software engineering is in a constant state of evolution, propelled by advancements in technology and the introduction of new methodologies.
+This constantly changing environment often makes it necessary to modernize, especially when it comes to legacy systems that can slow down innovation and growth.
 
 If you’re struggling with modernising your legacy systems - don’t hesitate to reach out to me and [my colleagues at Zühlke](https://www.zuehlke.com/en/expertise/software-engineering).
 We are always ready to help with your digital transformation initiatives.
