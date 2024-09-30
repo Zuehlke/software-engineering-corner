@@ -2,12 +2,12 @@
 title: All we need is Structure
 subtitle: From Structured Programming to Structured Concurrency
 domain: software-engineering-corner.hashnode.dev
-tags: concurrency, asynchronous, async, multithreading, , opinion-pieces, programming, developer, learning, general-advice, software-development, programming-tips, software-engineering, computer-science
+tags: concurrency, asynchronous, async, multithreading, opinion-pieces, programming, developer, learning, general-advice, software-development, programming-tips, software-engineering, computer-science
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1723012260097/450fe6ca-5c33-4335-b594-9cc7d4c3d0fb.jpeg
 publishAs: tiju
 hideFromHashnodeCommunity: false
-saveAsDraft: true
---- 
+---
+
 Do you remember when Dr. Carter, in the previous article "Demystifying Concurrency: Essential Clarifications," explained the difference between `Async` and `Parallel`? I think this story ended before touching on a crucial point. Even if you understand the core concepts and therefore have a better base than most people, it's easy to get into trouble with the implementation details. Like most explanations, it gave the impression that understanding the core concepts would be enough to master concurrency. Most people know this isn't true. But as we already established, it's not easy to **not** get drawn into detailed, complicated rabbit holes that sometimes lead to even more confusion. So, let's dive deeper into the problem and try to find best practices for these issues.
 
 Let's start with the simplest part: the quadrant that does not include concurrency.
