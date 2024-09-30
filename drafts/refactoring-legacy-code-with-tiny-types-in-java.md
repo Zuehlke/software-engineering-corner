@@ -209,8 +209,6 @@ public record Sulfuras(
 // ...
 ```
 
-Here’s a reworded version of the sentence:
-
 By utilising Java's pattern matching and [record patterns](https://openjdk.org/jeps/440) (available in Java 21 and later), we can separate our code for processing purchasable items into distinct code paths.
 
 ```java
