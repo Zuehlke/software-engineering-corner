@@ -184,7 +184,7 @@ As mentioned earlier, jQAssistant rules can be utilized for reporting and can en
 For reporting, we'll use the [jqassistant-asciidoctor-extension](https://github.com/jqassistant-tooling/jqassistant-asciidoctorj-extensions), which is an extension for asciiDoctor parsing the jQAssistant report and providing inculde directives for the results.
 As a documentation template, we’ll employ [arc42](https://arc42.org), a framework for documenting software architectures. It already provides a structure we can hook in and is available as [asciiDoc template](https://arc42.org/download#file-based-formats). 
 
-You'll find the documentation in the `src/docs` directory of our sample project. TThe project is pre-configured with the Asciidoc Maven plugin and the Asciidoc multipage HTML plugin, which creates a beautiful multipage documentation in your  `target/docs` folder, when running the project with `mvn verify`.
+You'll find the documentation in the `src/docs` directory of our sample project. The project is pre-configured with the Asciidoc Maven plugin and the Asciidoc multipage HTML plugin, which creates a beautiful multipage documentation in your  `target/docs` folder, when running the project with `mvn verify`.
 
 To enable jQAssistant-related Asciidoc directives, you'll need to add the jQAssistant extension as a dependency for the Asciidoc plugin in the pom.xml file.
 
@@ -226,7 +226,7 @@ With these tools in hand, we can now embark on our journey into creating living 
 
 ## Showcase: ADR validation
 
-To show what I mean with "living documentation" and what is possible besides analysing code using jQAssistant, I created a showcase, validating [Architecture Descicion Records (ADR)](https://github.com/joelparkerhenderson/architecture-decision-record).
+To show what I mean with "living documentation" and what is possible besides analysing code using jQAssistant, I created a showcase, validating [Architecture Decision Records (ADR)](https://github.com/joelparkerhenderson/architecture-decision-record).
 
 Here is what we want to do:
 
@@ -242,7 +242,7 @@ To document ADRs we want to use asciidoc files. Unfortunately, there is no jQAss
 
 In our sample project you'll find the ADR examples in the folder `src/docs/adr`.
 
-With the yaml files ingested by jQAssistant we can then write concepts and constraints targeting those nodes. Finally we can include all ADR documentation files in the architecture design desciions document.
+With the yaml files ingested by jQAssistant we can then write concepts and constraints targeting those nodes. Finally we can include all ADR documentation files in the architecture design decisions document.
 
 So this is the concept:
 
@@ -369,7 +369,7 @@ For a test, we now add two dummy constraints for adr-01. Both of those constrain
 
 With everything in place, we are now ready to incorporate the results into the documentation..
 As you may recall, our objective is to provide a comprehensive overview of all ADRs and their associated constraints.
-o facilitate this, we are introducing a new concept called `adr:constraintReport`. This concept does not modify the graph in any way. Rather we use the query result as a structured report.
+To facilitate this, we are introducing a new concept called `adr:constraintReport`. This concept does not modify the graph in any way. Rather we use the query result as a structured report.
 
 ```xml
     <concept id="adr:constraintReport">
