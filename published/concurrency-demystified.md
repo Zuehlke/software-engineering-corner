@@ -6,8 +6,8 @@ tags: concurrency, asynchronous, async, multithreading, opinion-pieces, programm
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1721214359400/b5d75350-8c3f-4392-840b-a96520ab9f94.jpeg
 publishAs: tiju
 hideFromHashnodeCommunity: false
-saveAsDraft: true
---- 
+---
+
 I often encounter situations where Software Engineers have differing mental models of concurrency. To make matters worse, there are terms that are used (almost) synonymously, like async and parallel. But also definitions for [Data parallelism](https://en.wikipedia.org/wiki/Data_parallelism) and [Task parallelism](https://en.wikipedia.org/wiki/Task_parallelism), [Implicit parallelism](https://en.wikipedia.org/wiki/Implicit_parallelism) and [Explicit parallelism](https://en.wikipedia.org/wiki/Explicit_parallelism) that seem to suggest that there are multiple kinds of concurrency. There is a wealth of content and numerous definitions on this topic, but I have yet to find a single explanation or definition that clearly delineates the differences. Most explanations only add to the confusion, and even the best ones remain somewhat unclear.
 
 ![concurrency cat](https://cdn.hashnode.com/res/hashnode/image/upload/v1720043156235/4a3cefd6-4d34-47f7-8ad4-9e991bc36525.jpeg align="center")
