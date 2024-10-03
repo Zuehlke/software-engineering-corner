@@ -29,7 +29,8 @@ This feature benefits Multi-Page Applications (MPAs) by speeding up future navig
 Single-Page Applications (SPAs) mainly benefit during initial page loads. Speculation rules can be
 implemented either within an HTML `<script>` tag or via a "speculation-rules" response header.
 
-**Pre-rendering** allows browsers to prefetch, render, and load a page in an invisible tab, including
+**Pre-rendering** allows browsers to prefetch, render, and load a page in an invisible tab,
+including
 all subresources and JavaScript. This makes future navigations to the pre-rendered page nearly
 instantaneous since the browser activates the hidden tab rather than reloading the page from
 scratch.
@@ -79,20 +80,16 @@ example:
 
 # Use Cases
 
-While writing this article and considering use cases for speculative pre-rendering, the first
-example that came to mind was **blogs**. For instance, if a blog has a *next* button to load the
-following article, pre-rendering the next page could make navigation seamless for the reader.
+The first example that came to me when writing this post and thinking about use cases for
+speculative pre-rendering was **blogs**. For instance, if a blog provides a *next* button to load
+the following article, pre-rendering the next page could make navigation simple for the reader.
 
-Another great use case would be **wiki** pages. Since wikis often have interconnected links leading
-to related articles, speculative pre-rendering could preload high-traffic links, improving user
-experience when navigating between frequently visited sections.
+**Wiki** pages would be an excellent application as well. Because wikis commonly contain links that
+lead to related articles, speculative pre-rendering could improve user experience by preloading
+popular links.
 
-Beyond these, **e-commerce sites** could greatly benefit from speculation rules. By pre-rendering
-product pages or checkout steps, online stores could ensure smoother and faster transitions during
-the shopping process, potentially increasing conversion rates.
-
-In general, any **multi-page application (MPA)**, can improve user satisfaction by implementing
-speculation rules.
+Generally speaking, implementing speculative rules into any **multi-page application (MPA)** could
+increase user happiness.
 
 # Downsides
 
