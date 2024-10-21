@@ -26,104 +26,42 @@ We'll use a small sample project implementing a [Ports and Adapters Architecture
 
 Let's dive in!
 
-## Ensure ports and adapters
+## How to write rules
 
-First, we want to ensure our setup of ports and adapters is consistently used. Here are the requirements:
+Before we start, let's have a look on some best practices of how to write jQAssistant rules. Again, I won't go into all the details, but to go further, we should understand the core concepts and workflows.
 
-- The `core` package contains the application core.
-- An interface in `core` is a `port`.
-- The `infra` package holds the adapter and other implementations.
-- A class from `infra` that implements a `port` is an `adapter`.
-- `Ports` are only allowed to be implemented by classes in `infra`.
+jQAssistant is based on rules. Rules can be either **concepts** or **constraints**.
+Concepts enhance the graph initially created by the file scanners and plugins with project or domain related concepts.
+Constraints on the other hand are validation rules. You can think of concepts as the domain language of your architecture and constraints as unit tests or assertions to validate the system structure.
 
-Let's translate these requirements into jQAssistant!
+Custom rules are defined in XML files within the `jqassistant` folder. Within these files, we write cypher queries executed by jQAssistant.
+For more information on writing rules, check out the [rules manual](https://jqassistant.github.io/jqassistant/current/#_rules) and [the rules in the sample project](https://github.com/stmu-zuhlke/jqa-sample/tree/master/jqassistant).
 
-Custom rules are defined in XML files within the `jqassistant` folder. Within these files, we write Cypher queries executed by jQAssistant.
-For more information on writing rules, check out the [rules manual](https://jqassistant.github.io/jqassistant/current/#_rules).
+<div data-node-type="callout">
+    <div data-node-type="callout-emoji">ℹ</div>
+    <div data-node-type="callout-text">
+    To reduce clutter, all future rules in this article will only show the cypher query.
+    </div>
+</div>
 
-First, let's enhance the graph by clarifying what constitutes a port and what qualifies as an adapter. 
-To do this, we’ll define concepts that match Java types with the `core` or `infra` packages first. These common core concepts will simplify our efforts when defining additional rules.
-
-```xml
-<concept id="commons:corePackage">
-        <description>Marks core package types</description>
-        <cypher><![CDATA[
-            MATCH
-                (t:Type)
-            WHERE
-                t.fqn STARTS WITH "com.weatherbuddy.weatherdataservice.core"
-            SET
-                t:Core
-            RETURN
-                t
-        ]]>
-        </cypher>
-    </concept>
-
-    <concept id="commons:infraPackage">
-        <description>Marks infra package types</description>
-        <cypher><![CDATA[
-            MATCH
-                (t:Type)
-            WHERE
-                t.fqn STARTS WITH "com.weatherbuddy.weatherdataservice.infra"
-            SET
-                t:Infra
-            RETURN
-                t
-        ]]>
-        </cypher>
-    </concept>
-```
-
-This can then be used to define a **ports-and-adapters** concept. This concept not only adds new labels to the nodes but also adds new relations `ADAPTER_OF` and `PORT_OF` between the nodes.
-
-Additionally, we return the port name and a list of all implementing adapters, which is handy for reporting and documentation.
-
-```xml
-<concept id="structure:ports-and-adapters">
-        <requiresConcept refId="commons:corePackage"/>
-        <requiresConcept refId="commons:infraPackage"/>
-        <description>Marks all interfaces in the core as ports</description>
-        <cypher><![CDATA[
-            MATCH
-                (adapter:Type)-[r:IMPLEMENTS]->(port:Interface:Core)
-            SET
-                port:Port,adapter:Adapter
-            CREATE
-                (adapter)-[:ADAPTER_OF]->(port)-[:PORT_OF]->(adapter)
-            RETURN
-                port.name AS Port, collect(adapter.name) AS Adapters
-        ]]>
-        </cypher>
-    </concept>
-```
-
-With these three concepts in place, we can now define a constraint to verify our last requirement.
-
-```xml
-    <constraint id="structure:adapterPackage" severity="blocker">
-        <requiresConcept refId="structure:ports-and-adapters"/>
-        <description>Makes sure, that adapters are in the infra package</description>
-        <cypher><![CDATA[
-            MATCH
-                (a:Adapter)
-            WHERE NOT
-                a:Infra
-            RETURN
-                a as InvalidAdapter
-        ]]></cypher>
-    </constraint>
-```
-
-When executed, this constraint will fail if the result set of the Cypher query is greater than zero.
-
-### Severity
+### Rule severity
 
 JQassistant rules come with a severity level, giving you the power to finely tune which rules should actually break your build and which ones should just serve as warnings or informational notes.
 This flexibility makes rule validation and reporting way more adaptable to your specific needs.
 
-In the example above, the `structure:adapterPackage` constraint is set to a `blocker` severity level. This is the highest severity, meaning the rule will result in a fail if the result count is not zero.
+given the following example
+
+```xml
+    <constraint id="my-constraint" severity="blocker">
+        <description>example constraint</description>
+        <cypher><![CDATA[
+            MATCH (file:Type)
+            RETURN file
+    ]]></cypher>
+    </constraint>
+```
+
+the `my-constraint` constraint is set to a `blocker` severity level. This is the highest severity, meaning the rule will result in a fail if the result count is not zero.
 
 If we set this to e.g. `minor`, only a warning will be printed out.
 
@@ -144,29 +82,91 @@ Warnings and failures will show up on the console and in the generated reports.
 
 Additionally, the `jqassistant.analyze.report.continue-on-failure` setting (default: false) determines whether jQAssistant continues or stops if failures are found during analysis.
 
+### Develop and debugging using the Neo4j explorer
+
+Writing and debugging rules directly in XML can be quite cumbersome. Luckily, jQAssistant offers a full-fledged Neo4J instance complete with the Neo4J explorer. This tool is perfect for developing, testing, and debugging your Cypher queries. Here's a streamlined development process:
+
+1. Run the initial scan.
+2. Start the local Neo4J instance.
+3. Inspect the current graph and develop concepts and rules using the Neo4J explorer.
+4. Compile everything you need into the XML files.
+5. Reset your local state and run the scan again.
+
+Now that we have our tools in place, we can dive into the first showcase.
+
+## Showcase 1: Ports and Adapters
+
+Let's get our hands dirty!
+
+First, we want to ensure our setup of ports and adapters is consistently used. Here are the requirements:
+
+- The `core` package contains the application core.
+- An interface in `core` is a `port`.
+- The `infra` package holds the adapter and other implementations.
+- A class from `infra` that implements a `port` is an `adapter`.
+- `Ports` are only allowed to be implemented by classes in `infra`.
+
+Let's translate these requirements into jQAssistant!
+
+First, let's enhance the graph by clarifying what constitutes a port and what qualifies as an adapter.
+To do this, we’ll define concepts that match Java types with the `core` or `infra` packages first. These common core concepts will simplify our efforts when defining additional rules.
+
+```Cypher
+// Concept: commons:corePackage
+
+MATCH (t:Type)
+WHERE t.fqn STARTS WITH "com.weatherbuddy.weatherdataservice.core"
+SET t:Core
+RETURN t
+```
+
+```Cypher
+// Concept: commons:infraPackage
+
+MATCH (t:Type)
+WHERE t.fqn STARTS WITH "com.weatherbuddy.weatherdataservice.infra"
+SET t:Infra
+RETURN t
+```
+
+This can then be used to define a **ports-and-adapters** concept. This concept not only adds new labels to the nodes but also adds new relations `ADAPTER_OF` and `PORT_OF` between the nodes.
+
+Additionally, we return the port name and a list of all implementing adapters, which is handy for reporting and documentation.
+
+```Cypher
+// Concept: structure:ports-and-adapters
+
+MATCH (adapter:Type)-[r:IMPLEMENTS]->(port:Interface:Core)
+SET port:Port,adapter:Adapter
+CREATE (adapter)-[:ADAPTER_OF]->(port)-[:PORT_OF]->(adapter)
+RETURN port.name AS Port, collect(adapter.name) AS Adapters
+```
+
+With these three concepts in place, we can now define a constraint to verify our last requirement.
+
+```Cypher
+// Constraint: structure:adapterPackage
+
+MATCH (a:Adapter)
+WHERE NOT a:Infra
+RETURN a as InvalidAdapter
+```
+
+When executed, this constraint will fail if the result set of the Cypher query is greater than zero.
+
 ## More insights with plugins
 
 JQAassistant offers a versatile plug-in system, extending its capabilities beyond just Java code. This flexibility allows us to gain deeper insights and metrics about system structures.
 
 In the sample project, the [git plugin](https://github.com/kontext-e/jqassistant-git-plugin) is utilized to collect metrics on contributors and identify hot spots. You can find the relevant rule in `/jqassistant/metrics.xml`.
 
-```xml
-    <concept id="metrics:MostChangedTypes">
-        <requiresConcept refId="commons:ConnectGitFilesAndTypes"/>
-        <description>Most changed Types</description>
-        <cypher><![CDATA[
-        MATCH
-            (commit:Git:Commit)
-            -[:CONTAINS_CHANGE]->(:Git:Change)-[:MODIFIES]->
-            (:Git:File)-[:CONTAINS]->(type:Type)
-        RETURN
-            type.fqn AS Type, count(commit) AS NumberOfCommits
-        ORDER BY
-            NumberOfCommits DESC
-        LIMIT
-            20
-    ]]></cypher>
-    </concept>
+```Cypher
+// Concept: metrics:MostChangedTypes
+
+MATCH (commit:Git:Commit)-[:CONTAINS_CHANGE]->(:Git:Change)-[:MODIFIES]->(:Git:File)-[:CONTAINS]->(type:Type)
+RETURN type.fqn AS Type, count(commit) AS NumberOfCommits
+ORDER BY NumberOfCommits DESC
+LIMIT 20
 ```
 
 The concept above highlights the top 20 java types with the most changes, useful for reporting or pinpointing risks and opportunities for restructuring.
@@ -224,7 +224,7 @@ include::jQAssistant:Rules[constraints="*"]
 
 With these tools in hand, we can now embark on our journey into creating living documentation. ⛵
 
-## Showcase: ADR validation
+## Showcase 2: ADR validation
 
 To show what I mean with "living documentation" and what is possible besides analysing code using jQAssistant, I created a showcase, validating [Architecture Decision Records (ADR)](https://github.com/joelparkerhenderson/architecture-decision-record).
 
@@ -235,14 +235,11 @@ Here is what we want to do:
 - scan ADRs with jQAssistant
 - Verify, if the ADR is backed with at least one jQAssistant constraint
 
-To document ADRs we want to use asciidoc files. Unfortunately, there is no jQAssistant plugin out there, which scans adoc files and adds them to the tree. But there are already other scanners included in jQAssistant, e.g. xml, json and yaml scanners. So as a workaround, we split up the ADR definition in two parts:
-
-1. **ADR yaml file**, implementing an ADR template and providing a unique ADR ID.
-2. **ADR adoc documentation file**, includes the yaml content and the jQAssitant rules for this ADR.
+To document ADRs we use asciidoc files. For scanning, we will use this [Asciidoc Scanner Plugin](https://github.com/kontext-e/jqassistant-asciidoc-plugin). The ADR files follow a template, starting with a table holding the header information like a unique ID, the author, and the status.
 
 In our sample project you'll find the ADR examples in the folder `src/docs/adr`.
 
-With the yaml files ingested by jQAssistant we can then write concepts and constraints targeting those nodes. Finally we can include all ADR documentation files in the architecture design decisions document.
+With the asciidoc files ingested by jQAssistant we can then write concepts and constraints targeting those nodes. Finally we can include all ADR documentation files in the architecture design decisions document.
 
 So this is the concept:
 
@@ -257,10 +254,15 @@ The end result should provide a documentation with the following contents:
 
 ### Scanning ADRs
 
-To ensure the YAML scanner can detect our ADR definitions, we simply add the following line to our .jqassistant.yml file:
+To ensure the asciidoc plug-in is loaded and the scanner can detect our ADR files, we simply add the following lines to our .jqassistant.yml file:
 
 ```yaml
 jqassistant:
+  plugins:
+[...]
+    - group-id: de.kontext-e.jqassistant.plugin
+      artifact-id: jqassistant.plugin.asciidoc
+      version: ${jqassistant.asciidoc-plugin.version}
 [...]
   scan:
     include:
@@ -269,36 +271,24 @@ jqassistant:
 [...]
 ```
 
-Adding this line will include all files in the adr folder for scanning by the YAML file scanner, which is part of the jQAssistant core distribution.
+Adding this line will include all files in the adr folder for scanning by the asciidoc file scanner.
 
-The yaml scanner adds generic yaml nodes into the Neo4J graph. To interpret these nodes as ADRs, we have to define our own concept:
+The scanner adds generic Asciidoc nodes into the Neo4J graph. To interpret these nodes as ADRs, we have to define our own concept:
 
-```xml
-<concept id="adr:document">
-        <description>ADR yaml documents files</description>
-        <cypher><![CDATA[
-            MATCH
-                (file:Yaml:File)
-                    -[HAS_DOCUMENT]->
-                (doc:Yaml:Document)
-                    -[HAS_MAP]->
-                (map:Yaml:Map)
-                    -[HAS_KEY]->
-                (key:Yaml:Key {name:'id'})
-                    -[HAS_VALUE]->
-                (id:Yaml:Value)
-            WHERE
-                file.fileName STARTS WITH '/adr-'
-            MERGE
-                (adr:Adr {adrId: id.value})
-            RETURN adr
-    ]]></cypher>
-    </concept>
+```Cypher
+// Concept: adr:document
+
+MATCH
+    (f:Asciidoc:File)-->(b:Block)-->(t:Table)-->
+    (r:Row {rownumber:0})-->(c: Cell {colnumber: 1})
+WHERE  f.fileName STARTS WITH '/adr-'
+MERGE (adr:Adr {adrId: c.text})
+RETURN adr
 ```
 
 Here's what's happening:
 
-We're scanning YAML documents whose filenames start with `/adr-`. For each of these files, a new node is created in the Neo4J graph. This node is labeled as `Adr` and includes a property holding the Adr-ID.
+We're scanning Asciidoc documents whose filenames start with `/adr-`. For each of these files, a new node is created in the Neo4J graph. This node is labeled as `Adr` and includes a property holding the Adr-ID extracted from the table in the ADR document.
 
 ### Matching ADR rules
 
@@ -322,24 +312,20 @@ jqassistant:
 
 With the XML nodes available, we can define the following concept, which matches the ADR nodes with the XML rule element. The `merge` then creates a new node labeled `AdrConstraint` and establishes a new relationship, `ENSURED_BY`, between this node and the `Adr` node.
 
-```xml
-    <concept id="adr:matchingConstraint">
-        <requiresConcept refId="adr:document"/>
-        <description>Links ADRs with JQL Constraints which ensure the ADR</description>
-        <cypher><![CDATA[
-            match (adr:Adr)
-            match (e:Xml:Element {name: 'constraint'})-->(attr:Xml:Attribute {name: 'id'})
-            where attr.value STARTS WITH adr.adrId
-            merge (adr)-[r:ENSURED_BY]->(constraint:AdrConstraint {adrId: adr.adrId, id: attr.value})
-            return adr.adrId, type(r), constraint.id
-        ]]></cypher>
-    </concept>
+```Cypher
+// Concept: adr:matchingConstraint
+
+MATCH (adr:Adr)
+MATCH (e:Xml:Element {name: 'constraint'})-->(attr:Xml:Attribute {name: 'id'})
+WHERE attr.value STARTS WITH adr.adrId
+MERGE (adr)-[r:ENSURED_BY]->(constraint:AdrConstraint {adrId: adr.adrId, id: attr.value})
+RETURN adr.adrId, type(r), constraint.id
 ```
 
 <div data-node-type="callout">
     <div data-node-type="callout-emoji">ℹ</div>
     <div data-node-type="callout-text">
-It seems that jQAssistant also has an internal concept providing JQAssistant rule nodes. Unfortunately, I haven't figured out how to reference it, which leads to race conditions during concept execution. I'm also unsure how to add this as `requiredConcept`. Here's a [Stack Overflow question](https://stackoverflow.com/questions/78981658/how-to-use-jqassistant-internal-node-labels-in-custom-concept) I created, but there hasn't been an answer so far.
+It appears that jQAssistant has an internal concept involving rule nodes. However, referencing it properly without triggering race conditions is not possible. I raised a [Stack Overflow question](https://stackoverflow.com/questions/78981658/how-to-use-jqassistant-internal-node-labels-in-custom-concept), which was recently answered, confirming this issue.
     </div>
 </div>
 
@@ -371,22 +357,17 @@ With everything in place, we are now ready to incorporate the results into the d
 As you may recall, our objective is to provide a comprehensive overview of all ADRs and their associated constraints.
 To facilitate this, we are introducing a new concept called `adr:constraintReport`. This concept does not modify the graph in any way. Rather we use the query result as a structured report.
 
-```xml
-    <concept id="adr:constraintReport">
-        <requiresConcept refId="adr:document"/>
-        <requiresConcept refId="adr:matchingConstraint"/>
-        <description>List of all constraints for adrs</description>
-        <cypher><![CDATA[
-            call {
-                match (a:Adr)-[r:ENSURED_BY]->(c:AdrConstraint)
-                return a.adrId as adr, c.id as Constraints
-                UNION DISTINCT
-                match(unionAdr:Adr)
-                return unionAdr.adrId as adr, null as Constraints
-           }
-           return adr, collect(Constraints) as Constraints
-        ]]></cypher>
-    </concept>
+```Cypher
+// Concept: adr:constraintReport
+
+CALL {
+    MATCH (a:Adr)-[r:ENSURED_BY]->(c:AdrConstraint)
+    RETURN a.adrId as adr, c.id as Constraints
+    UNION DISTINCT
+    MATCH(unionAdr:Adr)
+    RETURN unionAdr.adrId as adr, null as Constraints
+}
+RETURN adr, collect(Constraints) as Constraints
 ```
 
 The concept leverages advanced cypher features like `UNION` and `CALL` to gather all ADRs and connect them with their corresponding `AdrConstraints`.
@@ -409,6 +390,18 @@ To streamline the ADR inclusion, the sample project offers a custom Asciidoc inc
     </div>
 </div>
 
+## Next steps
+
+This is not the end. There is much more you can do with jQAssistant. Here are some ideas for next steps:
+
+- make mor parts of the system testable, using concepts and additional plugins
+- add jQAssistant into CICD pipelines
+- Use a central Neo4J instance and e.g. grafana, to build a monitoring solution
+
+### Testable architecture
+
+To really make the most of jQAssistant, it's important that not just the code, but the entire architecture is testable. This means we now have a method to not only identify concepts but also assess their quality. Similar to Test-Driven Development (TDD), if a concept is difficult to test, we should look into it and tweak the implementation until it's testable and verifiable.
+
 ## Conclusion
 
 Using jQAssistant in combination with arc42 provides a powerful approach to verifying and documenting software architecture. By integrating architectural rules into your build process, you can ensure that your design principles are consistently followed, creating living documentation that reflects the current state of the system.
@@ -418,9 +411,9 @@ Using jQAssistant in combination with arc42 provides a powerful approach to veri
 **Pros:**
 
 - **Automated Verification**: Automatically checks architectural compliance, reducing manual oversight.
-- **Living Documentation**: Keeps documentation up-to-date with actual implementation.
+- **Living Documentation**: Keeps documentation up-to-date with actual implementation and enforces a habbit of documentation.
 - **Flexibility**: Highly customizable with plugins and custom rules.
-- **Integration**: Easily integrates with existing CI/CD pipelines.
+- **Integration**: Easily integrates with existing CI/CD pipelines or other tools. As long as the tools use a standard file output (like XML) you do not even need plugins.
 
 **Cons:**
 
@@ -431,11 +424,13 @@ Using jQAssistant in combination with arc42 provides a powerful approach to veri
 ### Comparison with Sonar and ArchUnit
 
 **Sonar:**
+
 - **Focus**: Primarily on code quality, bugs, and vulnerabilities.
 - **Strengths**: Excellent for static code analysis and maintaining code hygiene.
 - **Limitations**: Less focus on architectural rules and design validation.
 
 **ArchUnit:**
+
 - **Focus**: Primarily on enforcing architectural rules within Java code.
 - **Strengths**: Easy to integrate with JUnit, making it a good fit for developers familiar with unit testing frameworks.
 - **Limitations**: Less comprehensive in creating living documentation compared to jQAssistant.
@@ -449,4 +444,4 @@ In summary, while tools like Sonar and ArchUnit have their unique strengths, jQA
 - [jQAssistant Manual](https://jqassistant.github.io/jqassistant/current/)
 - [Neo4J + Cypher refference](https://neo4j.com/docs/)
 - [Ports and Adapters Architecture](https://en.wikipedia.org/wiki/Hexagonal%5Farchitecture%5F(software))
-- [Blog post @ uxitra](https://uxitra.de/2024/04/04/codestrukturanalyse-mit-jqassistant-teil-1/)
+- [Blog post @uxitra](https://uxitra.de/2024/04/04/codestrukturanalyse-mit-jqassistant-teil-1/)
