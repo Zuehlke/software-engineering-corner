@@ -37,19 +37,12 @@ Constraints on the other hand are validation rules. You can think of concepts as
 Custom rules are defined in XML files within the `jqassistant` folder. Within these files, we write cypher queries executed by jQAssistant.
 For more information on writing rules, check out the [rules manual](https://jqassistant.github.io/jqassistant/current/#_rules) and [the rules in the sample project](https://github.com/stmu-zuhlke/jqa-sample/tree/master/jqassistant).
 
-<div data-node-type="callout">
-    <div data-node-type="callout-emoji">ℹ</div>
-    <div data-node-type="callout-text">
-    To reduce clutter, all future rules in this article will only show the cypher query.
-    </div>
-</div>
-
 ### Rule severity
 
 JQassistant rules come with a severity level, giving you the power to finely tune which rules should actually break your build and which ones should just serve as warnings or informational notes.
 This flexibility makes rule validation and reporting way more adaptable to your specific needs.
 
-given the following example
+given the following example:
 
 ```xml
     <constraint id="my-constraint" severity="blocker">
@@ -60,6 +53,13 @@ given the following example
     ]]></cypher>
     </constraint>
 ```
+
+<div data-node-type="callout">
+    <div data-node-type="callout-emoji">ℹ</div>
+    <div data-node-type="callout-text">
+    To reduce clutter, all future rules in this article will only show the cypher query.
+    </div>
+</div>
 
 the `my-constraint` constraint is set to a `blocker` severity level. This is the highest severity, meaning the rule will result in a fail if the result count is not zero.
 
@@ -248,8 +248,8 @@ So this is the concept:
 The end result should provide a documentation with the following contents:
 
 - a list of all ADRs in our documentation
-- detailes about every ADR
-- an overview about which ADRs are covered by a constriant
+- details about every ADR
+- an overview about which ADRs are covered by a constraint
 - the results of the constraints for the last build
 
 ### Scanning ADRs
@@ -313,7 +313,7 @@ jqassistant:
 With the XML nodes available, we can define the following concept, which matches the ADR nodes with the XML rule element. The `merge` then creates a new node labeled `AdrConstraint` and establishes a new relationship, `ENSURED_BY`, between this node and the `Adr` node.
 
 ```Cypher
-// Concept: adr:matchingConstraint
+// Concept: adr:AdrConstraint
 
 MATCH (adr:Adr)
 MATCH (e:Xml:Element {name: 'constraint'})-->(attr:Xml:Attribute {name: 'id'})
@@ -329,7 +329,7 @@ It appears that jQAssistant has an internal concept involving rule nodes. Howeve
     </div>
 </div>
 
-For a test, we now add two dummy constraints for adr-01. Both of those constraints will be linked to the corresponding ADR.
+For a test, we now add two dummy constraints for adr-01. Both of those constraints will be linked to the corresponding ADR (note: to be able to distinguish the two contraints, we are using the full xml definitions here).
 
 ```xml
     <constraint id="adr-01">
@@ -394,7 +394,7 @@ To streamline the ADR inclusion, the sample project offers a custom Asciidoc inc
 
 This is not the end. There is much more you can do with jQAssistant. Here are some ideas for next steps:
 
-- make mor parts of the system testable, using concepts and additional plugins
+- make more parts of the system testable, using concepts and additional plugins
 - add jQAssistant into CICD pipelines
 - Use a central Neo4J instance and e.g. grafana, to build a monitoring solution
 
@@ -411,7 +411,7 @@ Using jQAssistant in combination with arc42 provides a powerful approach to veri
 **Pros:**
 
 - **Automated Verification**: Automatically checks architectural compliance, reducing manual oversight.
-- **Living Documentation**: Keeps documentation up-to-date with actual implementation and enforces a habbit of documentation.
+- **Living Documentation**: Keeps documentation up-to-date with actual implementation and enforces a habit of documentation.
 - **Flexibility**: Highly customizable with plugins and custom rules.
 - **Integration**: Easily integrates with existing CI/CD pipelines or other tools. As long as the tools use a standard file output (like XML) you do not even need plugins.
 
