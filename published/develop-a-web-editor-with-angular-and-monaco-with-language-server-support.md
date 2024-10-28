@@ -1,7 +1,7 @@
 ---
 title: Develop a Web Editor for your DSL using Angular and Monaco Editor library with Language Server support
 domain: software-engineering-corner.hashnode.dev
-tags: Web Editor, Monaco, Monaco Language Client, Language Server, LSP
+tags: Angular, web-development, coding, TypeScript
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1719718605895/bv2LfyFWS.jpg?auto=format
 publishAs: cjayashantha
 seriesSlug: editor-with-ls-support
