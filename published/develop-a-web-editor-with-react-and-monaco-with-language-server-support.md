@@ -6,7 +6,6 @@ cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1720940174478/yjy4aJt
 publishAs: NipunaMarcusZuhlke
 seriesSlug: editor-with-ls-support
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 # Develop a Web Editor for your DSL using React and Monaco Editor library
