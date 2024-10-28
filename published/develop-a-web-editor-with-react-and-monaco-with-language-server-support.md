@@ -1,7 +1,7 @@
 ---
 title: Develop a Web Editor for your DSL using React and Monaco Editor library with Language Server support
 domain: software-engineering-corner.hashnode.dev
-tags: Web Editor, Monaco, Monaco Language Client, Language Server, LSP
+tags: React, web-development, coding, TypeScript
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1720940174478/yjy4aJtIT.gif?auto=format
 publishAs: NipunaMarcusZuhlke
 seriesSlug: editor-with-ls-support

@@ -1,7 +1,7 @@
 ---
 title: Develop your own Language Server
 domain: software-engineering-corner.hashnode.dev
-tags: Language Server Protocol, Java, LSP
+tags: Java, coding
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1720939748891/bKimfsPot.gif?auto=format
 publishAs: NipunaMarcusZuhlke
 seriesSlug: editor-with-ls-support
