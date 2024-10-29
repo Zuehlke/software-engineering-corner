@@ -29,13 +29,13 @@ This feature benefits Multi-Page Applications (MPAs) by speeding up future navig
 Single-Page Applications (SPAs) mainly benefit during initial page loads. Speculation rules can be
 implemented either within an HTML `<script>` tag or via a "speculation-rules" response header.
 
-**Pre-rendering** allows browsers to prefetch, render, and load a page in an invisible tab,
+**Pre-rendering** allows browsers to pre-fetch, render, and load a page in an invisible tab,
 including
 all subresources and JavaScript. This makes future navigations to the pre-rendered page nearly
 instantaneous since the browser activates the hidden tab rather than reloading the page from
 scratch.
 
-**Prefetching** on the other hand allows browsers to download the response body of referenced pages
+**Pre-fetching** on the other hand allows browsers to download the response body of referenced pages
 without fetching subresources, improving load times when users navigate to those pages. This method
 is more efficient than older approaches like `<link rel="prefetch">` or `fetch()` with low priority,
 as it supports cross-site navigation and avoids being blocked by `Cache-Control` headers.
@@ -140,7 +140,7 @@ The **eagerness** setting determines when speculation rules are triggered.
 
 - An eagerness of **"eager"** means that as soon as the page loads, it pre-renders every page that
   matches the speculation rules.
-- An eagerness of **"moderate"** delays prerendering until a user interacts with the
+- An eagerness of **"moderate"** delays pre-rendering until a user interacts with the
   page—specifically, when hovering over a link that meets the speculation rules criteria.
 
 This setting helps balance resource usage and performance based on user interaction.
@@ -159,18 +159,18 @@ Open the **Application** tab and find the *Background services* section ⇾ *Spe
 *Rules*, where you can view the active speculation rules.
 
 Right next to *Rules* there's the *Speculations* section, you’ll see all the pages that have been
-pre-rendered or what state they are in. As they are in *Ready* state, When navigating, the page will
+pre-rendered or what state they are in. As they are in *Ready* state, when navigating, the page will
 load instantly.
 ![Dev tools Application](https://cdn.hashnode.com/res/hashnode/image/upload/v1727713720845/jW-6gGIxw.png?auto=format)
 
 You can also observe background activity in the **Network** tab, where you’ll notice the
-prerendering process at
+pre-rendering process at
 work.![Dev tools Network](https://cdn.hashnode.com/res/hashnode/image/upload/v1727713751485/HsTee5a3T.png?auto=format)
 
 ## Excluded Links
 
 Some links are intentionally excluded from pre-rendering. These are identified by URLs ending with "
--no-prerender" and are also labeled with *"NO PRERENDER:"* in the link text for easy identification.
+-no-prerender" and are also labelled with *"NO PRERENDER:"* in the link text for easy identification.
 
 ## Performance Stats
 
@@ -184,8 +184,8 @@ you're on a fast network. If that’s the case, I recommend throttling the netwo
 1. In the **Network** tab, change the dropdown from *No throttling* to *Slow 4G* or even slower.
 2. Test the pages again and compare load times.
 
-If the performance boost isn’t immediately obvious, it might be because the prerendering wasn't
-completed when the link was clicked. You can confirm pre-render status in the **Speculations**
+If the performance boost isn’t immediately obvious, it might be because the pre-rendering wasn't
+completed when the link was clicked. You can confirm the pre-render status in the **Speculations**
 section under the **Application** tab.
 
 In my tests, switching to *Slow 4G* resulted in about 2000ms for non-pre-rendered pages versus 100ms
@@ -196,7 +196,7 @@ for pre-rendered ones.
 # Conclusion
 
 In summary, the **Speculation Rules API** offers exciting opportunities to enhance the performance
-of Multi-Page Applications (MPAs) by intelligently pre-rendering or prefetching content, making
+of Multi-Page Applications (MPAs) by intelligently pre-rendering or pre-fetching content, making
 future navigations feel nearly instantaneous. With proper implementation, this API can significantly
 improve user experience.
 
