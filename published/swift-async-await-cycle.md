@@ -6,8 +6,8 @@ tags: swift, swift-concurrency, ios, macos, watchos, tvos, visionos, apple, vapo
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1724686396858/4k_l7bLPj.jpg?auto=format
 publishAs: simonseyer
 hideFromHashnodeCommunity: false
-saveAsDraft: true
---- 
+---
+
 In a recent project, we observed one of those bugs that lets every developer jubilate. It was only happening rarely and seemed to manifest in varying ways. 
 
 But first, some context: We were running a Swift/Vapor server which controls a generic Zühlke Bluetooth emulation dongle (connected via USB) in order to emulate medical devices. This talks to an iOS app via Bluetooth (running on a real phone) that is under test by a custom (medical) XCTest-based test framework. In summary, quite some moving parts.
