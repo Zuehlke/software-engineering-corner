@@ -5,7 +5,6 @@ tags: legacy,legacy-systems,legacy-app-modernization
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1727431394860/XZ6VWy5WU.jpg?auto=format
 publishAs: KevZ
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 Whether you're tasked with updating functionality, improving performance, migrating to new technologies, or simply trying to understand an undocumented system for maintenance, dealing with legacy systems is an inevitable challenge in the software industry.
 
