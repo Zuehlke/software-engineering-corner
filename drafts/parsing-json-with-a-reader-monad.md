@@ -31,7 +31,7 @@ In this case, we're using it to process the JSON in a way that handles these pes
 
 You might be thinking why can't we just write a custom deserializer for a popular JSON processing library such as [Jackson](https://github.com/FasterXML/jackson-databind)?
 There's nothing wrong with leveraging your existing JSON processing library. 
-Personally, I prefer using a monad since it offers a more modular approach.
+Personally, in this specific instance, I prefer using a monad since it offers a more modular approach.
 It separates data extraction from transformation, allows for easy chaining with `map` and `flatMap`, and handles errors gracefully.
 This makes the code more readable, flexible, and easier to maintain, without tightly coupling the code to a specific library or JSON structure.
 
