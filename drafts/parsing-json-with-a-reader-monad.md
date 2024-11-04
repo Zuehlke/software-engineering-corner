@@ -8,11 +8,10 @@ hideFromHashnodeCommunity: false
 saveAsDraft: true
 ---
 
-Have you ever dealt with an API that made you question your life choices? 
-You know, the kind that returns an empty array when it should just say, "Hey, this value is missing," or sends a random string when you expected a nice clean `null`?
+Ever had an API response make you question its design choices?
+Like when it gives you an empty array instead of just saying, 'This value is missing,' or throws in an empty string where a `null` would be way cleaner?
 If this sounds familiar, you're not alone.
 
-Today's focus is on taming this madness using a reader monad in Java.
 This is the story of wrestling with an inconsistent JSON API and finding a clean, functional approach.
 
 ## The problem: Inconsistent JSON from the abyss
