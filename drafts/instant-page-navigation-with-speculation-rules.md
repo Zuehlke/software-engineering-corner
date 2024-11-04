@@ -4,12 +4,9 @@ domain: software-engineering-corner.hashnode.dev
 tags: web-development, web, performance, developer-tools, chrome, browsers
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1727714188831/N9FGMqpI4.jpg?auto=format
 publishAs: BenVil
-seriesSlug: instant-page-navigation-with-speculation-rules
 hideFromHashnodeCommunity: false
 saveAsDraft: true
 ---
-
-# Instant page navigations with speculation rules
 
 ## What are Speculation Rules?
 
