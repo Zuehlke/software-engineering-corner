@@ -16,7 +16,7 @@ is an experimental
 feature [available in all Chromium-based browsers](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API#browser_compatibility).
 It replaces
 the [now-deprecated](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/prerender) `<link rel="prerender">`
-and `<link rel=prefetch>`.
+and `<link rel="prefetch">`.
 
 The Speculation Rules API is designed to enhance navigation performance by pre-rendering or
 pre-fetching specific resources. It primarily relies on `href` matching rules to identify which
@@ -39,7 +39,7 @@ as it supports cross-site navigation and avoids being blocked by `Cache-Control`
 
 In this article, we won't cover all the features, and since the API is still experimental, there may
 be updates and improvements in the near future. I recommend checking
-the [MDN docs]([Speculation Rules API on MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API))
+the [MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API)
 for the latest information.
 
 ## Example
@@ -206,7 +206,7 @@ Unfortunately **speculationRules** are currently only available in
 Chromium-based browsers and even there an _experimental_ feature, therefore subject to change.
 I would not recommend to use it outside hobby-projects yet.
 
-- Sources:
+Sources:
 - [MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API)
 - [Fosdem24 Presentation](https://archive.fosdem.org/2024/schedule/event/fosdem-2024-2003-better-than-loading-fast-is-loading-instantly-/)
 - [prerender-pages](https://developer.chrome.com/docs/web-platform/prerender-pages)
