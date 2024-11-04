@@ -14,13 +14,28 @@ If this sounds familiar, you're not alone.
 
 This is the story of wrestling with an inconsistent JSON API and finding a clean, functional approach.
 
-## The problem: Inconsistent JSON from the abyss
+## The problem: Inconsistent JSON
 
 Here's the scenario: working with a JSON API that expressed missing values in the most unpredictable ways possible.
 Sometimes, it returned a `null`. Other times, it would return an empty string. And to make matters worse, it threw in an empty array - all for the same field.
 
 As you can imagine, there was no desire to change the legacy API and time was of the essence.
-How do you handle this chaos without littering your code with dozens of `if/else` statements?
+How do you handle this inconsistent behaviour without littering your code with dozens of `case` statements?
+
+```java
+record Person(Object name) {
+    public String getNameOrNull() {
+      return switch (name) {
+        case String value -> value.isBlank() ? null : value;
+        case List<?> value -> {
+          if (value.isEmpty()) yield null;
+          throw new IllegalArgumentException("Unexpected non-empty array");
+        }
+        case null, default -> null;
+      };
+    }
+  }
+```
 
 ## The solution: Enter the reader monad
 
