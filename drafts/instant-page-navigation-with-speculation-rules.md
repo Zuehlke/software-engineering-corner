@@ -8,8 +8,6 @@ hideFromHashnodeCommunity: false
 saveAsDraft: true
 ---
 
-# Instant page navigations with speculation rules
-
 ## What are Speculation Rules?
 
 As of the time of writing (October 2024),
