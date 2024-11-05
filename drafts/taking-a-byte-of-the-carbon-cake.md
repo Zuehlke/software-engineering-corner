@@ -2,12 +2,15 @@
 title: A Byte of the Carbon Cake
 domain: software-engineering-corner.hashnode.dev
 tags: design-patterns, software-architecture, best-practices, cloud, microservices, developers
-cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1730804922642/7N2hwJ1lV.jpg?auto=format
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1730817920538/my-2iG3i9.jpeg?auto=format
 publishAs: PaulSimmmons
 hideFromHashnodeCommunity: false
 saveAsDraft: true
 enableToc: true
 ---
+
+[ // Alt cover 800x400 https://cdn.hashnode.com/res/hashnode/image/upload/v1730817687984/9TrPClX8_.jpeg?auto=format ]: #
+
 # A Byte at the Carbon Cake
 
 We all make decisions that impact the future of our planet, from our choice of food and consumer products to transport options 
@@ -83,13 +86,15 @@ The calculation is shown below and gives a total of 175 KgCO2/year for a single 
 
 ### Relative carbon footprints
 
-![Figure: carbon cost proportions of the worked example](https://cdn.hashnode.com/res/hashnode/image/upload/v1730803133864/TkxqTomsM.png?auto=format)
+![Figure: Pie chart showing carbon footprint proportions](https://cdn.hashnode.com/res/hashnode/image/upload/v1730818499879/b95kTFxFy.jpg?auto=format)
+
+*Figure: Pie chart showing carbon footprint proportions*
 
 Some interesting facts emerge from this simple calculation above:
 
 1. The carbon cost of memory is surprisingly high compared to CPU (32:53%) whereas instinctively we think it should be insignificant.  
 We should consider memory allocation carefully, measure and optimise it for our service resources.
-2. Hard disk (HDD) space appears relatively cheap as a proportion of overall carbon impact.
+2. Hard disk (HDD) space appears relatively cheap as a proportion of overall carbon impact, especially given the unusually large allocation of disk in this example.
 3. Faster solid-state drives (SSD), with its use of non-volatile memory to store data, is many times the cost of HDD and so can become a significant carbon cost factor, 
 particularly if data is replicated across availability zones. The general rule is to optimise use of storage, which although not explicit in [GSF Pattern: Optimise Storage Resource](https://patterns.greensoftware.foundation/catalog/cloud/optimise-storage-resource-utilisation), 
 it's clear that selecting HDD where possible is naturally a lower rate of energy consumption.
@@ -131,13 +136,14 @@ Total system carbon footprint for single environment =  (0.01488 + 0.004058 + 0.
 Total system carbon footprint for 3 environments = 175 * 3 = 525 KgCO2/year
 
 ```
-[Figure: Relative Carbon Footprints, showing our Example Micro-service Cloud System]() 
+![Figure: Relative Carbon Footprints, showing our Example Micro-service Cloud System](https://cdn.hashnode.com/res/hashnode/image/upload/v1730817205560/Y1ZfUGOdl.jpg?auto=format)
+*Figure: Relative Carbon Footprints, including our Example Micro-service Cloud System*
 
 Let’s place our micro-services cloud system on the relative carbon footprint line. At 175 KgCO2 it would be somewhere in the middle between running a lawn mower and owning a cat. 
 But of course any realistic software system will likely have 2-3 similar environments, with varied configurations, plus services such as gateways, load balances, databases etc...
 These services may be PAYG shared, rather than dedicated to this system, but nevertheless need to be accounted. 
 
-In practice, it is likely that this carbon cost will be a multiple, let’s say 3x175 = 522 KgCO2/year for a very modest system. This is a very modest system and is small scale in comparison to many brand-name e-commerce retail sites or banking systems, yet already close to the cost of a flight from London to Malaga at 620 KgCO2.
+In practice, it is likely that this carbon cost will be a multiple, let’s say 3x175 = 522 KgCO2/year for our example. This system is small scale in comparison to many brand-name e-commerce retail sites or banking systems, yet already close to the cost of a flight from London to Malaga at 620 KgCO2.
 
 
 ## Green washing?
@@ -169,16 +175,16 @@ demand-shifting  (moving workloads to a region with lower carbon energy cost) an
 time-shifting (deferring until a time when carbon-free energy is available). There’s already some useful tools in this space, 
 such as a Kubernetes (carbon-aware) scheduler.
 
-However with the trend in cloud providers towards fully-green energy, it’s likely that their data centres in the most popular regions will be 100% soon, and so the gains in moving workloads from one to another are decreasing.  
-This diminishes the benefits of demand shifting and demand shaping, leaving time-shifting as a reasonable option.
+However with the trend in cloud providers towards fully-green energy, it’s likely that their data centres in the most popular regions will be 100% soon, and so the gains in moving workloads from one to another are decreasing. This diminishes the benefits of demand shifting and demand shaping, leaving time-shifting as a reasonable option.
 
-Therefore we purposefully ignore demand-shaping and shifting n the following opinionated view of the activities with the most significant impact; 
+Therefore we purposefully ignore demand-shaping and demand-shifting in the following opinionated view of the activities with the most significant impact; 
 focusing instead on three groups; easy-wins, medium effort and those activities at architecture design time:
 
 
 ### First: Low-Hanging Fruit
 
 ![Low hanging fruit](https://cdn.hashnode.com/res/hashnode/image/upload/v1730804092300/ebrrwNFL7.jpeg?auto=format)
+
 * **Measure**
 
   Start with carbon footprint tools, which will provide a ball-park figure of carbon usage decomposed over services. Be wary that these may not include ‘free usage’ (where free means cost-free of course) and may lack accuracy on shared ‘serverless’ services, eg: lambda functions.  Third party data from CCF or ClimateIQ data provides more granular detail.
@@ -206,18 +212,18 @@ focusing instead on three groups; easy-wins, medium effort and those activities 
 
 * **Right-size Databases**
 
-  Database can have a significant carbon footprint.  Right-size with appropriate data management …have a data archive policy, manage data to carbon-cheaper storage where practical. 
+  Database can have a significant carbon footprint.  Right-size with appropriate data management, own a data archive policy, manage data to carbon-cheaper storage where practical. 
 [AWS Well Architected: Sustainable A4](https://docs.aws.amazon.com/wellarchitected/latest/framework/sus_sus_data_a4.html)
 
 
 * **Compute Outliers**
 
-  Services that are particularly light on CPU, or underused memory and disk, though take care to be sure about failover and resilience configurations.
+  Identify services that are particularly light on CPU, or underused memory and disk, though take care to be sure about failover and resilience configurations.
 
 
 * **Choice of Disk**
 
-  Be frugal with your choice of SSD over HDD storage, it’s double the cost. 
+  Be frugal with your choice of SSD over HDD storage, it has significantly higher carbon footprint, ranging from 4x to 20x depending on cloud provider. 
   This might be a 'low effort' activity, however as it's likely SSD was originally chosen for performance reasons, such as a use in a cache, the effort here is in performance testing such as load, soak or similar.
 
 These medium-effort activities are clearly not free, and are probably best considered a form of technical debt and managed as such alongside project feature development.
