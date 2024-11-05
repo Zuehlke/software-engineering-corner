@@ -149,7 +149,7 @@ just use an incognito tab.
 
 ## Steps to test:
 
-1) Navigate to the [demonstration blog site]( https://speculation-rules-demo.deno.dev/)
+1) Navigate to the [demonstration blog site]( https://speculation-rules-demo.deno.dev/)  
 2) Open dev tools (F12)
 
 Open the **Application** tab and find the *Background services* section ⇾ *Speculative Loads* ⇾
