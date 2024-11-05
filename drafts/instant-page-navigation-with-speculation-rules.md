@@ -32,7 +32,7 @@ all subresources and JavaScript. This makes future navigations to the pre-render
 instantaneous since the browser activates the hidden tab rather than reloading the page from
 scratch.
 
-**Pre-fetching** on the other hand allows browsers to download the response body of referenced pages
+**Pre-fetching**, on the other hand allows browsers to download the response body of referenced pages
 without fetching subresources, improving load times when users navigate to those pages. This method
 is more efficient than older approaches like `<link rel="prefetch">` or `fetch()` with low priority,
 as it supports cross-site navigation and avoids being blocked by `Cache-Control` headers.
@@ -156,7 +156,7 @@ Open the **Application** tab and find the *Background services* section ⇾ *Spe
 *Rules*, where you can view the active speculation rules.
 
 Right next to *Rules* there's the *Speculations* section, you’ll see all the pages that have been
-pre-rendered or what state they are in. As they are in *Ready* state, when navigating, the page will
+pre-rendered or what state they are in. As they are in "Ready" state, when navigating, the page will
 load instantly.
 ![Dev tools Application](https://cdn.hashnode.com/res/hashnode/image/upload/v1727713720845/jW-6gGIxw.png?auto=format)
 
@@ -202,7 +202,7 @@ and security risks. Balancing these trade-offs with appropriate usage of the **e
 and carefully defined speculation rules can ensure a smoother, faster, and safer browsing
 experience.
 
-Unfortunately **speculationRules** are currently only available in
+Unfortunately **speculation rules** are currently only available in
 Chromium-based browsers and even there an _experimental_ feature, therefore subject to change.
 I would not recommend to use it outside hobby-projects yet.
 
