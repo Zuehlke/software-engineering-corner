@@ -58,24 +58,28 @@ Fortunately there are a growing number of third-party sources which help us see 
 
 Using Climate IQ as a source we can determine the following carbon cost rates:
 
-| Carbon Cost Item         | Carbon Rate           | Reference                                                       |
-|--------------------------|-----------------------|-----------------------------------------------------------------|
-| CPU compute              | 0.0007478 kg/CPU-hour | Climatiq id cpu-provider_aws-region_eu_west_1                   |
-| Memory                   | 0.0001 kgCO2e/GB-hour | Climatiq id memory-provider_aws-region_eu_west_1                |
-| Magnetic hard disk (HDD) | 0.0002 kgCO2e/TB-hour | Climatiq id storage-provider_azure-region_north_europe-type_hdd |
-| Solid state disk (SSD)   | 0.0004 kgCO2e/TB-hour | Climatiq id storage-provider_azure-region_north_europe-type_ssd |
+| Carbon Cost Item         | Carbon Rate           | Reference                                                             |
+|--------------------------|-----------------------|-----------------------------------------------------------------------|
+| CPU compute              | 0.0006314 kg/CPU-hour | Climatiq id cpu-provider_gcp-region_europe_west_                      |
+| Memory                   | 0.0001 kgCO2e/GB-hour | Climatiq id memory-provider_gcp-region_europe_west_2                  |
+| Magnetic hard disk (HDD) | 0.0000677 kgCO2e/TB-hour | Climatiq id storage-provider_gcp_cfe-region_europe_west_2-type_hdd |
+| Solid state disk (SSD)   | 0.0003049 kgCO2e/TB-hour | Climatiq id storage-provider_gcp-region_europe_west_2-type_ssd     |
 
-Rates differ by region and cloud provider, these examples are for Amazon cloud region; AWS Dublin
+Rates differ by region and cloud provider, these examples are for Google Cloud, region Europe West 2
 
 A few observations based on these rates:
 
  * The rates ('carbon cost') are incredibly small in comparison to everyday things
- * The rate of SSD is double that of HDD and we assume this reflects the cost of electricity required to maintain state, compared to magnetic hard drive; a subject we'll touch on this in the next section
+ * The rate of SSD is 4-5 times that of HDD, and in Amazon this is 20 times, and we assume this reflects the cost of electricity required to maintain state, compared to magnetic hard drive; a subject we'll touch on this in the next section
  * The standard units for memory and disk storage are respectively GB and TB, hence the carbon rate for memory is in fact 500x that of storage at the same unit
 
 We can use these rates, or similar for other providers or regions, to calculate the cost of our use of a cloud service. We simply evaluate for each of our service resources the number of CPU hours spent, memory and disk storage per hour. A worked example from a genuine project, that hosts a modest website with some video content, is as follows:
 
-The system consists of a handful of Spring micro-services with a database, a video server and some light messaging. Micro-services and messaging run in a Kubernetes cluster running on AWS EC2 on an m7g.medium CPU, 3 nodes with total of 15 Gb memory and a disk of 100 gb in an availability zone of 3 instances. The database TO BE ADDED.. The calculation is shown below and gives a total of 32 KgCO2/year ( ADD DATABASE COST) for one environment.
+The system consists of a handful of Spring micro-services with a database, a video server and some light messaging. 
+
+Micro-services and messaging runs on a Kubernetes cluster on Google Kubernetes (GKE) over 3 nodes ( spec: n1-standard-4, 15 GB memory, storage: 100 HDD + 100 SSD).  The video platform runs on a separate server on 2 nodes ( spec: n1-standard-1, 7.5 GB memory, storage: 20 HDD and 100 SDD).  The database runs on a separate server on 1 node ( spec: n1-standard-1, 3.75 GB memory,storage 10 SSD )  
+
+The calculation is shown below and gives a total of 175 KgCO2/year for a single environment.
 
 ### Relative carbon footprints
 
@@ -83,10 +87,10 @@ The system consists of a handful of Spring micro-services with a database, a vid
 
 Some interesting facts emerge from this simple calculation above:
 
-1. The carbon cost of memory is surprisingly high compared to CPU (41:57), just over 2/3~rds~, whereas instinctively we think it should be insignificant.  
+1. The carbon cost of memory is surprisingly high compared to CPU (32:53%) whereas instinctively we think it should be insignificant.  
 We should consider memory allocation carefully, measure and optimise it for our service resources.
 2. Hard disk (HDD) space appears relatively cheap as a proportion of overall carbon impact.
-3. Faster solid-state drives (SSD), with its use of non-volatile memory to store data, is twice the cost of HDD and so can become a significant carbon cost factor, 
+3. Faster solid-state drives (SSD), with its use of non-volatile memory to store data, is many times the cost of HDD and so can become a significant carbon cost factor, 
 particularly if data is replicated across availability zones. The general rule is to optimise use of storage, which although not explicit in [GSF Pattern: Optimise Storage Resource](https://patterns.greensoftware.foundation/catalog/cloud/optimise-storage-resource-utilisation), 
 it's clear that selecting HDD where possible is naturally a lower rate of energy consumption.
 4. Small rates grow quickly when considering real-world systems; scaled by unit size, time and over multiple environments.
@@ -103,21 +107,38 @@ it's clear that selecting HDD where possible is naturally a lower rate of energy
 My maths teacher taught me to always 'show your working', so here they are for the above carbon footprint calculations, based on the rates given above from ClimateIQ:
 
 ```
-CPU carbon footprint = 0.0007 * 3 nodes)  = 0.0021 per hour
-Memory carbon footprint = 0.0001 * 15  = 0.0015 per hour
-Storage carbon footprint = ( 100/1000 * 3 instances * 0.0002) = 0.00006 per hour
+Microservices:
+CPU carbon rate = 0.0006316 * 4 CPU * 3 nodes  = 0.0075792 per hour
+Memory carbon rate = 0.0001 * 15 * 3 nodes = 0.0045 per hour
+Storage carbon rate, HDD = 0.0000677 * (100/1000) = 0.0000609 per hour
+Storage carbon rate, SSD = 0.0003049 * (100/1000) = 0.0027441 per hour
+Total rate for microservices = 0.01488 per hour
 
-Total carbon footprint =  0.00366 * 8760 hours/year =~ 32 KgCO2/year
+Video platform:
+CPU carbon rate = 0.0006316 * 2 CPU * 2 nodes)  = 0.0025264 per hour
+Memory carbon rate = 0.0001 * 7.5 * 2 nodes = 0.0015 per hour
+Storage carbon rate, HDD = 0.0000677 * ( 20/1000 ) = 0.000001354 per hour
+Storage carbon rate, SSD =  0.000304 * ( 100/1000 ) = 0.0003049 per hour
+Total rate for video =  0.004058 per hour
 
-Total carbon footprint for 3 environments = 32 * 3 envs = 66 KgCO2/year
+Database:
+CPU carbon rate = 0.0006316 * 1 node)  = 0.0006316 per hour
+Memory carbon rate = 0.0001 * 3.75  = 0.000375 per hour
+Storage carbon rate, SSD = ( 10/1000 * 0.0003049) = 0.00003049 per hour
+Total rate for database=  0.001037 per hour
 
-(TO BE ADJUSTED FOR DB)
+Total system carbon footprint for single environment =  (0.01488 + 0.004058 + 0.001037) * 8760 hours/year =~ 175 KgCO2/year
+Total system carbon footprint for 3 environments = 175 * 3 = 525 KgCO2/year
+
 ```
 [Figure: Relative Carbon Footprints, showing our Example Micro-service Cloud System]() 
 
-Let’s place our micro-services cloud system on the relative carbon footprint line. At 32 KgCO2 it would be somewhere on the left between a single London-Birmingham bus trip and mowing the lawn for a year. But of course any realistic software system will likely have 2-3 similar environments, with varied configurations, plus services such as gateways, load balances, databases etc... These services may be PAYG shared, rather than dedicated to this system, but nevertheless need to be accounted. In practice it’s likely that this carbon cost will be a multiple, let’s say 5x at 150 KgCO2/year for a very modest system.
+Let’s place our micro-services cloud system on the relative carbon footprint line. At 175 KgCO2 it would be somewhere in the middle between running a lawn mower and owning a cat. 
+But of course any realistic software system will likely have 2-3 similar environments, with varied configurations, plus services such as gateways, load balances, databases etc...
+These services may be PAYG shared, rather than dedicated to this system, but nevertheless need to be accounted. 
 
-This is a very modest system and is small scale in comparison to many brand-name e-commerce retail sites or banking systems. Run the system for 5 years, an admittedly arbitrary figure to represent system life, and we’ve exceeded the cost of a return holiday flight from London to Malaga.
+In practice, it is likely that this carbon cost will be a multiple, let’s say 3x175 = 522 KgCO2/year for a very modest system. This is a very modest system and is small scale in comparison to many brand-name e-commerce retail sites or banking systems, yet already close to the cost of a flight from London to Malaga at 620 KgCO2.
+
 
 ## Green washing?
 
