@@ -1,7 +1,7 @@
 ---
 title: A Byte of the Carbon Cake
 domain: software-engineering-corner.hashnode.dev
-tags: green-computing, carbon-friendly, software-architecture
+tags: design-patterns, software-architecture, best-practices, cloud, microservices, developers
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1730804922642/7N2hwJ1lV.jpg?auto=format
 publishAs: PaulSimmmons
 hideFromHashnodeCommunity: false
@@ -121,7 +121,7 @@ This is a very modest system and is small scale in comparison to many brand-name
 
 ## Green washing?
 
-Any article on carbon footprint is almost obliged to mention green-washing, the subtle art of hiding the truth whilst appearing transparent on climate change and carbon footprints.
+Any article on carbon footprint is almost obliged to mention 'green washing', the subtle art of hiding the truth whilst appearing transparent on climate change and carbon footprints.
 
 Amazon has a target of 100% green by their own measurement. 
 That does NOT mean that your system will be carbon-friendly on AWS, it simply means that AWS are accounting for the offsets. 
