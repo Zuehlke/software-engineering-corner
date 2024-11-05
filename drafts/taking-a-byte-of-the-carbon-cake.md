@@ -272,7 +272,7 @@ however the tools for pre-emptive carbon measurement are yet to mature.
 
 ## Further Reading
 
-An explanation of carbon awareness, energy and carbon efficiency https://learn.greensoftware.foundation/
+An explanation of carbon awareness, energy and carbon efficiency https://learn.greensoftware.foundation/ (GSF)
 
 Awesome green software links to a number of dev tools and emission calculators: https://github.com/Green-Software-Foundation/awesome-green-software
 
