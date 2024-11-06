@@ -107,7 +107,7 @@ public class GraphQLController {
 
     @QueryMapping
     public String info() {
-        return "version=0.0.1";
+        return "version=0.0.1"; // hard coded for now, we'll make it configurable later
     }
 }
 ```
