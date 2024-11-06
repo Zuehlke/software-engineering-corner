@@ -7,13 +7,26 @@ publishAs: abeggchr
 hideFromHashnodeCommunity: false
 saveAsDraft: true
 ---
-Spring Boot starters typically contain everything to get started with a given technology (like `spring-boot-starter-web`),
-but they also provide a means to share functionality accross multiple applications (like `spring-boot-starter-actuator`).
-
 In this article, we'll create a Spring Boot starter which will make a GraphQL endpoint available to all applications where the starter is included.
 We will cover a similar functionality as the `info` endpoint of the [actuator](https://docs.spring.io/spring-boot/api/rest/actuator/index.html) starter: displaying the applications version. But instead of a REST API, we'll provide a GraphQL endpoint.
 
 The resulting code is available at [https://github.com/abeggchr/shared-graphql-spring-boot-starter](https://github.com/abeggchr/shared-graphql-spring-boot-starter).
+
+## Why should I create my own starter?
+
+Spring Boot starters typically contain everything to get started with a given technology (such as `spring-boot-starter-web`).
+This convenience is the primary reason for using a starter.
+
+However, Spring Boot starters can also serve as a way to share functionality accross multiple applications (e.g., `spring-boot-starter-actuator`), such as displaying the version information (as described in this article)
+, tracking frontend logs
+, or loading customer data.
+With a Spring Boot starter, 
+we can avoid re-implementing the same logic repeatedly in each consuming application.
+
+Of cours, a Spring Boot starter is just one option to achieve that goal.
+It can be especially useful when other options
+, like shared services or regular libraries,
+are not feasible in a given context.
 
 ## 1. Set up a Spring Boot application
 
