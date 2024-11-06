@@ -156,7 +156,8 @@ To ensure that Spring Boot picks up the auto-configuration class, you need to re
 org.example.GraphQLStarterAutoConfiguration
 ```
 
-Note that for older Spring versions, the `spring.factories` file was used for that purpose.
+Note that in older Spring versions, the `spring.factories` file was used for that purpose.
+Refer to the [Spring documentation](https://docs.spring.io/spring-boot/reference/features/developing-auto-configuration.html) for more information about creating your own auto-configuration. 
 
 ## 6. Add a GraphQL schema to the starter
 
@@ -309,6 +310,14 @@ logging.level.org.springframework.graphql=DEBUG
 
 We created a Spring Boot starter project which adds a GraphQL endpoint to the Spring application when used.
 The starter project can now be extended with additional functionality or more means to configure its functionality.
+
+## References
+
+* [Spring > Build Systems > Starters](https://docs.spring.io/spring-boot/reference/using/build-systems.html#using.build-systems.starters)
+* [Spring > Creating Your Own Auto-configuration](https://docs.spring.io/spring-boot/reference/features/developing-auto-configuration.html)
+* [Spring > Creating Your Own Auto-configuration > Creating Your Own Starter](https://docs.spring.io/spring-boot/reference/features/developing-auto-configuration.html#features.developing-auto-configuration.custom-starter)
+
+## Credits
 
 Photo by <a href="https://unsplash.com/@itfeelslikefilm?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Janko Ferlič</a> on <a href="https://unsplash.com/photos/photo-of-library-with-turned-on-lights-sfL_QOnmy00?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
   
