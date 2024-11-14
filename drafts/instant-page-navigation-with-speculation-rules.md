@@ -16,7 +16,7 @@ is an experimental
 feature [available in all Chromium-based browsers](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API#browser_compatibility).
 It replaces
 the [now-deprecated](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/prerender) `<link rel="prerender">`
-and `<link rel=prefetch>`.
+and `<link rel="prefetch">`.
 
 The Speculation Rules API is designed to enhance navigation performance by pre-rendering or
 pre-fetching specific resources. It primarily relies on `href` matching rules to identify which
@@ -32,14 +32,14 @@ all subresources and JavaScript. This makes future navigations to the pre-render
 instantaneous since the browser activates the hidden tab rather than reloading the page from
 scratch.
 
-**Pre-fetching** on the other hand allows browsers to download the response body of referenced pages
+**Pre-fetching**, on the other hand allows browsers to download the response body of referenced pages
 without fetching subresources, improving load times when users navigate to those pages. This method
 is more efficient than older approaches like `<link rel="prefetch">` or `fetch()` with low priority,
 as it supports cross-site navigation and avoids being blocked by `Cache-Control` headers.
 
 In this article, we won't cover all the features, and since the API is still experimental, there may
 be updates and improvements in the near future. I recommend checking
-the [MDN docs]([Speculation Rules API on MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API))
+the [MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API)
 for the latest information.
 
 ## Example
@@ -149,14 +149,14 @@ just use an incognito tab.
 
 ## Steps to test:
 
-1) Navigate to the [demonstration blog site]( https://speculation-rules-demo.deno.dev/)
+1) Navigate to the [demonstration blog site]( https://speculation-rules-demo.deno.dev/)  
 2) Open dev tools (F12)
 
 Open the **Application** tab and find the *Background services* section ⇾ *Speculative Loads* ⇾
 *Rules*, where you can view the active speculation rules.
 
 Right next to *Rules* there's the *Speculations* section, you’ll see all the pages that have been
-pre-rendered or what state they are in. As they are in *Ready* state, when navigating, the page will
+pre-rendered or what state they are in. As they are in "Ready" state, when navigating, the page will
 load instantly.
 ![Dev tools Application](https://cdn.hashnode.com/res/hashnode/image/upload/v1727713720845/jW-6gGIxw.png?auto=format)
 
@@ -202,11 +202,11 @@ and security risks. Balancing these trade-offs with appropriate usage of the **e
 and carefully defined speculation rules can ensure a smoother, faster, and safer browsing
 experience.
 
-Unfortunately **speculationRules** are currently only available in
+Unfortunately **speculation rules** are currently only available in
 Chromium-based browsers and even there an _experimental_ feature, therefore subject to change.
 I would not recommend to use it outside hobby-projects yet.
 
-- Sources:
+Sources:
 - [MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API)
 - [Fosdem24 Presentation](https://archive.fosdem.org/2024/schedule/event/fosdem-2024-2003-better-than-loading-fast-is-loading-instantly-/)
 - [prerender-pages](https://developer.chrome.com/docs/web-platform/prerender-pages)
