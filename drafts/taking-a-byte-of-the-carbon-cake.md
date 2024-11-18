@@ -191,8 +191,8 @@ To 'code greener' is to reduce the carbon footprint of the software we create.  
 With an engineering mindset it is tempting to focus on improvements to compute workloads such as demand-shifting, demand-shaping or time-shifting [^1] .
 We are trained to optimise and this is arguably one of the most challenging and interesting aspects of our practice.  
 
-However, given the trend in cloud providers towards fully-green energy, albeit tainted by carbon offsets, the gains in adjusting workloads from one to another region or time are diminishing.
-Instead, we present the following opinionated view of activities with the most significant impact, in three activity groups; easy-wins, medium effort and those at design-time:
+However, given the trend in cloud providers towards fully-green energy, albeit tainted by carbon offsets, the gains in adjusting workloads from one to another region or over time are diminishing.
+Instead, we outline below a structured approach of activities categorised in three groups based on their impact and effort; easy-wins, medium effort and those at design-time:
 
 
 ### First: Low-Hanging Fruit
