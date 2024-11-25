@@ -1,10 +1,10 @@
 ---
-title: TODO
-subtitle: TODO
+title: Using Ktor in Kotlin Multiplatform
+subtitle: Keeping your HTTP stack easy to maintain
 domain: software-engineering-corner.hashnode.dev
 tags: kotlin, mobile, android, ios, kmp, kmm, kotlin-multiplatform, ktor, networking, http, testing, mocking
-cover: TODO
-publishAs: TODO
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1732552346062/ykEYfmZW2.jpg?auto=format
+publishAs: mohsenr
 hideFromHashnodeCommunity: false
 saveAsDraft: true
 --- 
