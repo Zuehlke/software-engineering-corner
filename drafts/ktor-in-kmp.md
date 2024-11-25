@@ -75,9 +75,12 @@ interface HttpClientProvider {
 For the “default” use case, we may have an implementation of that interface like so:
 
 ```kotlin
-class DefaultHttpClientProvider(private val host: String,
-                                private val path: String? = null,
-                                private val scheme: String = "https") : HttpClientProvider {
+class DefaultHttpClientProvider(
+        private val host: String,
+        private val path: String? = null,
+        private val scheme: String = "https"
+) : HttpClientProvider {
+
     override fun httpClient(commonInit: HttpClientConfig<*>.() -> Unit): HttpClient {
         return newPlatformHttpClient {
 
@@ -94,6 +97,7 @@ class DefaultHttpClientProvider(private val host: String,
             commonInit(this)
         }
     }
+    
 }
 
 internal expect fun newPlatformHttpClient(config: HttpClientConfig<*>.() -> Unit = {}): HttpClient
