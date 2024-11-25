@@ -5,7 +5,6 @@ tags: functional-programming,java,legacy,legacy-systems,legacy-app-modernization
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1729171984188/wQFjiomGa.jpg?auto=format
 publishAs: KevZ
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 Ever had an API response make you question its design choices?
