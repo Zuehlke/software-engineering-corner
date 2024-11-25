@@ -57,7 +57,7 @@ We like to decouple how we set these environment-specific configuration from how
 
 ## Interfacing our problem
 
-Due to the way `HttpClient` is configured, we can’t inject a pre-built instance into the app as it wouldn’t be able to further configure it anymore. We also don’t want to manually inject configuration data objects into the app, as ideally it shouldn’t even know *what* should it configure.
+Due to the way `HttpClient` is configured, we can’t inject a pre-built instance into the app as it wouldn’t be able to further configure it anymore. We also don’t want to manually inject configuration data objects into the app, as ideally it shouldn’t even know *what* it should configure.
 
 We have a straightforward solution for this – though it may need a bit of getting used to. When we start our app, instead of creating the `HttpClient` directly in the app, we inject an interface that creates it for us, but gives us a chance to customise it:
 
@@ -240,6 +240,6 @@ Implementation of `MockHttpClientProvider` (as written here) can easily get out 
 
 # Summary
 
-In this article we explore a method of systematically improving separation of concerns and in turn maintainability of networking infrastructure in a KMP app.
+In this article we explored a method of systematically improving separation of concerns and in turn maintainability of networking infrastructure in a KMP app.
 
 The method suggested here only slightly changes how Ktor is used, so it should still be familiar to anyone who is used to Ktor. But it’s a method that can be built on into a more bespoke solution for your specific needs.
