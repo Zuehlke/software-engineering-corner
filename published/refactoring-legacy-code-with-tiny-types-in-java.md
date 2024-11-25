@@ -5,7 +5,6 @@ tags: functional-programming,java,legacy,legacy-systems,legacy-app-modernization
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1726831500748/c0V6Wtg-K.avif?auto=format
 publishAs: KevZ
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 Legacy systems are often procedural and rely heavily on mutable state, which makes them difficult to maintain and extend.
