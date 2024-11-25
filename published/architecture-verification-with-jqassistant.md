@@ -5,7 +5,6 @@ tags: Java, software architecture
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1727771451245/mNMwZtunX.jpg?auto=format
 publishAs: stmu
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 enableToc: true
 ---
 
