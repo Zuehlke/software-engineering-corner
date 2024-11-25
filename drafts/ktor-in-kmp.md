@@ -39,13 +39,8 @@ val httpClient = HttpClient(Darwin) { // 1. Engine selection – “Darwin” is
         level = LogLevel.ALL
     }
  
-    // 5. Payload handling
-    install(ContentNegotiation) {
-         json(jsonFormatter)
-    }
-     
-    // 6. Response validation
-    HttpResponseValidator { /* omitted */ }
+    // 5. Response handling
+    expectSuccess = true
 }
 ```
 
@@ -97,7 +92,7 @@ class DefaultHttpClientProvider(
             commonInit(this)
         }
     }
-    
+
 }
 
 internal expect fun newPlatformHttpClient(config: HttpClientConfig<*>.() -> Unit = {}): HttpClient
@@ -158,6 +153,66 @@ class MockHttpClientProvider(private val maximumSimulatedNetworkingDelay: Durati
         }
 
     }
+}
+```
+
+## Putting it all together
+
+Exactly how these types will be used depends on your app’s architecture. For example, you may be using a Dependency Injection framework. For the purpose of demonstration, imagine the core KMP types, like the “repositories”, are set up by calling a method called `bootstrap`.
+
+Since `bootstrap` is part of the core logic, it has no idea of the environment it’s running under. On the other hand, it knows exactly the networking convention amongst network calls (e.g. to expect 2xx responses). Here, you can inject an `HttpClientProvider` and let it internally create an `HttpClient`. For example:
+
+```kotlin
+fun bootstrap(httpClientProvider: HttpClientProvider) {
+    val httpClient = httpClientProvider.httpClient {
+        expectSuccess = true
+    }
+
+    val userProfileRepository = UserProfileRepository(httpClient)
+    val accountsRepository = AccountsRepository(httpClient)
+    // store and use the repositories
+}
+```
+
+You can then call bootstrap differently in different build variants. For example, production call may look like
+
+```kotlin
+val httpClientProvider = DefaultHttpClientProvider(
+    host = "example.com",
+    path = "/prod/v2"
+)
+bootstrap(httpClientProvider)
+```
+
+whereas during tests it may look like
+
+```kotlin
+bootstrap(MockHttpClientProvider())
+```
+
+This separation of concerns makes it very easy to evolve the different parts of the application independently. For example, creating a new variant just changes how we call `bootstrap` which is concerned with environment setup.
+
+Conversly, imagine we want to allow retries, but only for the user profile repository. For that, we can adapt `bootstrap`:
+
+```kotlin
+fun bootstrap(httpClientProvider: HttpClientProvider) {
+
+    val userProfileHttpClient = httpClientProvider.httpClient {
+        expectSuccess = true
+    }
+
+    val accountsHttpClient = httpClientProvider.httpClient {
+        expectSuccess = true
+
+        install(HttpRequestRetry) {
+            retryOnServerErrors(maxRetries = 3)
+            exponentialDelay()
+        }
+    }
+
+    val userProfileRepository = UserProfileRepository(userProfileHttpClient)
+    val accountsRepository = AccountsRepository(accountsHttpClient)
+    // store and use the repositories
 }
 ```
 
