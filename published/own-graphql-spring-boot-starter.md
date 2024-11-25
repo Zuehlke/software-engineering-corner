@@ -5,7 +5,6 @@ tags: Java, Springboot, GraphQL
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1726474334943/vvF5pmFaI.jpg?auto=format
 publishAs: abeggchr
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 In this article, we'll create a Spring Boot starter which will make a GraphQL endpoint available to all applications where the starter is included.
 We will cover a similar functionality as the `info` endpoint of the [actuator](https://docs.spring.io/spring-boot/api/rest/actuator/index.html) starter: displaying the applications version. But instead of a REST API, we'll provide a GraphQL endpoint.
@@ -320,4 +319,3 @@ The starter project can now be extended with additional functionality or more me
 ## Credits
 
 Photo by <a href="https://unsplash.com/@itfeelslikefilm?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Janko Ferlič</a> on <a href="https://unsplash.com/photos/photo-of-library-with-turned-on-lights-sfL_QOnmy00?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-  
