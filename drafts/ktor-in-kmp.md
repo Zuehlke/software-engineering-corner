@@ -237,3 +237,9 @@ For smaller projects, this is probably the right trade-off. For bigger projects 
 ## Mocking can be expanded
 
 Implementation of `MockHttpClientProvider` (as written here) can easily get out of hand when you start mocking many APIs, and maybe have different possible responses for each of those APIs, so consider improvements that suit your needs.
+
+# Summary
+
+In this article we explore a method of systematically improving separation of concerns and in turn maintainability of networking infrastructure in a KMP app.
+
+The method suggested here only slightly changes how Ktor is used, so it should still be familiar to anyone who is used to Ktor. But it’s a method that can be built on into a more bespoke solution for your specific needs.
