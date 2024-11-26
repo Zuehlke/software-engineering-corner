@@ -259,7 +259,7 @@ These medium-effort activities are probably best considered a form of technical 
 ![Design time](https://cdn.hashnode.com/res/hashnode/image/upload/v1730805754587/E5d6FuVir.jpg?auto=format)
 
 The activities above assume an existing system.
-When designing future systems or additional features to an existing system, we should consider carbon as a quality that informs the non-functional qualities such as scalability, security, reliability, performance etc.. 
+When designing future systems or additional features to an existing system, we should consider carbon as a quality that informs the non-functional qualities such as scalability, security, reliability, performance etc.
 when assessing trade-offs in light of business drivers (eg: a process such as Architecture Tradeoff Analysis Method (ATAM) [^3] ).
 The calculations for this can be driven by data such as ClimateIQ, but there aren't yet tools to help with new features or entire new systems.  
 
