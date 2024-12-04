@@ -101,8 +101,8 @@ A worked example from a genuine project, that hosts a modest website with some v
 
 The system consists of a handful of Spring micro-services with a database, a video server and some light messaging. 
 
-Micro-services and messaging runs on a Kubernetes cluster on Google Kubernetes (GKE) over 3 nodes ( spec: n1-standard-4, 15 GB memory, storage: 100 HDD + 100 SSD).  The video platform runs on a separate server on 2 nodes ( spec: n1-standard-1, 7.5 GB memory, storage: 20 HDD and 100 SDD).
-The database runs on a separate server on 1 node ( spec: n1-standard-1, 3.75 GB memory,storage 10 SSD )
+Micro-services and messaging runs on a Kubernetes cluster on Google Kubernetes (GKE) over 3 nodes ( spec: n1-standard-4, 15 GB memory, storage: 100 GB HDD + 100 GB SSD).  The video platform runs on a separate server on 2 nodes ( spec: n1-standard-1, 7.5 GB memory, storage: 20 GB HDD and 100 GB SDD).
+The database runs on a separate server on 1 node ( spec: n1-standard-1, 3.75 GB memory,storage 10 GB SSD )
 This example is a dev environment which explains the lack of database resiliency.
 
 The calculation is shown below and gives a total of 175 KgCO2/year for a single environment.
