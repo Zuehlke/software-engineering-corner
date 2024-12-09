@@ -1,7 +1,7 @@
 ---
 title: Create own GraphQL Spring Boot Starter
 domain: software-engineering-corner.hashnode.dev
-tags: Java, Springboot, GraphQL
+tags: java, springboot, graphql
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1726474334943/vvF5pmFaI.jpg?auto=format
 publishAs: abeggchr
 hideFromHashnodeCommunity: false
