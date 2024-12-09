@@ -3,9 +3,8 @@ title: Coding for a Greener Future, Actions for Big Impact
 domain: software-engineering-corner.hashnode.dev
 tags: design-patterns, software-architecture, best-practices, cloud, microservices, developers
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1730896533269/j9ph1lyMh.jpg?auto=format
-publishAs: PaulSimmmons
+publishAs: PaulSimmons
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 enableToc: true
 ---
 
