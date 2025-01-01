@@ -1,117 +1,68 @@
 ---
 title: Advanced Routing
 domain: software-engineering-corner.hashnode.dev
-tags: javascript, web-development, frontend-development, angular
+tags: javascript, web-development, frontend-development, angular, navigation
 cover: https://cdn.hashnode.com/res/hashnode/image/stock/unsplash/EOq4Dj33G_U/upload/72980e96faa8075e8392477062a3fd78.jpeg?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp&quot
 publishAs: mikaruch
 saveAsDraft: true
 hideFromHashnodeCommunity: false
 ---
 
-# What is our goal
+The navigation in complex web applications quickly goes beyond forward and back navigation.
+I recently rebuilt the navigation for a large project.
+Though our project uses Angular, the underlying navigation concept is versatile and can be applied to any framework.
 
-We have already refactored our navigation concept twice.
-Both times we have solely used forward navigations.
-Yes also for actions which should have been back navigations, like the in-content back button.
+# What Was Our Goal
 
-The concept of the old navigation concept was quite simple but got out of hand quite quickly.
-We just manage our own navigation stack.
-When someone initiated a back navigation, the page was popped from our internal stack, but was pushed onto the browser native stack.
-This happened, since under the hood we just called `router.navigate(['/a'], { state: { isBackNavigation: true } })`.
-`isBackNavigation` was a flag we used to detect if the navigation was a back navigation or not.
+At the start of the rewrite, we had already refactored the navigation twice.
+Both versions heavily relied on forward navigation, even when a user, for example, clicked on a `back` button.
+This scenario meant the page was removed from an internal history stack but pushed onto the browser's history stack.
+![Browser vs. Internal History Stack](https://cdn.hashnode.com/res/hashnode/image/upload/v1735512763637/ehl2GJbfc.png?auto=format)
 
-We quickly found out, that the stacks gets out of sync quite quickly, since many people prefer using the native back button over the `back` button from within the portal.
+If users only used the back button within the web app, they were fine.
+If they only used the browser back button, they were fine.
+However, mixing the two led to strange errors, as the stacks were out of sync.
 
-# Angular Router Configuration
+This was the main motivation to implement a proper navigation solution once and for all - one that could cover all scenarios.
 
-Let us quickly have a look at the configuration we are using in our project.
+# Project Specifics
 
-```ts
-withRouterConfig({ onSameUrlNavigation: 'ignore', canceledNavigationResolution: 'computed' });
-```
+Every project has unique aspects.
+Here are the relevant ones for this one.
 
-**onSameUrlNavigation**
+## Flows
 
-The `onSameUrlNavigation` defines what should happen, when the same URL is activated.
-E.g. when the user clicks on the same menu item again.
+Flows in our project are sequences of pages that create or mutate user data.
+For instance, when a user wants to change their address, it involves multiple pages.
+The flow in this scenario consists of all the pages involved in changing the address.
 
-- `ignore (default)`: The navigation will be skipped
-- `reload`: The router will load the component and execute all guards again
+## Disabled Navigation Menu
 
-**canceledNavigationResolution**
+Another unique aspect of our project is that the navigation menu is disabled on detail pages.
+![Disabled navigation menu on detail pages](https://cdn.hashnode.com/res/hashnode/image/upload/v1735637847386/Ub6Yog8qj.png?auto=format)
 
-The `canceledNavigationResolution` defines what should happen, after a navigation gets cancelled.
+# Requirements
 
-- With `replace (default)` the cancelled navigation URL will be overridden with the origin.
-  ![Replace cancel navigation resolution](https://cdn.hashnode.com/res/hashnode/image/upload/v1731316497961/8B2GoQVRe.png?auto=format)
-- With `computed` the Angular router tries to restore the state from before the cancelled navigation.
-  This will leave the browser stack intact.
-  ![Compute cancel navigation resolution](https://cdn.hashnode.com/res/hashnode/image/upload/v1731316514823/iO7cKQORz.png?auto=format)
+Apart from the regular forward and back navigation, we also have to implement the following use cases:
 
-# The new concept
+1. When a user cancels a flow, they should be navigated back to the page where the flow started (`flow source page`).
+   ![Visualization of canceling flows](https://cdn.hashnode.com/res/hashnode/image/upload/v1731316536567/siByewFSg.png?auto=format)
+2. When a user finishes a flow and initiates a back navigation, they should be navigated back to the `flow source page`.
+   ![Visualization of skipping flow pages](https://cdn.hashnode.com/res/hashnode/image/upload/v1731316547891/K6fY_oilb.png?auto=format)
+3. When a user clicks on the disabled navigation menu on detail pages, they should be redirected back to the last page where the menu was active (main page).
+   ![Visualization of navigating to the previous main page](https://cdn.hashnode.com/res/hashnode/image/upload/v1731316557945/FmbKRfvYm.png?auto=format)
 
-To come up with a better solution, we first have to understand what requirements we have to meet.
-And our portal has some interesting requirements.
+# The Concept
 
-- When a user cancels a flow, they should be navigated back to the page where the flow was started from (flow source page).
-  ![Visualization of canceling flows](https://cdn.hashnode.com/res/hashnode/image/upload/v1731316536567/siByewFSg.png?auto=format)
-- When a user finishes a flow and initiates a back navigation, they should be navigated back to the flow source page.
-  ![Visualization of skipping flow pages](https://cdn.hashnode.com/res/hashnode/image/upload/v1731316547891/K6fY_oilb.png?auto=format)
-- And, when a user clicks on the grayed out menu on detail pages, the user should be redirected back to a page where the menu is active (main page).
-  ![Visualization of navigating to the previous main page](https://cdn.hashnode.com/res/hashnode/image/upload/v1731316557945/FmbKRfvYm.png?auto=format)
+We realized maintaining a custom internal navigation stack is very difficult, so we needed a different and simpler solution.
+The browser already maintains its own navigation stack, and each stack entry has an associated state.
+There are JavaScript APIs to read and write into this history state.
+Performing a `popstate` navigation (browser back/forward navigation) restores the state associated with the stack item.
+Additionally, the state is persistent, meaning it survives refreshes.
 
-## Basic navigation
-
-The basic back and forward navigations are quite simple.
-The forward navigation is done as usual with the Angular router.
-
-```ts
-router.navigate(['next']);
-```
-
-And for the back navigation, we can use the `Location` service from Angular.
-It uses `window.history` under the hood, so it is the same as pressing the back button in the browser.
-
-```ts
-const location = inject(Location);
-// navigate back
-location.go(-1);
-```
-
-## Theory about Angular Router
-
-To understand how it is possible to skip pages, we first have to have a look at the Angular router.
-The Angular router dispatches at every step of the navigation process a different event.
-When a navigation starts, the `NavigationStart` event is dispatched from the Angular router.
-
-The `NavigationEnd` event is dispatched, when a navigation finished successfully.
-
-The `NavigationCancel` event is dispatched, when a navigation gets cancelled.
-This happens, if for example a canActivate guard returns `false`.
-
-The `NavigationSkipped` event is dispatched, when a navigation gets skipped (duh).
-This happens if `onSameUrlNavigation: 'ignore'` is set, and the same URL should be activated as the current.
-
-![Angular Navigation Events](https://cdn.hashnode.com/res/hashnode/image/upload/v1731316570876/l81JiHIHn.png?auto=format)
-
-# Implementation
-
-First, let us remind ourselves what the requirements are:
-
-- Navigate back to the flow source page on cancel during a flow
-- Navigate back over finished flows
-- Navigate back to a main page where the menu is active
-
-## The concept
-
-Since maintaining our own navigation stack is not an option, we have to find a different solution.
-The browser already maintains its own navigation stack, and each stack entry has its own state associated to it, which can be accessed via browser APIs.
-To write to the state, we can use the global `history.replaceState()`, and to read from it, we just call `history.state`.
-Doing a `popstate` navigation (browser back/forward navigation) will restore the previous state.
-And the state is persistent, which means it survives reloading the page.
-
-This is the key to our solution.
-We can store an offset to the last `flow source page` and `main page` which was visited in this state.
+This is the solution to our problem.
+We can store an offset to the last `flow source page` and `main page` in the history state.
+For example, when a user cancels a flow, they should be navigated back `x` pages, where `x` is the `flow source page offset`.
 
 Calculating the offsets should work like this:
 
@@ -120,16 +71,15 @@ Calculating the offsets should work like this:
 history.state = { flowSourcePageOffset: 0, mainPageOffset: 0 };
 // navigate to /detail -> detail is a flow source page but not a main page
 history.state = { flowSourcePageOffset: 0, mainPageOffset: 1 };
-// navigate to /detail/a -> detail/a neither flow source page nor main page
+// navigate to /detail/a -> detail/a is neither a flow source page nor a main page
 history.state = { flowSourcePageOffset: 1, mainPageOffset: 2 };
 // navigate back to /detail -> restore state from /detail
 history.state = { flowSourcePageOffset: 0, mainPageOffset: 1 };
 ```
 
-## Identifying the pages
+# Identifying The Pages
 
-Having the concept from before in our mind, how can we identify a main page or flow source page?
-The best solution is setting a flag in the data of the route itself.
+To identify whether a page is a `flow source page` or a `main page`, we can set a flag in the route's data.
 
 ```ts
 export const appRoutes: CustomRoute[] = [
@@ -142,8 +92,8 @@ export const appRoutes: CustomRoute[] = [
 ];
 ```
 
-This means, every page which starts a flow needs to set `flowSourcePage` to `true`, and every main page needs to set `mainPage` to `true`.
-To make life easier for developers, the `Route` type can be extended and the two custom data attributes can be added.
+Every page that starts a flow needs to set `flowSourcePage` to `true`, and every main page needs to set `mainPage` to `true`.
+To enable autocompletion and type safety, the `Route` type can be extended to add these custom data attributes.
 
 ```ts
 export interface RouteData {
@@ -157,19 +107,18 @@ export interface CustomRoute extends Route {
 }
 ```
 
-# Navigate back to flow source pages on cancel
+# Working With history.state (LocationService)
 
-To get started with the implementation, we first have to know how to read and write from the state.
-In Angular, we can use the `Location` service, which abstracts the `history` object, and does some other Angular magic.
-But the web API would be quite simple:
+In Angular, we can use the `Location` service to interact with the history state.
+It abstracts the `history` object and handles some Angular-specific tasks.
+The web API for this is simple:
 
 - Read: `history.state`
 - Write: `history.replaceState(state, unused, url)`
 
-## LocationService
-
-Since we will use `Location` in multiple services, we will create our own service for it.
-It simplifies and unifies the interaction with `Location`.
+Since we will use Angular's `Location` service in multiple places, it is helpful to create a wrapper for it.
+This wrapper simplifies and unifies the interaction with the `Location` service.
+Ensure you import the `Location` service from `@angular/common`.
 
 ```ts
 // important import
@@ -180,14 +129,10 @@ export interface HistoryState {
   mainPageOffset?: number;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class LocationService {
-  constructor(
-    private readonly location: Location,
-    private readonly router: Router
-  ) {}
+  private readonly location = inject(Location);
+  private readonly router = inject(Router);
 
   getCurrentState(): HistoryState | null {
     // history.state
@@ -195,6 +140,7 @@ export class LocationService {
   }
 
   go(relativePosition: number) {
+    // e.g. this.location.historyGo(-3) -> navigates back 3 pages
     this.location.historyGo(relativePosition);
   }
 
@@ -205,51 +151,132 @@ export class LocationService {
 }
 ```
 
-## NavigatorService
+_Note that `location.replaceState` has different parameters than `history.replaceState`.
+`location.replaceState(path: string, query?: string, state?: any)` vs `history.replaceState(data: any, unused: string, url?: string | URL | null)`._
 
-The main logic of the new navigation concepts is implemented in the `NavigationService`.
-To recapitulate, we want to write the offset to the last `flow source page` and `main page` to the state.
-And we want to do this once a navigation finishes.
-We can subscribe to `router.events` and listen for the `NavigationEnd` event.
-At this point, we know the navigation successfully finished, and we can update the state.
-One important note is, we do not want to increase the offset, if we navigate using `{ replaceUrl: true }`.
+# Basic Navigation
 
-### The Brain of the Operation
+Now let us take a look at the first part of the navigation: forward and back navigation.
+To navigate forward, we can use `router.navigate(['/home'])`.
 
-Let us have a look at the main part of the `NavigationService`.
+For back navigation, we are going to use `LocationService.go(-1)`.
+Although `Location.back()` could also be used, the result would be the same, but the `go` function can be reused later on.
 
 ```ts
-@Injectable({
-  providedIn: 'root'
-})
-export class NavigatorService implements OnDestroy {
-  private destroy = new Subject<void>();
+
+@Injectable({ providedIn: 'root' })
+export class NavigationService {
+  private readonly locationService = inject(LocationService);
+
+  back(): void {
+    this.historyGo(-1);
+  }
+
+  private historyGo(relativePosition: number) {
+    this.locationService.go(relativePosition);
+  }
+}
+```
+
+The implementation is straightforward and works in most cases, but there is one exception.
+If a logged-in user directly navigates to a detail page and then tries to navigate back, they would end up on the empty start page.
+There are two ways a user can navigate back: the native browser back button and our `back` button within the application.
+We cannot intercept the native browser back button, meaning the user will always end up on the empty start page.
+However, for the `back` button within our application, we can implement a fallback if we detect this scenario.
+The fallback is to replace the current page with the home page.
+
+## Prevent Exiting The Application
+
+To determine if a back navigation would leave the application, we first have to know how large the history stack is.
+Instead of tracking the size manually, we can use an internal `Angular Router` counter, which is persisted in the history state.
+The `ɵrouterPageId` gets updated by the router before the guard checks are run.
+This means if we access the `pageId` in a `canActivate` guard, it will already be updated.
+
+However, if you know a little about Angular, you might know that functions and properties beginning with a Greek theta (`ɵ`) are usually private to Angular internals and should not be used.
+Angular declares these functions and properties as unstable since they are not part of the public API.
+However, in the Angular source code, they added this comment:
+
+```ts
+// The `ɵ` prefix is there to reduce the chance of colliding with any existing user properties on
+// the history state.
+```
+
+This does not guarantee that this property will not change in future updates.
+_If it is removed, it is not that difficult to build this yourself._
+
+To make this work, we only have to extend the `HistoryState` model and update the `NavigationService.historyGo` function.
+
+```ts
+export interface HistoryState {
+  ɵrouterPageId?: number; // <---- Add
+  flowSourcePageOffset?: number;
+  mainPageOffset?: number;
+}
+```
+
+Once we have access to the `ɵrouterPageId` state, we simply check if the current navigation request would exit the application.
+If it does, we replace the current page with the home page.
+
+```ts
+
+@Injectable({ providedIn: 'root' })
+export class NavigationService {
+  private readonly locationService = inject(LocationService);
+  private readonly router = inject(Router);
+
+  back(): void {
+    this.historyGo(-1);
+  }
+
+  private historyGo(relativePosition: number) {
+    const pageId = this.locationService.getCurrentState()?.ɵrouterPageId ?? 0;
+    if (pageId + relativePosition < 0) {
+      this.router.navigate(['/home'], { replaceUrl: true });
+      return;
+    }
+    this.locationService.go(relativePosition);
+  }
+}
+```
+
+# Calculating The Offsets
+
+If we recall the concept, we want to store an offset to the `flow source page` and `main page` in the history state.
+The calculation of the offset should happen once a navigation finishes.
+The `Angular Router` provides an observable for navigation events.
+We can subscribe to `router.events` and listen for `NavigationEnd`.
+At this point, we know the navigation has successfully finished, and we can update the state.
+One important note is that we do not want to increase the offset if we navigate using `{ replaceUrl: true }`.
+
+Let us take a look at the main part of the `NavigationService`.
+
+_Below the code, there is further explanation about how the code works._
+
+```ts
+
+@Injectable({ providedIn: 'root' })
+export class NavigationService {
+  private readonly locationService = inject(LocationService);
+  private readonly router = inject(Router);
 
   private flowSourcePageOffset?: number = undefined;
   private mainPageOffset?: number = undefined;
 
-  constructor(
-    private readonly locationService: LocationService,
-    private readonly router: Router,
-    private readonly navigationDirectionService: NavigationDirectionService,
-    private readonly store: Store
-  ) {
+  constructor() {
     this.setupListener();
   }
 
-  ngOnDestroy() {
-    this.destroy.next();
-    this.destroy.complete();
-  }
-
   private setupListener() {
-    this.router.events.pipe(takeUntil(this.destroy)).subscribe((e) => {
+    this.router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
         const replacingUrl = this.router.getCurrentNavigation()?.extras.replaceUrl ?? false;
+        // 1. Getting Route Data
         const data = this.getRouteData(this.router.routerState.snapshot.root);
+        // 2. Reading Current State
         const currentState = this.locationService.getCurrentState();
 
-        if (data.flowSourcePageOffset) {
+        // 3. Offset Calculation
+        if (data.flowSourcePage) {
           this.flowSourcePageOffset = 0;
         } else if (currentState?.flowSourcePageOffset !== undefined) {
           this.flowSourcePageOffset = currentState.flowSourcePageOffset;
@@ -257,7 +284,7 @@ export class NavigatorService implements OnDestroy {
           this.flowSourcePageOffset += 1;
         }
 
-        if (data.mainPageOffset) {
+        if (data.mainPage) {
           this.mainPageOffset = 0;
         } else if (currentState?.mainPageOffset !== undefined) {
           this.mainPageOffset = currentState.mainPageOffset;
@@ -265,7 +292,12 @@ export class NavigatorService implements OnDestroy {
           this.mainPageOffset += 1;
         }
 
-        this.locationService.replaceState({ ...currentState, flowSourcePageOffset: this.flowSourcePageOffset, mainPageOffset: this.mainPageOffset });
+        // 4. Updating the State
+        this.locationService.replaceState({
+          ...currentState,
+          flowSourcePageOffset: this.flowSourcePageOffset,
+          mainPageOffset: this.mainPageOffset
+        });
       }
     });
   }
@@ -281,131 +313,46 @@ export class NavigatorService implements OnDestroy {
 }
 ```
 
-As you can see, we subscribe to all `NavigationEnd` events.
-We have to get the route data at this point, to know if the page is either a `flowSourcePage` or `mainPage`.
-The not so nice part is, we have to drill down the `ActivatedRouteSnapshot`, to get the current route data, since the service can not inject `ActivatedRoute`.
-We also read the current state from the history.
-If it is a `popstate` navigation (browser back/forward), the current state would have the offset already set.
-Or if it is an `imperative` navigation, the current state would not have any offset yet.
+## 1. Detecting Flow Source and Main Pages
 
-The logic for calculating the offset is simple.
-If it is a `flowSourcePage` or `mainPage`, set the offset to 0.
-If we recovered a state, because it was a `popstate` navigation, set it to the value which was already in the state.
-And if `flowSourcePageOffset` or `mainPageOffset` is not `undefined` and we do not want to replace the page on the stack, we just count one up.
+To read the route data, we must use `this.router.routerState.snapshot.root` instead of injecting `ActivatedRoute`.
+We cannot inject `ActivatedRoute` into any service because it is tied to the current active route context, which is only available in components or services injected within the component's hierarchy.
 
-At the end we replace the current history state, and have the proper offset associated to the browser stack entry.
+To get the routes data, we traverse to the deepest child route.
 
-The cool thing about this concept is, if a reload is triggered, `NavigationEnd` will be dispatched again.
-This means we get the current history state again, which automatically sets the variables within this service.
+## 2. Reading Current State
 
-### Basic Back Navigation
+I mentioned before that navigating back or forward (`popstate`) would restore the state from the newly activated page.
+This means we can restore the previous offsets.
+If it is a new navigation (`imperative`), then the current state will not have any offset set yet.
 
-With this implementation, we have the offset calculation done.
-But so far, we cannot do any basic navigations yet.
-The easiest navigation is a simple back navigation.
-Let us have a look at how we implemented this scenario.
+## 3. Offset Calculation
 
-```ts
-export class NavigatorService implements OnDestroy {
-  // ...
-  back(): void {
-    this.historyGo(-1);
-  }
+If it is a `flow source page` or `main page`, set the offset to 0.
+If we recovered a state because it was a `popstate` navigation, set it to the restored value.
+And if `flowSourcePageOffset` or `mainPageOffset` is set, and `replaceUrl` is not set, the offset is increased.
 
-  private historyGo(relativePosition: number) {
-    if (this.navigationDirectionService.getRouterPageId() + relativePosition < 0) {
-      this.store.dispatch(routerNavigate({ commands: [pages.Home.path], extras: { replaceUrl: true } }));
-      return;
-    }
-    this.locationService.go(relativePosition);
-  }
+## 4. Updating the State
 
-  // ...
-}
-```
+Now that the offset is calculated, it can be set again in the history state.
 
-As you can see, it is quite simple.
-We just call under the hood `history.go(-1)`.
-But one exception exists.
-If someone directly navigates to a page, tries to do a back navigation, but there is no previous page in the stack, we would end up on `about:blank`.
-This will always happen if the native browser back button is used, but it should never happen if the button within the portal is clicked.
-Hence, we always navigate to our home page, if we detect that the back navigation would leave our portal.
+The really cool part about this concept is that if a reload is triggered, `NavigationEnd` will be dispatched again.
+This means the current history state is restored, which automatically sets the variables within this service.
 
-#### NavigationDirectionService (keeping track of the current page id)
+# Requirement 1: Navigate Back to Flow Source Pages on Cancel
 
-To figure out, if the user wants to leave the portal, we will have to implement another service.
-The `NavigationDirectionService` is going to not only keep track of the current `pageId`, but also detect which direction the `popstate` navigation is.
-The latter one, is especially helpful for our back and forward Angular animations.
-
-```ts
-@Injectable({
-  providedIn: 'root'
-})
-export class NavigationDirectionService implements OnDestroy {
-  private currentPageId = 0;
-  private destroy = new Subject<void>();
-
-  constructor(
-    private readonly router: Router,
-    private readonly locationService: LocationService
-  ) {
-    this.setupListeners();
-  }
-
-  ngOnDestroy() {
-    this.destroy.next();
-    this.destroy.complete();
-  }
-
-  getRouterPageId(): number {
-    return this.locationService.getCurrentState()?.ɵrouterPageId ?? 0;
-  }
-
-  private setupListeners() {
-    this.router.events.pipe(takeUntil(this.destroy)).subscribe((e) => {
-      if (e instanceof NavigationEnd) {
-        this.currentPageId = this.getRouterPageId();
-      }
-    });
-  }
-}
-```
-
-To explain what we are doing here, we simply keep the `currentPageId` in memory and compare it to the `ɵrouterPageId`.
-The `ɵrouterPageId` gets updated by the Angular router during the `RoutesRecognized` phase, which is called before `GuardsCheck`.
-This means, if we check the value of `ɵrouterPageId` from a guard, it will already contain the new page id, while in the service we still track the old id in `currentPageId`.
-
-However, important to note is, this only works with `popstate`.
-Imperative navigations (navigations that were made with `router.navigate`) will always be forward navigations.
-
-Now you might ask what is `ɵrouterPageId`.
-This property is used by Angular to keep track of the current router page id.
-And if you know a little bit about Angular, you might know any function or property that starts with the greek theta is private to Angular and should not be used.
-It is likely to break, since it is not a public API.
-However in the Angular source code, they added this comment:
-
-```ts
-// The `ɵ` prefix is there to reduce the chance of colliding with any existing user properties on
-// the history state.
-```
-
-Since we know this comment, and know that the router somehow has to keep track of the current page id, I am quite sure that this information is not going to be removed from `history.state`.
-It might come differently packaged, but it will still be there.
-And in the worst case, we could rebuild what Angular currently has.
-
-### Navigating to a Flow Source Page during a Flow
-
-It should be quite simple to navigate back to a `flowSourcePage`, since we already know how many pages we have to jump back.
-In the end the implementation is super simple.
+It should be straightforward to navigate back to a `flow source page`, as we already know how many pages we need to jump back.
 
 ```ts
 type NavigationTarget = 'flow-source-page' | 'main-page';
 
-export class NavigatorService implements OnDestroy {
+@Injectable({ providedIn: 'root' })
+export class NavigationService {
   // ...
   navigateBackTo(target: NavigationTarget) {
     let relativePosition: number | undefined;
 
+    // 1. Getting the Offsets
     const currentState = this.locationService.getCurrentState();
 
     if (target === 'flow-source-page') {
@@ -413,13 +360,18 @@ export class NavigatorService implements OnDestroy {
     } else if (target === 'main-page') {
       relativePosition = currentState?.mainPageOffset;
     }
+
+    // 2. Wrong Usage
     if (relativePosition === 0) {
+      console.error(`Calling navigateBackTo ${target} from ${target} does nothing`);
       return;
     }
+
+    // 3. Navigation
     if (relativePosition !== undefined) {
       this.historyGo(relativePosition * -1);
     } else {
-      this.store.dispatch(routerNavigate({ commands: [pages.Home.path] }));
+      this.router.navigate(['/home']);
     }
   }
 
@@ -427,34 +379,74 @@ export class NavigatorService implements OnDestroy {
 }
 ```
 
-We read the current history state.
-We get the relativePosition defined by the target.
-We then jump back to this page by using the offset.
-If the offset is 0, we do not want to do anything, since we just want to stay on the current page.
-However, there is one problem.
-Users can access the application directly into a detail page, which is neither a `flowSourcePage` or a `mainPage`.
-Hence, we can never set an offset, because there is no offset to begin with.
-So instead of letting the user not navigate, the easiest solution is to do a simple forward navigation to our home page.
+## 1. Getting the Offsets
 
-And that is it, users can now navigate around the app and jump back in history to the page they came from.
+The offsets are stored within history state, so we only need to read it to get the current values.
+Depending on the `target`, we then access the corresponding offset.
 
-# Navigate back over finished flows
+## 2. Wrong Usage
 
-Having implemented the previous solution, it is quite easy to implement this requirement.
-We want to detect if we want to navigate into a finished flow.
-If we detect this, we can redirect the user back to the previous `flowSourcePage`.
+If the offset is 0, it typically indicates a programming error.
+To make the programmer aware of the issue, an error is logged.
+It is a programming mistake, because e.g. `navigateBackTo('flow-source-page')` should not be called on a `flow source page`.
 
-Since this is not a new concept to use, we already solved this with guard (`flow-page-activation.guard`).
-This guard checks if the URL we are originating from, belongs to the current flow.
-If it does, we allow the navigation else we block the navigation.
+## 3. Navigation
 
-To identify whether the two pages belong to the same flow, each flow page has to define a `flowBasePath`.
-This `flowBasePath` is defined in the route data, and it is a common url segment between the flow pages have.
+When an offset is found, the user is navigated back by the specified number of pages.
+
+However, logged-in users can directly access the application on a detail page, which may not be a `flow source page` or a `main page`.
+In such cases, the offsets would not be set.
+Instead of preventing navigation, the fallback navigates the user to the home page.
+
+# Requirement 2: Navigate Back Over Finished Flows
+
+Before diving into the solution, it is necessary to cover some `Angular Router` basics.
+Let us briefly look at the configuration used in this project.
+
+## Angular Router Theory
+
+```ts
+withRouterConfig({ canceledNavigationResolution: 'computed', onSameUrlNavigation: 'ignore' });
+```
+
+### canceledNavigationResolution
+
+The `canceledNavigationResolution` setting defines what should happen after a navigation is canceled.
+
+- With `replace (default)`, the canceled navigation URL will be replaced by the origin.
+  ![Replace cancel navigation resolution](https://cdn.hashnode.com/res/hashnode/image/upload/v1731316497961/8B2GoQVRe.png?auto=format)
+- With `computed`, the `Angular Router` attempts to restore the state before the canceled navigation.
+  This keeps the browser history stack intact.
+  ![Compute cancel navigation resolution](https://cdn.hashnode.com/res/hashnode/image/upload/v1731316514823/iO7cKQORz.png?auto=format)
+
+### onSameUrlNavigation
+
+The `onSameUrlNavigation` setting defines what should happen when the same URL is activated, for example, if the user clicks the same menu item twice.
+
+- `ignore (default)`: The navigation will be skipped.
+- `reload`: The router will reload the component and re-execute all guards.
+
+## Theory
+
+The first problem to address is detecting a back navigation that would lead into a finished flow.
+![Example of detecting flows](https://cdn.hashnode.com/res/hashnode/image/upload/v1735736268084/Yh6GI65zT.png?auto=format)
+
+Once this scenario is detected, navigation can proceed to the last `flow source page`, which we implemented in the previous step.
+
+## Detecting Navigation into Finished Flow
+
+Detecting back navigation into a finished flow can be solved using a guard: `flow-page-activation.guard`.
+The guard verifies if the origin URL belongs to the current flow.
+If it does, the navigation is allowed; otherwise, the navigation is blocked.
+
+To determine whether the origin URL belongs to the same flow, each flow page must define a `flowBasePath` in its route data.
+The `flowBasePath` represents a common URL segment shared by all flow pages.
 
 ```ts
 export interface RouteData {
-  // ...
-  flowBasePath?: string;
+  flowSourcePage?: boolean;
+  mainPage?: boolean;
+  flowBasePath?: string; // <---- Add
 }
 
 export const routes: CustomRoute[] = [
@@ -462,84 +454,52 @@ export const routes: CustomRoute[] = [
     path: '/flow/a',
     component: FlowAComponent,
     pathMatch: 'full',
-    data: { flowBasePath: 'flow' }
+    canActivate: [flowPageActivationGuard],
+    data: { flowBasePath: '/flow' }
   },
   {
-    path: '/flow/n',
+    path: '/flow/b',
     component: FlowBComponent,
     pathMatch: 'full',
-    data: { flowBasePath: 'flow' }
+    canActivate: [flowPageActivationGuard],
+    data: { flowBasePath: '/flow' }
   },
   {
-    path: '/start',
-    component: StartComponent,
+    path: '/end',
+    component: EndComponent,
     pathMatch: 'full'
   }
 ];
 ```
 
-## Theory
+However, it is not possible to call `navigateBackTo` within the `guard` itself because guards execute during an active navigation.
+This could lead to unexpected errors.
 
-In theory, it is clear what has to happen.
-The guard detects that the page we are coming from is not part of the flow and redirects the user to the `flowSourcePage`.
-The main issue with this concept is, the guard is called during an active navigation.
-This means if we call directly `history.go(-3)` we interrupt an ongoing navigation, which could lead to a bad state.
-Here `canceledNavigationResolution: computed` and `onSameUrlNavigation: ignore` comes into play.
-Since Angular detects that we return `false` from the guard, Angular tries to restore the previous state.
-This means they call `history.go(1)`, basically doing a forward navigation to the origin page.
-Since we have never changed the URL, because the guard returned `false`, Angular now tries to activate the same URL again.
-Since we configured to ignore any navigation, which activates the same URL, the `NavigationSkipped` event is dispatched.
+As described earlier, we configured the `Angular Router` in a specific way.
 
-So what we need to do in the guard, return `false`, wait until `NavigationSkipped` is dispatched and then call `navigateBackTo`.
-![Computed in action](https://cdn.hashnode.com/res/hashnode/image/upload/v1731316595311/_8_xt5-Mx.png?auto=format)
+When a blocked navigation is detected, Angular attempts to restore the previous state (`canceledNavigationResolution: computed`).
+Under the hood, Angular calls `history.go(1)`, which triggers a new navigation, but restores the browser history stack.
+At the time of the guard execution, the previous page is still active.
+The restore navigation now wants to navigate to the same URL, but it is ignored due to (`onSameUrlNavigation: ignore`).
+This will trigger the `NavigationSkipped` event.
 
-## NavigatorService (waiting for NavigationSkipped)
+To summarize:
 
-The implementation is again quite simple.
-However, we have another edge case.
-If the user directly tries to access a flow page, the guard should still return `false`.
-However returning `false`, but having no previous navigation will result in a blank page being shown.
-This means, if we see that the current page is the first page in the stack, we just redirect to our home page.
-This should almost never happen though, but it is good to have it in place, in case it does happen.
-
-```ts
-export class NavigatorService implements OnDestroy {
-  // ...
-  navigateBackToTargetAfterNavigationFinish(target: NavigationTarget) {
-    if (this.navigationDirectionService.getRouterPageId() === 0) {
-      this.router.navigate([pages.Home.path], { replaceUrl: true });
-      return;
-    }
-    this.router.events
-      .pipe(
-        filter((e) => e instanceof NavigationSkipped),
-        take(1)
-      )
-      .subscribe(() => {
-        this.navigateBackTo(target);
-      });
-  }
-  // ...
-}
-```
+1. If the `flow-page-activation.guard` detects a navigation back into a finished flow, it should return `false`.
+2. Wait for the `NavigationSkipped` event to be dispatched.
+3. Then call the `navigateBackTo` function.
+   ![Computed in action](https://cdn.hashnode.com/res/hashnode/image/upload/v1731316595311/_8_xt5-Mx.png?auto=format)
 
 ## Flow Page Activation Guard
 
-How to detect if we are redirecting from one to another flow page was described above.
-
-But let us look at an example.
-![Example of trying to navigate to a finished flow](https://cdn.hashnode.com/res/hashnode/image/upload/v1731316611920/7Q3bsiK3q.png?auto=format)
-In this case the previous URL **must** start with `/flow`.
-So navigating from `/detail/a` to `/flow/b` should trigger `navigateBackToTargetAfterNavigationFinish('flow-source-page)`.
-
-The `flowPageActivationGuard` simply has to read the `flowBasePath` from the route data, get the `originUrl`.
+The `flow-page-activation.guard` retrieves the `flowBasePath` from the route data and the origin URL.
 If they match, the navigation is valid.
-If they do not, then we have to navigate back to the `flowSourcePage`.
+If they do not match, the guard returns `false` and waits for the `NavigationSkipped` event.
 
 ```ts
 export const flowPageActivationGuard: CanActivateFn = (route) => {
   const router = inject(Router);
-  const navigatorService = inject(NavigatorService);
+  const navigationService = inject(NavigationService);
 
   // the shared part of the flow path (e.g., /insurance/accident-coverage-mutation/form -> accident-coverage-mutation) -> must be provided via route data -> see *.routes.ts
   const flowBasePath = route.data.flowBasePath as string;
@@ -554,28 +514,94 @@ export const flowPageActivationGuard: CanActivateFn = (route) => {
     return true;
   }
 
-  // if a navigation request outside a flow targets a flow page, we navigate to the latest flowSourcePage, instead of the requested page
-  navigatorService.navigateBackToTargetAfterNavigationFinish('flow-source-page');
+  // if a navigation request outside a flow targets a flow page, navigate to the latest flowSourcePage, instead of the requested page
+  navigationService.navigateBackToTargetAfterNavigationFinish('flow-source-page');
   return false;
 };
 ```
 
-You might have noticed in the previous image, that navigating from `/start` to `/flow/a` would trigger the guard.
-And the guard will return `false` because `/start` is not within the flow.
-To work around this issue, we added a flow start page, which is part of the flow URL wise, but is not protected by the guard.
+### Handling Forward Navigation
+
+This code also runs during forward navigation.
+Starting a flow does not work as expected because the origin URL is not part of the flow.
+
+To work around this, a flow start page can be introduced.
+This page shares the same URL segment but is not protected by the guard.
 ![Flow Start Page](https://cdn.hashnode.com/res/hashnode/image/upload/v1731316623940/6P4A6ACKU.png?auto=format)
-This component then automatically redirects to the actual first flow page during `ngOnInit`.
+
+During `ngOnInit`, this component redirects to the first flow page:
 
 ```ts
-router.navigate(['/flow/a'], { repalceUrl: true });
+router.navigate(['/flow/a'], { replaceUrl: true });
 ```
 
-With this implementation, we have to take one compromise into consideration.
-Navigating backwards is no problem now, but once one navigated back, the forward navigation will always go to the first flow page `/flow/a`.
-And this means, the `flow-page-activation.guard` will return `false`, which means the browser navigation is stuck.
-We tried other ways on how to solve this problem, but came to the conclusion, that the browsers (especially Chrome) had issues with them.
+### Compromise with Browser Navigation
 
-# Navigate back to main pages
+Once navigated back to the `flow source page`, the browser's forward navigation no longer works, as the `flow/start` page is replaced by the protected `flow/a`.
+![Browser Forward Navigation is blocked](https://cdn.hashnode.com/res/hashnode/image/upload/v1735738419103/do6p4Nc1z.png?auto=format)
 
-We have already implemented the logic to track the offset and even navigate back to `mainPages`.
-We only have to call `navigatorService.navigateTo('main-page')`
+## Waiting for NavigationSkipped
+
+Navigating back to the `flow source page` is only possible after the current navigation finishes.
+The `NavigationSkipped` event ensures this behavior.
+
+```ts
+
+@Injectable({ providedIn: 'root' })
+export class NavigationService {
+  // ...
+  navigateBackToTargetAfterNavigationFinish(target: NavigationTarget) {
+    this.router.events
+      .pipe(
+        filter((e) => e instanceof NavigationSkipped),
+        take(1)
+      )
+      .subscribe(() => {
+        this.navigateBackTo(target);
+      });
+  }
+
+  // ...
+}
+```
+
+### Edge Case Handling
+
+If a logged-in user attempts to directly access a flow page, the guard returns `false`.
+Returning `false` during an initial navigation does not dispatch the `NavigationSkipped` event.
+
+If the current page is the first page in the stack, redirecting directly to the home page resolves the issue.
+
+```ts
+export class NavigationService {
+  // ...
+  navigateBackToTargetAfterNavigationFinish(target: NavigationTarget) {
+    // ADD
+    if (this.navigationDirectionService.getRouterPageId() === 0) {
+      this.router.navigate([pages.Home.path], { replaceUrl: true });
+      return;
+    }
+    this.router.events
+      .pipe(
+        filter((e) => e instanceof NavigationSkipped),
+        take(1)
+      )
+      .subscribe(() => {
+        this.navigateBackTo(target);
+      });
+  }
+
+  // ...
+}
+```
+
+# Requirement 3: Navigate Back to Main Pages
+
+We already implemented the logic to track the offset for main pages and navigate back to them.
+Simply call `navigationService.navigateTo('main-page')`.
+
+# Conclusion
+
+Implementing this new navigation concept showed me how working with the available tools and APIs can significantly simplify the implementation.
+I was able to reduce a lot of code, make the implementation easier, and even resolve some edge case bugs.
+If you have any suggestions or better approaches for solving these kinds of use cases, feel free to share them in the comments!
