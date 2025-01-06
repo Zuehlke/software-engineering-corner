@@ -6,8 +6,8 @@ tags: kotlin, mobile, android, ios, kmp, kmm, kotlin-multiplatform, ktor, networ
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1732552346062/ykEYfmZW2.jpg?auto=format
 publishAs: mohsenr
 hideFromHashnodeCommunity: false
-saveAsDraft: true
---- 
+---
+
 These days it’s quite rare to have a mobile that doesn’t access online resources. Naturally, “set up the HTTP stack” is one of the first stories on our backlog in a new project.
 
 We’ve found [Ktor](https://ktor.io) to be a great library to work with, especially in our [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html) projects. We wanted to share an approach we’ve used in many of our project when we set up Ktor.
