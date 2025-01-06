@@ -1,5 +1,5 @@
 ---
-title: Advanced Routing
+title: Routing Beyond Forward and Back
 domain: software-engineering-corner.hashnode.dev
 tags: javascript, web-development, frontend-development, angular, navigation
 cover: https://cdn.hashnode.com/res/hashnode/image/stock/unsplash/EOq4Dj33G_U/upload/72980e96faa8075e8392477062a3fd78.jpeg?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp&quot
@@ -9,7 +9,7 @@ hideFromHashnodeCommunity: false
 ---
 
 The navigation in complex web applications quickly goes beyond forward and back navigation.
-I recently rebuilt the navigation for a large project.
+We recently rebuilt the navigation on a large project. 
 Though our project uses Angular, the underlying navigation concept is versatile and can be applied to any framework.
 
 # What Was Our Goal
@@ -322,7 +322,7 @@ To get the routes data, we traverse to the deepest child route.
 
 ## 2. Reading Current State
 
-I mentioned before that navigating back or forward (`popstate`) would restore the state from the newly activated page.
+As mentioned before the navigating back or forward (`popstate`) will restore the state from the newly activated page.
 This means we can restore the previous offsets.
 If it is a new navigation (`imperative`), then the current state will not have any offset set yet.
 
@@ -603,5 +603,5 @@ Simply call `navigationService.navigateTo('main-page')`.
 # Conclusion
 
 Implementing this new navigation concept showed me how working with the available tools and APIs can significantly simplify the implementation.
-I was able to reduce a lot of code, make the implementation easier, and even resolve some edge case bugs.
+We were able to reduce a lot of code, making the implementation easier, and even resolve some edge case bugs.
 If you have any suggestions or better approaches for solving these kinds of use cases, feel free to share them in the comments!
