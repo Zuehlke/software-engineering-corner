@@ -104,7 +104,7 @@ How to measure success is an important question and something most managers and 
 
 Unfortunately, the problems that pair programming solves are complex and, therefore, difficult to measure.
 In our case, less experienced team members learnt more, and the team spent less time reviewing pull requests.
-Keeping a log book of the wins you have while pairing can be really useful, especially when you first start out. 
+Keeping a log book of your wins while pairing can be useful, especially when starting out.
 
 The team successfully met all deadlines, delivering the features on time.
 As a result, everyone felt more confident and satisfied, knowing we maintained high quality despite the immense time pressure.
