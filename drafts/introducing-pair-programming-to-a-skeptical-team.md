@@ -50,7 +50,8 @@ In my experience, they tend to be a variation of the following three statements:
 
 While it's true that pair programming is not the cheapest way to make software, it is cost-effective.
 At its core, pair programming is flow-centric - you optimise things to finish features quicker rather than getting them done cheaper.
-As it turns out, a lot of software falls into this category, making pair programming a cost-effective solution. (Pearl, 2018)
+As it turns out, a lot of software falls into this category, making pair programming a cost-effective solution (Pearl, 2018).
+On the other hand, when you work resource-efficiently, you get the most skilled person for the specific tasks; this creates experts and bottlenecks.
 
 If someone has tried pair programming before and doesn't like it, listening to their concerns and understanding what they don't like is essential.
 Pairing is a skill that requires practice and experimentation to discover what works best for you.
