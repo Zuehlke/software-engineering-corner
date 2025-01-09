@@ -59,6 +59,9 @@ Pairing is a skill that requires practice and experimentation to discover what w
 Pair programming doesn't mean you must spend every minute of every day with your pair.
 Allowing space to think or do individual research is all part of the process. Once you feel comfortable, you can reconvene and continue working as a pair.
 
+Of course, there are many more challenges, such as different skill levels, power dynamics, and poor tooling.
+To tackle these challenges, I recommend reading [Martin Fowler's blog post: "On Pairing"](https://martinfowler.com/articles/on-pair-programming.html#Challenges).
+
 With all the best intentions, I couldn't convince the whole team of the benefits of pair programming, and that's fine, too.
 Whatever you do, don't force colleagues to participate.
 It's a recipe for disaster.
