@@ -2,7 +2,7 @@
 title: Introducing Pair Programming to a Skeptical Team
 domain: software-engineering-corner.hashnode.dev
 tags: pair-programming
-cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1736330699291/AM4BRYqI6.jpg?auto=format
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1736502832866/Kw5q3_iWZ.jpg?auto=format
 publishAs: KevZ
 hideFromHashnodeCommunity: false
 saveAsDraft: true
