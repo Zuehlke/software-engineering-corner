@@ -48,19 +48,20 @@ In my experience, they tend to be a variation of the following three statements:
 1. I have tried pair programming before, but I didn't like it.
 1. I need time to think on my own, and I can't possibly write code with another person at the same time.
 
-While it's true that pair programming is not the cheapest way to make software, it is cost-effective.
-At its core, pair programming is flow-centric - you optimise things to finish features quicker rather than getting them done cheaper.
-As it turns out, a lot of software falls into this category, making pair programming a cost-effective solution (Pearl, 2018).
+While pair programming is not the cheapest way to make software, it is cost-effective.
+At its core, pair programming is flow-centric—you optimise things to finish features quicker rather than get them done cheaper.
+A lot of software falls into this category, making pair programming a cost-effective solution (Pearl, 2018).
 On the other hand, when you work resource-efficiently, you get the most skilled person for the specific tasks; this creates experts and bottlenecks.
 
 If someone has tried pair programming before and doesn't like it, listening to their concerns and understanding what they don't like is essential.
 Pairing is a skill that requires practice and experimentation to discover what works best for you.
 
 Pair programming doesn't mean you must spend every minute of every day with your pair.
-Allowing space to think or do individual research is all part of the process. Once you feel comfortable, you can reconvene and continue working as a pair.
+Allowing space to think or do individual research is all part of the process.
+Once you feel comfortable, you can reconvene and continue working as a pair.
 
 Of course, there are many more challenges, such as different skill levels, power dynamics, and poor tooling.
-I recommend reading Martin Fowler's blog post "[On Pairing](https://martinfowler.com/articles/on-pair-programming.html#Challenges)" to tackle these challenges. 
+To tackle these challenges, I recommend reading [Martin Fowler's blog post - On Pairing](https://martinfowler.com/articles/on-pair-programming.html#Challenges).
 
 With all the best intentions, I couldn't convince the whole team of the benefits of pair programming, and that's fine, too.
 Whatever you do, don't force colleagues to participate.
@@ -70,6 +71,7 @@ It's a recipe for disaster.
 
 It's a good idea to start small.
 We quickly found a Sprint ticket that we could work on together.
+I recommend a small ticket with well-understood requirements and scope that the current system can easily support.
 Before we started our first pairing session, we agreed to the following etiquette:
 
 * Ask for a break if you feel tired.
@@ -86,12 +88,12 @@ With an etiquette established, it was time to discuss how we wanted to approach 
 Do we understand the requirements?
 Do we need to do some tidying before implementing the necessary change?
 Is there an existing pattern in the codebase we can follow?
-Can we write a failing test?
-Sometimes, I like to write a little to-do list in a text editor so we don't lose track of all the steps.
+Can we write a failing test? Sometimes, I like to write a little to-do list in a text editor so we don't lose track of all the steps.
 
 Once we've agreed on the overall approach, the next step is deciding how to structure our first pairing session.
 We can try a few styles, such as Unstructured, Ping-Pong, Driver-Navigator, or my favourite, Driver-Navigator in Strong Style (Böckeler, 2020).
 There is no right or wrong answer; you should experiment with what style works best for you and your colleague.
+You can vary the style between pairs, or even depending on today's mood.
 It's essential to have an open mind and the willingness to experiment.
 
 Our first pairing session was a success, and we felt confident that we had met all the ticket requirements, adhered to all the team's coding standards, learnt something new, and were ready to raise the PR. 
@@ -104,27 +106,31 @@ The feedback was positive, and the team started pairing more over the next few w
 
 ## Measuring success
 
-How to measure success is an important question and something most managers and tech leads want to know, so set the expectations up front: You will not be able to measure the success of pairing by measuring the short-term "velocity" of the team (Pearl, 2018).
+How to measure success is an important question and something most managers and tech leads want to know, so set the expectations up front: you will not be able to measure the success of pairing by measuring the short-term "velocity" of the team (Pearl, 2018).
 
 Unfortunately, the problems that pair programming solves are complex and, therefore, difficult to measure.
-In our case, less experienced team members learnt more, and the team spent less time reviewing pull requests.
-Keeping a log book of your wins while pairing can be useful, especially when starting out.
+In our case, less experienced team members learnt more, and features written as a pair spent less time in code review.
+As a result, the feature can be merged into the main branch more quickly.
 
-The team successfully met all deadlines, delivering the features on time.
-As a result, everyone felt more confident and satisfied, knowing we maintained high quality despite the immense time pressure.
+Keeping a log book of your wins while pairing can be useful, especially at the beginning of your pair programming journey.
+For example, store daily events with specific dates of things you want to look out for, such as knowledge share opportunities, quality issues discovered, etc.
 
 ## Conclusion
 
-In conclusion, introducing pair programming made a big difference for our team.
-Despite initial doubts, we overcame misconceptions and set clear expectations.
-Trying different pairing styles improved our workflow and reduced code review time.
-The team shared more knowledge and took greater ownership of the code.
-Although measuring success is hard, we saw clear benefits in faster feature delivery and higher confidence in our work.
-Pair programming helped us meet tight deadlines while keeping quality high.
-It proved that investing in collaboration leads to better results.
+Introducing pair programming was challenging.
+The team was sceptical at first, which made sense, given their established ways of working.
+Also, it's important to recognise that pairing requires vulnerability.
+Showing vulnerability requires courage and creating an environment where people feel safe to show their vulnerability. Listening, showing empathy, starting small, and being a role model will help you overcome these challenges.
+
+Establishing a shared pairing etiquette with the team, containing clear rules and expectations, helped us get started and removed some of the worry.
+
+Keeping track of the pairing wins helps convince other sceptical parties outside the team and allows the team to share uncovered knowledge in team-wide sessions.
+
+Ultimately, the team successfully met all deadlines, delivering the features on time.
+Pairing helped us share knowledge, reduce delays in code reviews, and build stronger teamwork.
+Not everyone embraced it, and that's okay. But for many, it made a real difference.
 
 ## References
 
 * Pearl, M. (2018). Code with the Wisdom of the Crowd. Pragmatic Bookshelf.
 * Böckeler, B and Siessegger N. (2020) On pair programming. Available at: https://martinfowler.com/articles/on-pair-programming.html.
-
