@@ -5,7 +5,6 @@ tags: web-development, web, performance, developer-tools, chrome, browsers
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1727714188831/N9FGMqpI4.jpg?auto=format
 publishAs: BenVil
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 ## What are Speculation Rules?
