@@ -5,7 +5,6 @@ tags: pair-programming
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1736502832866/Kw5q3_iWZ.jpg?auto=format
 publishAs: KevZ
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 Last year, I joined a client's team of highly skilled and dedicated Java engineers.
