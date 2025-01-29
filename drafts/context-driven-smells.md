@@ -3,7 +3,7 @@ title: Context-Driven Smells
 domain: software-engineering-corner.hashnode.dev
 tags: agile team, smells, deliver value, quality
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1727431394860/XZ6VWy5WU.jpg?auto=format
-publishAs: ZuhlkePhill
+publishAs: phedro
 hideFromHashnodeCommunity: false
 saveAsDraft: true
 ---
