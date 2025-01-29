@@ -193,7 +193,7 @@ Having the sales team, good as they are, be the only customer contact means that
 I highly recommend reading [Transformed](https://www.worldofbooks.com/en-gb/products/transformed-book-marty-cagan-9781119697336?price=18.49), by Marty Cagan, which discusses all of this, prescribing a strong partnership with the sales team, rather than an adversarial one.
 It goes on to push for Product-Centric teams, rather than project- or feature-led ones.
 In this world, the Product Team steers the direction of a product, know the domain, know the customers, and can be more innovative and move faster.
-This transformation can be difficult to get right - Zuhlke has expertise here and can readily provide advice.
+This transformation can be difficult to get right - [Zühlke](https://www.zuehlke.com/en/contact) has expertise here and can readily provide advice.
 
 ### 3. Zero tests
 
