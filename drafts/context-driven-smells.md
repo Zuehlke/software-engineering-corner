@@ -265,7 +265,7 @@ Aggregate the logs into something like the [Elastic Stack]( https://www.elastic.
 * Log volume can grow very quickly and can add up to significant costs.
   Think about what retention period is useful, perhaps only log `error` level and above in production, refine what’s needed after it’s been developed.
 * Try to enforce the correct level of log throughout your codebase according to something like [this](https://betterstack.com/community/guides/logging/log-levels-explained/).
-  Trace level is useful in development environments, but in production would be far too noisy.
+  `trace` level is useful in development environments, but in production would be far too noisy.
 * At $company there were *many* logs.
   So many error logs that it was impossible to see what was cause for concern, what was mis-labelled, and what was a bug from 4 years ago that no-one cares about.
   Logs, like anything else, must provide *value*.
@@ -363,9 +363,10 @@ We know that we can’t speed up development, with fixed scope and money while m
 We had a fixed (unknown) deadline, so maintaining quality would mean flexing on:
 
 * Extend the team
-  * This can help! Extra people can do extra work, but
+  * This *can* help! Extra people *can* do extra work, but
   * It can also add complexity to communications
   * Onboarding will take longer than you think – will the benefit new people bring cost too much time to achieve?
+  * Adding more chefs won't make water boil faster - beware parallelisation fallacies
   
     If you do bring new people in, ask them to focus on isolated, well-defined areas, that don’t need huge context.
     Pair with them to get them up to speed more quickly and to maintain team standards.
