@@ -13,9 +13,9 @@ This innovation reduces defects and leads to lower costs.
 
 ## Initial situation
 
-A new, service-oriented financial platform offers several dozen web services to exchange financial data bidirectional.
+A new, service-oriented financial platform offers several dozen web services to bidirectionally exchange financial data.
 The web service specification is based on specialised data models to avoid dependencies to products or technologies.
-The web services are newly implemented, or existing service implementations are adapted.
+The platform comprises a mixture of new, and modified existing web services.
 The focus is on REST services with a JSON payload, specified using OpenAPI or OData.
 
 The following diagram shows the initial situation:
@@ -32,7 +32,7 @@ This distributed system decouples the organisational units in terms of products,
 However, quality assurance is challenging, as the web services offered can only be invoked end-2-end via the consumer's systems or by complex, manual test requests.
 These tests are therefore time-consuming, error-prone, only partially reproducible and difficult to document.
 As key financial figures and reports are generated via the platform, it is important that the web services are implemented and integrated correctly.
-If incorrect values would be processed, solvency issues, loss of reputation or legal cases may result.
+If the platform generates incorrect results, the consequences may be severe - reputational damage, legal challenges, and even insolvency.
 
 To test the interfaces and the behaviour of the system, the people involved in development use a REST client.
 For services that only offer read or write operations, additional calls are made to other services to create the preconditions for the test or to verify the result.
@@ -47,17 +47,21 @@ This should ensure quality and reduce effort to execute the tests and to fix err
 This in turn leads to greater efficiency within the organisation and the specialist capacities that are freed up can be used more effectively.
 
 The following diagram shows the development process:
-![Development process with information flow and Living Documentation extension for API Tests](https://cdn.hashnode.com/res/hashnode/image/upload/v1738137334135/wv_ru7VCD.png?auto=format)
+![Development process with information flow and Living Documentation extension for API Tests](https://cdn.hashnode.com/res/hashnode/image/upload/v1738239853878/7Ka7v-wqs.png?auto=format)
 *Development process with information flow and Living Documentation extension for API Tests*
 
-The requirements from the business analysis are transferred to development in various formats such as prose text, decision tables, flowcharts and verbal explanations.
+The requirements from the business analysis are transferred to development in various formats such as plain text, decision tables, flowcharts and verbal explanations.
 During development, the service contracts are defined, and the services are implemented and tested.
 The implementation is then verified together with the service contract and the tests executed are based on the requirements out of the business analysis.
 This feedback goes back to the business analysis for verification.
 
+### Challenges
+
 One of the disadvantages of this development process is that it requires four transformation steps to bring the business requirements into a specification, to interpret the specification, to implement and verify it.
 As the requirements change over time, these time-consuming and error-prone transformation steps take place several times per requirement and service.
 Furthermore, it takes a long time before feedback about the quality of the implementation can be provided as an output of the manual tests.
+
+### Optimisations
 
 The additional living documentation in the form of feature files in Gherkin optimises the development process by providing early feedback to the BA.
 Furthermore, these feature files are used for test automation, which reduces the manual testing effort and identifies discrepancies in the implementation more quickly.
@@ -73,7 +77,16 @@ This ensures a faster and less error-prone development process, which in turn in
 To ensure that the tests can be defined and interpreted by business experts, developers and testers, the test scenarios are defined in Gherkin.
 Gherkin is a text format to define the expected behaviour of a system, readable for machines and humans.
 The Gherkin definitions are structured into features, scenarios and steps, whereby the steps are divided into Given-When-Then steps.
-The Given steps define the preconditions, the When steps define the interaction with the system and the Then steps define the postconditions, i.e. the expected behaviour of the system.
+A complete reference of this language including the keywords with synonyms, step arguments, and language selectors can be found at [cucumber.io](https://cucumber.io/docs/gherkin/reference).
+
+The following Gherkin elements are used in the examples below:
+
+- `Feature` contains a high-level description and related scenarios.
+- `Scenario` describes a use case or a business rule and consists of a list of steps.
+- `Given` steps define one or more preconditions.
+- `When` steps define one or more interactions with the system.
+- `Then` steps define one or more postconditions, i.e. the expected behaviour of the system.
+- `@` tag contains the technical name and the version of the API.
 
 For an API test, the data required in the system and the data for the service request are defined in the Given step.
 In the When step, the service operation to be called is defined, i.e. which URL with parameters and payload is called in a web service.
@@ -252,6 +265,28 @@ This allows developers and testers to trace the tests independently, adapt the i
 By regularly running the API tests in a nightly build, errors that occur without direct code changes can also be detected.
 These include problems in the infrastructure, changed authorisations, expired certificates, long response times, etc.
 Failed test cases can be converted to notifications, bugs or incidents to analyse them.
+
+## Test Pyramid
+
+The Test Pyramid is a metaphor to group tests of different granularity.
+Feature-driven tests are well-known as system or end-2-end tests calling a web UI with Selenium.
+In fact, these tests can be used at all levels of the test pyramid, as the following examples show:
+![Feature-driven tests can be used for unit, integration, and system tests](https://cdn.hashnode.com/res/hashnode/image/upload/v1738268699930/rS4YbQNAl.png?auto=format)
+*Feature-driven tests can be used for unit, integration, and system tests*
+
+The automated API tests shown are system tests to test web-services end-2-end.
+Such tests tempt to be used to test the entire functionality of a system.
+This should be avoided, as system tests are more complex to create and to execute than integration or unit tests.
+The test pyramid helps to categorise test cases using examples and gives a guidance which tests to implement at which level.
+
+Business logic as an example could be verified isolated in a unit test, which is easy to create and provides fast feedback.
+Feature-driven tests in Gherkin can also be used here to define the expected behaviour from a business perspective.
+However, this does not mean that all unit tests should be defined in Gherkin.
+It is an addition to classic tests and not a replacement.
+
+If it’s not possible to test a feature isolated, an integration test could be used as an alternative.
+Those tests are more complex than a unit test, but in general less complex than a system test.
+Examples here could be to call a mocked API, to test the implementation of the API isolated. Also on this level, feature-driven or classic integration test can be used.
 
 ## Conclusion
 
