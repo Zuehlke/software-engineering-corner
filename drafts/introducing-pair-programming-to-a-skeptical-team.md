@@ -29,7 +29,7 @@ This process could take significant time due to the waiting period for feedback 
 Everyone on the team was extremely helpful and would try to help if a colleague got stuck on their respective ticket, but the collaboration was ad hoc, and progress felt slow.
 
 In one of our retrospectives, I suggested trialling pair programming for the upcoming Sprint to speed up the code review process, deliver more functionality, and meet our tight deadlines.
-Pair programming involves two engineers working together on the same task, one writing the code and the other reviewing it in real-time.
+Pair programming involves two engineers working together on the same code at the same time.
 
 The [State of DevOps Report 2023](https://dora.dev/research/2023/dora-report/) agrees:
 
