@@ -119,7 +119,8 @@ For example, store daily events with specific dates of things you want to look o
 Introducing pair programming was challenging.
 The team was sceptical at first, which made sense, given their established ways of working.
 Also, it's important to recognise that pairing requires vulnerability.
-Showing vulnerability requires courage and creating an environment where people feel safe to show their vulnerability. Listening, showing empathy, starting small, and being a role model will help you overcome these challenges.
+Showing vulnerability requires courage and creating an environment where people feel safe to show their vulnerability.
+Listening, showing empathy, starting small, and being a role model will help you overcome these challenges.
 
 Establishing a shared pairing etiquette with the team, containing clear rules and expectations, helped us get started and removed some of the worry.
 
