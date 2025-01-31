@@ -48,7 +48,7 @@ In my experience, they tend to be a variation of the following three statements:
 1. I need time to think on my own, and I can't possibly write code with another person at the same time.
 
 While pair programming is not the cheapest way to make software, it is cost-effective.
-At its core, pair programming is flow-centric—you optimise things to finish features quicker rather than get them done cheaper.
+At its core, pair programming is flow-centric — you optimise things to finish features quicker rather than get them done cheaper.
 A lot of software falls into this category, making pair programming a cost-effective solution (Pearl, 2018).
 On the other hand, when you work resource-efficiently, you get the most skilled person for the specific tasks; this creates experts and bottlenecks.
 
