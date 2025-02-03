@@ -11,6 +11,10 @@ After that, you can start working on your blog post in your repository. For info
 
 When you are ready you can then open a pull request to this repository and set somebody from the organization as the reviewer. As soon as this person has reviewed your PR and everything has been resolved, it can be merged into the main branch. If you're unfamiliar with this, please refer to this guide by github: https://docs.github.com/en/get-started/quickstart/github-flow
 
+### Top Tip
+
+It is helpful to write each sentence on a new line. That can make reviews simpler for pinpointing comments. Markdown will ignore these new lines, and the paragraph structure will look as you intend. Take care in bullet point lists though, and validate with preview that it looks as you'd wish. 
+
 ## Frontmatter
 
 We recognized that there are some things which are important in the frontmatter of the articles:
