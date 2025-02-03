@@ -2,10 +2,9 @@
 title: Introducing Pair Programming to a Skeptical Team
 domain: software-engineering-corner.hashnode.dev
 tags: pair-programming
-cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1736502832866/Kw5q3_iWZ.jpg?auto=format
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1738314901414/sok1x9c3Y.jpg?auto=format
 publishAs: KevZ
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 Last year, I joined a client's team of highly skilled and dedicated Java engineers.
@@ -30,7 +29,7 @@ This process could take significant time due to the waiting period for feedback 
 Everyone on the team was extremely helpful and would try to help if a colleague got stuck on their respective ticket, but the collaboration was ad hoc, and progress felt slow.
 
 In one of our retrospectives, I suggested trialling pair programming for the upcoming Sprint to speed up the code review process, deliver more functionality, and meet our tight deadlines.
-Pair programming involves two engineers working together on the same task, one writing the code and the other reviewing it in real-time.
+Pair programming involves two engineers working together on the same code at the same time.
 
 The [State of DevOps Report 2023](https://dora.dev/research/2023/dora-report/) agrees:
 
@@ -49,7 +48,7 @@ In my experience, they tend to be a variation of the following three statements:
 1. I need time to think on my own, and I can't possibly write code with another person at the same time.
 
 While pair programming is not the cheapest way to make software, it is cost-effective.
-At its core, pair programming is flow-centric—you optimise things to finish features quicker rather than get them done cheaper.
+At its core, pair programming is flow-centric — you optimise things to finish features quicker rather than get them done cheaper.
 A lot of software falls into this category, making pair programming a cost-effective solution (Pearl, 2018).
 On the other hand, when you work resource-efficiently, you get the most skilled person for the specific tasks; this creates experts and bottlenecks.
 
@@ -120,7 +119,8 @@ For example, store daily events with specific dates of things you want to look o
 Introducing pair programming was challenging.
 The team was sceptical at first, which made sense, given their established ways of working.
 Also, it's important to recognise that pairing requires vulnerability.
-Showing vulnerability requires courage and creating an environment where people feel safe to show their vulnerability. Listening, showing empathy, starting small, and being a role model will help you overcome these challenges.
+Showing vulnerability requires courage and creating an environment where people feel safe to show their vulnerability.
+Listening, showing empathy, starting small, and being a role model will help you overcome these challenges.
 
 Establishing a shared pairing etiquette with the team, containing clear rules and expectations, helped us get started and removed some of the worry.
 
