@@ -13,29 +13,29 @@ enableToc: true
 
 ### The Company
 
-I once worked at a scale-up tech firm $company in the compliance space.
+I once worked at a scale-up tech firm $company.
 It had rapidly built its core product suites, gone to market, and attracted serious investment.
 The next phase was to add the bells and whistles promised to customers, improve quality, and to explore moves into other industry domains.
 In the UK were two strong product teams, comprising developers, permanent QA and Product members.
-A separate DevOps team[<sup>1</sup>](#1-separate-devops-teams) prioritised platform work, dropped into teams.
+A separate DevOps team[<sup>1</sup>](#smell-1-separate-devops-teams) prioritised platform work, dropped into teams.
 
 Due to the nature of the customers’ work, the offering was expected to work transparently and without fault.
-Customers were not interested in working with product teams and instead liaised purely through the strong and motivated sales/Customer Success team[<sup>2</sup>](#2-sales-teams-own-customer-contact-and-prioritise-features).
+Customers were not interested in working with product teams and instead liaised purely through the strong and motivated sales/Customer Success team[<sup>2</sup>](#smell-2-sales-teams-own-customer-contact-and-prioritise-features).
 This meant that bespoke, single-client requests were promised by sales, with little care for priority, complexity, or roadmap, and an adversarial relationship between sales and product teams developed.
 
 ### The Tech
 
 As is common with start-ups, code was written very quickly in an effort to get to market, broadly following a microservices architecture.
 It used a mixture of NodeJS and java codebases, with Postgres.
-Some odd design decisions – using a DB for staging communications rather than queues, codebases that no-one left at $company understood – were problematic, but the real issues were down to quality safeguards.
-Almost zero tests[<sup>3</sup>](#3-zero-tests), observability, or resilience engineering meant that the team were always surprised by bugs, downtime was frequent and long, and investigations were invariably complex[<sup>4</sup>](#4-being-surprised-by-bugs-long-downtime-and-complex-investigations).
+Some odd design decisions – using a common staging DB to communicate between microservices rather than queues, codebases that no-one left at $company understood – were problematic, but the real issues were down to quality safeguards.
+Almost zero tests[<sup>3</sup>](#smell-3-zero-tests), observability, or resilience engineering meant that the team were always surprised by bugs, downtime was frequent and long, and investigations were invariably complex[<sup>4</sup>](#smell-4-being-surprised-by-bugs-long-downtime-and-complex-investigations).
 
 Additionally, $company relied on multiple integrations with 3rd parties, some with well-defined support agreements, and other casual.
-Changing APIs and other contracts with these necessitated frequent changes of approach, and failures in these 3rd parties were often not detected without customer reports[<sup>5</sup>](#5-undetectable-failures-in-3rd-party-services).
+Changing APIs and other contracts with these necessitated frequent changes of approach, and failures in these 3rd parties were often not detected without customer reports[<sup>5</sup>](#smell-5-undetectable-failures-in-3rd-party-services).
 
 ### The Bombshell
 
-One of the 3rd party integrations significantly changed its architecture[<sup>5</sup>](#5-undetectable-failures-in-3rd-party-services).
+One of the 3rd party integrations significantly changed its architecture[<sup>5</sup>](#smell-5-undetectable-failures-in-3rd-party-services).
 We were able to use a pilot of the new version to test our existing product against, and the result was… nothing.
 
 Complete failure.
@@ -45,15 +45,15 @@ There was no SLA or formal agreement with the 3rd party, and we had no idea of w
 To preserve the anonymity of $company, imagine your business relied on collecting flight information from BA using their public API, and suddenly, they started doing hovercrafts too, upgraded the authentication from a simple token to a double ratchet mechanism, and entirely changed the handshake and payload.
 And you couldn’t miss a single flight update.
 
-So, our biggest product had to be re-written from scratch with no idea of the deadline, while keeping the current version running at 100% SLA[<sup>4</sup>](#4-being-surprised-by-bugs-long-downtime-and-complex-investigations).
+So, our biggest product had to be re-written from scratch with no idea of the deadline, while keeping the current version running at 100% of our customers' SLAs[<sup>4</sup>](#smell-4-being-surprised-by-bugs-long-downtime-and-complex-investigations).
 
 The team stopped developing new features.
 They fixed only the most pressing of bugs on the old system, and began rapid prototyping, research, and building of a new application.
 This time, we would do it right.
 
 We paired, designed for scalability, observability, and recovery, practised TDD, and made great progress.
-As distractions poured in from the ‘legacy’ version however, the deadline loomed closer, and a core library broke our tests.
-We made the conscious decision to comment the tests out, and promised ourselves that we would add them in as soon as we had time[<sup>6</sup>](#6-commenting-tests-simple-fixes-and-workarounds).
+As distractions poured in from the ‘legacy’ version however, the spectre of the unknowable deadline loomed closer, and a core library broke our tests.
+We made the conscious decision to comment the tests out, and promised ourselves that we would add them in as soon as we had time[<sup>6</sup>](#smell-6-commenting-out-tests-simple-fixes-and-workarounds).
 Auto-scaling our Kubernetes cluster could go on the To Do tech debt list too, and we configured a cluster that was over-sized, that we could manually reduce with user data and our shiny new dashboards.
 Automatic recovery was vital in case we missed any of those ‘BA flight’ events, but time was of the essence, so we hand cranked a ‘simple’ mechanism to manage it.
 
@@ -71,16 +71,16 @@ It would increase our customer base by a factor of 10.
 Our new service would scale beautifully.
 We ran load tests and were delighted.
 
-The rest of the ingestion pipeline though was far from ready – performance bottlenecks, DB IDs exhausted, ability to scale vertically only was not sufficient[<sup>7</sup>](#7-ignoring-the-wake-up-call) - and there were myriad other new things to focus on, from onboarding that many new people, to cost optimisations.
+The rest of the ingestion pipeline though was far from ready – performance bottlenecks, recursive retries from failures overwhelming DBs, ability to scale vertically only was not sufficient[<sup>7</sup>](#smell-7-ignoring-the-wake-up-call) - and there were myriad other new things to focus on, from onboarding that many new people, to cost optimisations.
 
 The tech debt would have to wait.
 
 ## Smells
 
 The points below are identified from the above context.
-As with [code smells](https://martinfowler.com/bliki/CodeSmell.html) ([or](https://code-smells.com/)), there may be nothing wrong here, but experience tells us that it’s worth taking a look.
+As with [code smells](https://martinfowler.com/bliki/CodeSmell.html) (or [code-smells.com](https://code-smells.com/)), there may be nothing wrong here, but experience tells us that it’s worth taking a look.
 
-### 1. Separate ‘DevOps’ teams
+### Smell 1. Separate ‘DevOps’ teams
 
 It is very common to see a DevOps or Platform team exist separately from product or feature development teams.
 There are often cross-cutting, enabling pieces of work that need to be done outside of those teams, so it makes sense, right?
@@ -92,7 +92,7 @@ Over separate projects, with separate platform teams, I’ve experienced
 * Locked down cloud environment, meaning the creation of a new repo, permissions for services, even monitoring of existing infrastructure is off limits
 * No access to IaC, meaning initial requirements, refactoring, even environment variables are passed off to other teams, causing mistakes, bottlenecks, and a batching of requests
 * Lack of ownership, and barrier to entry, encourages a blame culture
-* The bottlenecks mean that delivery & TTV are dramatically slowed, and that dev teams and DevOps teams are peppered with distractions
+* The bottlenecks mean that delivery & Time To Value (TTV) are dramatically slowed, and that dev teams and DevOps teams are peppered with distractions
 
 #### Diagnosis
 
@@ -140,7 +140,7 @@ I wasn’t blocked, but neither was I able to go rogue.
 Trust your teams.
 Give them the right tools, support their growth, and watch innovation flourish.
 
-### 2. Sales teams own customer contact, and prioritise features
+### Smell 2. Sales teams own customer contact, and prioritise features
 
 Even an excellent sales team is likely incentivised by keeping the customer happy, rather than what the customer needs, or what’s best for the product.
 This leads to conflicting product strategies, and according to the proverb, “if you chase two rabbits, you will not catch either one”.
@@ -195,7 +195,7 @@ It goes on to push for Product-Centric teams, rather than project- or feature-le
 In this world, the Product Team steers the direction of a product, know the domain, know the customers, and can be more innovative and move faster.
 This transformation can be difficult to get right - [Zühlke](https://www.zuehlke.com/en/contact) has expertise here and can readily provide advice.
 
-### 3. Zero tests
+### Smell 3. Zero tests
 
 This smell should be the most obvious.
 In this case, the lack of tests across the ‘legacy’ suite of services meant that when bugs appeared, it was difficult to narrow down the cause of the crime, so that investigations often took days instead of minutes.
@@ -211,7 +211,7 @@ It can be faster to build software without tests, it’s extra code to write, ex
 
 But, what happens in 2 weeks, or 2 months, when you can’t remember how this worked, or need to add a new feature and have no idea if it’ll break that thing over there? What if the shiny calculator app works beautifully, unless the user enters an odd number, or that profanity filter stops you using any words that begin with ‘f’?
 
-Your code may be built more quickly, but you have sacrificed it’s quality (see [The Iron Triangle](https://jchyip.medium.com/four-variables-cost-time-quality-scope-f29b4de8bfdf)) and as we know, we’re actually aiming to deliver value, not bits of code.
+Your code may be built more quickly, but you have sacrificed its quality (see [The Iron Triangle](https://jchyip.medium.com/four-variables-cost-time-quality-scope-f29b4de8bfdf)) and as we know, we’re actually aiming to deliver value, not bits of code.
 
 In fact, TDD can speed up development.
 It helps you to focus on what’s actually required (KISS), prevents you from building a Porsche when a van is what you need (YAGNI), and by biting off small chunks of the problem as tests, and iterating on them, you can make an enormous task smaller.
@@ -234,7 +234,7 @@ It helps you to focus on what’s actually required (KISS), prevents you from bu
 * Make sure to collaborate with your test team around test coverage (and, well, with everything).
   You should find that with better test coverage and automated pipelines, those day long manual regression tests can be dispensed with, helping you to release more safely and more often
 
-### 4. Being surprised by bugs, long downtime, and complex investigations
+### Smell 4. Being surprised by bugs, long downtime, and complex investigations
 
 Surprise incidents are a classic sign of poor observability.
 Think of observability as your application's vital signs – without good monitoring, logging, and tracing, you're essentially working in the dark.
@@ -284,7 +284,7 @@ Tweak them often.
 With a little more visibility over what’s happening inside your codebase, use those metrics to help you prioritise – and measure – improvements to it.
 If a particular operation is taking much longer than others, try to refactor it; if you get higher than normal error rates for a given API, investigate
 
-### 5. Undetectable failures in 3rd party services
+### Smell 5. Undetectable failures in 3rd party services
 
 Silent failures are like invisible leaks in your plumbing – they can cause serious damage before you even notice them.
 When third-party APIs degrade gracefully or fail subtly, your application might keep running while quietly delivering bad data or poor performance.
@@ -320,7 +320,7 @@ You obviously don’t want to test your 3rd party dependencies’ code, but you 
 It's also vital that the business understands these risks, so make sure to discuss them clearly.
 You may need extra time to safeguard the code, or the business may need to add legal cover or other mitigations to reduce the likelihood or damage.
 
-### 6. Commenting tests, ‘simple’ fixes, and workarounds
+### Smell 6. Commenting-out tests, ‘simple’ fixes, and workarounds
 
 The team did a good job initially, learning from past mistakes and building in quality from the start.
 The fact that they delivered and that the solution was scalable is testament to that.
@@ -392,7 +392,7 @@ Slow down.
 Keep it sustainable, make sure your test coverage is good, keep that great code structure, continue to pair and review code.
 Future you will thank you for it.
 
-### 7. Ignoring the wake-up call
+### Smell 7. Ignoring the wake-up call
 
 Although the 3rd party service changing didn’t directly impact the second team, it should have served as a wakeup call to significantly address software quality across the organisation.
 While one team had to stop everything to focus on the problem, the other team carried on as normal, shipping new features dreamed up by customers and adding cherries on top of existing products.
@@ -447,6 +447,12 @@ Regular load testing and pen testing are an overhead and expense that often mean
 Like house insurance, it’s a cost that you never get value for, until you do.
 Had $company performed load testing in the 6 months prior to ‘The New Opportunity’, we would have seen the bottlenecks and frailties that the existing codebase had.
 It still may not have been prioritised in time, but we would at least have known where the effort was needed and what the timescales looked like.
+
+The frequency of these tests will vary according to your business, but should still be regular - a plane is checked after every flight, but your car probably only annually.
+I have seen load tests performed in an automated pipeline each night, but the costs and set up of that could be prohibitive.
+Third party pen tests might only be needed twice a year.
+Ask yourself if you have confidence in your product - what would happen if your user base doubled or tripled, do you know?
+What would happen if a bedroom hacker targets it, or a nation-state, and does it matter?
 
 Load testing can be done in-house with tools like [Gatling](https://gatling.io/), or outsourced to specialist companies.
 A *lot* of security testing can also be done in house – tools like [SonarQube](https://www.sonarsource.com/products/sonarqube/), [Wiz](https://www.wiz.io/), [snyk](https://snyk.io/) are all fantastic at protecting you, but sometimes an external kick of the tyres brings up new things.
