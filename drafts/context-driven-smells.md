@@ -9,18 +9,16 @@ saveAsDraft: true
 enableToc: true
 ---
 
-## Context
-
-### The Company
+## The Context
 
 I once worked at a scale-up tech firm $company.
 It had rapidly built its core product suites, gone to market, and attracted serious investment.
 The next phase was to add the bells and whistles promised to customers, improve quality, and to explore moves into other industry domains.
 In the UK were two strong product teams, comprising developers, permanent QA and Product members.
-A separate DevOps team[<sup>1</sup>](#smell-1-separate-devops-teams) prioritised platform work, dropped into teams.
+A separate DevOps team[<sup>1</sup>](#smell-1-siloed-devops-teams) prioritised platform work, dropped into teams.
 
 Due to the nature of the customers’ work, the offering was expected to work transparently and without fault.
-Customers were not interested in working with product teams and instead liaised purely through the strong and motivated sales/Customer Success team[<sup>2</sup>](#smell-2-sales-teams-own-customer-contact-and-prioritise-features).
+Customers were not interested in working with product teams and instead liaised purely through the strong and motivated sales/Customer Success team[<sup>2</sup>](#smell-2-sales-driven-feature-prioritization).
 This meant that bespoke, single-client requests were promised by sales, with little care for priority, complexity, or roadmap, and an adversarial relationship between sales and product teams developed.
 
 ### The Tech
@@ -28,7 +26,7 @@ This meant that bespoke, single-client requests were promised by sales, with lit
 As is common with start-ups, code was written very quickly in an effort to get to market, broadly following a microservices architecture.
 It used a mixture of NodeJS and java codebases, with Postgres.
 Some odd design decisions – using a common staging DB to communicate between microservices rather than queues, codebases that no-one left at $company understood – were problematic, but the real issues were down to quality safeguards.
-Almost zero tests[<sup>3</sup>](#smell-3-zero-tests), observability, or resilience engineering meant that the team were always surprised by bugs, downtime was frequent and long, and investigations were invariably complex[<sup>4</sup>](#smell-4-being-surprised-by-bugs-long-downtime-and-complex-investigations).
+Almost zero tests[<sup>3</sup>](#smell-3-absence-of-testing), observability, or resilience engineering meant that the team were always surprised by bugs, downtime was frequent and long, and investigations were invariably complex[<sup>4</sup>](#smell-4-being-surprised-by-bugs-long-downtime-and-complex-investigations).
 
 Additionally, $company relied on multiple integrations with 3rd parties, some with well-defined support agreements, and other casual.
 Changing APIs and other contracts with these necessitated frequent changes of approach, and failures in these 3rd parties were often not detected without customer reports[<sup>5</sup>](#smell-5-undetectable-failures-in-3rd-party-services).
@@ -53,7 +51,7 @@ This time, we would do it right.
 
 We paired, designed for scalability, observability, and recovery, practised TDD, and made great progress.
 As distractions poured in from the ‘legacy’ version however, the spectre of the unknowable deadline loomed closer, and a core library broke our tests.
-We made the conscious decision to comment the tests out, and promised ourselves that we would add them in as soon as we had time[<sup>6</sup>](#smell-6-commenting-out-tests-simple-fixes-and-workarounds).
+We made the conscious decision to comment the tests out, and promised ourselves that we would add them in as soon as we had time[<sup>6</sup>](#smell-6-compromising-on-quality-under-pressure).
 Auto-scaling our Kubernetes cluster could go on the To Do tech debt list too, and we configured a cluster that was over-sized, that we could manually reduce with user data and our shiny new dashboards.
 Automatic recovery was vital in case we missed any of those ‘BA flight’ events, but time was of the essence, so we hand cranked a ‘simple’ mechanism to manage it.
 
@@ -71,16 +69,16 @@ It would increase our customer base by a factor of 10.
 Our new service would scale beautifully.
 We ran load tests and were delighted.
 
-The rest of the ingestion pipeline though was far from ready – performance bottlenecks, recursive retries from failures overwhelming DBs, ability to scale vertically only was not sufficient[<sup>7</sup>](#smell-7-ignoring-the-wake-up-call) - and there were myriad other new things to focus on, from onboarding that many new people, to cost optimisations.
+The rest of the ingestion pipeline though was far from ready – performance bottlenecks, recursive retries from failures overwhelming DBs, ability to scale vertically only was not sufficient[<sup>7</sup>](#smell-7-ignoring-the-warning-signs) - and there were myriad other new things to focus on, from onboarding that many new people, to cost optimisations.
 
 The tech debt would have to wait.
 
-## Smells
+## Seven Critical Software Development Smells
 
 The points below are identified from the above context.
 As with [code smells](https://martinfowler.com/bliki/CodeSmell.html) (or [code-smells.com](https://code-smells.com/)), there may be nothing wrong here, but experience tells us that it’s worth taking a look.
 
-### Smell 1. Separate ‘DevOps’ teams
+### Smell 1: Siloed DevOps Teams
 
 It is very common to see a DevOps or Platform team exist separately from product or feature development teams.
 There are often cross-cutting, enabling pieces of work that need to be done outside of those teams, so it makes sense, right?
@@ -93,6 +91,8 @@ Over separate projects, with separate platform teams, I’ve experienced
 * No access to IaC, meaning initial requirements, refactoring, even environment variables are passed off to other teams, causing mistakes, bottlenecks, and a batching of requests
 * Lack of ownership, and barrier to entry, encourages a blame culture
 * The bottlenecks mean that delivery & Time To Value (TTV) are dramatically slowed, and that dev teams and DevOps teams are peppered with distractions
+
+![Separate DevOps team reduces throughput](https://cdn.hashnode.com/res/hashnode/image/upload/v1738834733811/hf08Piy--.png?auto=format)
 
 #### Diagnosis
 
@@ -140,7 +140,9 @@ I wasn’t blocked, but neither was I able to go rogue.
 Trust your teams.
 Give them the right tools, support their growth, and watch innovation flourish.
 
-### Smell 2. Sales teams own customer contact, and prioritise features
+---
+
+### Smell 2: Sales-Driven Feature Prioritization
 
 Even an excellent sales team is likely incentivised by keeping the customer happy, rather than what the customer needs, or what’s best for the product.
 This leads to conflicting product strategies, and according to the proverb, “if you chase two rabbits, you will not catch either one”.
@@ -150,6 +152,9 @@ The development team begins to rush, tech debt is not included in a sprint, nice
 
 When new tasks drop to the team, members are forced to context switch between new and old pieces of work.
 [Scrum.org](https://www.scrum.org/resources/blog/context-switch-what-it-and-its-impacts#:~:text=Reduced%20Productivity%3A%20Frequent%20context%20switches,tasks%20can%20reduce%2020%25%20productivity) says this can lead to a 20% productivity hit, and that this increases linearly with additional tasks.
+
+![Price of task switching (Image is licensed under the Creative Commons Attribution 4.0 International license.)](https://cdn.hashnode.com/res/hashnode/image/upload/v1738777160885/DtLp9GdhR.png?auto=format)
+
 Even something as simple as answering emails can pull you out of your flow state and it can take 20 minutes or so to get back to focus.
 Not only will this make work progress more slowly, it increases error rates and leads to a reduction in developer engagement.
 
@@ -195,7 +200,9 @@ It goes on to push for Product-Centric teams, rather than project- or feature-le
 In this world, the Product Team steers the direction of a product, know the domain, know the customers, and can be more innovative and move faster.
 This transformation can be difficult to get right - [Zühlke](https://www.zuehlke.com/en/contact) has expertise here and can readily provide advice.
 
-### Smell 3. Zero tests
+---
+
+### Smell 3: Absence of Testing
 
 This smell should be the most obvious.
 In this case, the lack of tests across the ‘legacy’ suite of services meant that when bugs appeared, it was difficult to narrow down the cause of the crime, so that investigations often took days instead of minutes.
@@ -216,7 +223,9 @@ Your code may be built more quickly, but you have sacrificed its quality (see [T
 In fact, TDD can speed up development.
 It helps you to focus on what’s actually required (KISS), prevents you from building a Porsche when a van is what you need (YAGNI), and by biting off small chunks of the problem as tests, and iterating on them, you can make an enormous task smaller.
 
-* Pay close attention to the [Testing Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html#TheTestPyramid), check if you're [getting it wrong](https://github.com/kevin-denver/software-engineering-corner/blob/ked/pair-and-mob-programming/published/are-you-getting-the-test-pyramid-wrong.md) – structure your tests appropriately.
+![The Test Pyramid (Image is licensed under the Creative Commons Attribution-Share Alike 4.0 International license)](https://cdn.hashnode.com/res/hashnode/image/upload/v1738777419701/a5jdvKcXU.png?auto=format)
+
+* Pay close attention to the [Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html#TheTestPyramid), check if you're [getting it wrong](https://github.com/kevin-denver/software-engineering-corner/blob/ked/pair-and-mob-programming/published/are-you-getting-the-test-pyramid-wrong.md) – structure your tests appropriately.
   Focus on many small, fast, low-level tests, fewer wide integration tests, and a very limited number of complex, slow, end to end tests.
   You want to aim for the situation where you’re completely confident that your code does what it should, but without being brittle, taking an age to re-write, or taking an age to run.
   Running a test suite is the very first piece of fast feedback your code gets, so make sure it’s fast.
@@ -234,7 +243,9 @@ It helps you to focus on what’s actually required (KISS), prevents you from bu
 * Make sure to collaborate with your test team around test coverage (and, well, with everything).
   You should find that with better test coverage and automated pipelines, those day long manual regression tests can be dispensed with, helping you to release more safely and more often
 
-### Smell 4. Being surprised by bugs, long downtime, and complex investigations
+---
+
+### Smell 4: Being surprised by bugs, long downtime, and complex investigations
 
 Surprise incidents are a classic sign of poor observability.
 Think of observability as your application's vital signs – without good monitoring, logging, and tracing, you're essentially working in the dark.
@@ -284,7 +295,9 @@ Tweak them often.
 With a little more visibility over what’s happening inside your codebase, use those metrics to help you prioritise – and measure – improvements to it.
 If a particular operation is taking much longer than others, try to refactor it; if you get higher than normal error rates for a given API, investigate
 
-### Smell 5. Undetectable failures in 3rd party services
+---
+
+### Smell 5: Undetectable failures in 3rd party services
 
 Silent failures are like invisible leaks in your plumbing – they can cause serious damage before you even notice them.
 When third-party APIs degrade gracefully or fail subtly, your application might keep running while quietly delivering bad data or poor performance.
@@ -320,7 +333,9 @@ You obviously don’t want to test your 3rd party dependencies’ code, but you 
 It's also vital that the business understands these risks, so make sure to discuss them clearly.
 You may need extra time to safeguard the code, or the business may need to add legal cover or other mitigations to reduce the likelihood or damage.
 
-### Smell 6. Commenting-out tests, ‘simple’ fixes, and workarounds
+---
+
+### Smell 6: Compromising on Quality Under Pressure
 
 The team did a good job initially, learning from past mistakes and building in quality from the start.
 The fact that they delivered and that the solution was scalable is testament to that.
@@ -345,7 +360,7 @@ Quality isn't just about perfect code; it's about maintaining velocity and trust
 When you sacrifice it, you're borrowing time you'll have to repay with heavy interest.
 
 The [Iron Triangle](https://jchyip.medium.com/four-variables-cost-time-quality-scope-f29b4de8bfdf) is real.
-With a fixed time scale, it is far better to reduce scope that sacrifice quality.
+With a fixed time scale, it is far better to reduce scope than sacrifice quality.
 
 #### Diagnoses
 
@@ -358,6 +373,8 @@ Use concrete examples from other parts of the project – all that tech debt, th
 You can’t guarantee that your product will be bug free, but spending a little time now will save you [4-5 times that in production](https://www.functionize.com/blog/the-cost-of-finding-bugs-later-in-the-sdlc).
 
 ##### [The Iron Triangle](https://jchyip.medium.com/four-variables-cost-time-quality-scope-f29b4de8bfdf)
+
+![The Iron Triangle](https://cdn.hashnode.com/res/hashnode/image/upload/v1738778218916/nXn9pk4zp.png?auto=format)
 
 We know that we can’t speed up development, with fixed scope and money while maintaining quality
 We had a fixed (unknown) deadline, so maintaining quality would mean flexing on:
@@ -392,7 +409,9 @@ Slow down.
 Keep it sustainable, make sure your test coverage is good, keep that great code structure, continue to pair and review code.
 Future you will thank you for it.
 
-### Smell 7. Ignoring the wake-up call
+---
+
+### Smell 7: Ignoring the Warning Signs
 
 Although the 3rd party service changing didn’t directly impact the second team, it should have served as a wakeup call to significantly address software quality across the organisation.
 While one team had to stop everything to focus on the problem, the other team carried on as normal, shipping new features dreamed up by customers and adding cherries on top of existing products.
@@ -420,6 +439,8 @@ Some of this can be fixed in the normal day of a dev team, following the Good Sc
 I have found it useful for prioritisation to use an [Eisenhower Matrix](https://www.eisenhower.me/eisenhower-matrix/).
 As a team, decide whether each piece of tech debt is important or not, complex or not, and prioritise those items that are both simple and important.
 Some important and complex things need to be fixed, but this approach operates on the 80:20 rule – 20% effort should give you 80% of the value.
+
+![Eisenhower Matrix for prioritising tasks - High value, low effort to low value, high effort](https://cdn.hashnode.com/res/hashnode/image/upload/v1738835631996/aC-ZwFz8i.png?auto=format)
 
 Once you have chosen, add them into your backlog as you normally would, and *make sure they don’t get deprioritised*.
 The advice for this is that same as for ensuring code quality – and in fact, it’s the same problem!
