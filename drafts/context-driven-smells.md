@@ -108,7 +108,8 @@ Here's how to make DevOps work:
 
 ##### Short-term wins
 
-* Embed DevOps engineers into the team, and help them to shift left
+* Embed DevOps engineers into the team, and help them to shift left.
+It can be challenging to re-organise teams. Perhaps initially a nominated DevOps engineer simply attends standups, planning, kick-offs, and retros, offering expertise earlier, and becoming more aware of the team's expectations; later, pairing with devs, working together to improve processes and tools. It can be challenging for that person to prioritise work for the team *and* their DevOps chapter, so try to make workloads as visible as possible.
 * Create shared tooling that reduces friction and standardizes best practices, while still allowing teams autonomy
 * Implement cross-team knowledge sharing and collaborative problem-solving
 * Invest in automation that speeds up deployment and reduces manual work, for example CICD pipelines.
