@@ -1,7 +1,7 @@
 ---
 title: Architecture verification and documentation with jQAssistant and arc42
 domain: software-engineering-corner.hashnode.dev
-tags: Java, software architecture  
+tags: Java, software-architecture  
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1727771451245/mNMwZtunX.jpg?auto=format
 publishAs: stmu
 hideFromHashnodeCommunity: false
