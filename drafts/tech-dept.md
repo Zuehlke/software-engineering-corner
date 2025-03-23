@@ -1,112 +1,84 @@
 ---
-title: Technical debts are fun
-subtitle: Keeping your HTTP stack easy to maintain
+title: What happens when a team dedicates 10% of their time to fixing technical debt?
+subtitle: Technical debt is a silent killer of productivity and growth
 domain: software-engineering-corner.hashnode.dev
 tags: kotlin, mobile, android, ios, kmp, kmm, kotlin-multiplatform, ktor, networking, http, testing, mocking
-cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1732552346062/ykEYfmZW2.jpg?auto=format
-publishAs: mohsenr
+cover: https://media.licdn.com/dms/image/v2/D4D10AQGfI9tKSix73g/image-shrink_1280/B4DZSH4JdpHIAM-/0/1737446431305?e=1743368400&v=beta&t=KMM1UeW2ZtMXbgCQYaO8w-04OtNFzfbLDH-wS3FTdsU 
+publishAs: abishekanthony07
 hideFromHashnodeCommunity: false
 saveAsDraft: true
 ---
 
 [//remove me]: # ( https://miro.com/app/board/uXjVIYkz16U=/?share_link_id=497027063057)
 
-# What is Technical Debt?
+### **Introduction: More Than a Mess of Code**
 
-Imagine this: You're on a tight deadline and take a shortcuts in your code.
-Few months later, bugs occurred, slowed down development and requires urgent fixes.
-This is called technical debt.
+Technical debt often evokes feelings of guilt and frustration. It’s what we whisper about during retros, grumble over in PRs, and quietly accept as a side effect of real-world software delivery. But what if we’ve been thinking about it all wrong?
 
-> Basically, Technical debt occurs when a unit of work is inefficient, not scalable, or difficult to
-> test. It often results from rushed development, outdated technologies, or poorly structured
-> processes.
-> While taking shortcuts can speed up delivery, it often leads to higher costs in the long run,
-> making maintenance harder and development slower.
+At Zühlke, we believe technical debt isn’t just a technical flaw. It’s a strategic lever — one that impacts velocity, team morale, innovation, and business sustainability. Left unmanaged, it erodes productivity. Handled wisely, it becomes an investment in long-term resilience.
 
-## Types of Technical Debt
-Having a look at a software-oriented company, technical debt can be categorized as:
+In this article, we explore the dual nature of technical debt — as both a technical concern and a product/business risk — and share how we’ve embedded a best practice of allocating at least **10% of engineering time** to reducing it.
 
-### 📃 **Documentation Debt**
+## **What Is Technical Debt, Really?**
 
-> **Outdated, missing, or unclear documentation**, making it harder for teams to onboard or maintain
-> systems.
+Coined by Ward Cunningham, technical debt is a metaphor that likens short-term compromises in software quality to financial borrowing. Like real debt, it can accelerate progress — or bankrupt you later.
 
-### 🐛 **Code Debt**
+### **Types of Technical Debt:**
+- **Design Debt:** Inflexible architectures that block evolution.
+- **Code Debt:** Messy or duplicated code that slows developers.
+- **Documentation Debt:** Missing context that hinders onboarding and collaboration.
+- **Infrastructure Debt:** Outdated systems or configurations that increase fragility.
+- **Process Debt:** Inefficient workflows and manual steps that hinder scaling.
 
-> **Poorly written, inefficient, or not scalable code** that is difficult to maintain or extend
+These forms of debt arise from tight deadlines, shifting requirements, legacy constraints — or sometimes, simply neglect.
 
-### 🧱 **Architecture Debt**
+> “Tech debt is like a credit card for your codebase. Easy to get into, hard to get out of.” — Juan Jose Behrend
 
-> **Badly designed software components**, lack of modularization, and poor scalability, leading to
-> performance and availability issues
+## **The Business Risk of Ignoring Tech Debt**
 
-### 🏰 **Infrastructure Debt**
+Technical debt isn’t just an engineering concern—it’s a **product and business risk**.
 
-> **Outdated technologies** and tools that hinder adoption of modern best practices, forcing developers
-> to "**reinvent the wheel**."
+- **Missed Deadlines:** Teams slow down as complexity grows
+- **Increased Costs:** More time is spent maintaining, not innovating
+- **Talent Retention:** Skilled engineers burn out or leave
+- **Customer Frustration:** Bugs, instability, and missing features become common
+- **Security Gaps:** Outdated dependencies and fragile systems increase vulnerability
 
-### 🔃 **Process Debt**
+Ignoring tech debt is like ignoring interest on a loan—it compounds silently, then hits all at once.
 
-> **Inefficient, unclear, or overly bureaucratic workflows** that slow down development and introduce
-> unnecessary manual steps.
+### **Business Impact**
+When tech debt piles up, it constrains agility and slows time-to-market. Companies may find themselves outpaced by more nimble competitors — not due to inferior ideas, but due to bloated systems.
 
-### 🧪 **Testing Debt**
+### **Cultural Decay**
+The "broken windows" theory applies to software: once mess is tolerated, care diminishes. This sets off a vicious cycle where the bar for quality drops across the board.
 
-> **Lack of automated testing**, leading to reliance on manual testing, which slows down releases and
-> increases the risk of bugs.
+To address these risks effectively, we must first understand how different roles perceive and influence technical debt — because the way people think about tech debt shapes how (or whether) it gets resolved.
 
-## Potential Causes
-Such Technical debt doesn’t appear out of nowhere—it’s usually caused by:
-- 📈 **Rapidly changing business** requirements that force teams to adapt quickly, often at the cost
-  of
-  technical quality.
-- 📆 **Tight deadlines** that encourage shortcuts, accumulating technical debt over time.
-- 💰 **Limited budgets** that put teams under pressure, causing rushed development and fewer
-  automated tests.
-- 🌬️ **Lack of understanding** in best practices or future-proof designs.
-- ☹️ **Poor** or missing code **reviews**.
-- ⛔ **Bypassing code reviews** and resisting necessary changes.
+## **How Roles Perceive Technical Debt**
 
-When discussing technical debt with different roles in an agile team, each will have a unique
-perspective on its impact and priority.
+### Product Owner View
 
-## PO View
+Product Owners (POs) tend to focus less on the technical details and more on delivery, prioritization, and business outcomes. Their questions often revolve around effort, urgency, and trade-offs:
 
-If you ask a Product Owner (PO) about technical debt, their response will likely focus on time,
-priority, and business impact rather than technical details.
+- *“How much time will it take to fix?”* (Worried about delays.)
+- *“Is it blocking anything critical?”* (Weighing business value.)
+- *“Can we make it visible and prioritize it properly?”* (Seeking transparency.)
+- *“I don’t care unless it’s causing problems.”* (If the impact is hidden, urgency may be low.)
 
-Common reactions include:
+> 💡 **Takeaway:** To gain a PO’s support, translate tech debt into business impact — lost velocity, instability, or rising costs.
 
-- *"How much time do you need to resolve it?"* (Concerned about **effort and impact** on delivery.)
-- *"Is it really necessary right now?"* (**Balancing priorities** between features and tech debt.)
-- *"Make it visible to the team and refine it ASAP."* (**Encouraging the team** to track and prioritize
-  it
-  in backlog refinements.)
-- 🚨 *"I don’t care!"* (If the debt isn’t visibly affecting business value, it **might not seem
-  urgent**.)
+### Lead Architect
 
-> 💡 **Key takeaway:** POs often focus on business value and delivery speed. To gain their buy-in, it’s
-crucial to quantify the impact of technical debt in terms of lost efficiency, risk, and long-term
-costs.
+Lead Architects see technical debt through a long-term lens. Their concerns are stability, scalability, and sustainability.
 
-## Lead View
+- *“We need to surface this to the team.”* (Creating visibility.)
+- *“Let’s design it the right way going forward.”* (Preventing future debt.)
+- *“Who wants to collaborate on fixing this?”* (Promoting ownership.)
+- *“I’ll help convince the PO.”* (Acting as a bridge between tech and business.)
 
-A Lead Architect is primarily concerned with the long-term stability, scalability, and risks of
-unresolved technical debt. Their focus is on preventing bottlenecks that could harm future
-development.
+> 💡 **Takeaway:** Great architects don’t just react to debt — they anticipate it, advocate for addressing it, and design to avoid it.
 
-- *"Yes, let's make it visible to the team!"* (Ensuring **transparency and accountability**.)
-- *"I’ve already designed the architecture for how it should be."* (Taking a **proactive** approach.)
-- *"Who is interested in designing the architecture?"* (Encouraging **collaboration and mentorship**.)
-- *"I will convince the PO to prioritize resolving tech debt in an upcoming sprint."* (Aligning
-  **technical needs with business priorities**.)
-- 🚨 *A bad architect:* **Doesn’t** even **recognize** technical debt or, worse, **doesn’t care** about it.
-
-> 💡 **Key takeaway:** Great architects proactively manage technical debt and advocate for long-term
-solutions. If a PO needs convincing, the Lead Architect often plays a key role in making the
-business case.
-
-## Developer View
+### Developer View
 
 From a developer's perspective, technical debt awareness depends on two key factors:
 
@@ -117,7 +89,7 @@ From a developer's perspective, technical debt awareness depends on two key fact
 Since developers often work under tight deadlines, they may take shortcuts that unintentionally
 introduce technical debt.
 
-### ⚖️ The Pragmatic Developer (Balances Priorities)
+#### ⚖️ The Pragmatic Developer (Balances Priorities)
 
 - *"This code is messy, but we don’t have time for a full refactor. I’ll leave a TODO and fix it
   later."*
@@ -127,7 +99,7 @@ introduce technical debt.
 
 > 💡 **Key Trait:** Finds a balance between short-term delivery and long-term maintainability.
 
-### 😖 The Frustrated Developer (Wants to Fix Tech Debt but Feels Stuck)
+#### 😖 The Frustrated Developer (Wants to Fix Tech Debt but Feels Stuck)
 
 - "Why are we still using this outdated framework?"
 - "If only we had time, I could clean up this spaghetti code..."
@@ -135,36 +107,108 @@ introduce technical debt.
 - "Every bug fix here takes forever because of tech debt."
 >  💡 Key Trait: Understands the pain of tech debt but may feel powerless to address it.
 
-### 🙃 The Careless Developer (Ignores or Contributes to Tech Debt)
+#### 🙃 The Careless Developer (Ignores or Contributes to Tech Debt)
 
 - "Let’s just copy-paste this code instead of refactoring."
 - "Tests? Who needs them? It works on my machine!" 🚀🔥
 - "I’ll just comment this out instead of deleting it."
 >  💡 Key Trait: Prioritizes speed over quality, often leading to long-term problems.
 
-### 🥳 The Proactive Developer (Reduces Tech Debt Because It’s Fun!)
+#### 🥳 The Proactive Developer (Reduces Tech Debt Because It’s Fun!)
 
 - "Let’s refactor this while we’re already working in this area."
 - "I’ll write a quick test to make sure this doesn’t break later."
 - "We should automate this process instead of doing it manually every time."
 - "I’ll bring this up in the next sprint planning so we can allocate time to fix it."
 
->💡 Key Trait: Enjoys making code better and invests in maintainability, automation, and long-term
-efficiency—all while having fun! 🎉
+## **A Reframed View: Tech Debt as a Strategic Tool**
 
-Yes, resolving technical debt can be satisfying — as long as new debt isn't constantly introduced. 
+Not all debt is bad. Strategic technical debt — taken on consciously to validate ideas, meet a critical deadline, or accelerate discovery — can be powerful. The key is intentionality and a plan to pay it back.
 
-🚀 How does your team deal with technical debt? </br>
-📥 Share your experiences in the comments! </br>
-🗣️ Let’s discuss how we can make codebases more maintainable. </br>
+> “Good tech debt is a deliberate and conscious trade-off… Bad tech debt is borrowing with no way to repay.” — Alex Ewerlöf
 
-<hr>
+We often ask clients to reflect:
+- Are we aware of the debt we’re taking on?
+- Is it documented and visible?
+- Do we have a plan to address it?
 
-- [1] https://patternica.com/blog/how-to-reduce-technical-debt
-- [2] https://martinfowler.com/bliki/TechnicalDebtQuadrant.html
-- [3] https://martinfowler.com/bliki/TechnicalDebt.html
-- [4] https://www.machonedigital.com/blog/3-main-types-of-technical-debt-and-how-to-manage-them
-- [5] https://www.linkedin.com/pulse/architects-role-identifying-technical-debt-across-systems-9ouje/
-- [6] https://www.scalablepath.com/project-management/technical-debt
-- [7] https://www.reddit.com/r/ExperiencedDevs/comments/uemf4v/how_to_keep_up_with_technical_debt_when_po_is/_
-- [8] https://chatgpt.com/
+## **A Zühlke Best Practice: The 10% Rule**
+
+At Zühlke, we advocate for allocating **at least 10% of engineering time** to systematically reduce technical debt.
+This practice isn’t just about cleanup — it’s about:
+
+- **Maintaining flow**: Unblocking delivery pipelines.
+- **Building collective code ownership**: Developers collaborate, learn, and document.
+- **Shifting left**: Identifying fragility earlier in the lifecycle.
+- **Preventing new debt**: Cleaner codebases lead to better coding habits.
+
+This regular investment creates a flywheel of improvement and the results are stunning:
+1. **Cleaner Code:** Repeated effort made messy areas easier to maintain  
+2. **Faster Delivery:** We cleared recurring blockers, which sped up feature work  
+3. **Stronger Teams:** Knowledge sharing and collective refactoring boosted morale  
+4. **Preventive Mindset:** Engineers started designing with sustainability in mind  
+5. **Managerial Trust:** Product owners saw fewer regressions and faster ramp-ups  
+6. **Better Decisions:** We became more strategic about “when to take debt”
+
+> “It’s not just about fixing old code—it’s about building a foundation for speed.”
+
+## **Making the Investment Work: Practical Guidance**
+
+Here’s how to embed this mindset and practice in your organization:
+
+### **📌 Track It Transparently**
+Use labels like `tech-debt` in your backlog. Make it visible to product owners and leadership. Frame it as risk mitigation and long-term acceleration — not “cleanup.”
+
+### **📊 Measuring the Invisible**
+
+One challenge with technical debt is that it’s not obvious in Jira or burn-down charts. But it *can* be tracked with meaningful metrics:
+
+| Metric | What It Tells You |
+|--------|-------------------|
+| **Code Complexity** | Risk of bugs and change difficulty |
+| **Technical Debt Ratio** | Effort spent on fixes vs. features |
+| **Defect Density** | Quality of code and test coverage |
+| **Code Churn Rate** | Stability of recently changed code |
+| **Time to First Commit (TTFC)** | Onboarding friction for new devs |
+| **Lead Time & MTTR** | Operational impact of tech quality
+
+We recommend adding a “tech debt dashboard” to your engineering metrics, ideally surfaced in retros or quarterly planning.
+
+### **🛠 Include in Sprint Planning**
+Allocate 10% of each sprint for debt reduction. Don’t let it become a stretch goal.
+
+### **📣 Share the Wins**
+Demo improved test coverage, removed duplication, or better CI pipelines. Celebrate small wins to show value.
+
+### **🤝 Involve Everyone**
+Let developers decide what to tackle — from removing dead code to automating painful deployments.
+
+### **⚖ Prioritize Strategically**
+Balance high-impact fixes with low-hanging fruit. Use metrics like:
+- Code complexity
+- Defect density
+- Code churn
+- Lead time to change
+
+## **From Tactical Fixes to Strategic Advantage**
+
+Technical debt isn’t just a dev team problem. It’s a **business enabler** when managed — and a **growth killer** when ignored.
+
+**Reframing technical debt as a shared responsibility** leads to:
+- More ownership
+- Build faster, safer
+- Greater agility.
+- Healthier engineering culture.
+- Stronger alignment between business and tech.
+
+The path to innovation is paved not just with new features, but with sustainable foundations.
+
+### **Closing Reflection**
+
+Managing technical debt isn’t glamorous. But in our experience at Zühlke, it’s one of the clearest indicators of engineering maturity — and one of the most powerful drivers of long-term value.
+
+Don’t wait for the system to rot. Start investing today. Just 10% of time, consistently applied, can change everything.
+
+**Want to learn more about our engineering best practices at Zühlke?**  
+We’d love to share how we help clients build resilient, future-ready platforms.
+
