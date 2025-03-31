@@ -2,26 +2,36 @@
 title: What happens when a team dedicates 10% of their time to fixing technical debt?
 subtitle: Technical debt is a silent killer of productivity and growth
 domain: software-engineering-corner.hashnode.dev
-tags: kotlin, mobile, android, ios, kmp, kmm, kotlin-multiplatform, ktor, networking, http, testing, mocking
+tags: software-engineering, coding, agile, tech-debt
 cover: https://media.licdn.com/dms/image/v2/D4D10AQGfI9tKSix73g/image-shrink_1280/B4DZSH4JdpHIAM-/0/1737446431305?e=1743368400&v=beta&t=KMM1UeW2ZtMXbgCQYaO8w-04OtNFzfbLDH-wS3FTdsU 
 publishAs: abishekanthony07
 hideFromHashnodeCommunity: false
 saveAsDraft: true
 ---
 
-[//remove me]: # ( https://miro.com/app/board/uXjVIYkz16U=/?share_link_id=497027063057)
-
 ### **Introduction: More Than a Mess of Code**
 
-Technical debt often evokes feelings of guilt and frustration. It’s what we whisper about during retros, grumble over in PRs, and quietly accept as a side effect of real-world software delivery. But what if we’ve been thinking about it all wrong?
+Technical debt often evokes feelings of guilt and frustration. 
+It’s what we whisper about during retros, grumble over in PRs, 
+and quietly accept as a side effect of real-world software delivery. 
+But what if we’ve been thinking about it all wrong?
 
-At Zühlke, we believe technical debt isn’t just a technical flaw. It’s a strategic lever — one that impacts velocity, team morale, innovation, and business sustainability. Left unmanaged, it erodes productivity. Handled wisely, it becomes an investment in long-term resilience.
+At Zühlke, we believe technical debt isn’t just a technical flaw. 
+It’s a strategic lever — one that impacts velocity, team morale, 
+innovation, and business sustainability. 
+Left unmanaged, it erodes productivity. 
+Handled wisely, it becomes an investment in long-term resilience.
 
-In this article, we explore the dual nature of technical debt — as both a technical concern and a product/business risk — and share how we’ve embedded a best practice of allocating at least **10% of engineering time** to reducing it.
+In this article, we explore the dual nature of technical debt — 
+as both a technical concern and a product/business risk — 
+and share how we’ve embedded a best practice of allocating at least
+**10% of engineering time** to reducing it.
 
 ## **What Is Technical Debt, Really?**
 
-Coined by Ward Cunningham, technical debt is a metaphor that likens short-term compromises in software quality to financial borrowing. Like real debt, it can accelerate progress — or bankrupt you later.
+Coined by Ward Cunningham, technical debt is a metaphor
+that likens short-term compromises in software quality to financial borrowing. 
+Like real debt, it can accelerate progress — or bankrupt you later.
 
 ### **Types of Technical Debt:**
 - **Design Debt:** Inflexible architectures that block evolution.
@@ -30,7 +40,8 @@ Coined by Ward Cunningham, technical debt is a metaphor that likens short-term c
 - **Infrastructure Debt:** Outdated systems or configurations that increase fragility.
 - **Process Debt:** Inefficient workflows and manual steps that hinder scaling.
 
-These forms of debt arise from tight deadlines, shifting requirements, legacy constraints — or sometimes, simply neglect.
+These forms of debt arise from tight deadlines, shifting requirements, 
+legacy constraints — or sometimes, simply neglect.
 
 > “Tech debt is like a credit card for your codebase. Easy to get into, hard to get out of.” — Juan Jose Behrend
 
@@ -47,18 +58,23 @@ Technical debt isn’t just an engineering concern—it’s a **product and busi
 Ignoring tech debt is like ignoring interest on a loan—it compounds silently, then hits all at once.
 
 ### **Business Impact**
-When tech debt piles up, it constrains agility and slows time-to-market. Companies may find themselves outpaced by more nimble competitors — not due to inferior ideas, but due to bloated systems.
+When tech debt piles up, it constrains agility and slows time-to-market. 
+Companies may find themselves outpaced by more nimble competitors — not due to inferior ideas, but due to bloated systems.
 
 ### **Cultural Decay**
-The "broken windows" theory applies to software: once mess is tolerated, care diminishes. This sets off a vicious cycle where the bar for quality drops across the board.
+The "broken windows" theory applies to software: once mess is tolerated, care diminishes. 
+This sets off a vicious cycle where the bar for quality drops across the board.
 
-To address these risks effectively, we must first understand how different roles perceive and influence technical debt — because the way people think about tech debt shapes how (or whether) it gets resolved.
+To address these risks effectively, we must first understand 
+how different roles perceive and influence technical debt — 
+because the way people think about tech debt shapes how (or whether) it gets resolved.
 
 ## **How Roles Perceive Technical Debt**
 
 ### Product Owner View
 
-Product Owners (POs) tend to focus less on the technical details and more on delivery, prioritization, and business outcomes. Their questions often revolve around effort, urgency, and trade-offs:
+Product Owners (POs) tend to focus less on the technical details and more on delivery, 
+prioritization, and business outcomes. Their questions often revolve around effort, urgency, and trade-offs:
 
 - *“How much time will it take to fix?”* (Worried about delays.)
 - *“Is it blocking anything critical?”* (Weighing business value.)
@@ -69,7 +85,8 @@ Product Owners (POs) tend to focus less on the technical details and more on del
 
 ### Lead Architect
 
-Lead Architects see technical debt through a long-term lens. Their concerns are stability, scalability, and sustainability.
+Lead Architects see technical debt through a long-term lens. 
+Their concerns are stability, scalability, and sustainability.
 
 - *“We need to surface this to the team.”* (Creating visibility.)
 - *“Let’s design it the right way going forward.”* (Preventing future debt.)
@@ -123,7 +140,9 @@ introduce technical debt.
 
 ## **A Reframed View: Tech Debt as a Strategic Tool**
 
-Not all debt is bad. Strategic technical debt — taken on consciously to validate ideas, meet a critical deadline, or accelerate discovery — can be powerful. The key is intentionality and a plan to pay it back.
+Not all debt is bad. Strategic technical debt — taken on consciously to validate ideas, 
+meet a critical deadline, or accelerate discovery — can be powerful. 
+The key is intentionality and a plan to pay it back.
 
 > “Good tech debt is a deliberate and conscious trade-off… Bad tech debt is borrowing with no way to repay.” — Alex Ewerlöf
 
@@ -157,11 +176,13 @@ This regular investment creates a flywheel of improvement and the results are st
 Here’s how to embed this mindset and practice in your organization:
 
 ### **📌 Track It Transparently**
-Use labels like `tech-debt` in your backlog. Make it visible to product owners and leadership. Frame it as risk mitigation and long-term acceleration — not “cleanup.”
+Use labels like `tech-debt` in your backlog. Make it visible to product owners and leadership. 
+Frame it as risk mitigation and long-term acceleration — not “cleanup.”
 
 ### **📊 Measuring the Invisible**
 
-One challenge with technical debt is that it’s not obvious in Jira or burn-down charts. But it *can* be tracked with meaningful metrics:
+One challenge with technical debt is that it’s not obvious in Jira or burn-down charts. 
+But it *can* be tracked with meaningful metrics:
 
 | Metric | What It Tells You |
 |--------|-------------------|
@@ -205,9 +226,11 @@ The path to innovation is paved not just with new features, but with sustainable
 
 ### **Closing Reflection**
 
-Managing technical debt isn’t glamorous. But in our experience at Zühlke, it’s one of the clearest indicators of engineering maturity — and one of the most powerful drivers of long-term value.
+Managing technical debt isn’t glamorous. But in our experience at Zühlke, 
+it’s one of the clearest indicators of engineering maturity — and one of the most powerful drivers of long-term value.
 
-Don’t wait for the system to rot. Start investing today. Just 10% of time, consistently applied, can change everything.
+Don’t wait for the system to rot. Start investing today. Just 10% of time, 
+consistently applied, can change everything.
 
 **Want to learn more about our engineering best practices at Zühlke?**  
 We’d love to share how we help clients build resilient, future-ready platforms.
