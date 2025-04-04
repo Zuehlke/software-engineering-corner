@@ -8,6 +8,9 @@ saveAsDraft: true
 hideFromHashnodeCommunity: false
 ---
 
+> **Note:** Chrome has an [experimental implementation of the Navigation API](https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API), which provides native primitives for navigation handling.  
+> If supported across all major browsers, this API could significantly simplify many of the patterns discussed in this article.
+
 The navigation in complex web applications quickly goes beyond forward and back navigation.
 We recently rebuilt the navigation on a large project. 
 Though our project uses Angular, the underlying navigation concept is versatile and can be applied to any framework.
