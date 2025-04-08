@@ -236,6 +236,11 @@ ensuring it aligns with ongoing development efforts and business objectives.
 
 Allocate 10% of each sprint for debt reduction. Don’t let it become a stretch goal.
 
+> ℹ️:
+> _Allocating a portion of each sprint to address technical debt is a widely recognized practice in agile development._ 
+> _This approach ensures that code quality is maintained alongside the delivery of new features._ 
+> _The specific percentage allocated can vary based on the team's needs and project requirements._
+
 ### **📣 Share the Wins**
 
 Demo improved test coverage, removed duplication, or better CI pipelines. Celebrate small wins to
