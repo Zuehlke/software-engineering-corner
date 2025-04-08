@@ -2,9 +2,9 @@
 title: What happens when a team dedicates 10% of their time to fixing technical debt?
 subtitle: Technical debt is a silent killer of productivity and growth
 domain: software-engineering-corner.hashnode.dev
-tags: software-engineering, coding, agile, tech-debt
-cover: https://media.licdn.com/dms/image/v2/D4D10AQGfI9tKSix73g/image-shrink_1280/B4DZSH4JdpHIAM-/0/1737446431305?e=1743368400&v=beta&t=KMM1UeW2ZtMXbgCQYaO8w-04OtNFzfbLDH-wS3FTdsU
-publishAs: abishekanthony07
+tags: software-engineering, coding, agile, code-smell, website-design, designing, front-end, programming, patterns, dashboard, devjourney, styleguide
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1744125137768/5aOXuwx9r.jpeg?auto=format
+publishAs: abishekanthony
 hideFromHashnodeCommunity: false
 saveAsDraft: true
 ---
