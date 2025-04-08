@@ -223,7 +223,7 @@ But it *can* be tracked with meaningful metrics:
 | **Code Churn Rate**             | Stability of recently changed code                         |
 | **Time to First Commit (TTFC)** | Onboarding friction for new devs                           |
 | **Lead Time & MTTR**            | Operational impact of tech quality                         |
-| **Techinal Debt Heatmap**       | Highlighting significant areas which have technical debt's |
+| **Technical Debt Heatmap**      | Highlighting significant areas which have technical debt's |
 
 By integrating these strategies, teams can manage technical debt proactively,
 ensuring it aligns with ongoing development efforts and business objectives.
