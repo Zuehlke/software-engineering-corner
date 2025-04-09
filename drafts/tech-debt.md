@@ -286,3 +286,5 @@ consistently applied, can change everything.
 **Want to learn more about our engineering best practices at Zühlke?**  
 We’d love to share how we help clients build resilient, future-ready platforms.
 
+---
+**Authors:** [Abishek Anthony](https://www.linkedin.com/in/abishekanthony/), [Romano Roth](https://www.linkedin.com/in/romanoroth/)
