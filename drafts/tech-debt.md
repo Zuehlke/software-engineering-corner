@@ -65,6 +65,14 @@ When tech debt piles up, it constrains agility and slows time-to-market.
 Companies may find themselves outpaced by more nimble competitors — not due to inferior ideas, but
 due to bloated systems.
 
+A study titled "[Code Red: The Business Impact of Code Quality](https://arxiv.org/abs/2203.04374)" by Adam Tornhill and Markus Borg, 
+analyzed 39 proprietary production codebases and revealed that:
+- Low-quality code contains 15 times more defects than high-quality code.
+- Resolving issues in low-quality code takes 124% more time.
+- Issue resolutions in low-quality code are far less predictable, with 9 times longer maximum cycle times.
+
+This research highlights the tangible cost of technical debt and poor code quality on development speed and predictability.
+
 ### **Cultural Decay**
 
 The "broken windows" theory applies to software: once mess is tolerated, care diminishes.
