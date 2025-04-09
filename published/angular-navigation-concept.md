@@ -4,7 +4,6 @@ domain: software-engineering-corner.hashnode.dev
 tags: javascript, web-development, frontend-development, angular, navigation
 cover: https://cdn.hashnode.com/res/hashnode/image/stock/unsplash/EOq4Dj33G_U/upload/72980e96faa8075e8392477062a3fd78.jpeg?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp&quot
 publishAs: mikaruch
-saveAsDraft: true
 hideFromHashnodeCommunity: false
 ---
 
