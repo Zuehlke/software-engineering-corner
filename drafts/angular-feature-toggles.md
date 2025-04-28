@@ -57,7 +57,9 @@ export type FlagMap = {
 ```
 
 `FlagKey` lists all the feature flags we have, so we don’t accidentally use one that doesn’t exist.
-The feature flag API call for fetching the feature flags could fail. This is why defining sensible defaults is a good idea. We can use the previously created `FlagMap` and set the appropriate defaults. 
+The feature flag API call for fetching the feature flags could fail. 
+This is why defining sensible defaults is a good idea. 
+We can use the previously created `FlagMap` and set the appropriate defaults. 
 
 ```js
 // feature-flag.constants.ts
@@ -114,7 +116,8 @@ export const applicationConfig = (featureFlags: FlagMap): ApplicationConfig => (
 
 ## Feature Flag Service
 
-In a service we can inject the remotely loaded feature flags and provide a function to check their status. This service will be used throughout our setup.
+In a service we can inject the remotely loaded feature flags and provide a function to check their status. 
+This service will be used throughout our setup.
 
 ```js
 @Injectable({ providedIn: 'root' })
@@ -174,22 +177,14 @@ Optionally it should also take a template reference to a fallback component, in 
 *appFeatureFlag="'iframe'; else fallback"
 ```
 
-The setup of the feature flags directive is quite simple. 
-We inject the feature flags instance, the `TemplateRef`, and the `ViewContainerRef`. 
-We define two inputs: one for the flag key and another for an optional fallback template. 
-A `computed` signal checks if the feature is enabled. 
-Inside the constructor, we use an `effect` to reactively respond to changes in the signal. 
-Based on the value, we either render the main template using `featureActive()` or the fallback template using `featureDisabled()`.
+The directive has two inputs: one for the flag key and another for an optional fallback template. 
+Based on the value of the flag, we either render the main template or the fallback template.
 
-If the feature is active, we use the `ViewContainerRef` to create an embedded view from the `TemplateRef` that the directive is attached to. 
-If the feature is not active, we clear the view container and, if a fallback template is provided via the `appFeatureFlagElse` input, render that instead.
-
-You might wonder why the input names seem weird. 
-They are set like this on purpose to, so we can use this directive as a structural directive with the `*` prefix. 
-This is beneficial because Angular transforms the asterisk in front of a structural directive into an `<ng-template>` that hosts the directive and surrounds the element and its descendants behind the scene. 
+You might wonder why the input names seem weird.
+This is necessary so the directive can be used as a structural directive with the `*` prefix.
+This so called [structural directive shorthand](https://angular.dev/guide/directives/structural-directives#structural-directive-shorthand) requires us to use a certain naming convention for the inputs.
+Angular transforms the asterisk in front of a structural directive into an `<ng-template>` that hosts the directive and surrounds the element and its descendants behind the scene. 
 Otherwise, we would have to do this ourselves anytime we use the directive. 
-This so called [structural directive shorthand](https://angular.dev/guide/directives/structural-directives#structural-directive-shorthand) requires us to use a certain naming convention for the inputs. 
-They need to have the directive selector as a prefix. 
 
 ```js
 @Directive({
@@ -246,8 +241,7 @@ And this is how you would use it within a template
 
 ## Guarding a route with a feature flag
 
-In this last example I want to demonstrate how you can use a guard to toggle a route in your Angular project. 
-It’s easy to implement and can be quite useful for restricting access to certain parts of your application. 
+Protecting a route with a feature flag guard can be quite useful for restricting access to certain parts of your application. 
 If the feature is active, the guard returns true and allows the navigation. 
 Otherwise it redirects to the fallback url.
 
@@ -280,4 +274,5 @@ This `canActivate` guard can be used with any route.
 ```
 
 ## Conclusion
-While feature flags can add flexibility and support gradual rollouts or A/B testing, they also bring extra complexity—and, if not handled carefully, can cause issues. But when used with clear guidelines, they can help teams experiment and adapt more easily without constant redeployments. 
+While feature flags can add flexibility and support gradual rollouts or A/B testing, they also bring extra complexity—and, if not handled carefully, can cause issues. 
+But when used with clear guidelines, they can help teams experiment and adapt more easily without constant redeployments. 
