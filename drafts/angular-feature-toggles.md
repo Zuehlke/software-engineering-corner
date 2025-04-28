@@ -1,6 +1,6 @@
 ---
-title: Feature Toggles in Angular
-subtitle: "Crafting a Custom Feature Toggle Setup in Angular"
+title: Feature Flags in Angular
+subtitle: "Crafting a Custom Feature Flag Setup in Angular"
 domain: software-engineering-corner.zuehlke.com
 tags: angular, web-development, javascript, frontend-development, guide
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1732888744339/n2T03yjCA.jpg?auto=format
@@ -9,72 +9,44 @@ hideFromHashnodeCommunity: false
 saveAsDraft: true
 ---
 
-_Disclaimer: On a project I am currently working on, I introduced feature toggles and created a setup in Angular that works great for me. 
+# Feature Flags in Angular
+
+_Disclaimer: On a project I am currently working on, I introduced feature flags and created a setup in Angular that works great for me. 
 With this post I would like to share the results with you._
 
-## What are feature toggles
-In the most basic form, you can think of feature toggles as a remote configuration consisting of features and their state (enabled / disabled). 
+## What are feature flags
+In the most basic form, you can think of feature flags as a remote configuration consisting of features and their state (enabled / disabled). 
 This configuration can be updated during the runtime of the application to  manage gradual rollouts, A/B tests, and quick rollbacks, improving flexibility and reducing risk.
 
-<iframe src="https://stackblitz.com/edit/stackblitz-starters-2rzgektu?file=src%2Fmain.ts&amp;embed=1" width="100%" height="400"></iframe>
+<iframe src="https://stackblitz.com/edit/stackblitz-starters-6zh7dxms?embed=1&file=src%2Fmain.ts" width="100%" height="400"></iframe>
 
 ## Tooling
 
-There are many tools available for adding feature toggles to your project. 
+There are many tools available for adding feature flags to your project. 
 The only requirement is a request, which returns a list of feature-flags with their current state. 
 This could even be done by hosting a static JSON file somewhere that can easily be updated. 
 
 ## Goal
 
-Let's say we want to be able to toggle three features. 
-The first one is an external analytics script we inject into the DOM during the initialization of Angular. 
-The second feature toggle should be able to show/hide some iFrame we display within our application. 
-The final feature is a route that should become inaccessible when toggled off. 
-If all features are enabled, the response of the feature flag request would look something like this.
+We are going to implement following three feature flags:
+ - toggling the injection of an external analytics script into the DOM
+ - showing/hideing an iframe within our application
+ - enabling a route to a new feature
 
-```json
-[
-    {
-        "feature": {
-            "id": 0,
-            "name": "analytics"
-        },
-        "enabled": true
-    },
-    {
-        "feature": {
-            "id": 1,
-            "name": "iframe"
-        },
-        "enabled": true
-    },
-    {
-        "feature": {
-            "id": 2,
-            "name": "route"
-        },
-        "enabled": true
-    }
-]
-```
+## Setup
 
-## Basic Setup
+Before we jump into the examples, we first need a setup to manage and use feature flags in our app. We'll define some types for better structure, set up default values, and create a way to fetch and provide the flags throughout the app.
 
 ### Type Safety
 
-For some type safety within the feature toggle setup, I came up with the following model.
+To keep things simple and avoid mistakes, it’s helpful to define a clear structure for our feature flags. This way, we know exactly what flags are available.
 
 ```js
-// feature-toggle.model.ts
-
-export interface FeatureToggle {
-  init: () => Promise<void>;
-  hasFeature: (key: FlagKey) => boolean;
-}
+// feature-flag.model.ts
 
 export type FlagKey = 'analytics' | 'iframe' | 'route';
 
-export interface Flag {
+export type Flag = {
   readonly key: FlagKey;
   readonly enabled: boolean;
 }
@@ -84,11 +56,11 @@ export type FlagMap = {
 };
 ```
 
-Using the `FlagMap` type, we can create a constant to manage and access all our flags and their keys. 
-We can also use it to set our default flags, which we needed when initiating the feature toggle instance.
+`FlagKey` lists all the feature flags we have, so we don’t accidentally use one that doesn’t exist.
+The feature flag API call for fetching the feature flags could fail. This is why defining sensible defaults is a good idea. We can use the previously created `FlagMap` and set the appropriate defaults. 
 
 ```js
-// feature-toggle.constants.ts
+// feature-flag.constants.ts
 export const featureFlags: FlagMap = {
   analytics: {
     key: 'analytics',
@@ -105,68 +77,87 @@ export const featureFlags: FlagMap = {
 };
 ```
 
-### Setting up the feature toggle instance
+### Fetching the feature flags
 To toggle any kind of feature, we need to make the feature flag request as early as possible. 
-Therefore we create our feature toggle instance and make the initial call, which fetches the flags. 
-We do this before bootstrapping the application. 
-The feature toggle instance should provide some method to check if a feature is active at any given time, without having to re-fetch the flags (e.g. `hasFeature()`). 
-After setting up the feature toggle instance, it can then pe provided within your Angular application using an injection token in your `ApplicationConfiguration`.
+Therefore we fetch the flags before bootstrapping the application. 
+After receiving the remote feature flags, they can then pe provided within your Angular application using an injection token in your `ApplicationConfiguration`.
 
 ```js
 // tokens.ts
 // Create the injection token
-export const FEATURE_TOGGLE_TOKEN = new InjectionToken<FeatureToggle>('FEATURE_TOGGLE_TOKEN');
+export const FEATURE_FLAG_TOKEN = new InjectionToken<FeatureFlag>('FEATURE_FLAG_TOKEN');
 
 // main.ts
-// Create feature toggle instance and provide within the ApplicationConfiguration
-const featureToggle = createFeatureToggleInstance();
-featureToggle
-  .init({
-    environmentID: ENVIRONMENT_ID,
-    defaultFlags: DEFAULT_FLAGS
-  })
-  .then(() => bootstrapApplication(AppComponent, applicationConfig(featureToggle)));
+// Fetch the feature flags and provide them within the ApplicationConfiguration
+
+const fetchFlags = async (): Promise<FlagMap> => {
+  try {
+    // throw new Error('load default flags');
+    const response = await fetch('/assets/feature-flags.json');
+    return response.json();
+  } catch {
+    return DEFAULT_FLAGS;
+  }
+};
+
+fetchFlags()
+  .then((featureFlags) => bootstrapApplication(AppComponent, applicationConfig(featureFlags)));
 
 // app.config.ts
-export const applicationConfig = (featureToggle: FeatureToggle): ApplicationConfig => ({
+export const applicationConfig = (featureFlags: FlagMap): ApplicationConfig => ({
   providers: [
-    { provide: FEATURE_TOGGLE_TOKEN, useValue: featureToggle },
+    { provide: FEATURE_FLAG_TOKEN, useValue: featureFlags },
     // Rest of your providers
   ]
 });
 ```
 
-## Basic use
+## Feature Flag Service
 
-With the basic setup established we are now able to use the feature toggle instance and check the flag values. 
+In a service we can inject the remotely loaded feature flags and provide a function to check their status. This service will be used throughout our setup.
+
+```js
+@Injectable({ providedIn: 'root' })
+export class FeatureFlagService {
+  private readonly featureFlags = inject(FEATURE_FLAG_TOKEN);
+
+  hasFeature(key: FlagKey): boolean {
+    return this.featureFlags[key].enabled;
+  }
+}
+```
+
+### Basic use
+
+With the basic setup established we are now able to use the feature flags service and check the flag values. 
 We just need to inject it wherever we need it. 
 
 ```js
 
 // Inject
-private readonly featureToggle = inject(FEATURE_TOGGLE_TOKEN);
+private readonly featureFlag = inject(FeatureFlagService);
 
 // Use
-const featureValue = this.featureToggle.hasFeature('analytics')
+const featureValue = this.featureFlag.hasFeature('analytics')
 ```
 
-This flag’s value can now be used to change the behavior of your application. 
-More often than not, it’s not that simple—we usually want to use feature flags in more specific contexts. 
-Thats why I want to talk about a few tools that can make your life easier when working with feature toggles.
+More often than not, it’s not that simple to just see if a feature is enabled—we usually want to use feature flags in more specific contexts. 
+Let me show you a few tools that can make your life easier when working with feature toggles.
 
 ## Using a feature flag before initializing Angular
-The first situation I want to talk about is using a feature flag, before the application is fully initialized. 
-In this example we want to conditionally inject an analytics script into the DOM to track the user interaction within our application. 
-To achieve this, we can use the `provideAppInitializer` function within our `ApplicationConfiguration`. 
-Using our feature toggle instance, we can conditionally append the script to the DOM depending on the flag.
+To toggle any feature, it's essential to make the feature flag request as early as possible.
+In Angular, there are different approaches to achieve this.
+The earliest opportunity is to fetch the feature flags before bootstrapping the application.
+For us this makes sense, since feature flags are fundamental to the app's core.
+Once resolved, the feature flags are provided through an InjectionToken.
 
 ```js
 // app.config.ts
 {
     provideAppInitializer(() => {
-    const featureToggle = inject(FEATURE_TOGGLE_TOKEN);
+    const featureFlag = inject(FeatureFlagService);
 
-    if (featureToggle.hasFeature('analytics')) {
+    if (featureFlag.hasFeature('analytics')) {
       addAnalyticsScriptToDom(document);
     }
   }),
@@ -175,19 +166,23 @@ Using our feature toggle instance, we can conditionally append the script to the
 
 ## Conditionally showing UI using a directive
 A very common use case for a feature flag is to show/hide content. 
-This could be achieved with the setup we already have but we can make our lives easier when creating a directive we can use within the template. 
-It should take the flag key as an input and render/hide the component depending on the flag value. 
-Optionally it should also take a template reference as an input for the fallback, if the feature is disabled.
+This could be achieved with the code we already have but we can make our lives easier with creating a structural directive. 
+It should take the flag key as an input and render/hide the component depending on the state of the flag 
+Optionally it should also take a template reference to a fallback component, in case the feature is disabled.
 
-The setup of the feature toggle directive is quite simple. 
-We inject the feature toggle instance, the `TemplateRef`, and the `ViewContainerRef`. 
+```js
+*appFeatureFlag="'iframe'; else fallback"
+```
+
+The setup of the feature flags directive is quite simple. 
+We inject the feature flags instance, the `TemplateRef`, and the `ViewContainerRef`. 
 We define two inputs: one for the flag key and another for an optional fallback template. 
 A `computed` signal checks if the feature is enabled. 
 Inside the constructor, we use an `effect` to reactively respond to changes in the signal. 
 Based on the value, we either render the main template using `featureActive()` or the fallback template using `featureDisabled()`.
 
 If the feature is active, we use the `ViewContainerRef` to create an embedded view from the `TemplateRef` that the directive is attached to. 
-If the feature is not active, we clear the view container and, if a fallback template is provided via the `appFeatureToggleElse` input, render that instead.
+If the feature is not active, we clear the view container and, if a fallback template is provided via the `appFeatureFlagElse` input, render that instead.
 
 You might wonder why the input names seem weird. 
 They are set like this on purpose to, so we can use this directive as a structural directive with the `*` prefix. 
@@ -198,20 +193,20 @@ They need to have the directive selector as a prefix.
 
 ```js
 @Directive({
-  selector: '[appFeatureToggle]',
+  selector: '[appFeatureFlag]',
   standalone: true
 })
-export class FeatureToggleDirective {
-  appFeatureToggle =  input<FlagKey | undefined>();
-  appFeatureToggleElse = input<TemplateRef<unknown> | undefined>();
+export class FeatureFlagDirective {
+  appFeatureFlag =  input<FlagKey | undefined>();
+  appFeatureFlagElse = input<TemplateRef<unknown> | undefined>();
 
-  private readonly featureToggle = inject(FEATURE_TOGGLE_TOKEN);
+  private readonly featureFlag = inject(FeatureFlagService);
   private readonly templateRef = inject<TemplateRef<unknown>>(TemplateRef);
   private readonly viewContainer = inject(ViewContainerRef);
 
   private readonly isEnabled = computed(() => {
-    const flagKey = this.appFeatureToggle();
-    return !flagKey || this.featureToggle.hasFeature(flagKey);
+    const flagKey = this.appFeatureFlag();
+    return !flagKey || this.featureFlag.hasFeature(flagKey);
   });
 
   constructor() {
@@ -225,7 +220,7 @@ export class FeatureToggleDirective {
   }
 
   private featureDisabled(): void {
-    const elseTemplate = this.appFeatureToggleElse();
+    const elseTemplate = this.appFeatureFlagElse();
     elseTemplate ? this.createView(elseTemplate) : this.viewContainer.clear();
   }
 
@@ -239,7 +234,7 @@ export class FeatureToggleDirective {
 And this is how you would use it within a template
 
 ```html
-<iframe *featureToggle="'iframe'; else fallback"
+<iframe *appFeatureFlag="'iframe'; else fallback"
         width="560"
         height="315"
         src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=PqWzCGoitRdn2RUt"
@@ -254,16 +249,15 @@ And this is how you would use it within a template
 In this last example I want to demonstrate how you can use a guard to toggle a route in your Angular project. 
 It’s easy to implement and can be quite useful for restricting access to certain parts of your application. 
 If the feature is active, the guard returns true and allows the navigation. 
-Otherwise it redirects to the fallback url if provided. 
-In my case the fallback is optional and the guard navigates to the home page by default.
+Otherwise it redirects to the fallback url.
 
 ```js
-export function featureToggleGuard(key: FlagKey, redirectUrl?: string): CanActivateFn {
+export function featureFlagGuard(key: FlagKey, redirectUrl: string = '/'): CanActivateFn {
   return () => {
-    const featureToggle = inject(FEATURE_TOGGLE_TOKEN);
+    const featureFlag = inject(FeatureFlagService);
     const router = inject(Router);
 
-    if (featureToggle.hasFeature(key)) {
+    if (featureFlag.hasFeature(key)) {
       return true;
     }
     if (redirectUrl) {
@@ -274,21 +268,16 @@ export function featureToggleGuard(key: FlagKey, redirectUrl?: string): CanActiv
 }
 ```
 
-This guard can be used in any route within the `canActivate` Array.
+This `canActivate` guard can be used with any route.
 
 ```js
 {
   path: 'new-feature',
   component: NewFeatureComponent,
   pathMatch: 'full',
-  canActivate: [featureToggleGuard('route', '/coming-soon')],
+  canActivate: [featureFlagGuard('route', '/coming-soon')],
 }
 ```
 
 ## Conclusion
-
-Feature flags aren’t the right choice for every project. 
-While they can add flexibility and support gradual rollouts or A/B testing, they also bring extra complexity—and, if not handled carefully, can cause issues. But when used with clear guidelines, they can help teams experiment and adapt more easily.
-
-In this post, I shared a custom setup for feature toggles in Angular, including examples for runtime configuration, conditionally showing UI with directives, and guarding routes. 
-Your implementation might look different, but I hope this gave you a good starting point and some ideas to work with.
+While feature flags can add flexibility and support gradual rollouts or A/B testing, they also bring extra complexity—and, if not handled carefully, can cause issues. But when used with clear guidelines, they can help teams experiment and adapt more easily without constant redeployments. 
