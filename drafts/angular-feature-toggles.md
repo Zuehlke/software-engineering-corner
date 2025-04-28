@@ -9,16 +9,20 @@ hideFromHashnodeCommunity: false
 saveAsDraft: true
 ---
 
-_Disclaimer: This post doesn’t aim to promote feature toggles, but rather to demonstrate what a custom setup in Angular could look like. 
-When used appropriately, feature toggles can be a powerful tool. 
-However, if overused or poorly managed, they can introduce unnecessary complexity to your project._
+_Disclaimer: On a project I am currently working on, I introduced feature toggles and created a setup in Angular that works great for me. 
+With this post I would like to share the results with you._
+
+## What are feature toggles
+In the most basic form, you can think of feature toggles as a remote configuration consisting of features and their state (enabled / disabled). 
+This configuration can be updated during the runtime of the application to  manage gradual rollouts, A/B tests, and quick rollbacks, improving flexibility and reducing risk.
+
+<iframe src="https://stackblitz.com/edit/stackblitz-starters-2rzgektu?file=src%2Fmain.ts&amp;embed=1" width="100%" height="400"></iframe>
 
 ## Tooling
 
 There are many tools available for adding feature toggles to your project. 
-In this post, I will be using Flagsmith as an example, but most of the setup will work for other tools as well. 
 The only requirement is a request, which returns a list of feature-flags with their current state. 
-This could also be done by hosting a static JSON file somewhere. 
+This could even be done by hosting a static JSON file somewhere that can easily be updated. 
 
 ## Goal
 
@@ -62,9 +66,11 @@ For some type safety within the feature toggle setup, I came up with the followi
 
 ```js
 // feature-toggle.model.ts
-import { IFlagsmith } from 'flagsmith/types';
 
-export type FeatureToggle = IFlagsmith<FlagKey, TraitKey>;
+export interface FeatureToggle {
+  init: () => Promise<void>;
+  hasFeature: (key: FlagKey) => boolean;
+}
 
 export type FlagKey = 'analytics' | 'iframe' | 'route';
 
@@ -103,8 +109,7 @@ export const featureFlags: FlagMap = {
 To toggle any kind of feature, we need to make the feature flag request as early as possible. 
 Therefore we create our feature toggle instance and make the initial call, which fetches the flags. 
 We do this before bootstrapping the application. 
-The feature toggle instance should provide some method to check if a feature is active at any given time, without having to re-fetch the flags. 
-With Flagsmith its the `hasFeature()` function. 
+The feature toggle instance should provide some method to check if a feature is active at any given time, without having to re-fetch the flags (e.g. `hasFeature()`). 
 After setting up the feature toggle instance, it can then pe provided within your Angular application using an injection token in your `ApplicationConfiguration`.
 
 ```js
@@ -114,18 +119,18 @@ export const FEATURE_TOGGLE_TOKEN = new InjectionToken<FeatureToggle>('FEATURE_T
 
 // main.ts
 // Create feature toggle instance and provide within the ApplicationConfiguration
-const flagsmith = createFlagsmithInstance();
-flagsmith
+const featureToggle = createFeatureToggleInstance();
+featureToggle
   .init({
     environmentID: ENVIRONMENT_ID,
     defaultFlags: DEFAULT_FLAGS
   })
-  .then(() => bootstrapApplication(AppComponent, applicationConfig(flagsmith)));
+  .then(() => bootstrapApplication(AppComponent, applicationConfig(featureToggle)));
 
 // app.config.ts
-export const applicationConfig = (flagsmith: FeatureToggle): ApplicationConfig => ({
+export const applicationConfig = (featureToggle: FeatureToggle): ApplicationConfig => ({
   providers: [
-    { provide: FEATURE_TOGGLE_TOKEN, useValue: flagsmith },
+    { provide: FEATURE_TOGGLE_TOKEN, useValue: featureToggle },
     // Rest of your providers
   ]
 });
@@ -285,5 +290,5 @@ This guard can be used in any route within the `canActivate` Array.
 Feature flags aren’t the right choice for every project. 
 While they can add flexibility and support gradual rollouts or A/B testing, they also bring extra complexity—and, if not handled carefully, can cause issues. But when used with clear guidelines, they can help teams experiment and adapt more easily.
 
-In this post, I shared a custom setup for feature toggles in Angular using Flagsmith, including examples for runtime configuration, conditionally showing UI with directives, and guarding routes. 
+In this post, I shared a custom setup for feature toggles in Angular, including examples for runtime configuration, conditionally showing UI with directives, and guarding routes. 
 Your implementation might look different, but I hope this gave you a good starting point and some ideas to work with.
