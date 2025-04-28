@@ -268,4 +268,7 @@ This `canActivate` guard can be used with any route.
 While feature flags can add flexibility and support gradual rollouts or A/B testing, they also bring extra complexity—and, if not handled carefully, can cause issues. 
 But when used with clear guidelines, they can help teams experiment and adapt more easily without constant redeployments. 
 
+I hope this guide helps you create a more adaptable and resilient Angular application.
+Let me know about your experiences with feature flags in the comments.
+
 <iframe src="https://stackblitz.com/edit/stackblitz-starters-6zh7dxms?embed=1&file=src%2Fmain.ts" width="100%" height="400"></iframe>
