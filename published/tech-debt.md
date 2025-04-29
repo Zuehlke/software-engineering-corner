@@ -6,7 +6,6 @@ tags: software-engineering, coding, agile, code-smell, website-design, designing
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1744125137768/5aOXuwx9r.jpeg?auto=format
 publishAs: abishekanthony
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 ### **Introduction: More Than a Mess of Code**
