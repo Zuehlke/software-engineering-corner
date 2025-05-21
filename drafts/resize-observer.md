@@ -124,7 +124,6 @@ Now, it is easy to use the utility function in our component. We just need to pa
 ```typescript
     private readonly inputField = viewChild.required<ElementRef<HTMLInputElement>>('autocompleteInput');
     protected dropdownWidth: Signal<string> = updateWidthOnElementResize(this.inputField);
-
 ```
 The `dropdownWidth` signal can now be used in the template to set the width of the dropdown. In our case, we are using the 
 [ng-bootstrap typeahead](https://ng-bootstrap.github.io/#/components/typeahead/api) component, which allows us to set the width of the dropdown-items via the `[style.width]` input.
