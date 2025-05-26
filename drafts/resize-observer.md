@@ -14,9 +14,16 @@ Thus, reactive UI updates not only have to respond to user input, but also to la
 
 A frequent challenge is keeping dropdowns or overlays aligned with their trigger elements. 
 Specifically for an autocomplete input, ensuring the width of the dropdown window matches the width of the corresponding input field. 
-Traditionally, developers relied on the global `window:resize` listeners or manual DOM manipulations to handle these cases.
 
-With the introduction of Signals and by leveraging modern Web APIs, we now have a cleaner, more reactive, and efficient alternative.
+![Autocomplete dropdown not spanning full width of the input field](https://cdn.hashnode.com/res/hashnode/image/upload/v1747822528316/O5YjORX2-.png?auto=format)
+
+In some cases, a pure CSS solution might suffice to tackle the issue e.g. using `width: 100%` or `min-width: inherit`.
+However, this relies on the DOM structure and CSS inheritance, which doesn’t always guarantee that the dropdown will match the width of the input element. 
+Especially if the dropdown is rendered outside the normal flow of the DOM (e.g., in overlays, portals, or absolutely positioned containers).
+
+Traditionally, developers relied on the global `window:resize` listeners and manual DOM manipulations to handle these cases.
+
+With the introduction of [Angular Signals](https://angular.io/guide/signals) and by leveraging modern Web APIs, we now have a cleaner, more reactive, and efficient alternative.
 
 ### The Problem with Window Resize
 One requirement is to ensure that the width of a dropdown matches the width of its input field, also when the input field is resized.
@@ -85,14 +92,15 @@ import { effect, ElementRef, signal, Signal } from '@angular/core';
 export function updateWidthOnElementResize(
     targetElement: Signal<ElementRef>,
 ): Signal<string> {
-    const width = signal('100%');
+    const width = signal('');
 
     effect((onCleanup) => {
-        const nativeElement = targetElement()?.nativeElement;
-
-        if (!nativeElement) {
+        const elementRef = targetElement();
+        if (!elementRef) {
             return;
         }
+        
+        const nativeElement = elRef.nativeElement;
 
         // Create observer and update the width signal when the target element resizes
         const observer = new ResizeObserver(() => {
@@ -110,9 +118,9 @@ export function updateWidthOnElementResize(
     return width.asReadonly();
 }
 ```
-
 Our utility function takes a signal to the ElementRef as an argument. 
-This signal is created by the new `viewChild()` function, replacing the existing `@ViewChild()` and the need for an `ngAfterViewInit()`. 
+This signal is created by the Angular's new `viewChild` function (see [here](https://angular.dev/guide/components/queries#view-queries)), replacing the existing `@ViewChild()` and the need for an `ngAfterViewInit()`. 
+It was introduced in Angular 17 in developer preview and as of Angular 19 is considered stable to use. 
 Instead, we get a signal to the target element that updates as soon as the target element reference is available and wrap our logic in an Angular `effect` ([see Angular effects](https://angular.dev/guide/signals#effects)).
 
 Inside, we create our observer and define our callback function that updates the width signal whenever the target element changes its dimensions.
@@ -122,8 +130,8 @@ Additionally, we use the `onCleanup()` to disconnect the observer when the compo
 Now, it is easy to use the utility function in our component. We just need to pass it the target element that we want to observe.
 
 ```typescript
-    private readonly inputField = viewChild.required<ElementRef<HTMLInputElement>>('autocompleteInput');
-    protected dropdownWidth: Signal<string> = updateWidthOnElementResize(this.inputField);
+private readonly inputField = viewChild.required<ElementRef<HTMLInputElement>>('autocompleteInput');
+protected dropdownWidth: Signal<string> = updateWidthOnElementResize(this.inputField);
 ```
 The `dropdownWidth` signal can now be used in the template to set the width of the dropdown. In our case, we are using the 
 [ng-bootstrap typeahead](https://ng-bootstrap.github.io/#/components/typeahead/api) component, which allows us to set the width of the dropdown-items via the `[style.width]` input.
@@ -139,7 +147,8 @@ Thanks to the nature of signals, the reactivity comes out of the box.
 </ng-template>
 ```
 
-The dropdown will now automatically adapt its width to match the input field's width, even if the input size changes independently of the window size.
+Looking at our autocomplete input field we can see that the dropdown now spans the full width of the input field and responds to input field resizes.
+![Autocomplete dropdown spanning full width of the input field](https://cdn.hashnode.com/res/hashnode/image/upload/v1747822733913/q7xshhRL1.png?auto=format)
 
 ### Benefits of this approach
 1. **Efficiency**: No unnecessary updates — only reacts to element resizes, not window resizes.
@@ -157,3 +166,7 @@ Let me know your thoughts in the comments below.
 
 ### Bonus
 You can easily extend the utility function to track both width and height if needed, or debounce the updates for extremely rapid layout changes.
+Or you might extract it to a directive for enhanced reusability. 
+
+### Demo in Stackblitz
+<iframe src="https://stackblitz.com/edit/angular-cg8dnyys-tetsidrt?file=src%2Fmain.ts" width="100%" height="400"></iframe>
