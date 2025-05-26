@@ -30,7 +30,7 @@ One requirement is to ensure that the width of a dropdown matches the width of i
 This is particularly important in responsive layouts, as the input field may change size due to various factors, such as window resizing or layout changes.
 
 It is tempting to just listen to the `window:resize` with `@HostListener` and adjust the dropdown width based on the current input field width. 
-Following is a naive implementation, as seen in many projects:
+Following is a naive implementation (legacy version), as seen in many projects:
 ```typescript
 @ViewChild('inputField', {read: ElementRef}) inputElement: ElementRef<HTMLInputElement>;
 
@@ -49,14 +49,56 @@ adjustDropdownWidth(): void {
     dropdown.style.width = `${input.offsetWidth}px`;
 }
 ```
-However, this approach has some drawbacks. 
+
+A more modern implementation leverages the power of Angular's new [viewChild function](https://angular.dev/guide/components/queries#view-queries) and [signals](https://angular.io/guide/signals). 
+This removes the need for `ngAfterViewInit` and the `HostListener` to catch the window resize event. 
+
+Additionally, we can add reactivity by removing the direct DOM manipulation (which is bad practice anyways). 
+To that end, we wrap the dropdown width in a signal that we bind to `style.width` using property binding in our template.
+This ensures that we are no longer dependent on the class name used by `document.querySelector`, which might change when using third party libraries such as [ng-bootstrap typeahead](https://ng-bootstrap.github.io/#/components/typeahead/api).
+The modernised code looks as follows: 
+```typescript
+private readonly inputField = viewChild.required<ElementRef<HTMLInputElement>>('autocompleteInput');
+private readonly windowResize = toSignal(fromEvent(window, 'resize'));
+
+readonly dropdownWidth = signal('100%');
+
+constructor(){
+    this.onWindowResize();
+}
+
+private onWindowResize(): void {
+    effect(() => {
+        this.windowResize();
+        this.inputField();
+        
+        this.adjustDropdownWidth();
+    });
+}
+
+adjustDropdownWidth(): void {
+    const nativeElement = this.inputField()?.nativeElement;
+    
+    if(nativeElement){
+        this.dropdownWidth.set(`${nativeElement.offsetWidth}px`);
+    }
+}
+```
+```html
+<ng-template #dropdownList let-result="result" let-term="term">
+    <ngb-highlight
+            class="dropdown-item"
+            [style.width]="dropdownWidth()" <--- SIGNALS FOR THE WIN
+            [result]="resultFormatter(result)"
+            [term]="term"
+    ></ngb-highlight>
+</ng-template>
+```
+
+However, this approach still has some drawbacks. 
 First, it triggers regardless of whether the input field was actually resized or not, since it only listens to window resizes. 
 This leads to unnecessary DOM updates and might impact performance. 
-Second, it does not work if the input field changes its size e.g. due to a collapsing sidebar, because the window size would remain the same. 
-
-Additionally, manipulating the DOM from within the component is not best practice. 
-We are dependent on the class name which might change when using third party libraries for the typeahead. 
-Or we might have multiple matches for the element and resize the wrong one after all. 
+Second, it does not work if the input field changes its size e.g. due to a collapsing sidebar, because the window size would remain the same.
 
 So, a solution independent of window events, is required.
 
@@ -119,11 +161,10 @@ export function updateWidthOnElementResize(
 }
 ```
 Our utility function takes a signal to the ElementRef as an argument. 
-This signal is created by the Angular's new `viewChild` function (see [here](https://angular.dev/guide/components/queries#view-queries)), replacing the existing `@ViewChild()` and the need for an `ngAfterViewInit()`. 
-It was introduced in Angular 17 in developer preview and as of Angular 19 is considered stable to use. 
-Instead, we get a signal to the target element that updates as soon as the target element reference is available and wrap our logic in an Angular `effect` ([see Angular effects](https://angular.dev/guide/signals#effects)).
+This signal is created by the `viewChild` function. 
+It gets us a signal to the target element that updates as soon as the target element reference is available.
 
-Inside, we create our observer and define our callback function that updates the width signal whenever the target element changes its dimensions.
+Inside our `effect` ([see Angular effects](https://angular.dev/guide/signals#effects)), we create our observer and define the resize callback that updates the width signal whenever the target element changes its dimensions.
 Additionally, we use the `onCleanup()` to disconnect the observer when the component is destroyed.
 
 ### Plugging it all together
@@ -132,19 +173,6 @@ Now, it is easy to use the utility function in our component. We just need to pa
 ```typescript
 private readonly inputField = viewChild.required<ElementRef<HTMLInputElement>>('autocompleteInput');
 protected dropdownWidth: Signal<string> = updateWidthOnElementResize(this.inputField);
-```
-The `dropdownWidth` signal can now be used in the template to set the width of the dropdown. In our case, we are using the 
-[ng-bootstrap typeahead](https://ng-bootstrap.github.io/#/components/typeahead/api) component, which allows us to set the width of the dropdown-items via the `[style.width]` input.
-Thanks to the nature of signals, the reactivity comes out of the box.
-```html
-<ng-template #dropdownList let-result="result" let-term="term">
-    <ngb-highlight
-            class="dropdown-item"
-            [style.width]="dropdownWidth()"
-            [result]="resultFormatter(result)"
-            [term]="term"
-    ></ngb-highlight>
-</ng-template>
 ```
 
 Looking at our autocomplete input field we can see that the dropdown now spans the full width of the input field and responds to input field resizes.
