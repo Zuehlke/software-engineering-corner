@@ -185,7 +185,7 @@ Looking at our autocomplete input field we can see that the dropdown now spans t
 4. **Scalability**: Supports multiple elements individually without interfering with each other.
 
 ### Conclusion
-In conclusion, the combination of ResizeObserver and Angular Signals provides a powerful and efficient way to handle dynamic element size tracking in Angular applications. 
+In conclusion, the combination of ResizeObserver and Angular signals provides a powerful and efficient way to handle dynamic element size tracking in Angular applications. 
 It avoids the pitfalls of traditional `window:resize` event listeners and brings reactivity directly to the DOM elements that need it.
 This small pattern can help with responsiveness and maintainability. 
 
