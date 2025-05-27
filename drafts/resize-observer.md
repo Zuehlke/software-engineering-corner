@@ -58,31 +58,14 @@ To that end, we wrap the dropdown width in a signal that we bind to `style.width
 This ensures that we are no longer dependent on the class name used by `document.querySelector`, which might change when using third party libraries such as [ng-bootstrap typeahead](https://ng-bootstrap.github.io/#/components/typeahead/api).
 The modernised code looks as follows: 
 ```typescript
-private readonly inputField = viewChild.required<ElementRef<HTMLInputElement>>('autocompleteInput');
+private readonly inputField = viewChild<ElementRef<HTMLInputElement>>('inputField');
 private readonly windowResize = toSignal(fromEvent(window, 'resize'));
 
-readonly dropdownWidth = signal('100%');
-
-constructor(){
-    this.onWindowResize();
-}
-
-private onWindowResize(): void {
-    effect(() => {
-        this.windowResize();
-        this.inputField();
-        
-        this.adjustDropdownWidth();
-    });
-}
-
-adjustDropdownWidth(): void {
-    const nativeElement = this.inputField()?.nativeElement;
-    
-    if(nativeElement){
-        this.dropdownWidth.set(`${nativeElement.offsetWidth}px`);
-    }
-}
+readonly dropdownWidth = computed(() => {
+    this.windowResize();
+    const inputFieldWidth = this.inputField()?.nativeElement?.offsetWidth;
+    return inputFieldWidth ? `${inputFieldWidth}px` : '100%';
+});
 ```
 ```html
 <ng-template #dropdownList let-result="result" let-term="term">
