@@ -11,7 +11,7 @@ saveAsDraft: true
 
 # Precision calibration of digital light projectors using a Moiré effect
 
-_Disclaimer: In this article I share some insights gained at Zühlke Group on designing measurement and alignment tools for high-resolution light projectors with lower-resolution detection equipment._
+_Disclaimer: The Moiré effect - an unwanted artefact? In this article I show how we can draw a profit from it and share some insights on designing measurement and alignment tools for high-resolution light projectors with lower-resolution detection equipment._
 
 The manufacturing, alignment, calibration and quality assessment of digital light projectors - i.e. beamers, light engines for 3d printers, 3d scanners or lithography machines and AR/VR projectors - involves an elaborate optical performance characterization. 
 That includes the measurement of geometrical distortion, intensity distribution, sharpness or modulation contrast at different (high) spatial frequencies and field points as well as low frequency regional contrasts. 
