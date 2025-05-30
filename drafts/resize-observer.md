@@ -180,4 +180,4 @@ You can easily extend the utility function to track both width and height if nee
 Or you might extract it to a directive for enhanced reusability. 
 
 ### Demo in Stackblitz
-<iframe src="https://stackblitz.com/edit/angular-cg8dnyys-tetsidrt?file=src%2Fmain.ts" width="100%" height="400"></iframe>
+<iframe src="https://stackblitz.com/edit/angular-cg8dnyys-tetsidrt?file=src%2Findex.html" width="100%" height="400"></iframe>
