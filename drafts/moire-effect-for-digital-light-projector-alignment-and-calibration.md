@@ -3,7 +3,7 @@ title: Precision calibration of digital light projectors using a Moiré effect
 subtitle: "Inspired by super-resolution microscopy: harnessing the Moiré effect for precision alignment and calibration of digital light projectors"
 domain: software-engineering-corner.zuehlke.com
 tags: optics, digital light projector, calibration, moiré effect, super-resolution
-cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1748600698206/uAXKMXq0-.jpg?auto=format
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1748600887759/zcK0cM5dG.jpg?auto=format
 publishAs: sgeissbu
 hideFromHashnodeCommunity: false
 saveAsDraft: true
