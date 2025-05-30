@@ -5,7 +5,6 @@ tags: apis,bdd,testing,domain,tdd,automation
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1738135144630/ZHt3i_56w.avif?auto=format
 publishAs: stma
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 Automated and continuous tests of web service interfaces detect discrepancies to specification at an early stage and can be resolved with less effort.
 By using Gherkin, the test cases are simple to understand and to define.
