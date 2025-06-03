@@ -49,13 +49,13 @@ adjustDropdownWidth(): void {
     dropdown.style.width = `${input.offsetWidth}px`;
 }
 ```
-
 A more modern implementation leverages the power of Angular's new [viewChild function](https://angular.dev/guide/components/queries#view-queries) and [signals](https://angular.io/guide/signals). 
 This removes the need for `ngAfterViewInit` and the `HostListener` to catch the window resize event. 
 
 Additionally, we can add reactivity by removing the direct DOM manipulation (which is bad practice anyways). 
 To that end, we wrap the dropdown width in a signal that we bind to `style.width` using property binding in our template.
 This ensures that we are no longer dependent on the class name used by `document.querySelector`, which might change when using third party libraries such as [ng-bootstrap typeahead](https://ng-bootstrap.github.io/#/components/typeahead/api).
+
 The modernised code looks as follows: 
 ```typescript
 private readonly inputField = viewChild<ElementRef<HTMLInputElement>>('inputField');
@@ -67,6 +67,10 @@ readonly dropdownWidth = computed(() => {
     return inputFieldWidth ? `${inputFieldWidth}px` : '100%';
 });
 ```
+We are still using the `window:resize` event, but wrap it in a signal instead. 
+The dropdown width is a computed signal. 
+Since we add the read to the `windowResize` signal, it gets recomputed every time the window resize event is triggered. 
+Now, in our template we just need to bind this computed signal. 
 ```html
 <ng-template #dropdownList let-result="result" let-term="term">
     <ngb-highlight
@@ -117,7 +121,7 @@ import { effect, ElementRef, signal, Signal } from '@angular/core';
 export function updateWidthOnElementResize(
     targetElement: Signal<ElementRef>,
 ): Signal<string> {
-    const width = signal('');
+    const width = signal<`${number}px` | '100%'>('100%');
 
     effect((onCleanup) => {
         const elementRef = targetElement();
@@ -125,7 +129,7 @@ export function updateWidthOnElementResize(
             return;
         }
         
-        const nativeElement = elRef.nativeElement;
+        const nativeElement = elementRef.nativeElement;
 
         // Create observer and update the width signal when the target element resizes
         const observer = new ResizeObserver(() => {
@@ -155,7 +159,7 @@ Now, it is easy to use the utility function in our component. We just need to pa
 
 ```typescript
 private readonly inputField = viewChild.required<ElementRef<HTMLInputElement>>('autocompleteInput');
-protected dropdownWidth: Signal<string> = updateWidthOnElementResize(this.inputField);
+protected dropdownWidth = updateWidthOnElementResize(this.inputField);
 ```
 
 Looking at our autocomplete input field we can see that the dropdown now spans the full width of the input field and responds to input field resizes.
