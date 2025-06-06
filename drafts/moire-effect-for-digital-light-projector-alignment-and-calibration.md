@@ -2,7 +2,7 @@
 title: Precision calibration of digital light projectors using the Moiré effect - How to unveil the unseen...
 subtitle: "Inspired by super-resolution microscopy: harnessing the Moiré effect for precision alignment and calibration of digital light projectors"
 domain: software-engineering-corner.zuehlke.com
-tags: optics, digital light projector, calibration, moiré effect, super-resolution
+tags: optics, projector, calibration, aliasing, super-resolution-techniques
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1748600887759/zcK0cM5dG.jpg?auto=format
 publishAs: sgeissbu
 hideFromHashnodeCommunity: false
@@ -48,11 +48,9 @@ For the precise measurement and alignment of light projectors, we can take advan
 
 Let us dive into the details of a 1D Moiré pattern and see how we can use it for the alignment and calibration of light projectors:
 
-![Illustration of the Moiré pattern formation resulting from the superposition of a mask pattern and a projector pattern with different periods, orientations, phases. Note that the similar periods of the underlying grid patterns lead to a significantly longer Moiré period, corresponding to the inverse of the difference of the two underlying spatial frequencies.](https://cdn.hashnode.com/res/hashnode/image/upload/v1748608015162/pGyWLgA_E.png?auto=format)
-
 <figure>
-<img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1748594823450/YCtbea4ht.PNG?auto=format"
-         alt="simplified math of the Moiré pattern formation">
+<img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1749213312003/s9sqZls-Y.png?auto=format"
+         alt="Illustration and simplified math of the Moiré pattern formation">
 <figcaption>Illustration and simplified math of the Moiré pattern formation resulting from the superposition of a mask pattern and a projector pattern with different periods, orientations, phases. Note that the similar periods of the underlying grid patterns lead to a significantly longer Moiré period, corresponding to the inverse of the difference of the two underlying spatial frequencies.</figcaption>
 </figure>
 
@@ -66,6 +64,13 @@ It could also be an absorbing metallic plate with cut out grid structures.
 A diffuser screen may then be placed behind the mask to observe the resulting Moiré pattern from a distance. 
 Also, a directly printed paper or diffuser sheet/plate can do the job, if the precision of the printed structures and the grain size of the diffuser are significantly finer than the projector pixel. 
 Only the mask with diffuser needs to be placed exactly at the plane of examination from the projector, which is usually easier to accomplish than placing an image sensor there. 
+
+<figure>
+<img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1749211820195/hGci_92HS.png?auto=format"
+         alt="schematic illustration of projector, diffuser screen with mask pattern and camera">
+<figcaption>Schematic illustration of projector, diffuser screen with imprinted mask pattern and camera arrangement. All geometry references are taken with respect to the mask patterns and consequently independent of distortions of the camera system. The mask pattern may further contain larger structures as coarse references that allow to resolve phase ambiguities in the Moiré pattern (in the illustrated example, the projected dots may be located within the white squares for coarse referencing).</figcaption>
+</figure>
+
 The remote observation and the lowered requirements on resolving power may then even allow for complete observation of the projection field with a single camera shot without scanning and can thus also provide a live view for full-field alignment. 
 
 This illustrates, how the sometimes unwanted but highly sensitive Moiré effect can also be used to our advantage and may help to unveil the unseen…
