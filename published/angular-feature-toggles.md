@@ -6,7 +6,6 @@ tags: angular, web-development, javascript, frontend-development, guide
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1732888744339/n2T03yjCA.jpg?auto=format
 publishAs: zemph
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 # Feature Flags in Angular
@@ -15,9 +14,9 @@ _Disclaimer: On a project I am currently working on, I introduced feature flags 
 With this post I would like to share the results with you._
 
 ## What are feature flags
+
 In the most basic form, you can think of feature flags as a remote configuration consisting of features and their state (enabled / disabled). 
 This configuration can be updated during the runtime of the application to  manage gradual rollouts, A/B tests, and quick rollbacks, improving flexibility and reducing risk.
-
 
 ## Tooling
 
@@ -29,7 +28,7 @@ This could even be done by hosting a static JSON file somewhere which can easily
 
 In this article we are going to implement following three feature flags:
  - toggling the injection of an external analytics script into the DOM
- - showing/hideing an advertisement banner within our application
+ - showing/hiding an advertisement banner within our application
  - enabling a route to a new feature
 
 ## Setup
@@ -40,7 +39,7 @@ Before we jump into the examples, we first need a setup to manage and use featur
 
 To keep things simple and avoid mistakes, it’s helpful to define a clear structure for our feature flags. This way, we know exactly what flags are available.
 
-```js
+```ts
 // feature-flag.model.ts
 
 export type FlagKey = 'analytics' | 'banner' | 'route';
@@ -60,7 +59,7 @@ The feature flag API call for fetching the feature flags could fail.
 This is why defining sensible defaults are a good idea. 
 We can use the previously created `FlagMap` and set the appropriate defaults. 
 
-```js
+```ts
 // feature-flag.constants.ts
 export const featureFlags: FlagMap = {
   analytics: {
@@ -79,13 +78,14 @@ export const featureFlags: FlagMap = {
 ```
 
 ### Fetching the feature flags
+
 To toggle any feature, it's essential to make the feature flag request as early as possible.
 In Angular, there are different approaches to achieve this.
 The earliest opportunity is to fetch the feature flags before bootstrapping the application.
 For us this makes sense, since feature flags are fundamental to the app's core.
 Once resolved, the feature flags are provided through an InjectionToken.
 
-```js
+```ts
 // tokens.ts
 // Create the injection token
 export const FEATURE_FLAG_TOKEN = new InjectionToken<FlagMap>('FEATURE_FLAG_TOKEN');
@@ -121,7 +121,7 @@ Let's create a service to simplify access to feature flag values throughout the 
 This service will inject the remotely loaded feature flags and provide a method to check their status. 
 We will use this service throughout the setup to manage feature flags more easily.
 
-```js
+```ts
 @Injectable({ providedIn: 'root' })
 export class FeatureFlagService {
   private readonly featureFlags = inject(FEATURE_FLAG_TOKEN);
@@ -137,7 +137,7 @@ export class FeatureFlagService {
 With the basic setup established we are now able to use the feature flags service and check the flag values. 
 We just need to inject it wherever we need it. 
 
-```js
+```ts
 
 // Inject
 private readonly featureFlagService = inject(FeatureFlagService);
@@ -150,11 +150,12 @@ More often than not, it’s not that simple to just see if a feature is enabled�
 Let me show you a few tools that can make your life easier when working with feature toggles.
 
 ## Using a feature flag before initializing Angular
-In this example we want to conditionally inject an analytics script into the DOM to track the user interaction within our application. 
-To achieve this, we can use the `provideAppInitializer` function within our `ApplicationConfiguration`. 
-Using our feature toggle instance, we can conditionally append the script to the DOM depending on the flag.
 
-```js
+In this example we want to conditionally inject an analytics script into the DOM to track the user interaction within our application. 
+To achieve this, we can use the `provideAppInitializer` function within our `ApplicationConfig`. 
+Using the feature flag service, we can conditionally append the script to the DOM depending on the flag.
+
+```ts
 // app.config.ts
 {
     provideAppInitializer(() => {
@@ -168,6 +169,7 @@ Using our feature toggle instance, we can conditionally append the script to the
 ```
 
 ## Conditionally showing UI using a directive
+
 A very common use case for a feature flag is to show/hide content. 
 This could be achieved with the code we already have but we can make our lives easier with creating a structural directive. 
 It should take the flag key as an input and render/hide the component depending on the state of the flag 
@@ -180,7 +182,7 @@ Optionally it should also take a template reference to a fallback component, in 
 The directive has two inputs: one for the flag key and another for an optional fallback template. 
 Based on the value of the flag, we either render the main template or the fallback template.
 
-```js
+```ts
 @Directive({
   selector: '[appFeatureFlag]',
   standalone: true
@@ -225,7 +227,7 @@ This so called [structural directive shorthand](https://angular.dev/guide/direct
 
 This is how you would use the directive within a template.
 
-```html
+```angular181html
 <div *appFeatureFlag="'banner'; else fallback">Advertising Banner</div>
 <ng-template #fallback>
     Ads coming soon..
@@ -238,7 +240,7 @@ Protecting a route with a feature flag guard can be quite useful for restricting
 If the feature is active, the guard returns true and allows the navigation. 
 Otherwise it redirects to the fallback url.
 
-```js
+```ts
 export function featureFlagGuard(key: FlagKey, redirectUrl: string = '/'): CanActivateFn {
   return () => {
     const featureFlagService = inject(FeatureFlagService);
@@ -255,7 +257,7 @@ export function featureFlagGuard(key: FlagKey, redirectUrl: string = '/'): CanAc
 
 This `canActivate` guard can be used with any route.
 
-```js
+```ts
 {
   path: 'new-feature',
   component: NewFeatureComponent,
@@ -265,6 +267,7 @@ This `canActivate` guard can be used with any route.
 ```
 
 ## Conclusion
+
 While feature flags can add flexibility and support gradual rollouts or A/B testing, they also bring extra complexity—and, if not handled carefully, can cause issues. 
 But when used with clear guidelines, they can help teams experiment and adapt more easily without constant redeployments. 
 
