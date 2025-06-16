@@ -1,0 +1,70 @@
+---
+import Layout from '../layouts/Layout.astro';
+import {  otherArticles } from '../lib/list';
+import ArticleCard from '../components/ArticleCard.astro';
+import FeaturedArticle from '../components/FeaturedArticle.astro';
+import Header from '../components/Header.astro';
+---
+
+<Layout>
+    <Fragment slot="head">
+        <title>The Dev Exchange</title>
+        <!--<meta-->
+        <!--        name="description"-->
+        <!--        content={GLOBAL.longDescription}-->
+        <!--/>-->
+        <!--<meta-->
+        <!--        property="og:title"-->
+        <!--        content={`${GLOBAL.username} • ${GLOBAL.shortDescription}`}-->
+        <!--/>-->
+        <!--<meta-->
+        <!--        property="og:description"-->
+        <!--        content={GLOBAL.longDescription}-->
+        <!--/>-->
+        <!--// <meta property="og:image" content={`${GLOBAL.rootUrl}/zaggonaut.png`}/>-->
+        <!--<meta property="og:url" content={GLOBAL.rootUrl}/>-->
+        <meta name="twitter:card" content="summary_large_image"/>
+        <!--<meta-->
+        <!--        name="twitter:title"-->
+        <!--        content={`${GLOBAL.username} • ${GLOBAL.shortDescription}`}-->
+        <!--/>-->
+        <!--<meta-->
+        <!--        name="twitter:description"-->
+        <!--        content={GLOBAL.longDescription}-->
+        <!--/>-->
+        <!--<meta name="twitter:image" content={`${GLOBAL.rootUrl}/zaggonaut.png`}/>-->
+        <meta http-equiv="content-language" content="en"/>
+        <meta name="language" content="English"/>
+        <script is:inline>
+            sessionStorage.setItem('dev-ex.hasVisitedHome', 'true');
+        </script>
+    </Fragment>
+    <Header>
+        <div class="flex font-display font-medium gap-4 flex-row px-0 mt-0 items-center">
+            the_dev_exchange
+        </div>
+    </Header>
+    <section class="max-w-full lg:max-w-[96rem] mx-auto px-8 mb-10">
+        <FeaturedArticle/>
+        <div class="border-t border-b border-black dark:border-white py-8 mb-16">
+            <div class="max-w-4xl mx-auto">
+                <p class="text-sm mb-4 leading-relaxed">
+                    In this blog, we discuss some of the unique challenges we meet whilst working for a service provider
+                    on
+                    enterprise customer projects.
+                </p>
+                <p class="text-sm leading-relaxed">
+                    <span class="font-bold">Who is "we?"</span> —&gt; Software engineers working at
+                    <a href="https://www.zuehlke.com/" target="_blank" class="underline hover:no-underline">Zühlke</a>.
+                </p>
+            </div>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {
+            otherArticles.map((post) =>
+                    <ArticleCard post={post}/>,
+            )
+          }
+        </div>
+    </section>
+</Layout>
