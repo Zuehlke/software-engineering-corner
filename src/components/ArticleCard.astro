@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { dateFormat } from '../lib/date-format.helper';
+import { timeToRead } from '../lib/reading-time';
+import { featuredArticle } from '../lib/list';
+type Props = {
+  post: CollectionEntry<'blog'>;
+};
+
+const {post} = Astro.props;
+---
+<a href={post.id} class="article-card rounded-none text-black dark:text-white bg-white dark:bg-zag-dark border-2 border-zag-dark dark:border-white
+   hover:bg-zag-dark dark:hover:bg-white hover:text-white dark:hover:text-black transition-colors duration-300
+   cursor-pointer group z-0">
+    <div class="p-0">
+        <div class="article-image relative overflow-hidden h-48" transition:name={`${post.id}-image`}>
+            <Image src={post.data.cover} alt="Cover image" class="aspect-video object-cover w-full"
+                   width="800"
+                   height="450"
+                   loading="lazy"
+            />
+            <div class="absolute bottom-0 left-0 w-full h-4/5 bg-gradient-to-t from-zag-dark to-transparent"></div>
+        </div>
+        <div class="p-4">
+            <h4 class="text-sm mb-3 leading-relaxed font-medium text-balance">{post.data.title}</h4>
+            <div class="space-y-1 text-xs opacity-80">
+                <p>By {post.data.author}</p>
+                <p>{dateFormat(post.data.released)} • {timeToRead(post)} min read</p>
+            </div>
+        </div>
+    </div>
+</a>
