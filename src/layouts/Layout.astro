@@ -1,0 +1,35 @@
+---
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+    <script is:inline>
+      const applyTheme = (document) => {
+        const localStorageTheme = localStorage.getItem('theme');
+        const theme = localStorageTheme ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        localStorage.setItem('theme', theme);
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+        document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'github-dark' : 'github-light');
+      };
+      applyTheme(document);
+      document.addEventListener('astro:before-swap', (event) => {
+        applyTheme(event.newDocument);
+      });
+    </script>
+    <ClientRouter/>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+    <meta name="generator" content={Astro.generator}/>
+    <slot name="head"/>
+</head>
+<body class="bg-zag-light dark:bg-zag-dark zag-transition text-zag-dark dark:text-zag-light">
+<slot name="header"/>
+<main>
+    <slot/>
+</main>
+</body>
+</html>
