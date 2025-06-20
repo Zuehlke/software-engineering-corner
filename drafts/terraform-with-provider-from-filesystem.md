@@ -3,7 +3,7 @@ title: Configuring Terraform to obtain a provider from the local filesystem
 domain: software-engineering-corner.hashnode.dev
 tags: [terraform, windows, cicd, ci, cd, iac]
 cover: https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbTjXYU%2Fbtq9e6SzhlK%2F1kOCYlRDgqPl3qF5qoQQNk%2Fimg.png
-publishAs: immo-huneke-zuhlke
+publishAs: immohuneke
 saveAsDraft: true
 hideFromHashnodeCommunity: false
 ---
@@ -85,9 +85,10 @@ The documentation is a little hazy on this subject,
 so I'm indebted to [this post on StackOverflow](
 https://stackoverflow.com/questions/70320229/how-can-i-use-2-providers-in-the-same-terraform-config)
 for useful clues.
-1. Obtain a copy of the provider (in this case,
-   the file name was `terraform-provider-gravitee.exe`)
-2. Store it under
+1. Build or obtain a copy of the provider (in this case,
+   the file name was `terraform-provider-gravitee.exe`
+   and we wanted to give it the namespace `custom`)
+2. Create the following folder and store the executable provider there:
    `%APPDATA%\terraform.d\registry.terraform.io\custom\gravitee\0.0.1\windows_amd64`
    (this mimics the repository layout that Terraform
    expects for providers)
