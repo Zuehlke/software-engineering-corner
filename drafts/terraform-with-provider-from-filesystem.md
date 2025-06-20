@@ -4,6 +4,7 @@ domain: software-engineering-corner.hashnode.dev
 tags: [terraform, windows, cicd, ci, cd, iac]
 cover: https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbTjXYU%2Fbtq9e6SzhlK%2F1kOCYlRDgqPl3qF5qoQQNk%2Fimg.png
 publishAs: immo-huneke-zuhlke
+saveAsDraft: true
 hideFromHashnodeCommunity: false
 ---
 
