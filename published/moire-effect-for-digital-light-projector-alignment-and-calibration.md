@@ -6,7 +6,6 @@ tags: optics, projector, calibration, aliasing, super-resolution-techniques
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1748600887759/zcK0cM5dG.jpg?auto=format
 publishAs: sgeissbu
 hideFromHashnodeCommunity: false
-saveAsDraft: true
 ---
 
 # Precision calibration of digital light projectors using the Moiré effect - How to unveil the unseen...
