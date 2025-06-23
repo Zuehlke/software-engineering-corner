@@ -89,9 +89,11 @@ for useful clues.
    the file name was `terraform-provider-gravitee.exe`
    and we wanted to give it the namespace `custom`)
 2. Create the following folder and store the executable provider there:
-   `%USERPROFILE%\registry.terraform.io\custom\gravitee\0.0.1\windows_amd64`
-   (this mimics the repository layout that Terraform
-   expects for providers)
+   `%APPDATA%\registry.terraform.io\custom\gravitee\0.0.1\windows_amd64`
+   * this mimics the repository layout that Terraform
+   expects for providers
+   * it may be safer to copy the file there than to move it, otherwise
+   your virus protection might prevent the executable from running
 3. Add code to the file `%APPDATA%\terraform.rc` as follows,
    making sure to use forward slashes only and substituting
    * your own user ID (in two places);
@@ -103,13 +105,13 @@ for useful clues.
    ```
    provider_installation {
      dev_overrides {
-       "custom/gravitee" = "C:/Users/<user>/registry.terraform.io/custom/gravitee/0.0.1/windows_amd64"
+       "custom/gravitee" = "C:/Users/<user>/AppData/Roaming/registry.terraform.io/custom/gravitee/0.0.1/windows_amd64"
      }
      direct {
        exclude = ["registry.terraform.io/*/*","custom/gravitee"]
      }
      filesystem_mirror {
-       path    = "C:/Users/<user>"
+       path    = "C:/Users/<user>/AppData/Roaming"
        include = ["custom/gravitee"]
      }
      network_mirror {
