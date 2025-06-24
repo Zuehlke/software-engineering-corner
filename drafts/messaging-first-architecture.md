@@ -12,7 +12,7 @@ tags:
   - motivation
   - microservice
 enableToc: true
-cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1750763487391/xyENTEBwe.jpeg?auto=format
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1750774772267/_rMXC2BJP.jpg?auto=format
 ---
 
 # Messaging-First Architectures: Resilient Systems with Azure Service Bus 
