@@ -31,7 +31,7 @@ If you’ve worked with something like ActiveMQ, Kafka, or RabbitMQ, a lot will 
 
 ## 2. Why & When Messaging-First? 
 
-In most systems I’ve worked on, HTTP APIs were the go-to service A calls service B, often in a tightly coupled chain. That works fine for many workflows, especially when you need quick, direct responses. But in a recent project, we leaned into a messaging-first approach using Azure Service Bus. Instead of services calling each other directly, they communicated through messages and that changed a lot. 
+In most of the systems I’ve worked on, HTTP APIs were the standard architectural approach, where service A calls service B often in a tightly coupled sequence. That works fine for many workflows, especially when you need quick, direct responses. But in a recent project, we leaned into a messaging-first approach using Azure Service Bus. Instead of services calling each other directly, they communicated through messages and that changed a lot. 
 
 It wasn’t about replacing REST, but about picking the right model for the problem. 
 Messaging brought clear benefits in areas like: 
@@ -57,9 +57,9 @@ You’re not babysitting a broker; Microsoft does that for you.
 
 That said, putting messaging at the center of your system does mean you have to take it seriously. 
 Things like Dead Letter Queues, lock timeouts, or message retries can become blind spots if you’re not monitoring them properly. 
-Team had to invest in observability early; logs, alerts, correlation IDs to make sure we weren’t flying blind. 
+The team had to invest in observability early; logs, alerts, correlation IDs to make sure we weren’t flying blind. 
 
-So yes, Service Bus is central. But with the right setup, it’s not fragile. In fact, it ended up being reliable parts of the stack. 
+So yes, Service Bus is central. But with the right setup, it’s not fragile. In fact, it ended up being the most reliable part of the stack.
 
 Overview of a simple ordering service with minimal processes 
 
@@ -102,9 +102,10 @@ A messaging-first system only works if you can see what’s happening.
 - Enable diagnostic settings to stream logs and metrics to Log Analytics.
 - Add Application Insights and propagate correlation IDs.
 - Include message IDs and payloads (truncated!) in logs for traceability.
-- Track processing times and delivery counts to detect slow consumers. 
-
-Don’t treat observability as an afterthought. When a message fails silently, it’s hard to debug unless you’ve wired in visibility.  
+- Track processing times and delivery counts to detect slow consumers.
+  
+⚠️ Note of Caution:
+Don’t treat observability as an afterthought - it’s a classic case of spoiling the ship for a ha’porth of tar. Skimping on logging and telemetry might save a little now, but it'll cost far more when failures strike and you're flying blind.
 
 
 
@@ -132,6 +133,6 @@ But here’s the nuance: messaging-first doesn’t mean messaging-only.
 
 Some interactions are still best done synchronously like fetching user details for a UI in real time or validating input. The real strength comes from knowing where async fits best: background jobs, cross-system workflows, retries, or anything that shouldn’t block the user. 
 
-System can be hybrid. It’s not one or the other. It’s about picking the right tool for the job. 
+Systems can be hybrid. It’s not one or the other. It’s about picking the right tool for the job. 
 
 If you're building distributed systems on Azure, or transitioning from a synchronous mindset like I was, I hope this gives you a good head start. 
