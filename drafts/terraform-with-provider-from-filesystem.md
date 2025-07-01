@@ -147,5 +147,16 @@ provider to the repository.
 You'll probably need to cater for a number of different
 operating systems and processor architectures.
 
+## Possible Gotchas
+
+When you come to switch back to the provider available from your
+artifact repo, make sure that you completely reinitialise terraform.
+Delete any existing `.terraform` folder and `.terraform.lock.hcl` from
+the Terraform root and rerun
+`terraform init -backend-config .\.vars\<local config file>`.
+Unless you do this, you may find that you get an out-of-date provider
+in your build, which Terraform will have retrieved from its provider
+cache.
+
 I hope this helps someone to cut to the chase more quickly than
 I was able to!
