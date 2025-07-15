@@ -6,6 +6,8 @@ import react from "@astrojs/react";
 
 import expressiveCode from "astro-expressive-code";
 
+import mdx from "@astrojs/mdx";
+
 // https://astro.build/config
 export default defineConfig({
   site: 'http://localhost:4321',
@@ -14,7 +16,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [react(), expressiveCode()],
+  integrations: [react(), expressiveCode(), mdx()],
 
   image: {
     service: {
