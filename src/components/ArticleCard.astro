@@ -22,7 +22,7 @@ const {post} = Astro.props;
             />
         </div>
         <div class="p-4">
-            <h4 class="text-sm mb-3 leading-relaxed font-medium text-balance">{post.data.title}</h4>
+            <h4 class="text-sm mb-3 leading-relaxed font-medium text-balance line-clamp-2 h-11">{post.data.title}</h4>
             <div class="space-y-1 text-xs opacity-80">
                 <p>By {post.data.author}</p>
                 <p>{dateFormat(post.data.released)} • {timeToRead(post)} min read</p>
