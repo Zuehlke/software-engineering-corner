@@ -1,12 +1,27 @@
 ---
-title: Precision calibration of digital light projectors using the Moiré effect - How to unveil the unseen...
-subtitle: "Inspired by super-resolution microscopy: harnessing the Moiré effect for precision alignment and calibration of digital light projectors"
-domain: software-engineering-corner.zuehlke.com
-tags: optics, projector, calibration, aliasing, super-resolution-techniques
-cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1748600887759/zcK0cM5dG.jpg?auto=format
-publishAs: sgeissbu
-hideFromHashnodeCommunity: false
+title: >-
+  Precision calibration of digital light projectors using the Moiré effect - How
+  to unveil the unseen...
+description: >-
+  Inspired by super-resolution microscopy: harnessing the Moiré effect for
+  precision alignment and calibration of digital light projectors
+released: '2025-06-23T09:28:20.499Z'
+cover: images/cover.jpg
+author: Stefan Geissbühler
+tags:
+  - optics
+  - projector
+  - calibration
+  - aliasing
+  - super-resolution-techniques
+shortDescription: >-
+  Discover how the Moiré effect enables precise calibration of digital light
+  projectors, overcoming resolution limits for real-time alignment and quality
+  assessment.
 ---
+import aliasingArtifact from './images/A_ayVSasV.png';
+import moireePatternFormation from './images/s9sqZls-Y.png';
+import projector from './images/hGci_92HS.png';
 
 # Precision calibration of digital light projectors using the Moiré effect - How to unveil the unseen...
 
@@ -35,9 +50,11 @@ Often the Moiré effect leads to unwanted artifacts.
 Well known is the unpleasant effect, when patterned objects such as textiles or regular wall structures are rendered on a digital display or camera:
 
 <figure>
-<img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1748590410347/A_ayVSasV.png?auto=format"
-         alt="aliasing artifact">
-<figcaption>Simulated image of a patterned textile that interferes with the sampling grid of an image sensor: The image to the left illustrates the effect of a lacking anti-aliasing filter and the image to the right shows the corresponding image with anti-aliasing filter</figcaption>
+<img src={aliasingArtifact.src}
+         alt="aliasing artifact" />
+<figcaption>
+  Simulated image of a patterned textile that interferes with the sampling grid of an image sensor: The image to the left illustrates the effect of a lacking anti-aliasing filter and the image to the right shows the corresponding image with anti-aliasing filter
+</figcaption>
 </figure>
 
 Digital cameras or displays thus come with either a physical low-pass filter (anti-aliasing filter) installed or perform low-pass filtering in software to reduce that effect. 
@@ -48,8 +65,8 @@ For the precise measurement and alignment of light projectors, we can take advan
 Let us dive into the details of a 1D Moiré pattern and see how we can use it for the alignment and calibration of light projectors:
 
 <figure>
-<img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1749213312003/s9sqZls-Y.png?auto=format"
-         alt="Illustration and simplified math of the Moiré pattern formation">
+<img src={moireePatternFormation.src}
+         alt="Illustration and simplified math of the Moiré pattern formation" />
 <figcaption>Illustration and simplified math of the Moiré pattern formation resulting from the superposition of a mask pattern and a projector pattern with different periods, orientations, phases. Note that the similar periods of the underlying grid patterns lead to a significantly longer Moiré period, corresponding to the inverse of the difference of the two underlying spatial frequencies.</figcaption>
 </figure>
 
@@ -65,8 +82,8 @@ Also, a directly printed paper or diffuser sheet/plate can do the job, if the pr
 Only the mask with diffuser needs to be placed exactly at the plane of examination from the projector, which is usually easier to accomplish than placing an image sensor there. 
 
 <figure>
-<img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1749211820195/hGci_92HS.png?auto=format"
-         alt="schematic illustration of projector, diffuser screen with mask pattern and camera">
+<img src={projector.src}
+         alt="schematic illustration of projector, diffuser screen with mask pattern and camera" />
 <figcaption>Schematic illustration of projector, diffuser screen with imprinted mask pattern and camera arrangement. All geometry references are taken with respect to the mask patterns and consequently independent of distortions of the camera system. The mask pattern may further contain larger structures as coarse references that allow to resolve phase ambiguities in the Moiré pattern (in the illustrated example, the projected dots may be located within the white squares for coarse referencing).</figcaption>
 </figure>
 
