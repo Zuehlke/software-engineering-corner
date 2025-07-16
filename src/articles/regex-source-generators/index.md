@@ -11,6 +11,10 @@ cover: images/cover.jpeg
 author: Steven Giesel
 tags:
   - architecture
+shortDescription: >-
+  Source generators for regular expressions in .NET 7 offer compiled performance
+  without complexity. They generate code at build time, improving startup and
+  debuggability.
 ---
 ## Source Generators and Regular Expressions
 

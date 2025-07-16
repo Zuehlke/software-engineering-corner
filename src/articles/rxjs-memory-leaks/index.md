@@ -16,6 +16,10 @@ tags:
   - form
   - RxJS
   - Web Development
+shortDescription: >-
+  Learn to prevent RxJS Observable memory leaks in Angular applications. This
+  guide covers techniques like `ngOnDestroy`, `takeUntil`, and
+  `takeUntilDestroyed`.
 ---
 Memory leaks are a dreadful little nightmare to fix in your web application. Yet, when using [RxJS Observables](https://rxjs.dev/guide/observable) you face the challenge of mitigating the threat of creating memory leaks. You might already wonder - what are memory leaks and how can I fix them?
 

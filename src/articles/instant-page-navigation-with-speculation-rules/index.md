@@ -18,6 +18,10 @@ tags:
   - performance
   - web
   - Web Development
+shortDescription: >-
+  The Speculation Rules API enhances web navigation by pre-rendering or
+  pre-fetching content, speeding up MPAs. It offers instant page loads but
+  consumes resources and poses security risks.
 ---
 ## What are Speculation Rules?
 

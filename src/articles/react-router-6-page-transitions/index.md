@@ -16,6 +16,9 @@ tags:
   - React
   - react router
   - UX
+shortDescription: >-
+  Implement smooth fade page transitions in React apps using react-router v6 and
+  framer motion. Learn to handle component lifecycle for seamless animations.
 ---
 # The goal
 

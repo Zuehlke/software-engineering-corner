@@ -26,6 +26,10 @@ tags:
   - Programming Tips
   - software development
   - Software Engineering
+shortDescription: >-
+  This post clarifies concurrency, distinguishing it from parallelism and
+  asynchrony. It proposes a unified definition and visual model for
+  understanding concurrent execution.
 ---
 I often encounter situations where Software Engineers have differing mental models of concurrency. To make matters worse, there are terms that are used (almost) synonymously, like async and parallel. But also definitions for [Data parallelism](https://en.wikipedia.org/wiki/Data_parallelism) and [Task parallelism](https://en.wikipedia.org/wiki/Task_parallelism), [Implicit parallelism](https://en.wikipedia.org/wiki/Implicit_parallelism) and [Explicit parallelism](https://en.wikipedia.org/wiki/Explicit_parallelism) that seem to suggest that there are multiple kinds of concurrency. There is a wealth of content and numerous definitions on this topic, but I have yet to find a single explanation or definition that clearly delineates the differences. Most explanations only add to the confusion, and even the best ones remain somewhat unclear.
 

@@ -18,6 +18,9 @@ tags:
   - software development
   - Web Development
   - webdev
+shortDescription: >-
+  Explore essential web development tools like Chrome DevTools for debugging, VS
+  Code for coding, and Figma for design, enhancing productivity.
 ---
 # What are Web Development Tools?
 

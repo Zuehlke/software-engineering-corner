@@ -17,6 +17,9 @@ tags:
   - legacy
   - legacy app modernization
   - legacy-systems
+shortDescription: >-
+  Refactor legacy Java code using Tiny Types and Data Oriented Programming.
+  Enhance type safety, prevent invalid states, and improve maintainability.
 ---
 Legacy systems are often procedural and rely heavily on mutable state, which makes them difficult to maintain and extend.
 This reliance on mutable data structures can lead to issues like unintended side effects and bugs, especially when several parts of the system interact with shared state.

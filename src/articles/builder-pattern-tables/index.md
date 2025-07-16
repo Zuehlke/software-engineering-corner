@@ -16,6 +16,10 @@ tags:
   - refactoring
   - software architecture
   - Web Development
+shortDescription: >-
+  Implementing tables in web applications can be complex. A shared table
+  component with a builder pattern simplifies development, ensuring consistency
+  and reducing boilerplate code.
 ---
 Tables are part of nearly every web application nowadays. We use them to display search results, to report financial statistics and sales, or to manage orders, inventory, and users.
 

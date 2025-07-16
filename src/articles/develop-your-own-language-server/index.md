@@ -13,6 +13,10 @@ cover: images/cover.gif
 author: Nipuna Marcus
 tags:
   - coding
+shortDescription: >-
+  Learn to develop a custom Language Server using LSP4J and Spring Boot. This
+  guide covers implementing core language features like auto-completion via
+  WebSocket.
 ---
 # Develop your own Language Server
 

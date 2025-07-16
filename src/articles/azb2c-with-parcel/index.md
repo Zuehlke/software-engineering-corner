@@ -15,6 +15,9 @@ tags:
   - Sass
   - Web Development
   - Build tool
+shortDescription: >-
+  Learn to build and optimize Azure AD B2C HTML templates with Parcel.js for a
+  custom user experience, covering setup, styling, and production builds.
 ---
 # The goal
 

@@ -19,6 +19,9 @@ tags:
   - SQLite
   - Testing
   - Web API
+shortDescription: >-
+  Learn to implement integration testing for ASP.NET Core web APIs using EF Core
+  and Migrations, mocking the database with SQLite in-memory.
 ---
 # ASP.NET Core Integration Testing
 

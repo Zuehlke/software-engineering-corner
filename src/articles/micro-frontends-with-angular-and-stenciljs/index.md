@@ -16,6 +16,10 @@ tags:
   - Angular
   - Web Development
   - software architecture
+shortDescription: >-
+  Explore building micro-frontends with Angular and StencilJS. Learn how to
+  break down UI monoliths using WebComponents for scalable, independent
+  deployments.
 ---
 Micro frontends is an emerging frontend architecture pattern defined by [Martin Fowler](https://martinfowler.com/articles/micro-frontends.html). The pattern slices a web frontend into loosely coupled, scaleable, and independent deployable components.
 

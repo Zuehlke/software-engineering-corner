@@ -13,6 +13,9 @@ cover: images/cover.jpg
 author: Kevin Denver
 tags:
   - pair programming
+shortDescription: >-
+  Overcome skepticism and introduce pair programming to your team. Learn how to
+  address common misconceptions, establish etiquette, and measure success.
 ---
 Last year, I joined a client's team of highly skilled and dedicated Java engineers. The team managed a complex event-driven system with a long history of changing requirements. The original engineers were long gone, making the code difficult to maintain and change. Deadlines were tight, and we needed to deliver new features fast.
 

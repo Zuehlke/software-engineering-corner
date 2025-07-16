@@ -33,6 +33,9 @@ tags:
   - vapor
   - VisionOS
   - watchOS
+shortDescription: >-
+  Explore how Swift async/await can inadvertently create retain cycles,
+  extending object lifetimes. Learn two solutions to prevent these issues.
 ---
 In a recent project, we observed one of those bugs that lets every developer jubilate. It was only happening rarely and seemed to manifest in varying ways.
 

@@ -1,5 +1,7 @@
 ---
-title: Develop a Web Editor for your DSL using Angular and Monaco Editor library with Language Server support
+title: >-
+  Develop a Web Editor for your DSL using Angular and Monaco Editor library with
+  Language Server support
 description: >-
   The development of domain-specific languages often requires custom editors to
   support features like syntax highlighting and autocompletion. This involves
@@ -13,6 +15,9 @@ author: Chathura Jayashantha
 tags:
   - coding
   - Web Development
+shortDescription: >-
+  Learn to build a web editor for your DSL using Angular and Monaco Editor,
+  integrating Language Server Protocol for features like syntax highlighting.
 ---
 # Create a custom web editor using Monaco and Language Server Protocol (LSP)
 

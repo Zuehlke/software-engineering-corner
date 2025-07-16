@@ -17,6 +17,9 @@ tags:
   - React
   - vite
   - Web Development
+shortDescription: >-
+  Explore Micro Frontend architecture with Module Federation in Vite for React.
+  Learn to configure host and remote applications, and optimize performance.
 ---
 With the introduction to the [Microservice](https://martinfowler.com/articles/microservices.html) architecture for the backend, developers were looking into developing a similar architecture for frontend applications which is what we now know as [Micro frontends](https://micro-frontends.org/).
 This architecture has a similar set of pros and cons as Microservices but for the frontend. One of the implementations to achieve this architecture from bundling tools such as Webpack and Vite is called Module Federation.

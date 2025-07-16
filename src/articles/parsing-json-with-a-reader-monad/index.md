@@ -16,6 +16,10 @@ tags:
   - legacy
   - legacy app modernization
   - legacy-systems
+shortDescription: >-
+  Learn how to parse inconsistent JSON with a reader monad in Java. This
+  approach handles varying representations of missing values, improving code
+  clarity and maintainability.
 ---
 Ever had an API response make you question its design choices?
 Like when it gives you an empty array instead of just saying, 'This value is missing,' or throws in an empty string where a `null` would be way cleaner?

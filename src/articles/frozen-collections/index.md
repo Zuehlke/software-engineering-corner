@@ -14,6 +14,9 @@ author: Steven Giesel
 tags:
   - C#
   - .NET
+shortDescription: >-
+  Explore .NET 8's new frozen collections, like FrozenSet and FrozenDictionary,
+  offering significant performance boosts for read-only data scenarios.
 ---
 .NET 7 was freshly released but Microsoft does not sleep. .NET 8 is already in the making and I want to showcase to you one new area where the dotnet team is working on **Frozen collections**.
 

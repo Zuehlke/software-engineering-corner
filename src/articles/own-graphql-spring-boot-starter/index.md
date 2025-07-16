@@ -15,6 +15,10 @@ tags:
   - GraphQL
   - Java
   - Springboot
+shortDescription: >-
+  Learn to create a Spring Boot starter that provides a GraphQL endpoint,
+  enabling shared functionality like displaying application version across
+  projects.
 ---
 In this article, we'll create a Spring Boot starter which will make a GraphQL endpoint available to all applications where the starter is included.
 We will cover a similar functionality as the `info` endpoint of the [actuator](https://docs.spring.io/spring-boot/api/rest/actuator/index.html) starter: displaying the applications version. But instead of a REST API, we'll provide a GraphQL endpoint.

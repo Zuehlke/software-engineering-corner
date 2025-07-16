@@ -18,6 +18,9 @@ tags:
   - developers
   - Microservices
   - software architecture
+shortDescription: >-
+  Learn to reduce software's carbon footprint. This guide covers measuring
+  carbon cost, optimizing cloud resources, and designing sustainable systems.
 ---
 # Coding for a Greener Future: Actions for Big Impact
 

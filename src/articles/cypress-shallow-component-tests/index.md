@@ -14,6 +14,9 @@ tags:
   - Angular
   - components
   - Testing
+shortDescription: >-
+  Learn to perform shallow component tests in Cypress with Angular standalone
+  components. This guide covers mocking child components for effective testing.
 ---
 We're all familiar with the testing pyramid principle, advocating for an abundance of unit tests and
 only a handful of e2e tests.

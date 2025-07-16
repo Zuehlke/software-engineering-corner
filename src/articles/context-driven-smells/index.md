@@ -13,6 +13,10 @@ cover: images/cover.jpg
 author: Phill Royle
 tags:
   - ''
+shortDescription: >-
+  Explore seven critical software development "smells" like siloed DevOps,
+  sales-driven prioritization, and lack of testing, with diagnoses and
+  solutions.
 ---
 ## The Context
 

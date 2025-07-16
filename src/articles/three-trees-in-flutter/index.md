@@ -1,5 +1,7 @@
 ---
-title: Understanding the three trees in Flutter - Widget tree, Element tree and RenderObject tree
+title: >-
+  Understanding the three trees in Flutter - Widget tree, Element tree and
+  RenderObject tree
 description: >-
   Flutter's UI rendering relies on three interconnected trees: Widget, Element,
   and RenderObject. The Widget tree describes the UI, the Element tree manages
@@ -13,6 +15,9 @@ author: Gabriel Duss
 tags:
   - Flutter
   - Flutter Widgets
+shortDescription: >-
+  Explore Flutter's core architecture: the Widget, Element, and RenderObject
+  trees. Understand how these interconnected structures efficiently render UIs.
 ---
 Flutter, Google's powerful UI framework, operates on a unique architecture that efficiently renders user interfaces. At the core of this architecture are three interconnected trees: the Widget tree, Element tree, and RenderObject tree.
 

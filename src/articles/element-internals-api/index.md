@@ -1,5 +1,5 @@
 ---
-title: Finally, custom form elements that don't suck!
+title: 'Finally, custom form elements that don''t suck!'
 description: >-
   The ElementInternals API simplifies the creation of custom form elements
   within web components, enabling seamless integration with HTML forms and
@@ -17,6 +17,9 @@ tags:
   - Shadow DOM
   - lit
   - JavaScript
+shortDescription: >-
+  The ElementInternals API simplifies creating custom form elements with web
+  components, enabling seamless integration with HTML forms and libraries.
 ---
 In the world of web development, creating custom form elements has always been a bit of a challenge.
 However, with the introduction of web components and the use of the ElementInternals API, this task

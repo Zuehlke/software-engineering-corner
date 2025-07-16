@@ -18,6 +18,9 @@ tags:
   - OpenApi
   - REST
   - REST API
+shortDescription: >-
+  Explore API-first development, a paradigm prioritizing API design before
+  coding. Learn its benefits, including parallel team work and code generation.
 ---
 The software development world is an ever-evolving landscape. Technologies and methodologies continuously evolve - each promising a more efficient and effective way to create high-quality software.
 One such approach that is gaining significant traction is *API-first* development.

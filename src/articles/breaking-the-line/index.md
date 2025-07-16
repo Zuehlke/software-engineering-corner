@@ -15,6 +15,10 @@ tags:
   - code style
   - development
   - lint
+shortDescription: >-
+  Limiting code line lengths enhances readability, debugging, collaboration, and
+  accessibility. Optimal limits range from 80-120 characters for improved code
+  quality.
 ---
 "Everyone has widescreen monitors nowadays."
 This is the argument I often hear when I bring up the idea of enforcing a maximum line length in our code.

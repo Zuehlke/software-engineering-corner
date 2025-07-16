@@ -16,6 +16,9 @@ tags:
   - Web Components
   - TypeScript
   - Tailwind CSS
+shortDescription: >-
+  Integrate Tailwind CSS with Web Components and Shadow DOM using LitElement.
+  This approach enables global utility classes within encapsulated components.
 ---
 We recently wanted to use tailwindcss to help developers at one of our customers create maintainable
 and scalable styling. At the same time we were creating web components for a design system. This

@@ -16,6 +16,9 @@ tags:
   - dotnet
   - TDD (Test-driven development)
   - Testing
+shortDescription: >-
+  Learn to implement Behavior-Driven Development (BDD) with C# and SpecFlow.
+  Discover Gherkin syntax, test creation, and execution.
 ---
 [Behaviour-Driven Development (BDD)](https://en.wikipedia.org/wiki/Behavior-driven_development) is a technique of agile software development to ensure that the requirements of the software to be developed are fulfilled. To achieve this a special syntax called **Gherkin** (see below) is used to write down the specification which then can be translated by tools into test case skeletons. The developers add the test code and write/enhance the application until the test passes.
 A big advantage is that stakeholders, customers, business analysts, requirement engineers, all parties of a project can provide tests.
