@@ -10,7 +10,7 @@ description: >-
   WebSocket connection for communication between the editor and the language
   server.
 released: '2024-10-28T10:51:02.359Z'
-cover: images/cover.gif
+cover: images/cover.jpg
 author: Nipuna Marcus
 tags:
   - coding

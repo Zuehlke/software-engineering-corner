@@ -9,7 +9,7 @@ description: >-
   can be implemented using libraries like LSP4J and exposed via WebSockets,
   allowing integration with web-based editors.
 released: '2024-10-28T10:51:02.891Z'
-cover: images/cover.gif
+cover: images/cover.jpg
 author: Nipuna Marcus
 tags:
   - coding
