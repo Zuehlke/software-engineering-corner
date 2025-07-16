@@ -12,6 +12,9 @@ author: Keerthikan
 tags:
   - software architecture
   - DDD
+shortDescription: >-
+  Learn how Event Storming, a workshop-based method, helps collect domain events
+  to understand system processes and facilitate requirement engineering.
 ---
 At Zühlke, there is a **DDD Topic Team** to discuss about various topics related to Domain-Driven-Design. Recently, we had a session about **Event Storming**. In this post, I would like to share how we did it and some key takeaways.
 

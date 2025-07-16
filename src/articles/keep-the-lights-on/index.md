@@ -17,6 +17,10 @@ tags:
   - software architecture
   - Web Components
   - Web Development
+shortDescription: >-
+  Prioritize robust error handling in software design to prevent costly
+  downtime. Degrade functionality gracefully instead of stopping the
+  application.
 ---
 Error handling is rather neglected in software projects and is more of a minor matter. No wonder, as it is much better to concentrate on business value and features. Unfortunately, this can be very annoying for users. Even worse, it can end in disaster.
 

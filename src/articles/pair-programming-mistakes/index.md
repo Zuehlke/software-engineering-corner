@@ -13,6 +13,10 @@ author: Oliver Amstutz
 tags:
   - pair programming
   - software development
+shortDescription: >-
+  Navigate common pair programming challenges. Learn to manage pace, guide
+  juniors, take breaks, and optimize remote sessions for effective
+  collaboration.
 ---
 Pair programming is a powerful tool in the software development process, but like any tool, it comes with its own set of challenges.
 From feeling overwhelmed by a partner’s pace to navigating the complexities of remote collaboration, I’ve experienced a range of obstacles in my pair programming journey.

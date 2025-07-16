@@ -16,6 +16,9 @@ tags:
   - Reactivity
   - signals
   - Web Development
+shortDescription: >-
+  Explore how Signals simplify UI synchronization by building a basic reactive
+  system from scratch, including computed values and side effects.
 ---
 *First off: the code in this post is not meant to be used for production-level application but serves an educational purpose.*
 

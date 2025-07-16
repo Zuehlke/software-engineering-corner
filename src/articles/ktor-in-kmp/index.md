@@ -22,6 +22,9 @@ tags:
   - Mocking
   - networking
   - Testing
+shortDescription: >-
+  Learn how to effectively manage HTTP client configurations in Kotlin
+  Multiplatform projects using Ktor, enhancing maintainability and testability.
 ---
 These days it’s quite rare to have a mobile that doesn’t access online resources. Naturally, “set up the HTTP stack” is one of the first stories on our backlog in a new project.
 

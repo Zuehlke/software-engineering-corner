@@ -16,6 +16,10 @@ tags:
   - Web Development
   - software architecture
   - Frontend Development
+shortDescription: >-
+  Exploring solutions for managing micro frontend configurations in a
+  Self-Contained System architecture. Options include using a reverse proxy or a
+  dedicated registry.
 ---
 This time I am not going to write about experiences I made in my daily life as a software architect and developer. But I will dump my brain about something that currently flutters around in my head. This is more of conceptual nature.
 

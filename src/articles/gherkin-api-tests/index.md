@@ -19,6 +19,10 @@ tags:
   - domain
   - TDD (Test-driven development)
   - Testing
+shortDescription: >-
+  Automated API tests with Gherkin enhance efficiency and quality by detecting
+  discrepancies early. This approach simplifies test case definition and
+  understanding.
 ---
 Automated and continuous tests of web service interfaces detect discrepancies to specification at an early stage and can be resolved with less effort.
 By using Gherkin, the test cases are simple to understand and to define.

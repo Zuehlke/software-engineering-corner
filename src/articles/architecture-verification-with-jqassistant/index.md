@@ -15,6 +15,9 @@ cover: images/cover.jpg
 author: Steffen Musiol
 tags:
   - software architecture
+shortDescription: >-
+  Learn how jQAssistant and arc42 enable automated architecture verification and
+  living documentation, ensuring design principles are consistently followed.
 ---
 # Architecture verification and documentation with jQAssistant and arc42
 

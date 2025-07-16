@@ -17,6 +17,10 @@ tags:
   - React
   - software architecture
   - Web Development
+shortDescription: >-
+  Explore React component variant creation: CSS class overwrites for quick
+  fixes, separate components for specific needs, and CVA for scalable design
+  systems.
 ---
 # Introduction
 

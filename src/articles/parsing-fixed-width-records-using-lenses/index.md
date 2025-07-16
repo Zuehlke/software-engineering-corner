@@ -20,6 +20,9 @@ tags:
   - legacy app modernization
   - legacy-systems
   - mainframe
+shortDescription: >-
+  Learn to efficiently parse COBOL fixed-length records using functional lenses.
+  This approach offers a type-safe, immutable, and robust solution.
 ---
 I have been lucky enough to work on more than one project that required integration with legacy mainframe applications throughout my career at Zühlke.
 Integrating with legacy technologies can be challenging and requires innovative solutions to avoid exposing legacy abstractions through APIs and REST interfaces.

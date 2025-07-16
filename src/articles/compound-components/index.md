@@ -16,6 +16,9 @@ tags:
   - patterns
   - React
   - software architecture
+shortDescription: >-
+  Learn how the compound component pattern in React enhances UI flexibility by
+  breaking down complex components into smaller, manageable parts.
 ---
 As frontend applications continue to grow and have to cover more use cases, their UI components need to get more flexible. This blog post describes how the requirements for a UI component increase throughout a typical project. We show what problems this entails and how they can be solved with the compound component pattern.
 

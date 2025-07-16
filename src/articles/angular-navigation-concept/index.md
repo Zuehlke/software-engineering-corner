@@ -17,6 +17,9 @@ tags:
   - JavaScript
   - navigation
   - Web Development
+shortDescription: >-
+  Explore advanced web app navigation beyond basic forward/back. Learn to manage
+  complex flows and history using browser APIs for a robust user experience.
 ---
 > **Note:** Chrome has an [experimental implementation of the Navigation API](https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API), which provides native primitives for navigation handling.\
 > If supported across all major browsers, this API could significantly simplify many of the patterns discussed in this article.

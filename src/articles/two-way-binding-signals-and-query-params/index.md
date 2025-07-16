@@ -21,6 +21,9 @@ tags:
   - signals
   - TypeScript
   - Web Development
+shortDescription: >-
+  Explore two-way binding between signals and query parameters in Angular. Learn
+  to connect writable signals to router state for seamless UI and URL updates.
 ---
 Signals are the hot topic of today. Pretty much every major framework (except React...) is introducing them in one way or another. Surprisingly, this is also the case for Angular, which is making huge efforts to improve a lot of the pain points we've been experiencing for too many years. A few examples of this include standalone components, a new build system leveraging esbuild and our protagonist of today: signals.
 

@@ -16,6 +16,10 @@ tags:
   - Sass
   - variables
   - Web Development
+shortDescription: >-
+  Implementing Dark Mode using CSS variables offers runtime color tweaking for
+  accessibility testing. This approach, replacing Sass, enables dynamic theme
+  switching.
 ---
 We are currently working on a machine that runs 24/7 at train stations all over Switzerland. The
 screen is fairly bright to help people navigate through our web application even when there is

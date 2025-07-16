@@ -16,6 +16,9 @@ tags:
   - test
   - test driven development
   - Software Testing
+shortDescription: >-
+  This article introduces unit testing, covering its theory, practical
+  application with xUnit frameworks, and faking techniques like stubs and mocks.
 ---
 # An Introduction to Unit Testing
 

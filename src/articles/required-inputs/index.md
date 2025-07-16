@@ -15,6 +15,10 @@ tags:
   - Bugs and Errors
   - components
   - Web Development
+shortDescription: >-
+  Learn how to enforce required inputs in Angular components to prevent bugs.
+  Explore solutions using selector attributes or Angular v16's new required
+  input argument.
 ---
 Have you ever added an Angular component to a page view and wondered which component inputs are required? Have you ever created a new component and asked yourself if you can enforce specific inputs? Have you ever been annoyed by dealing with potentially undefined inputs for expected inputs? If so, then you my friend, are up for a treat!
 

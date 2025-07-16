@@ -24,6 +24,9 @@ tags:
   - Software Engineering
   - styleguide
   - Website design
+shortDescription: >-
+  Allocating 10% of engineering time to technical debt boosts velocity, morale,
+  and innovation. Learn how to strategically manage tech debt.
 ---
 ### **Introduction: More Than a Mess of Code**
 

@@ -14,6 +14,9 @@ author: Steven Giesel
 tags:
   - C#
   - .NET
+shortDescription: >-
+  Explore how the .NET garbage collector manages memory, its generational
+  approach, and the impact on application performance and optimization.
 ---
 Let's have a deeper dive into the way the garbage collector (GC) works in .NET. We will see what different "Generation" means and how this all impact our application and its performance. Also if you use tools like BenchmarkDotNet, this will give you a better understanding of what some of the statistics mean.
 

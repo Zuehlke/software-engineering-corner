@@ -1,5 +1,5 @@
 ---
-title: Finally, multi-file OpenAPI specifications
+title: 'Finally, multi-file OpenAPI specifications'
 description: >-
   The API-first approach emphasizes the importance of APIs in software
   development. A new feature in OpenAPI Generator allows for organizing API
@@ -17,6 +17,10 @@ tags:
   - OpenApi
   - REST
   - REST API
+shortDescription: >-
+  OpenAPI Generator now supports multiple specification files, enabling better
+  organization and reusability of API definitions. This enhances the API-first
+  approach.
 ---
 The API-first approach prioritizes APIs over code and puts them at the beginning of the software development process.
 Our [previous article](https://software-engineering-corner.hashnode.dev/effortless-api-first) looked at the idea behind API-first development and some first examples.

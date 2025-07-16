@@ -17,6 +17,9 @@ tags:
   - Testing
   - Frontend Development
   - Cypress
+shortDescription: >-
+  Learn how Cypress app actions with Angular can improve e2e test stability,
+  readability, and speed by directly manipulating app state.
 ---
 It came as no surprise when the Angular team announced last August [on their official blog](https://blog.angular.io/the-state-of-end-to-end-testing-with-angular-d175f751cb9c) that they've decided to deprecate Protractor.
 They've been public about evaluating the future of Protractor.

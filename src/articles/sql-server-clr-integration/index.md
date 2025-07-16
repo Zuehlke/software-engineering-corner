@@ -12,6 +12,9 @@ author: Fabio Scagliola
 tags:
   - C#
   - SQL
+shortDescription: >-
+  This post explains how to develop and deploy a .NET assembly with a C#
+  user-defined function to SQL Server for CLR integration.
 ---
 # SQL Server CLR Integration
 

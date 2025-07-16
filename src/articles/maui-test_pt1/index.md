@@ -11,6 +11,9 @@ released: '2024-06-11T10:34:12.867Z'
 cover: images/cover.png
 author: Nijaz Zaljevic
 tags: []
+shortDescription: >-
+  Learn to test .NET MAUI apps, focusing on service and view model layers. This
+  guide covers setup, mocking IFileSystem, and handling Shell navigation.
 ---
 # How to test a .NET MAUI App Part 1
 

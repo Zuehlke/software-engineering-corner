@@ -18,6 +18,9 @@ tags:
   - '#maui'
   - MVVM
   - xaml
+shortDescription: >-
+  Learn to reduce boilerplate code in .NET MAUI with the MVVM Community Toolkit.
+  This post covers MVVM principles and toolkit implementation.
 ---
 # Reducing boilerplate code with the MVVM Community Toolkit in .NET MAUI
 

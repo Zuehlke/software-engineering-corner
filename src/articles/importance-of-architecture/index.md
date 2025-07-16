@@ -14,6 +14,9 @@ tags:
   - software architecture
   - architecture
   - design and architecture
+shortDescription: >-
+  Prioritizing urgent software features over crucial architecture leads to
+  long-term issues. Balancing both ensures adaptability and sustainability.
 ---
 A software project generally has different stakeholders.
 

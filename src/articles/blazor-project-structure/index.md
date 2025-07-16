@@ -11,6 +11,9 @@ cover: images/cover.jpg
 author: Steven Giesel
 tags:
   - architecture
+shortDescription: >-
+  Explore an alternative Blazor project structure using a "Features" folder to
+  group related components, services, and pages, enhancing organization.
 ---
 Did you ever wonder what is a nice way of structuring your Blazor application?
 

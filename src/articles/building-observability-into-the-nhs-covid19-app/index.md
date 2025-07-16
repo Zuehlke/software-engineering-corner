@@ -1,5 +1,7 @@
 ---
-title: Building observability into the NHS COVID-19 app backend serving 16 million users
+title: >-
+  Building observability into the NHS COVID-19 app backend serving 16 million
+  users
 description: >-
   During the COVID-19 pandemic, a digital contact-tracing solution was rapidly
   developed to help contain the virus's spread. A key aspect of this solution
@@ -22,6 +24,9 @@ tags:
   - logging
   - monitoring
   - telemetry
+shortDescription: >-
+  Building observability into the NHS COVID-19 app backend serving 16 million
+  users. The app averted ~1 million cases of COVID-19.
 ---
 When the COVID-19 pandemic swept the globe, it triggered a race to develop digital tools that could help manage and track the spread of the virus.
 The Department of Health and Social Care (DHSC) oversees the UK's National Health Service (NHS), with the aim to help people live more independent, healthier lives for longer.

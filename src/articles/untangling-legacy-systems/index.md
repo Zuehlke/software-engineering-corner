@@ -15,6 +15,9 @@ tags:
   - legacy
   - legacy app modernization
   - legacy-systems
+shortDescription: >-
+  Understand and modernize legacy systems by documenting architecture, exploring
+  code, and running tests. Learn strategies for successful transformation.
 ---
 Whether you're tasked with updating functionality, improving performance, migrating to new technologies, or simply trying to understand an undocumented system for maintenance, dealing with legacy systems is an inevitable challenge in the software industry.
 

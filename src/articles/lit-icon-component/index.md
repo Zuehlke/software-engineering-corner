@@ -14,6 +14,10 @@ tags:
   - CSS
   - Sass
   - Web Development
+shortDescription: >-
+  Learn to create a lazy-loading icon web component using LitElement. This guide
+  covers loading SVGs, dynamic imports, and optimizing SVG assets with
+  compression.
 ---
 Recently we started working on a design system at one of our customers. One of the components we had
 to create quite early in the process was an icon component loading their custom icons.

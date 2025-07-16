@@ -1,5 +1,7 @@
 ---
-title: Develop a Web Editor for your DSL using React and Monaco Editor library with Language Server support
+title: >-
+  Develop a Web Editor for your DSL using React and Monaco Editor library with
+  Language Server support
 description: >-
   The article explores the creation of a web-based code editor using React and
   the Monaco Editor library. It details how to integrate the Monaco Editor with
@@ -13,6 +15,9 @@ author: Nipuna Marcus
 tags:
   - coding
   - Web Development
+shortDescription: >-
+  Learn to build a web editor for your DSL using React and Monaco Editor, with
+  Language Server Protocol support for rich editing features.
 ---
 # Develop a Web Editor for your DSL using React and Monaco Editor library
 

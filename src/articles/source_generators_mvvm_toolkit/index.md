@@ -17,6 +17,9 @@ tags:
   - '#maui'
   - MVVM
   - xaml
+shortDescription: >-
+  Explore Source Generators in the MVVM Community Toolkit, a .NET 5 compiler
+  feature reducing boilerplate code and improving performance.
 ---
 # Source Generators in the MVVM Community Toolkit
 

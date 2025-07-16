@@ -16,6 +16,9 @@ tags:
   - General Programming
   - Tutorial
   - Web Development
+shortDescription: >-
+  Learn to implement a powerful application search using Apache Solr. This guide
+  covers indexing documents, performing queries, and Solr's core features.
 ---
 A search function is a crucial feature in an application, playing an important role in enhancing the user experience. By simply entering relevant keywords or phrases, the users get instant access to the precise data they require. This saves them from the cumbersome task of manually navigating through intricate menus or hierarchies, making their interaction with the application more intuitive and efficient.
 

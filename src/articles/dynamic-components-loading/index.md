@@ -16,6 +16,9 @@ tags:
   - HTML
   - template
   - Web Development
+shortDescription: >-
+  Explore dynamic component loading in Angular for varied data displays. Learn
+  how `ngComponentOutlet` simplifies handling diverse views.
 ---
 Sometimes you have to deal with handling various views for different data types. In this article, we explore dynamic components loading in Angular.
 

@@ -14,6 +14,9 @@ tags:
   - CSS
   - CSS3
   - Web Development
+shortDescription: >-
+  Explore why `border-radius` should be `corner-radius`. Learn how this CSS
+  property rounds corners using circles, not borders.
 ---
 Why isn't my `div` centered? Why does it overflow? Why do I always have to override a lot of rules to make CSS less unpredictable?
 
