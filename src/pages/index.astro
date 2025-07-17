@@ -1,42 +1,36 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import {  otherArticles } from '../lib/list';
+import { otherArticles } from '../lib/list';
 import ArticleCard from '../components/ArticleCard.astro';
 import FeaturedArticle from '../components/FeaturedArticle.astro';
 import Header from '../components/Header.astro';
+import { getImage } from 'astro:assets';
+import logo from '../../public/logo.png';
+import SocialSharingHeader from '../components/SocialSharingHeader.astro';
+
+const blogDescription = 'In this blog, we discuss some of the unique challenges we meet whilst working for a service provider on enterprise customer projects.';
+const socialDescription = `${blogDescription} Who is "we?" -> Software engineers working at Zühlke.`;
+
+const socialImage = await getImage({
+  src: logo,
+  width: 1200,
+  height: 630,
+  format: 'png',
+  quality: 85,
+});
+const socialImageUrl = new URL(socialImage.src, Astro.site);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <Layout>
     <Fragment slot="head">
-        <title>The Dev Exchange</title>
-        <!--<meta-->
-        <!--        name="description"-->
-        <!--        content={GLOBAL.longDescription}-->
-        <!--/>-->
-        <!--<meta-->
-        <!--        property="og:title"-->
-        <!--        content={`${GLOBAL.username} • ${GLOBAL.shortDescription}`}-->
-        <!--/>-->
-        <!--<meta-->
-        <!--        property="og:description"-->
-        <!--        content={GLOBAL.longDescription}-->
-        <!--/>-->
-        <!--// <meta property="og:image" content={`${GLOBAL.rootUrl}/zaggonaut.png`}/>-->
-        <!--<meta property="og:url" content={GLOBAL.rootUrl}/>-->
-        <meta name="twitter:card" content="summary_large_image"/>
-        <!--<meta-->
-        <!--        name="twitter:title"-->
-        <!--        content={`${GLOBAL.username} • ${GLOBAL.shortDescription}`}-->
-        <!--/>-->
-        <!--<meta-->
-        <!--        name="twitter:description"-->
-        <!--        content={GLOBAL.longDescription}-->
-        <!--/>-->
-        <!--<meta name="twitter:image" content={`${GLOBAL.rootUrl}/zaggonaut.png`}/>-->
-        <meta http-equiv="content-language" content="en"/>
-        <meta name="language" content="English"/>
+        <SocialSharingHeader
+                title="The Dev Exchange"
+                description={socialDescription}
+                imageUrl={socialImageUrl}
+                canonicalUrl={canonicalURL}/>
         <script is:inline>
-            sessionStorage.setItem('dev-ex.hasVisitedHome', 'true');
+          sessionStorage.setItem('dev-ex.hasVisitedHome', 'true');
         </script>
     </Fragment>
     <Header>
@@ -48,11 +42,7 @@ import Header from '../components/Header.astro';
         <FeaturedArticle/>
         <div class="border-t border-b border-black dark:border-white py-8 mb-16">
             <div class="max-w-4xl mx-auto">
-                <p class="text-sm mb-4 leading-relaxed">
-                    In this blog, we discuss some of the unique challenges we meet whilst working for a service provider
-                    on
-                    enterprise customer projects.
-                </p>
+                <p class="text-sm mb-4 leading-relaxed">{blogDescription}</p>
                 <p class="text-sm leading-relaxed">
                     <span class="font-bold">Who is "we?"</span> —&gt; Software engineers working at
                     <a href="https://www.zuehlke.com/" target="_blank" class="underline hover:no-underline">Zühlke</a>.

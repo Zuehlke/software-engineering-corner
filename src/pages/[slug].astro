@@ -8,6 +8,7 @@ import { dateFormat } from '../lib/date-format.helper';
 import Header from '../components/Header.astro';
 import { BackButton } from '../components/BackButton';
 import { timeToRead } from '../lib/reading-time';
+import SocialSharingHeader from '../components/SocialSharingHeader.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -24,37 +25,28 @@ const {Content} = await render(post);
 const {title, cover, shortDescription} = post.data;
 
 const socialImage = await getImage({
-    src: cover,
-    width: 1200,
-    height: 630,
-    format: 'jpg',
-    quality: 85
+  src: cover,
+  width: 1200,
+  height: 630,
+  format: 'jpg',
+  quality: 85,
 });
+const socialImageUrl = new URL(socialImage.src, Astro.site);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <Layout>
     <Fragment slot="head">
-        <title>{title}</title>
-        <meta name="description" content={shortDescription} />
-
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={shortDescription} />
-        <meta property="og:image" content={new URL(socialImage.src, Astro.site)} />
-        <!--<meta property="og:url" content={url} />-->
-        <meta property="og:type" content="article" />
-
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={shortDescription} />
-        <meta name="twitter:image" content={new URL(socialImage.src, Astro.site)} />
-
-        <meta http-equiv="content-language" content="en"/>
-        <meta name="language" content="English"/>
+        <SocialSharingHeader
+                title={title}
+                description={shortDescription}
+                imageUrl={socialImageUrl}
+                canonicalUrl={canonicalURL}/>
     </Fragment>
     <Fragment slot="header">
         <Header>
             <div class="flex font-display font-medium gap-4 flex-row px-0 mt-0">
-                <BackButton client:only="react" />
+                <BackButton client:only="react"/>
             </div>
         </Header>
     </Fragment>
@@ -70,7 +62,7 @@ const socialImage = await getImage({
               {title}
             </h1>
         </div>
-        <p class="">By {post.data.author}</p>
+        <p>By {post.data.author}</p>
         <p class="mb-8">{dateFormat(post.data.released)} • {timeToRead(post)}min read</p>
         <Prose>
             <Content/>
