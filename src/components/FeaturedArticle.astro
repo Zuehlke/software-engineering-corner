@@ -10,7 +10,7 @@ import { timeToRead } from '../lib/reading-time';
             <div class="space-y-2 text-sm"><p>By {featuredArticle.data.author}</p>
                 <p>{dateFormat(featuredArticle.data.released)} • {timeToRead(featuredArticle)} min read</p></div>
             <div class="mt-8">
-                <a href={featuredArticle.id}
+                <a href={`${featuredArticle.id}/`}
                    class="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors
                    h-10 bg-zag-dark dark:bg-white text-white dark:text-black
                    border-2 border-zag-dark dark:border-white hover:bg-white dark:hover:bg-zag-dark hover:text-black dark:hover:text-white text-sm py-2 px-4">

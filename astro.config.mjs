@@ -18,6 +18,8 @@ export default defineConfig({
 
   integrations: [react(), expressiveCode(), mdx()],
 
+  trailingSlash: 'always',
+
   image: {
     service: {
       entrypoint: 'astro/assets/services/sharp',
