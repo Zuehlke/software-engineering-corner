@@ -1,7 +1,7 @@
 ---
 title: Digital Twins .. or why doing things twice is sometimes more efficient
 domain: software-engineering-corner.hashnode.dev
-tags: agile development, programming languages, hardware, best practices
+tags: agile-development, programming-languages, hardware, best-practices
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1747223913763/rWSPApSkf.avi?auto=format
 publishAs: sernst-zch
 saveAsDraft: true
