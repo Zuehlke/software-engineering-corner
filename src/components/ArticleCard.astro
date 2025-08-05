@@ -10,7 +10,7 @@ type Props = {
 
 const {post} = Astro.props;
 ---
-<a href={post.id} class="article-card rounded-none text-black dark:text-white bg-white dark:bg-zag-dark border-2 border-zag-dark dark:border-white
+<a href={`${post.id}/`} class="article-card rounded-none text-black dark:text-white bg-white dark:bg-zag-dark border-2 border-zag-dark dark:border-white
    hover:bg-zag-dark dark:hover:bg-white hover:text-white dark:hover:text-black transition-colors duration-300
    cursor-pointer group z-0">
     <div class="p-0">
