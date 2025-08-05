@@ -14,7 +14,7 @@ const {post} = Astro.props;
    hover:bg-zag-dark dark:hover:bg-white hover:text-white dark:hover:text-black transition-colors duration-300
    cursor-pointer group z-0">
     <div class="p-0">
-        <div class="article-image relative overflow-hidden h-48" transition:name={`${post.id}-image`}>
+        <div class="article-image relative overflow-hidden h-48">
             <Image src={post.data.cover} alt="Cover image" class="aspect-video object-cover w-full"
                    width="800"
                    height="450"
