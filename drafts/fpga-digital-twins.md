@@ -13,10 +13,10 @@ enableToc: true
 
 Hardware engineers as well as FPGA[<sup>1</sup>](#glossary) engineers have the reputation of not fitting well into agile development sprints.
 How should one create a PCB[<sup>2</sup>](#glossary) within a week?
-Siimilarely for FPGA engineering, we sometimes have longer to work for a shippable increment.
+Similarely for FPGA engineering, we sometimes have longer to work for a shippable increment.
 Coding VHDL or Verilog is bit-banging, both are hardware description languages, there is barely any abstraction from the language provided and basically reduced to connecting wires to flip-flops.
 In contradiction, the thing that everyone wants to know before the project even starts, is:
-"How many FPGA ressources will we need and how expensive is the device going to be?".
+"How many FPGA resources will we need and how expensive is the device going to be?".
 I can't tell. I don't even know if the paper-concept, that we created at the kick-off, works in real life.
 It's like building a medieval castle with only stones and mortar and no exact building plan.
 You only know once the project is finished, how long it took and how many stones were needed... and if it was feasible at all.
@@ -31,7 +31,7 @@ It shall be big, they have five horses, and they are 7 people.
 *"Be quicketh or Thy head shall tumble"* and the deal was made.
 <br><br>
 Well, how do you proceed?
-Waterfall methology states, that we build first, then verify and test.
+Waterfall methodology states, that we build first, then verify and test.
 So, you begin carving stones.  
 You carve and carve, carry the finished blocks over long distances from the quarry to the site, put one on top of another, build walls, roofs and polish the door handles.
 Finally, after a year or three, the castle is finished.
@@ -54,8 +54,8 @@ The surveillance application on the main processor-module shall only receive UDP
 
 We could now start the same way as our poor friends a thousand years ago did.
 We would start up our VHDL code machines, carve lines after lines, create a super solid foundation to receive ethernet frames, have the PLLs[<sup>5</sup>](#glossary) lock and the data passing through the device with line speed and no bit-errors.
-This is a time consuming tasks, as everything has to be aligned with the hardware already and the hardware specific properties of the target environment resp. the evaluation board.
-Three weeks in the project and the led is blinking on the evaluation board, and the VHDL testbench features a few testcases to prove the UDP filter works.
+This is a time-consuming tasks, as everything must be aligned with the hardware already and the hardware specific properties of the target environment resp. the evaluation board.
+Three weeks in the project and the LED is blinking on the evaluation board, and the VHDL testbench features a few testcases to prove the UDP filter works.
 So far so good.
 Now, while trying to test the device with our noble customers, we find out that not only IPv4 but also IPv6 shall be supported.
 Additionally, as soon as we hooked up our prototype to the test network in the hospital for the first field tests, random ARP frames would pass the filter unharmed, as the payload data by coincidence matches the destination port comparison.
@@ -70,12 +70,12 @@ The huge python ecosystem can abstract all the foundation and swamp problems, ad
 I think you start to get the concept. We are turning the waterfall upside down.
 Test-driven design shapes our implementation and from there we observe very quickly how the device acts in real life against our concept / requirements.
 And because we now use python, we are much faster in adapting our implementation.
-Python is a high-level language and it's ecosystem makes it very convenient to "just hack something". Not even mentioning AI GPT's that fluently speak Python but rarely VHDL.
-The digital twin can be seen as a "dry-run" before we actually start carving out lines of VHDL.
+Python is a high-level language and its ecosystem makes it very convenient to "just hack something". Not even mentioning AI GPTs that fluently speak Python but rarely VHDL.
+The digital twin can be seen as a "dry run" before we actually start carving out lines of VHDL.
 
 ### Walkthrough
 
-Enough theory and funny words, let's walk through from A-Z for our patient supervision case.
+Enough theory and funny words; let's walk through from A-Z for our patient supervision case.
 The filter we want to design, shall only pass valid UDP frames with a specific destination port.
 
 Instead of building the filter right away, let us start to create a testbench and generate (synthetic) data first:
@@ -127,15 +127,15 @@ packet_list.append(Ether(src="22:11:11:11:00:01", dst="22:22:22:22:00:02")/IP(sr
 wrpcap("./test_input.pcap", packet_list, linktype=1)
 ```
 
-With [scapy](https://scapy.net/), we can craft new headers like `Ether(dst, src, type)` or `IP(src, dst, ...)` and concatinate them with the division operator `Ether()/IP()`.
+With [scapy](https://scapy.net/), we can craft new headers like `Ether(dst, src, type)` or `IP(src, dst, ...)` and concatenate them with the division operator `Ether()/IP()`.
 The `raw` header lets us append or inject any length of bytes to our desire.
 Scapy's utils package provides us with `wrpcap()`. This function takes a list of packets and writes them to a PCAP file, which you can open with wireshark.
 Similarly, `rdpcap()` will read those packets back into scapys packetList format.
 The file `test_input.pcap` will now have around 200 packets, which we use as testdata for our filter. The good thing is, this testbench can later be reused together with [cocoTb](https://www.cocotb.org/) to run VHDL code next to it and compare the output with our golden device, the python implementation.
 <br><br>
 Important when designing a digital twin for an FPGA is now, that we make use of the python ecosystem, but won't take too many shortcuts.
-We want to keep the FPGA ressources and capabilites in mind.
-A simple one-liner in python might do the trick as well, but we wouldn't get any insights of the ressources needed in VHDL for this.
+We want to keep the FPGA resources and capabilities in mind.
+A simple one-liner in python might do the trick as well, but we wouldn't get any insights of the resources needed in VHDL for this.
 
 First, let's define a function prototype that takes an input file path, an output file path for frames that shall be forwarded (pass the filter) and one for frames that are dropped by the filter (rejected by the filter).
 Additionally, we need the valid destination port number to compare the UDP header to.
@@ -472,12 +472,12 @@ async def test_passthrough(dut):
 # Conclusion
 Digital twins can help to understand the core problem(s) and risks much faster and easier than straight VHDL coding from the beginning.
 By leveraging the flexibility and popularity of python, we can reduce the time spent on VHDL coding to a minimum.
-Using testframeworks like cocotb further ease the development cycle in a way, that we can create big and diverse testcases much faster and easier than using pure VHDL or Verilog based testcases.  
+Using test frameworks like cocotb further ease the development cycle in a way, that we can create big and diverse testcases much faster and easier than using pure VHDL or Verilog based testcases.  
 
 # glossary
-[1] : FPGA - field programmable gate array, a computerchip like an ASIC, but reconfigurable<br/>
+[1] : FPGA - field programmable gate array, a computer chip like an ASIC, but reconfigurable<br/>
 [2] : PCB - Printed Circuit Board<br/>
 [3] : ICU - Intensive care unit<br/>
-[4] : UDP - User Datagram Protocol - a connectionless OSI-layer 4 protocoll<br/>
+[4] : UDP - User Datagram Protocol - a connectionless OSI-layer 4 protocol<br/>
 [5] : PLL - Phase-locked loop - a circuit to synchronize or multiply clock frequencies<br/>
 [6] : PCAP - a file format (and API) for packet capture, used by e.g. tcpdump and wireshark<br/>
