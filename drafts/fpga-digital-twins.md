@@ -88,7 +88,7 @@ from scapy.layers.inet6 import *
 
 import udp_port_filter
 
-valid_dst_port = 1234
+valid_udp_dst_port = 1234
 
 packet_list = []
 
@@ -107,7 +107,7 @@ packet_list.append(Ether(src="22:11:11:11:00:01", dst="22:22:22:22:00:02")/IPv6(
 # IPv4 with random destination port, random payload (and -length). Destination port is not the one we want, all should be dropped
 while len(packet_list) < sample_size+3:
     dport = random.randint(0, 65535)
-    if dport != tb.dut.valid_udp_dst_port:
+    if dport != valid_udp_dst_port:
         packet_list.append(Ether(src="22:11:11:11:00:01", dst="22:22:22:22:00:02")/IPv6(src="fe80::10", dst="fe80::15")/UDP(sport=random.randint(1,65535), dport=dport)/raw(random.randbytes(random.randint(0, 1400))))
 
 # append one good one
@@ -116,7 +116,7 @@ packet_list.append(Ether(src="22:11:11:11:00:01", dst="22:22:22:22:00:02")/IPv6(
 # IPv6 with all ports, random payload (and -length). Destination port is not the one we want, all should be dropped
 while len(packet_list) < sample_size*2+4:
     dport = random.randint(0, 65535)
-    if dport != tb.dut.valid_udp_dst_port:
+    if dport != valid_udp_dst_port:
         packet_list.append(Ether(src="22:11:11:11:00:01", dst="22:22:22:22:00:02")/IP(src="192.168.1.10", dst="192.168.1.15")/UDP(sport=random.randint(1,65535), dport=dport)/raw(random.randbytes(random.randint(0, 1400))))
 
 # append one good one
@@ -200,6 +200,12 @@ wrpcap(output_file_drop, dropped_frame_list, linktype=DLT_EN10MB)
 
 That's it.
 
+Now we would just have to add our digital twin to it and call the process function.
+
+```python
+udp_port_filter.process("./test_input.pcap", "./test_output_forward.pcap", "./test_output_drop.pcap", tb.dut.valid_udp_dst_port)
+```
+
 running the testbench with our filter at the end will give the following result:
 
 ```bash
@@ -213,7 +219,7 @@ Instead of generating our testdata from within the testbench, we could feed it w
 
 ### Reusing the python testbench with cocoTb
 
-Once we validated, that the virtual twin does, what we want, we can craft our VHDL code.
+Once we validated, that the virtual twin does what we want, we can craft our VHDL code.
 The benefit is, we exactly know what we need to do and how input, intermediate results and output shall look like.
 As mentioned above, to test the finished VHDL implementation, we can reuse our digital twin testbench.
 cocotb has a few examples in their github repository under https://github.com/cocotb/cocotb/tree/master/examples.
