@@ -1,0 +1,29 @@
+---
+import ThemeToggle from './ThemeToggle';
+---
+<style is:inline>
+    ::view-transition-group(header) {
+        z-index: 10;
+    }
+</style>
+<header class="bg-zag-light dark:bg-zag-dark zag-transition zag-border-b sticky top-0 w-full z-50 h-16"
+        transition:name="header">
+  <nav class="max-w-full lg:max-w-[96rem] px-8 zag-border-b relative inset-x-0 top-0 h-auto flex justify-between gap-8 py-4 text-xl flex-row mx-auto pt-4 border-none">
+    <slot/>
+    <div class="flex gap-4 justify-between px-0 text-sm items-center">
+      <a href="https://www.zuehlke.com/en" target="_blank" class="hidden sm:block">ZÜHLKE</a>
+      <a href="https://www.zuehlke.com/en/careers" target="_blank" class="hidden sm:block">CAREERS</a>
+      <a href="/rss.xml"
+         class="focus:outline-2 focus:outline-offset-2 focus:outline-slate-800 dark:focus:outline-slate-200">
+        <svg fill="none" height="30" stroke="currentColor" stroke-linecap="round"
+             stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="30"
+             xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 11a9 9 0 0 1 9 9"/>
+          <path d="M4 4a16 16 0 0 1 16 16"/>
+          <circle cx="5" cy="19" r="1"/>
+        </svg>
+      </a>
+      <ThemeToggle client:load/>
+    </div>
+  </nav>
+</header>
