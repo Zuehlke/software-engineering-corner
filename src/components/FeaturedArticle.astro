@@ -2,11 +2,23 @@
 import { featuredArticle } from '../lib/list';
 import { dateFormat } from '../lib/date-format.helper';
 import { timeToRead } from '../lib/reading-time';
+import { Image } from "astro:assets";
 ---
 <div class="my-16 mx-auto">
-    <div class="grid lg:grid-cols-2 gap-8 items-center">
+    <div class="relative overflow-hidden md:hidden mb-2">
+        <img alt="Cover image of featured article"
+             loading="lazy" decoding="async"
+             class="h-fit max-h-96 w-full inset-0 text-transparent object-cover object-center"
+             src={featuredArticle.data.cover.src}>
+        <div class="absolute bottom-0 left-0 right-0 h-4/5 bg-gradient-to-t from-zag-dark to-transparent"></div>
+        <h1 class="absolute bottom-5 mx-2 text-base sm:text-2xl leading-normal font-display scroll-m-24 text-zag-light"
+            id="_top">
+            {featuredArticle.data.title}
+        </h1>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8 items-center">
         <div>
-            <h2 class="text-2xl md:text-3xl mb-6 font-display text-balance">{featuredArticle.data.title}</h2>
+            <h2 class="text-base lg:text-3xl mb-6 font-display text-balance hidden md:block">{featuredArticle.data.title}</h2>
             <div class="space-y-2 text-sm"><p>By {featuredArticle.data.author}</p>
                 <p>{dateFormat(featuredArticle.data.released)} • {timeToRead(featuredArticle)} min read</p></div>
             <div class="mt-8">
@@ -18,10 +30,10 @@ import { timeToRead } from '../lib/reading-time';
                 </a>
             </div>
         </div>
-        <div class="relative row-start-1 lg:row-start-auto w-full">
+        <div class="relative row-start-1 md:row-start-auto w-full hidden md:block border-2 dark:border-zag-light border-zag-dark">
             <img alt="Cover image of featured article"
                  loading="lazy" decoding="async"
-                 class="h-fit max-h-96 w-full inset-0 text-transparent object-cover"
+                 class="h-fit max-h-96 w-full inset-0 text-transparent object-cover object-center"
                  src={featuredArticle.data.cover.src}>
         </div>
     </div>
