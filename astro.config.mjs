@@ -8,6 +8,8 @@ import expressiveCode from "astro-expressive-code";
 
 import mdx from "@astrojs/mdx";
 
+import sitemap from "@astrojs/sitemap";
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://thedevexchange.com',
@@ -16,7 +18,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [react(), expressiveCode(), mdx()],
+  integrations: [react(), expressiveCode(), mdx(), sitemap()],
 
   trailingSlash: 'always',
 

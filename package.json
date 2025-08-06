@@ -11,6 +11,7 @@
     "@astrojs/mdx": "^4.3.0",
     "@astrojs/react": "^4.3.0",
     "@astrojs/rss": "^4.0.12",
+    "@astrojs/sitemap": "^3.4.2",
     "@stackblitz/sdk": "^1.11.0",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.8",
