@@ -47,6 +47,7 @@ tags: <list of tags (they dont do anything yet)>
 shortDescription: <short description for sharing preview (twitter, facebook, linkedin) max 200 characters>
 ---
 ```
+Please add this to the start of your article. For reference, please refer to the format of already published articles. 
 
 ## Top Tip
 
