@@ -235,13 +235,13 @@ It helps you to focus on what’s actually required (KISS), prevents you from bu
 
 ![The Test Pyramid (Image is licensed under the Creative Commons Attribution-Share Alike 4.0 International license)](images/1749947403888-6zx60lmus6s.png)
 
-* Pay close attention to the [Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html#TheTestPyramid), check if you're [getting it wrong](https://github.com/kevin-denver/software-engineering-corner/blob/ked/pair-and-mob-programming/published/are-you-getting-the-test-pyramid-wrong.md) – structure your tests appropriately.
+* Pay close attention to the [Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html#TheTestPyramid), check if you're [getting it wrong](/are-you-getting-the-test-pyramid-wrong/) – structure your tests appropriately.
   Focus on many small, fast, low-level tests, fewer wide integration tests, and a very limited number of complex, slow, end to end tests.
   You want to aim for the situation where you’re completely confident that your code does what it should, but without being brittle, taking an age to re-write, or taking an age to run.
   Running a test suite is the very first piece of fast feedback your code gets, so make sure it’s fast.
 * Keep abstraction in mind.
   Adding a field or two in an object should not mean days of test refactoring.
-* [An introduction to unit testing](https://github.com/kevin-denver/software-engineering-corner/blob/ked/pair-and-mob-programming/published/an-introduction-to-unit-testing.md)
+* [An introduction to unit testing](/an-introduction-to-unit-testing/)
 * Getting started can be daunting, especially when you’re starting from near zero – getting a good level of test coverage would take weeks on a large project.
   Typically, it’s recommended to ensure a good level (80%?) of test coverage on *each new commit* to the codebase, that way you ensure that your new stuff is of high quality, you begin to make inroads slowly, and gradually coverage improves.
   There are many tools to measure that, but a very good all-rounder is [SonarQube](https://www.sonarsource.com/products/sonarqube/) which allows you to define quality gateways whereby commits can’t be merged without that test coverage
