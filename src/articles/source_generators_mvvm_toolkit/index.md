@@ -23,7 +23,7 @@ shortDescription: >-
 ---
 # Source Generators in the MVVM Community Toolkit
 
-This blog post is a continuation of the blog post [Reducing boilerplate code with the MVVM Community Toolkit in .NET MAUI](https://software-engineering-corner.hashnode.dev/reducing-boilerplate-code-with-the-mvvm-community-toolkit-in-net-maui). It covers the Source Generator aspect of the MVVM Community Toolkit. Firstly, I am going to explain you the fundaments with some theory. Afterwards you are going to see an example from the MVVM Community Toolkit. The final chapter is going to summarize the blog post.
+This blog post is a continuation of the blog post [Reducing boilerplate code with the MVVM Community Toolkit in .NET MAUI](/mvvm_toolkit/). It covers the Source Generator aspect of the MVVM Community Toolkit. Firstly, I am going to explain you the fundaments with some theory. Afterwards you are going to see an example from the MVVM Community Toolkit. The final chapter is going to summarize the blog post.
 
 ## Table Of Contents
 
@@ -53,7 +53,7 @@ ASP.NET uses this extensively in e.g. controller classes, etc. The difference be
 Let us now have a look at an example from the MVVM Community Toolkit.
 
 The following code was taken from the last blog post mentioned in the first chapter of this blog post.
-It shows an implementation of a view model with the MVVM Community Toolkit. If you are interested in the benefits of the MVVM Community Toolkit I highly recommend you to read the [first blog post](https://software-engineering-corner.hashnode.dev/reducing-boilerplate-code-with-the-mvvm-community-toolkit-in-net-maui).
+It shows an implementation of a view model with the MVVM Community Toolkit. If you are interested in the benefits of the MVVM Community Toolkit I highly recommend you to read the [first blog post](/mvvm_toolkit/).
 
 ```csharp
 namespace CatFinder.ViewModel;

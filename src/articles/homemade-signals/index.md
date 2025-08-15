@@ -22,7 +22,7 @@ shortDescription: >-
 ---
 *First off: the code in this post is not meant to be used for production-level application but serves an educational purpose.*
 
-In [a previous blog post](https://software-engineering-corner.zuehlke.com/signals-signals-everywhere), we explored where Signals came from, what they are, and how they took over the frontend ecosystem.
+In [a previous blog post](/signals-everywhere/), we explored where Signals came from, what they are, and how they took over the frontend ecosystem.
 We already saw that they simplify keeping the UI in sync with the state, even if we skip using any other libraries.
 But today, we're taking it one step further.
 We are building rudimentary Signals from scratch to understand the underlying mechanisms.

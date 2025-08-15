@@ -23,7 +23,7 @@ shortDescription: >-
   approach.
 ---
 The API-first approach prioritizes APIs over code and puts them at the beginning of the software development process.
-Our [previous article](https://software-engineering-corner.hashnode.dev/effortless-api-first) looked at the idea behind API-first development and some first examples.
+Our [previous article](/api-first-part-1/) looked at the idea behind API-first development and some first examples.
 This article will focus on how [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator)'s new multiple specification files feature lets us organize our APIs.
 
 > Note: Release 7.1.0 that will fix [issue 16419](https://github.com/OpenAPITools/openapi-generator/issues/16419) and allows multiple specification files is expected to be released later this month 🔥 Until then, the feature is only supported by the CLI version.

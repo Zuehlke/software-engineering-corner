@@ -1,7 +1,6 @@
 ---
 title: Disagreeing Without Dividing
 subtitle: Getting on the same side of the table
-domain: software-engineering-corner.hashnode.dev
 tags: conflictresolution, engineering-leadership, team-culture, team-management, alignment, software-engineering
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1753183836454/o1wbYgDja.jpg?auto=format
 publishAs: haym

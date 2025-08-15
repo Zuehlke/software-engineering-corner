@@ -1,7 +1,6 @@
 ---
 title: Reactive Element Size Tracking in Angular with ResizeObserver and Signals
 subtitle: A modern approach to keeping dropdowns and overlays aligned with dynamic inputs
-domain: software-engineering-corner.zuehlke.com
 tags: angular, responsive-web-design, responsive-design, frontend, web-development, javascript, performance, best-practices, browser
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1745872404199/OhbgsBw-f.jpg?auto=format
 publishAs: timouti

@@ -340,5 +340,5 @@ Happy Coding!
 
 **Next**
 
-* [Develop a Web Editor With React and Monaco with Language Server support](https://software-engineering-corner.zuehlke.com/develop-a-web-editor-with-react-and-monaco-with-language-server-support)
-* [Develop a Web Editor With Angular And Monaco with Language Server support](https://software-engineering-corner.zuehlke.com/develop-a-web-editor-with-angular-and-monaco-with-language-server-support)
+* [Develop a Web Editor With React and Monaco with Language Server support](/develop-a-web-editor-with-react-and-monaco-with-language-server-support/)
+* [Develop a Web Editor With Angular And Monaco with Language Server support](/develop-a-web-editor-with-angular-and-monaco-with-language-server-support/)

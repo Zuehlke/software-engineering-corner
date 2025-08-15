@@ -368,8 +368,8 @@ Happy Coding!
 
 **Next**
 
-* [Develop a Web Editor With Angular and Monaco with Language Server support](https://software-engineering-corner.zuehlke.com/develop-a-web-editor-with-angular-and-monaco-with-language-server-support)
+* [Develop a Web Editor With Angular and Monaco with Language Server support](/develop-a-web-editor-with-angular-and-monaco-with-language-server-support/)
 
 **Previous**
 
-* [Develop your own language server](https://software-engineering-corner.zuehlke.com/develop-your-own-language-server)
+* [Develop your own language server](/develop-your-own-language-server/)
