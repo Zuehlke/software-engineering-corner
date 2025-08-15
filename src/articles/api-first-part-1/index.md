@@ -280,4 +280,4 @@ A final thought about organizing your code: Keep your generated code in a separa
 ### Conclusion
 
 As we can see, the OpenAPI Generator is a powerful tool that can be used to generate code for both server and client side.
-In the [next article](https://software-engineering-corner.hashnode.dev/multi-file-openapi-specifications) we will look at a more realistic example and how [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator) helps you to keep your specification files structured.
+In the [next article](/api-first-part-2/) we will look at a more realistic example and how [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator) helps you to keep your specification files structured.

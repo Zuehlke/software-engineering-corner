@@ -631,7 +631,7 @@ That's all for today but remember to stay tuned for more exciting articles about
 
 [angular17.1]: https://github.com/angular/angular/releases/tag/17.1.0
 
-[signalsEverywhereArticle]: https://software-engineering-corner.zuehlke.com/signals-signals-everywhere
+[signalsEverywhereArticle]: /signals-everywhere/
 
 [angularDiscussions]: https://github.com/angular/angular/discussions
 

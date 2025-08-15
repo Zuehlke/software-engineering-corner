@@ -23,7 +23,7 @@ shortDescription: >-
 
 If you are developing a domain-specific language or custom language, chances are high that current editors might not support features such as syntax highlighting, diagnostics, and code autocompletion. To enable these features, you need a Language Server Protocol (LSP) and sometimes a custom editor. In this article, we will discuss how to develop a web editor and connect it to a language server using the WebSocket protocol.
 
-To read more about this topic, visit [Develop your own language server](https://software-engineering-corner.zuehlke.com/develop-your-own-language-server).
+To read more about this topic, visit [Develop your own language server](/develop-your-own-language-server/).
 
 ### What is Monaco Editor?
 
@@ -494,8 +494,8 @@ Happy Coding!
 
 **Next**
 
-* [Develop a Web Editor With React and Monaco with Language Server support](https://software-engineering-corner.zuehlke.com/develop-a-web-editor-with-react-and-monaco-with-language-server-support)
+* [Develop a Web Editor With React and Monaco with Language Server support](/develop-a-web-editor-with-react-and-monaco-with-language-server-support/)
 
 **Previous**
 
-* [Develop your own language server](https://software-engineering-corner.zuehlke.com/develop-your-own-language-server)
+* [Develop your own language server](/develop-your-own-language-server/)
