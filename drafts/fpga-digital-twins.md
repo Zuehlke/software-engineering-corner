@@ -170,7 +170,7 @@ wrpcap("./test_input.pcap", packet_list, linktype=1)
 
 With [scapy](https://scapy.net/), we can create headers like `Ether(dst, src, type)` or `IP(src, dst, ...)` and concatenate them with the division operator `Ether()/IP()`.
 The `raw` header lets us append or inject any length of bytes.
-Scapy's utils package provides us with `wrpcap()`. This function takes a list of packets and writes them to a PCAP file, which you can open with wireshark.
+Scapy's utils package provides us with `wrpcap()`. This function takes a list of packets and writes them to a PCAP[^6] file, which you can open with wireshark.
 Similarly, `rdpcap()` will read those packets back into scapy's packetList format.
 The file `test_input.pcap` will now have around 200 packets, which we use as test data for our filter. Crucially, this testbench can later be reused together with [cocoTb](https://www.cocotb.org/) to test the VHDL implementation. In effect, the digital twin becomes the golden device, also known as a test oracle.
 
@@ -531,15 +531,14 @@ Digital twins can help to understand the core problem(s) and risks much faster a
 By leveraging the flexibility and popularity of Python, we can reduce the time spent on VHDL coding to a minimum.
 Using test frameworks like cocotb further ease the development cycle in a way, that we can create an extensive collection of testcases much faster and easier than using pure VHDL or Verilog based testcases.  
 
-# glossary
-[^1] : FPGA - field programmable gate array, a computer chip like an ASIC, but reconfigurable
+[^1]: FPGA - field programmable gate array, a computer chip like an ASIC, but reconfigurable
 
-[^2] : PCB - Printed Circuit Board
+[^2]: PCB - Printed Circuit Board
 
-[^3] : ICU - Intensive care unit
+[^3]: ICU - Intensive care unit
 
-[^4] : UDP - User Datagram Protocol - a connectionless OSI-layer 4 protocol
+[^4]: UDP - User Datagram Protocol - a connectionless OSI-layer 4 protocol
 
-[^5] : PLL - Phase-locked loop - a circuit to synchronize or multiply clock frequencies
+[^5]: PLL - Phase-locked loop - a circuit to synchronize or multiply clock frequencies
 
-[^6] : PCAP - a file format (and API) for packet capture, used by e.g. tcpdump and wireshark
+[^6]: PCAP - a file format (and API) for packet capture, used by e.g. tcpdump and wireshark
