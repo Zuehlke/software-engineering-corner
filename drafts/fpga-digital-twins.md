@@ -47,7 +47,7 @@ The horses?
 They will go into the stable in the backyard, we'll build them a nice shelt... THE BACKYARD?!
 No, no, no, the horses should have been *inside* the castle! We don't want to leave them unprotected outside! It's a castle after all! And where do our 14 servants live? Surely we didn't need to mention that we never take care of the horses by ourselves.
 
-Oh boy. Good thing we have python nowadays!
+Oh boy. Good thing we have Python nowadays!
 
 ### A more realistic example: ICU patient supervision
 
@@ -172,13 +172,13 @@ With [scapy](https://scapy.net/), we can create headers like `Ether(dst, src, ty
 The `raw` header lets us append or inject any length of bytes.
 Scapy's utils package provides us with `wrpcap()`. This function takes a list of packets and writes them to a PCAP[^6] file, which you can open with wireshark.
 Similarly, `rdpcap()` will read those packets back into scapy's packetList format.
-The file `test_input.pcap` will now have around 200 packets, which we use as test data for our filter. Crucially, this testbench can later be reused together with [cocoTb](https://www.cocotb.org/) to test the VHDL implementation. In effect, the digital twin becomes the golden device, also known as a test oracle.
+The file `test_input.pcap` will now have around 200 packets, which we use as test data for our filter. Crucially, this testbench can later be reused together with [cocotb](https://www.cocotb.org/) to test the VHDL implementation. In effect, the digital twin becomes the golden device, also known as a test oracle.
 
 #### Creating the digital twin
 
-When designing a digital twin for an FPGA, it's very important that we don't take too many shortcuts leveraging the python ecosystem.
+When designing a digital twin for an FPGA, it's very important that we don't take too many shortcuts leveraging the Python ecosystem.
 We want to keep the FPGA resources and capabilities in mind.
-A simple one-liner in python might do the trick as well, but we wouldn't gain any insights into the resources needed in VHDL for this.
+A simple one-liner in Python might do the trick as well, but we wouldn't gain any insights into the resources needed in VHDL for this.
 
 First, let's define a function prototype with the following parameter:
 
@@ -267,12 +267,12 @@ Drop: 203 frames
 With less than 100 lines of code, we built a complete virtual twin with testbench.
 Instead of generating our test data, we could also feed our testbench with real-world data captured using utilities like tcpdump, wireshark or specialized hardware.
 
-### Reusing the python testbench with cocoTb
+### Reusing the Python testbench with cocotb
 
 Once we validated our digital twin, we can write our VHDL code.
 With our digital twin, we get additional insights about intermediate results, the algorithm itself and how input and output shall look like.
-To finally test the finished VHDL implementation, we can reuse our digital twin testbench by integrating cocoTb.
-There are a few examples on how to use cocotb in the github repository under https://github.com/cocotb/cocotb/tree/master/examples.
+To finally test the finished VHDL implementation, we can reuse our digital twin testbench by integrating cocotb.
+There are a few examples on how to use cocotb in the github repository under (https://github.com/cocotb/cocotb/tree/master/examples).
 
 All of them have a `cocotb.test()` routine, which is executed either by the framework in Makefile based testbenches or via runner on runner based testbenches (https://docs.cocotb.org/en/stable/runner.html).
 The example below is a Makefile based testbench.
@@ -288,7 +288,7 @@ Both are launched via `cocotb.start_soon()`.
 The expected results are generated inside the `test_passthrough()` function on the line:  
 `udp_port_filter.process("./test_input.pcap", "./test_output_forward.pcap", "./test_output_drop.pcap", tb.dut.valid_udp_dst_port)`
 
-This is the same line as we used before in our digital twin testbench to call the python version of our code.
+This is the same line as we used before in our digital twin testbench to call the Python version of our code.
 Running this (with the right Makefile and a VHDL implementation of the udp filter) will result in something like this:
 
 ```text
@@ -321,7 +321,7 @@ The following listing shows the full source file:
 
 ```python
 # Testbench for udp_port_filter for cocotb.
-# Testbench will setup simulation and then generate testdata and expected results by using the python model udp_port_filter.py
+# Testbench will setup simulation and then generate testdata and expected results by using the Python model udp_port_filter.py
 # Data is sent via AXI-Stream, Results as well as input data are written to PCAP Files.
 
 import logging
@@ -496,7 +496,7 @@ async def test_passthrough(dut):
     # save stimuli to file
     wrpcap("./test_input.pcap", packet_list, linktype=1)
 
-    # run the python model to get the expected results
+    # run the Python model to get the expected results
     udp_port_filter.process("./test_input.pcap", "./test_output_forward.pcap", "./test_output_drop.pcap", tb.dut.valid_udp_dst_port)
 
     # convert scapy to raw (bytearray)
@@ -526,7 +526,8 @@ async def test_passthrough(dut):
     return
 ```
 
-# Conclusion
+## Conclusion
+
 Digital twins can help to understand the core problem(s) and risks much faster and easier than straight VHDL coding from the beginning.
 By leveraging the flexibility and popularity of Python, we can reduce the time spent on VHDL coding to a minimum.
 Using test frameworks like cocotb further ease the development cycle in a way, that we can create an extensive collection of testcases much faster and easier than using pure VHDL or Verilog based testcases.  
