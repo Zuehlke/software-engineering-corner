@@ -1,13 +1,9 @@
 ---
 title: Disagreeing Without Dividing
 description: >-
-  Language Server Protocol (LSP) standardizes communication between development
-  tools and language-specific logic, enabling features like autocompletion and
-  syntax checking. By implementing LSP, language developers can create a single
-  language server that integrates with multiple IDEs, reducing the effort
-  required to support various development environments. A basic language server
-  can be implemented using libraries like LSP4J and exposed via WebSockets,
-  allowing integration with web-based editors.
+  Disagreements in software consultancy are inevitable, but they don’t have to be a battle of being right.
+  By shifting from defending our perspective to leading with curiosity, we create space for trust, collaboration, and wiser decisions.
+  Listening deeply not only defuses tension but also helps uncover insights we might otherwise miss, turning conflict into an opportunity for stronger partnerships and better outcomes.
 released: '2025-09-15T00:00:00.000Z'
 cover: images/cover.png
 author: Mavis Hayrettin
@@ -19,9 +15,7 @@ tags:
   - alignment
   - software-engineering
 shortDescription: >-
-  Learn to develop a custom Language Server using LSP4J and Spring Boot. This
-  guide covers implementing core language features like auto-completion via
-  WebSocket.
+  Disagreement isn’t failure, it’s a chance to lead with curiosity, build trust, and find shared understanding in teams and with clients.
 ---
 
 In the world of software engineering, especially within a consultancy environment, disagreement in a project is inevitable. We often treat disagreement as a problem to be fixed, rather than a signal to _listen better_. But how should we handle these disagreements and get on the same side of the table? 
