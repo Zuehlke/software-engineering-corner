@@ -1,8 +1,10 @@
-# Belimo and Zühlke: How to win with #FlutterInProduction 
+# Belimo and Zühlke: How to wAll these combinations lead to more than 10'000 ways the app can be used.
+
+![Combinations diagram showing various app usage scenarios](images/combinations-diagram.png)with #FlutterInProduction 
 
 Belimo is a global market leader in developing, producing, and selling field devices for energy-efficient control of heating, ventilation, and air conditioning (HVAC) systems. Its core products include damper actuators, control valves, sensors, and meters. Despite its success, Belimo recognised the need to enhance its digital products to offer the best possible experience for its end-users and expand its competitive edge. 
 
-<img src="image.png" alt="Belimo overview" width="400">
+<img src="images/belimo-overview.png" alt="Belimo overview" width="400">
 
 # The Launch of Belimo Assistant 2 
 
@@ -10,16 +12,16 @@ By working together, Belimo and Zühlke realized the Belimo Assistant 2 app and 
 
 The core use case of the app is reading and updating the field device configuration via a smartphone or tablet by communicating directly with the field device via NFC or Bluetooth or using the ZIP-BT-NFC Bluetooth to NFC converter.
 
-<img src="image-1.png" alt="Mobile app interface" width="400">
-<img src="image-2.png" alt="Device communication flow" width="400">
+<img src="images/mobile-app-interface.png" alt="Mobile app interface" width="400">
+<img src="images/device-communication-flow.png" alt="Device communication flow" width="400">
 
 Windows PCs can connect either directly to a field device or scan the Belimo MP Bus for devices using the Belimo ZTH Gateway. 
 
-<img src="image-3.png" alt="Windows PC connection setup" width="500">
+<img src="images/windows-pc-connection.png" alt="Windows PC connection setup" width="500">
 
 After reading the device, the app provides the user with an overview of the most relevant information, the general health of the device, and a predefined set of workflows for specific configurations.  
 
-<img src="image-10.png" alt="Device overview and workflow interface" width="500">
+<img src="images/device-overview-workflow.png" alt="Device overview and workflow interface" width="500">
 
 # Pushing Flutter to its limits 
 
@@ -44,7 +46,7 @@ To meet these requirements, we implemented a layered architecture consisting of:
 * Business Logic Layer: Device configuration and guided workflow components
 * Communication Layer: Separate modules for device and cloud communication 
 
-<img src="image-11.png" alt="App architecture layers diagram" width="600">
+<img src="images/app-architecture-layers.png" alt="App architecture layers diagram" width="600">
 
 The following sections describe how each layer contributes to fulfilling the non-functional requirements. 
 
@@ -56,7 +58,7 @@ To facilitate rapid design iterations and stakeholder feedback, we created a Com
 
 This approach enabled quick design iterations and clear communication with stakeholders before implementing components in the main app. 
 
-<img src="image-12.png" alt="UI Library companion app" width="500">
+<img src="images/ui-library-companion.png" alt="UI Library companion app" width="500">
 
 Making the design responsive was important for Windows PC users who can freely resize the application window.  
 
@@ -78,7 +80,7 @@ Performing automated tests with physical devices is challenging, especially main
 
 With the goal to automate as many tests as possible, we have set up a test laboratory with hardware-in-the-loop (HIL) tests for USB communication. The test laboratory consisted of a laptop connected to multiple devices via USB, with programmatic control over device connections and power supply. The laptop was configured as self-hosted GitHub runner allowing us to run the tests directly from GitHub Actions. While it took several months to stabilise this testing environment, the investment significantly improved our quality assurance process and confidence in the device communication module. 
 
-<img src="test-lab.png" alt="Hardware-in-the-loop test laboratory setup" width="600">
+<img src="images/hardware-test-laboratory.png" alt="Hardware-in-the-loop test laboratory setup" width="600">
 
 # Cloud communication: enabling offline operations 
 
