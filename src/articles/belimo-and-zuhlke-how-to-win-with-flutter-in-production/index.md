@@ -29,7 +29,7 @@ With 40 device families supported by the app, the most significant technical cha
 
 All these combinations lead to more than 10’000 ways the app can be used.
 
-![alt text](image-6.png)
+![alt text](image-5.png)
 
 # Structure of the app: meeting core requirements 
 
