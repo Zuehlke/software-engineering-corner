@@ -1,6 +1,4 @@
-# Belimo and Zühlke: How to wAll these combinations lead to more than 10'000 ways the app can be used.
-
-![Combinations diagram showing various app usage scenarios](images/combinations-diagram.png)with #FlutterInProduction 
+# Belimo and Zühlke: How to with #FlutterInProduction 
 
 Belimo is a global market leader in developing, producing, and selling field devices for energy-efficient control of heating, ventilation, and air conditioning (HVAC) systems. Its core products include damper actuators, control valves, sensors, and meters. Despite its success, Belimo recognised the need to enhance its digital products to offer the best possible experience for its end-users and expand its competitive edge. 
 
