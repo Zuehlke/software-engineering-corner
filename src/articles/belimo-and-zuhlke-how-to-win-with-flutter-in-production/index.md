@@ -1,8 +1,30 @@
+---
+title: Belimo and Zühlke - How to win with FlutAll these combinations lead to more than 10'000 ways the app can be used.
+description: >-
+  Discover how Belimo and Zühlke developed Belimo Assistant 2, a cross-platform
+  Flutter app that pushes the framework to its limits with low-level device
+  communication, proprietary protocols, and industrial-grade requirements across
+  40 device families and 10,000+ usage combinations.
+released: '2025-09-19T10:00:00.000Z'
+cover: images/belimo-overview.png
+author: Djordje Madic
+tags:
+  - flutter
+  - mobile
+  - cross-platform
+  - industrial
+  - bluetooth
+  - nfc
+shortDescription: >-
+  How Belimo and Zühlke built an industrial Flutter app with low-level device
+  communication, supporting 40 device families across 10,000+ combinations.
+---
+
 # Belimo and Zühlke: How to with #FlutterInProduction 
 
 Belimo is a global market leader in developing, producing, and selling field devices for energy-efficient control of heating, ventilation, and air conditioning (HVAC) systems. Its core products include damper actuators, control valves, sensors, and meters. Despite its success, Belimo recognised the need to enhance its digital products to offer the best possible experience for its end-users and expand its competitive edge. 
 
-<img src="images/belimo-overview.png" alt="Belimo overview" width="400">
+![Belimo overview](images/belimo-overview.png)
 
 # The Launch of Belimo Assistant 2 
 
@@ -10,16 +32,16 @@ By working together, Belimo and Zühlke realized the [Belimo Assistant 2](https:
 
 The core use case of the app is reading and updating the field device configuration via a smartphone or tablet by communicating directly with the field device via NFC or Bluetooth or using the ZIP-BT-NFC Bluetooth to NFC converter.
 
-<img src="images/mobile-app-interface.png" alt="Mobile app interface" width="400">
-<img src="images/device-communication-flow.png" alt="Device communication flow" width="400">
+![Mobile app interface](images/mobile-app-interface.png)
+![Device communication flow](images/device-communication-flow.png)
 
 Windows PCs can connect either directly to a field device or scan the Belimo MP Bus for devices using the Belimo ZTH Gateway. 
 
-<img src="images/windows-pc-connection.png" alt="Windows PC connection setup" width="500">
+![Windows PC connection setup](images/windows-pc-connection.png)
 
 After reading the device, the app provides the user with an overview of the most relevant information, the general health of the device, and a predefined set of workflows for specific configurations.  
 
-<img src="images/device-overview-workflow.png" alt="Device overview and workflow interface" width="500">
+![Device overview and workflow interface](images/device-overview-workflow.png)
 
 # Pushing Flutter to its limits 
 
@@ -29,7 +51,7 @@ With 40 device families supported by the app, the most significant technical cha
 
 All these combinations lead to more than 10’000 ways the app can be used.
 
-<img src="images/combinations-diagram.png" alt="Belimo overview">
+![Combinations diagram](images/combinations-diagram.png)
 
 # Structure of the app: meeting core requirements 
 
@@ -44,7 +66,7 @@ To meet these requirements, we implemented a layered architecture consisting of:
 * Business Logic Layer: Device configuration and guided workflow components
 * Communication Layer: Separate modules for device and cloud communication 
 
-<img src="images/app-architecture-layers.png" alt="App architecture layers diagram" width="600">
+![App architecture layers diagram](images/app-architecture-layers.png)
 
 The following sections describe how each layer contributes to fulfilling the non-functional requirements. 
 
@@ -56,7 +78,7 @@ To facilitate rapid design iterations and stakeholder feedback, we created a Com
 
 This approach enabled quick design iterations and clear communication with stakeholders before implementing components in the main app. 
 
-<img src="images/ui-library-companion.png" alt="UI Library companion app" width="500">
+![UI Library companion app](images/ui-library-companion.png)
 
 Making the design responsive was important for Windows PC users who can freely resize the application window.  
 
@@ -78,7 +100,7 @@ Performing automated tests with physical devices is challenging, especially main
 
 With the goal to automate as many tests as possible, we have set up a test laboratory with hardware-in-the-loop (HIL) tests for USB communication. The test laboratory consisted of a laptop connected to multiple devices via USB, with programmatic control over device connections and power supply. The laptop was configured as self-hosted GitHub runner allowing us to run the tests directly from GitHub Actions. While it took several months to stabilise this testing environment, the investment significantly improved our quality assurance process and confidence in the device communication module. 
 
-<img src="images/hardware-test-laboratory.png" alt="Hardware-in-the-loop test laboratory setup" width="600">
+![Hardware-in-the-loop test laboratory setup](images/hardware-test-laboratory.png)
 
 # Cloud communication: enabling offline operations 
 
