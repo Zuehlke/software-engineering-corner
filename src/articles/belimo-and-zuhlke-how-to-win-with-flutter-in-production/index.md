@@ -32,12 +32,12 @@ By working together, Belimo and Zühlke realized the [Belimo Assistant 2](https:
 
 The core use case of the app is reading and updating the field device configuration via a smartphone or tablet by communicating directly with the field device via NFC or Bluetooth or using the ZIP-BT-NFC Bluetooth to NFC converter.
 
-![Mobile app interface](images/mobile-app-interface.png)
-![Device communication flow](images/device-communication-flow.png)
+![Mobile app interface](images/mobile-nfc.png)
+![Device communication flow](images/mobile-ble.png)
 
 Windows PCs can connect either directly to a field device or scan the Belimo MP Bus for devices using the Belimo ZTH Gateway. 
 
-![Windows PC connection setup](images/windows-pc-connection.png)
+![Windows PC connection setup](images/windows-usb.png)
 
 After reading the device, the app provides the user with an overview of the most relevant information, the general health of the device, and a predefined set of workflows for specific configurations.  
 
