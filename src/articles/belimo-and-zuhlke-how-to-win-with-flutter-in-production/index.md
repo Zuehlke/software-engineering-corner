@@ -1,5 +1,5 @@
 ---
-title: Belimo and Zühlke - How to win with FlutAll these combinations lead to more than 10'000 ways the app can be used.
+title: Belimo and Zühlke - How to win with Flutter in production
 description: >-
   Discover how Belimo and Zühlke developed Belimo Assistant 2, a cross-platform
   Flutter app that pushes the framework to its limits with low-level device
