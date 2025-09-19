@@ -6,7 +6,7 @@ description: >-
   communication, proprietary protocols, and industrial-grade requirements across
   40 device families and 10,000+ usage combinations.
 released: '2025-09-19T10:00:00.000Z'
-cover: images/belimo-overview.png
+cover: images/cover.png
 author: Djordje Madic
 tags:
   - flutter
@@ -24,16 +24,13 @@ shortDescription: >-
 
 Belimo is a global market leader in developing, producing, and selling field devices for energy-efficient control of heating, ventilation, and air conditioning (HVAC) systems. Its core products include damper actuators, control valves, sensors, and meters. Despite its success, Belimo recognised the need to enhance its digital products to offer the best possible experience for its end-users and expand its competitive edge. 
 
-![Belimo overview](images/belimo-overview.png)
-
 # The Launch of Belimo Assistant 2 
 
 By working together, Belimo and Zühlke realized the [Belimo Assistant 2](https://www.belimo.com/us/en_US/digital-ecosystem/assistant-app) app and brought it to market in 2024. Belimo Assistant 2 is a cross-platform Flutter app for managing the entire lifecycle of Belimo field devices and replaces 3 former software solutions. It enables wired and wireless communication, on-site operation, and troubleshooting of Belimo devices on Android and Apple smartphones, tablets, and even Windows PCs. The app also integrates with the Belimo Cloud to keep the digital twin of each device up to date. 
 
 The core use case of the app is reading and updating the field device configuration via a smartphone or tablet by communicating directly with the field device via NFC or Bluetooth or using the ZIP-BT-NFC Bluetooth to NFC converter.
 
-![Mobile app interface](images/mobile-nfc.png)
-![Device communication flow](images/mobile-ble.png)
+![Mobile NFC and BLE](images/mobile-nfc-ble.png)
 
 Windows PCs can connect either directly to a field device or scan the Belimo MP Bus for devices using the Belimo ZTH Gateway. 
 
