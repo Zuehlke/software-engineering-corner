@@ -2,14 +2,17 @@
 
 Repository for our Zuehlke dev blog: [https://thedevexchange.com](https://thedevexchange.com)
 
+## Are you a first time contributor?
+
+Create a PR where you add your name to the [AUTHORS.md](./AUTHORS.md) file.
 
 ## How to add a blog post
 
-To add new blog posts, fork this repository with your GitHub user and write your blog post in your fork of this repository. 
+To add new blog posts, fork this repository with your GitHub user and write your blog post in your fork of this repository.
 If you need help with how forking works, please refer to this guide by GitHub: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo
 
 Please start your post in the directory `src/articles/<article-name>`.
-After that, you can start working on your blog post in your repository. 
+After that, you can start working on your blog post in your repository.
 
 ## Publishing the Article
 
@@ -19,10 +22,10 @@ Once you have created a PR, you will see a comment from Cloudflare with a previe
 If you're unfamiliar with this, please refer to this guide on GitHub: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request
 
 As soon as this person has reviewed your PR and everything has been resolved, the editorial team will merge it into the main branch.
-**Please note**: **Merging the PR does not mean immediate publishing**. 
-The editorial team creates a separate publishing timeline, ensuring consistent release cadence, topic diversity, and relevance. 
-Please be patient, your article will get published eventually. 
-Reach out to the editorial team privately if you need a time-sensitive publication. 
+**Please note**: **Merging the PR does not mean immediate publishing**.
+The editorial team creates a separate publishing timeline, ensuring consistent release cadence, topic diversity, and relevance.
+Please be patient, your article will get published eventually.
+Reach out to the editorial team privately if you need a time-sensitive publication.
 
 ## Local Testing
 
@@ -51,7 +54,8 @@ tags: <list of tags (they don't do anything yet)>
 shortDescription: <short description for sharing preview (twitter, facebook, linkedin) max 200 characters>
 ---
 ```
-Please add this to the start of your article. For reference, please refer to the format of already published articles. 
+
+Please add this to the start of your article. For reference, please refer to the format of already published articles.
 
 ## Top Tip
 
