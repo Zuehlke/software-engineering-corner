@@ -11,6 +11,7 @@ author: Djordje Madic
 tags:
   - flutter
   - mobile
+  - desktop
   - cross-platform
   - industrial
   - bluetooth
