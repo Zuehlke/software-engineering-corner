@@ -33,8 +33,9 @@ Astro powers the blog.
 You will need Node (or something similar, like Deno or Bun).
 
 1. Install Dependencies: `npm install`
-2. Run: `npm run dev`
-3. Go to http://localhost:4321
+2. *(optional)* To create a search index run: `npm run build`
+3. Run: `npm run dev`
+4. Go to http://localhost:4321
 
 ## Images
 
