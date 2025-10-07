@@ -1,0 +1,169 @@
+---
+// SearchModal.astro - Dedicated search modal component
+---
+
+<!-- Search Modal -->
+<div id="search-modal" class="fixed inset-0 z-50 hidden">
+  <!-- Backdrop with blur -->
+  <div id="search-backdrop" class="absolute inset-0 bg-zag-dark/20 dark:bg-zag-light/20 backdrop-blur-sm"></div>
+  
+  <!-- Modal content -->
+  <div class="relative z-10 flex items-start justify-center min-h-screen px-4 pt-16 sm:pt-24">
+    <div class="w-full max-w-2xl">
+      <!-- Search input container -->
+      <div class="modal-content bg-zag-light dark:bg-zag-dark zag-transition border-2 border-zag-dark dark:border-zag-light shadow-xl">
+        <div class="p-4">
+          <div class="relative">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search articles..."
+              class="w-full px-4 py-3 text-lg bg-transparent border-none outline-none text-zag-dark dark:text-zag-light placeholder-zag-dark-muted dark:placeholder-zag-light-muted zag-transition font-sans"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+            />
+            <button
+              id="search-close"
+              class="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 hover:bg-zag-dark-muted/10 dark:hover:bg-zag-light-muted/10 zag-transition"
+              aria-label="Close search"
+            >
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M18 6L6 18M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Search results placeholder -->
+        <div id="search-results" class="border-t-2 border-zag-dark dark:border-zag-light max-h-96 overflow-y-auto">
+          <div class="p-4 text-center text-zag-dark-muted dark:text-zag-light-muted">
+            Start typing to search articles...
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Search modal animations */
+  #search-modal {
+    animation: fadeIn 0.2s ease-out;
+  }
+  
+  #search-modal.hidden {
+    animation: fadeOut 0.2s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
+  /* Ensure proper backdrop blur support */
+  .backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  
+  /* Focus styles for search input */
+  #search-input:focus {
+    outline: none;
+  }
+  
+  /* Dark mode focus styles */
+  .dark #search-input:focus {
+    outline: none;
+  }
+</style>
+
+<script>
+  // Search modal functionality that works with Astro page transitions
+  function initSearchModal() {
+    const searchButton = document.getElementById('search-button');
+    const searchModal = document.getElementById('search-modal');
+    const searchBackdrop = document.getElementById('search-backdrop');
+    const searchClose = document.getElementById('search-close');
+    const searchInput = document.getElementById('search-input') as HTMLInputElement;
+
+    function openModal() {
+      searchModal?.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      // Focus the input after a brief delay to ensure modal is visible
+      setTimeout(() => {
+        searchInput?.focus();
+      }, 100);
+    }
+
+    function closeModal() {
+      searchModal?.classList.add('hidden');
+      document.body.style.overflow = '';
+      // Clear the search input
+      if (searchInput) {
+        searchInput.value = '';
+      }
+    }
+
+    // Remove any existing event listeners to prevent duplicates
+    const newSearchButton = searchButton?.cloneNode(true) as HTMLElement;
+    const newSearchClose = searchClose?.cloneNode(true) as HTMLElement;
+    const newSearchBackdrop = searchBackdrop?.cloneNode(true) as HTMLElement;
+    
+    if (searchButton && newSearchButton) {
+      searchButton.parentNode?.replaceChild(newSearchButton, searchButton);
+      newSearchButton.addEventListener('click', openModal);
+    }
+    
+    if (searchClose && newSearchClose) {
+      searchClose.parentNode?.replaceChild(newSearchClose, searchClose);
+      newSearchClose.addEventListener('click', closeModal);
+    }
+    
+    if (searchBackdrop && newSearchBackdrop) {
+      searchBackdrop.parentNode?.replaceChild(newSearchBackdrop, searchBackdrop);
+      newSearchBackdrop.addEventListener('click', closeModal);
+    }
+
+    // Also add click handler to the modal container itself for better UX
+    const modalContainer = searchModal?.querySelector('.flex.items-start.justify-center');
+    modalContainer?.addEventListener('click', closeModal);
+
+    // Close modal when Escape key is pressed
+    function handleKeydown(event: KeyboardEvent) {
+      if (event.key === 'Escape' && !searchModal?.classList.contains('hidden')) {
+        closeModal();
+      }
+    }
+
+    // Remove existing keydown listener and add new one
+    document.removeEventListener('keydown', handleKeydown);
+    document.addEventListener('keydown', handleKeydown);
+
+    // Prevent closing when clicking inside the modal content box
+    const modalContentBox = searchModal?.querySelector('.modal-content');
+    modalContentBox?.addEventListener('click', function(event) {
+      event.stopPropagation();
+    });
+  }
+
+  // Initialize on DOM content loaded
+  document.addEventListener('DOMContentLoaded', initSearchModal);
+  
+  // Re-initialize after Astro page transitions
+  document.addEventListener('astro:page-load', initSearchModal);
+</script>
