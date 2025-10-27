@@ -5,7 +5,7 @@ description: >-
   Flutter app that pushes the framework to its limits with low-level device
   communication, proprietary protocols, and industrial-grade requirements across
   40 device families and 10,000+ usage combinations.
-released: '2025-09-19T10:00:00.000Z'
+released: '2025-10-27T10:00:00.000Z'
 cover: images/cover.png
 author: Djordje Madic
 tags:
