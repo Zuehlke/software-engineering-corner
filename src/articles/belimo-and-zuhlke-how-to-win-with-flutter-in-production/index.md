@@ -21,7 +21,7 @@ shortDescription: >-
   communication, supporting 40 device families across 10,000+ combinations.
 ---
 
-# Belimo and Zühlke: How to with #FlutterInProduction 
+# Belimo and Zühlke: How to win with #FlutterInProduction 
 
 Belimo is a global market leader in developing, producing, and selling field devices for energy-efficient control of heating, ventilation, and air conditioning (HVAC) systems. 
 Its core products include damper actuators, control valves, sensors, and meters. 
