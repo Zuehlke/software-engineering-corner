@@ -1,0 +1,193 @@
+---
+import Search from "astro-pagefind/components/Search";
+---
+
+<div id="search-modal" class="fixed inset-0 z-50 hidden">
+  <div id="search-backdrop" class="absolute inset-0 bg-zag-dark/20 dark:bg-zag-light/20 backdrop-blur-sm"></div>
+  
+  <div class="relative z-10 flex items-start justify-center min-h-screen px-4 pt-16 sm:pt-24">
+    <div class="w-full max-w-2xl">
+      <div class="modal-content bg-zag-light dark:bg-zag-dark zag-transition border-2 border-zag-dark dark:border-zag-light shadow-xl">
+        <div class="relative">
+          <button
+            id="search-close"
+            class="absolute right-4 top-2 z-10 p-2 cursor-pointer hover:bg-zag-dark-muted/10 dark:hover:bg-zag-light-muted/10 zag-transition"
+            aria-label="Close search"
+          >
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
+          
+          <!-- astro-pagefind Search component -->
+          <Search id="search" className="pagefind-ui" uiOptions={{ showImages: false }} />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Search modal animations */
+  #search-modal {
+    animation: fadeIn 0.2s ease-out;
+  }
+  
+  #search-modal.hidden {
+    animation: fadeOut 0.2s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
+  /* Ensure proper backdrop blur support */
+  .backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+</style>
+<style is:global>
+  /* Overrides of the astro-pagefind component styles */
+  :root {
+   --pagefind-ui-scale: 0.8;
+   --pagefind-ui-primary: var(--color-zag-dark);
+   --pagefind-ui-text: var(--color-zag-dark);
+   --pagefind-ui-message-text: var(--color-zag-dark);
+   --pagefind-ui-result-title-text: var(--brand);
+   --pagefind-ui-result-text: var(--color-zag-dark);
+   --pagefind-ui-background: var(--color-zag-light);
+   --pagefind-input-background: var(--color-zag-light);
+   --pagefind-ui-tag: var(--color-zag-dark-muted);
+   --pagefind-ui-border: var(--color-zag-accent-light);
+   --pagefind-ui-border-width: 0;
+   --pagefind-ui-border-radius: 0;
+   --pagefind-ui-image-border-radius: 4px;
+   --pagefind-ui-image-box-ratio: 3 / 2;
+   --pagefind-ui-font: var(--font-sans);
+   --pagefind-button-background: var(--color-zag-light);
+   --pagefind-button-color: var(--color-zag-dark);
+    &:where(.dark, .dark *) {
+      --pagefind-ui-primary: var(--color-zag-light);
+      --pagefind-ui-text: var(--color-zag-light);
+      --pagefind-ui-message-text: var(--pagefind-ui-text);
+      --pagefind-ui-result-title-text: var(--color-zag-accent-dark);
+      --pagefind-ui-result-text: var(--color-zag-light);
+      --pagefind-ui-background: var(--color-zag-dark);
+      --pagefind-input-background: var(--color-zag-light);
+      --pagefind-ui-border: var(--color-zag-light);
+      --pagefind-ui-tag: var(--color-zag-light-muted);
+    }
+  }
+
+  #search .pagefind-ui__drawer {
+    padding: 0 10px;
+    max-height: 66vh;
+    overflow-y: scroll;
+    scrollbar-color: var(--color-zag-dark);
+
+    &:where(.dark, .dark *) {
+      scrollbar-color: var(--color-zag-light);
+    }
+  }
+
+  #search .pagefind-ui__search-clear {
+    visibility: hidden;
+  }
+
+  #search .pagefind-ui__search-input {
+    outline: none;
+    border-bottom: var(--zag-stroke) solid;
+    border-color: var(--color-zag-dark);
+    
+    &:where(.dark, .dark *) {
+      border-color: var(--color-zag-light);
+    }
+  }
+
+  #search .pagefind-ui__button {
+    border-top: 2px solid var(--color-zag-dark-muted);
+    margin: 5px 0;
+
+    &:where(.dark, .dark *) {
+      border-top: 2px solid var(--color-zag-light-muted);
+    }
+  }
+</style><script>
+  function initSearchModal() {
+    const searchButton = document.getElementById('search-button');
+    const searchModal = document.getElementById('search-modal');
+    const searchBackdrop = document.getElementById('search-backdrop');
+    const searchClose = document.getElementById('search-close');
+
+    function openModal() {
+      searchModal?.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      const searchInput = searchModal?.querySelector('.pagefind-ui__search-input') as HTMLInputElement;
+      searchInput?.focus();
+    }
+
+    function closeModal() {
+      searchModal?.classList.add('hidden');
+      document.body.style.overflow = '';
+
+      const searchInput = searchModal?.querySelector('.pagefind-ui__search-input') as HTMLInputElement;
+      if (searchInput) {
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    }
+
+    const newSearchButton = searchButton?.cloneNode(true) as HTMLElement;
+    const newSearchClose = searchClose?.cloneNode(true) as HTMLElement;
+    const newSearchBackdrop = searchBackdrop?.cloneNode(true) as HTMLElement;
+    
+    if (searchButton && newSearchButton) {
+      searchButton.parentNode?.replaceChild(newSearchButton, searchButton);
+      newSearchButton.addEventListener('click', openModal);
+    }
+    
+    if (searchClose && newSearchClose) {
+      searchClose.parentNode?.replaceChild(newSearchClose, searchClose);
+      newSearchClose.addEventListener('click', closeModal);
+    }
+    
+    if (searchBackdrop && newSearchBackdrop) {
+      searchBackdrop.parentNode?.replaceChild(newSearchBackdrop, searchBackdrop);
+      newSearchBackdrop.addEventListener('click', closeModal);
+    }
+
+    const modalContainer = searchModal?.querySelector('.flex.items-start.justify-center');
+    modalContainer?.addEventListener('click', closeModal);
+
+    function handleKeydown(event: KeyboardEvent) {
+      if (event.key === 'Escape' && !searchModal?.classList.contains('hidden')) {
+        closeModal();
+      }
+    }
+
+    document.removeEventListener('keydown', handleKeydown);
+    document.addEventListener('keydown', handleKeydown);
+
+    const modalContentBox = searchModal?.querySelector('.modal-content');
+    modalContentBox?.addEventListener('click', function(event) {
+      event.stopPropagation();
+    });
+  }
+
+  document.addEventListener('astro:page-load', initSearchModal);
+</script>

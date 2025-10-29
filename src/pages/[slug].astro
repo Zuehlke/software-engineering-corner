@@ -50,7 +50,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
             </div>
         </Header>
     </Fragment>
-    <section class="pt-8 max-w-4xl mx-auto px-8 mb-24">
+    <section class="pt-8 max-w-4xl mx-auto px-8 mb-24" data-pagefind-body>
         <div class="relative overflow-hidden hidden sm:block">
             <Image src={cover} alt="Cover image" class="aspect-video object-cover w-full"
                    width="800"
@@ -63,7 +63,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
             </h1>
         </div>
         <h1 class="text-2xl block sm:hidden leading-normal font-bold scroll-m-24 dark:text-zag-light text-zag-dark mb-3"
-            id="_top">
+            id="_top"
+            data-pagefind-meta="title">
             {title}
         </h1>
 
