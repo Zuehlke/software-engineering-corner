@@ -16,11 +16,16 @@ shortDescription: >-
 
 # Introduction
 
-On the project I am currently working on, we are building a Next.js powered web application for a health care provider. Some content we show in the web app such as product data or user specific information such as active subscriptions to services is curated via a admin UI, though the main part of the content comes from pages and blog articles as well as images that are fully driven by [Dato, a headless CMS.](https://www.datocms.com/) Consequentially, navigation elements and footer content are curated in the CMS as well, with links representing references to other CMS-driven data records.
+On the project I am currently working on, we are building a Next.js powered web application for a health care provider.
+Some content we show in the web app such as product data or user specific information such as active subscriptions to services is curated via a admin UI, though the main part of the content comes from pages and blog articles as well as images that are fully driven by [Dato, a headless CMS.](https://www.datocms.com/).
+Consequentially, navigation elements and footer content are curated in the CMS as well, with links representing references to other CMS-driven data records.
 
-In order to pave the way for a fully localized user experience, we had to implement a locale resp. language switcher component located in the header of the web application. This dropdown component should always be able to serve the correct, localized URL to the currently viewed page in the other languages the content is available in. Now, this would be trivial if the task at hand would be to just switch the locale with the rest of the URL staying the same, e.g. linking from a German article located under `/de/blog/gesund-essen` to the English version of it `/en/blog/gesund-essen`. But as [Google documents on "Google Search Central"](developers.google.com/search/docs/crawling-indexing/url-structure#use-your-audiences-language), the best practice when it comes to localized URLs is to use human-readable, descriptive URLs in your audience's language (e.g. in our example `/en/healthy-eating`).
+In order to pave the way for a fully localized user experience, we had to implement a locale resp. language switcher component located in the header of the web application.
+This dropdown component should always be able to serve the correct, localized URL to the currently viewed page in the other languages the content is available in.
+Now, this would be trivial if the task at hand would be to just switch the locale with the rest of the URL staying the same, e.g. linking from a German article located under `/de/blog/gesund-essen` to the English version of it `/en/blog/gesund-essen`.
+But as [Google documents on "Google Search Central"](developers.google.com/search/docs/crawling-indexing/url-structure#use-your-audiences-language), the best practice when it comes to localized URLs is to use human-readable, descriptive URLs in your audience's language (e.g. in our example `/en/healthy-eating`).
 
-In the following article I will talk about the challenges of building such a locale switcher component if it requires CMS-driven data might only be only available after the component itself has already finished rendering, a problem touching a lot of different aspects and pitfalls of building projects with Next.js, and how our solution to this both leverages the inner workings of React context and integrates well with SSR (server side rendering) and the "Network Boundary"
+In the following article I will talk about the challenges of building such a locale switcher component if it requires CMS-driven data might only be only available after the component itself has already finished rendering, a problem touching a lot of different aspects and pitfalls of building projects with Next.js, and how our solution to this both leverages the inner workings of React context and integrates well with SSR (server side rendering) and the "Network Boundary".
 
 # The Challenge
 
@@ -28,7 +33,8 @@ Further building upon our example in the introduction, consider the following fo
 
 [![](https://mermaid.ink/img/pako:eNo9jctuwjAQRX_FmnWgcUoe9qJSVZaRGqldlbBwk8Gx6tjIcaAU-PealHRWvnd8zpyhsS0Ch522x6YTzpP3dW1ImAeyWJCNto3QuCUhPJFyU4qTHf3270d5Ky-f2soLqejm2XnVaBxIqQZPKiExOF4P6A4Kj1O-cxWd1IMe5XbyVskMkzV6ofRMvykjQzkv747aQATSqRa4dyNG0KPrxS3C-XahBt9hjzXw8GyF-6qhNtfA7IX5sLafMWdH2QHfCT2ENO5b4XGthHSi_28dmhbdix2NB05jlk4W4Gf4Bp7k2TLP4pzSLGMsoSyCE_A0WWZFviqKNE1ZXCTXCH6mq_Ey1CwMpUm2yh9Tdv0FyTV1Hw?type=png)](https://mermaid.live/edit#pako:eNo9jctuwjAQRX_FmnWgcUoe9qJSVZaRGqldlbBwk8Gx6tjIcaAU-PealHRWvnd8zpyhsS0Ch522x6YTzpP3dW1ImAeyWJCNto3QuCUhPJFyU4qTHf3270d5Ky-f2soLqejm2XnVaBxIqQZPKiExOF4P6A4Kj1O-cxWd1IMe5XbyVskMkzV6ofRMvykjQzkv747aQATSqRa4dyNG0KPrxS3C-XahBt9hjzXw8GyF-6qhNtfA7IX5sLafMWdH2QHfCT2ENO5b4XGthHSi_28dmhbdix2NB05jlk4W4Gf4Bp7k2TLP4pzSLGMsoSyCE_A0WWZFviqKNE1ZXCTXCH6mq_Ey1CwMpUm2yh9Tdv0FyTV1Hw)
 
-Now, for those not familiar with Next.js, the folder structure in a Next.js project corresponds to the URL segments. Layouts and pages are placed correspondingly inside of this folder hierarchy to build compositional patterns that allow for subroutes and their pages being rendered inside of a shared layout that only gets rendered once and is then being reused for as long as navigation happens between pages that are also placed under that layout:
+Now, for those not familiar with Next.js, the folder structure in a Next.js project corresponds to the URL segments.
+Layouts and pages are placed correspondingly inside of this folder hierarchy to build compositional patterns that allow for subroutes and their pages being rendered inside of a shared layout that only gets rendered once and is then being reused for as long as navigation happens between pages that are also placed under that layout:
 
 ```
 /
@@ -40,7 +46,8 @@ Now, for those not familiar with Next.js, the folder structure in a Next.js proj
             └── page.tsx    ← Article Detail Page / Single Article Page
 ```
 
-`[locale]` and `[slug]` represent dynamic URL segments, telling Next.js that those are named placeholders holding space for data that is being filled in either during build time (in the case of statically generating pages) or run time (in case of rendering pages as they are requested). For example, within our `page.tsx` files, `locale` and `slug` will be made available to us by the framework via component props:
+`[locale]` and `[slug]` represent dynamic URL segments, telling Next.js that those are named placeholders holding space for data that is being filled in either during build time (in the case of statically generating pages) or run time (in case of rendering pages as they are requested).
+For example, within our `page.tsx` files, `locale` and `slug` will be made available to us by the framework via component props:
 
 ```tsx
 export default async function ArticleListPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -117,7 +124,9 @@ export default async function LocaleLayout({ params, children }: BlogLayoutProps
 
 A layout is shared UI that wraps multiple pages. The key benefit of layouts is that they preserve state, remain interactive, and don’t re-render when a user navigates between pages that share the layout.
 
-The handling of the locale and internationalization, including routing, correctly switching localized strings stored in resource files as well as providing us with several useful hooks is handled by [next-intl](https://next-intl.dev/). You don't have to worry about the details, just note here that we are wrapping our pages in a `NextIntlClientProvider`, a context provider that comes with the plugin and enables the beforementioned hooks to access the current locale, regardless of where they are located in the render tree, as long as they are a child component of this provider and a client-side component. You can also see that we are rendering a `Navigation` and a `LocaleSwitcher` component in the layout here.
+The handling of the locale and internationalization, including routing, correctly switching localized strings stored in resource files as well as providing us with several useful hooks is handled by [next-intl](https://next-intl.dev/).
+You don't have to worry about the details, just note here that we are wrapping our pages in a `NextIntlClientProvider`, a context provider that comes with the plugin and enables the beforementioned hooks to access the current locale, regardless of where they are located in the render tree, as long as they are a child component of this provider and a client-side component.
+You can also see that we are rendering a `Navigation` and a `LocaleSwitcher` component in the layout here.
 
 Let's recap the setup so far: We have two pages, an overview page where we show a list of blog articles, a blog article page where we show a single blog article and finally a layout containing shared code between the two pages containing our locale switcher.
 
@@ -130,7 +139,9 @@ And here is where our problem(s) presents itself:
 
 1. **We can't access the pathname in the layout and pass it to the locale switcher as a prop:**
 
-   The key benefit of Layouts in Next.js is that they don't rerender during navigation between pages that are located "under" them, which allows for shared UI, Scripts etc. To achieve that, they are cached client-side. Logically, as a consequence, they can't access the current pathname of the page they are rendering "inside" of themselves, as it could become stale. So how do we get the current pathname into the locale switcher component?
+   The key benefit of Layouts in Next.js is that they don't rerender during navigation between pages that are located "under" them, which allows for shared UI, Scripts etc.
+   To achieve that, they are cached client-side. Logically, as a consequence, they can't access the current pathname of the page they are rendering "inside" of themselves, as it could become stale.
+   So how do we get the current pathname into the locale switcher component?
 
 2. **We can't pass the information about the article's slugs in other languages from the layout into the locale switcher because we can't get it up into the layout to begin with**
 
@@ -140,7 +151,8 @@ And here is where our problem(s) presents itself:
    const article = await getArticle(locale, slug);
    ```
 
-   The information about the article's slugs in other languages is contained here in the `article` object. But how do we get this information up into the layout and into the layout?
+   The information about the article's slugs in other languages is contained here in the `article` object.
+   But how do we get this information up into the layout and into the layout?
 
 # First Attempt: Global (Server-Side) Stores
 
@@ -199,7 +211,8 @@ But in reality:
 
 In fact, several people realized in the context of localization or in an attempt to block the rendering of page content early on by implementing "blockers" in a shared layout that [nested layouts or pages render before their parent layouts](https://github.com/vercel/next.js/discussions/53026).
 
-In the context of our problem, this "unexpected" order of rendering might solve the problem at first glance again, because the layout could read from an already populated store (set by the page), but we quickly realize that this approach falls apart on the first navigation between two pages that share the same layout. Because the layout is shared, it won't be rerendered and it won't repopulate the locale switcher with information about slug translations fetched by the new page we navigated to through an updated store value.
+In the context of our problem, this "unexpected" order of rendering might solve the problem at first glance again, because the layout could read from an already populated store (set by the page), but we quickly realize that this approach falls apart on the first navigation between two pages that share the same layout.
+Because the layout is shared, it won't be rerendered and it won't repopulate the locale switcher with information about slug translations fetched by the new page we navigated to through an updated store value.
 
 So, to summarize:
 
@@ -209,17 +222,21 @@ So, to summarize:
 
 3. **Server components have no reactive mechanism**
 
-Server components run once per request. They don’t subscribe to updates, and they don’t react to mutations the way React client state does. Even more strict: Once a server component has rendered, it’s immutable for the duration of that navigation.
+Server components run once per request.
+They don’t subscribe to updates, and they don’t react to mutations the way React client state does. Even more strict: Once a server component has rendered, it’s immutable for the duration of that navigation.
 
 4. **Nanostores stores are not scoped to a single render cycle**
 
-This was a small caveat in the face of the other, more fundamental problems we ran into with trying to solve this with server side stores, but it was still a core problem: Nanostores stores are not isolated to a single render cycle by default. They are global in the sense of that they are tied to the life cycle of the node process running the Next.js server, so you definitely run the risk of leaking data between different render cycles and requests, but also between different users. A problem when trying to store localized data, definitely a problem when trying to store user data globally on the server.
+This was a small caveat in the face of the other, more fundamental problems we ran into with trying to solve this with server side stores, but it was still a core problem: Nanostores stores are not isolated to a single render cycle by default.
+They are global in the sense of that they are tied to the life cycle of the node process running the Next.js server, so you definitely run the risk of leaking data between different render cycles and requests, but also between different users.
+A problem when trying to store localized data, definitely a problem when trying to store user data globally on the server.
 
 Now you may ask yourself:
 
 # What about React Server Context
 
-React originally experimented with Server Contexts as a mechanism for sharing request-scoped values across server components without prop drilling. However, the feature was ultimately removed before leaving the experimental stage.
+React originally experimented with Server Contexts as a mechanism for sharing request-scoped values across server components without prop drilling.
+However, the feature was ultimately removed before leaving the experimental stage.
 
 The concept sounded great:
 
@@ -227,7 +244,8 @@ The concept sounded great:
 - Any server component in the same render tree can read from it.
 - It is scoped to the current request, so no cross-request leaks occur.
 
-In theory, this could help a layout consume data computed deeper in the tree. But in practice, it has severe limitations. It resembled the React context we all know from classic client components, but:
+In theory, this could help a layout consume data computed deeper in the tree.
+But in practice, it has severe limitations. It resembled the React context we all know from classic client components, but:
 
 1. It's read only
 2. It's non-reactive
@@ -242,7 +260,8 @@ Logically, this simply isn't compatible with how server rendering works.
 
 # React's cache()
 
-Facing the problem with React server context, React introduced react.cache() as a safer, more predictable primitive for (some of) its use cases. In short:
+Facing the problem with React server context, React introduced react.cache() as a safer, more predictable primitive for (some of) its use cases.
+In short:
 
 - `react.cache()` is a React API that memoizes the result of an async function **per request** on the server.
 - It ensures that when multiple Server Components call the same data-fetching function during a single render, React only runs it once and reuses the result.
@@ -257,13 +276,15 @@ Facing the problem with React server context, React introduced react.cache() as 
 
 So, `cache()` is a modern, widely used and really useful React feature, but unfortunately it still doesn’t fix the core issue behind the locale switcher: layouts and pages don’t render together, and layouts can’t receive data that pages load later:
 
-- Layouts and pages render separately. `cache()` only shares values within the same render pass. A layout can’t see data fetched by a page rendered later or in a different request.
+- Layouts and pages render separately. `cache()` only shares values within the same render pass.
+  A layout can’t see data fetched by a page rendered later or in a different request.
 
 - Server Components render top-down. A layout can’t “wait” for the page’s localized slugs.
 
 - Client Components can’t read server cache. `cache()` is reserved for server components.
 
-In short: `cache()` is memoization, not shared state. It eliminates redundant fetches but does not create a reactive or global data layer across server/client boundaries.
+In short: `cache()` is memoization, not shared state.
+It eliminates redundant fetches but does not create a reactive or global data layer across server/client boundaries.
 
 # Moving away from the idea of "server context"
 
@@ -319,7 +340,8 @@ This avoids all the pitfalls:
 
 Instead, the page simply hands the data to the browser, and the browser hands it to the layout subtree through context.
 
-At a first glance, this solution might seem counter-intuitive and I'd argue it even is, because most tutorials and even the React documentation focus mostly on how to use Context as a way to move state upwards the component tree and avoid prop-drilling. The pattern described here where Context is a solution to the problem of having to update state shared by components or the entire page way down in the component tree.
+At a first glance, this solution might seem counter-intuitive and I'd argue it even is, because most tutorials and even the React documentation focus mostly on how to use Context as a way to move state upwards the component tree and avoid prop-drilling.
+The pattern described here where Context is a solution to the problem of having to update state shared by components or the entire page way down in the component tree.
 
 Let's look at some code snippets:
 
@@ -413,9 +435,13 @@ export function LocalizedSlugsHydrator({ paramKey, values }: { paramKey: string;
 }
 ```
 
-The `LocalizedSlugsProvider` creates a simple React Context that stores all localized slugs, grouped by locale. It exposes setter functions so the client can update this data later. The layout initializes the provider with whatever slug information is available during the server render.
+The `LocalizedSlugsProvider` creates a simple React Context that stores all localized slugs, grouped by locale.
+It exposes setter functions so the client can update this data later.
+The layout initializes the provider with whatever slug information is available during the server render.
 
-The `LocalizedSlugsHydrator` is a minimal client component that runs inside each page. After the page fetches localized slugs from the CMS, the hydrator injects those slugs into the React Context. It doesn’t render anything visually; its only role is to synchronize page-level data upwards into the global state.
+The `LocalizedSlugsHydrator` is a minimal client component that runs inside each page.
+After the page fetches localized slugs from the CMS, the hydrator injects those slugs into the React Context.
+It doesn’t render anything visually; its only role is to synchronize page-level data upwards into the global state.
 
 And finally, we can use this hydrator component on the page like this:
 
@@ -498,7 +524,7 @@ This component
 
 # Conclusion
 
-What looked like a simple feature on the surface ("just switch the locale and update the slug") quickly exposed gaps between server-rendered data and client-side UI logic
+What looked like a simple feature on the surface ("just switch the locale and update the slug") quickly exposed gaps between server-rendered data and client-side UI logic.
 
 The fix came from stepping back and asking what was truly needed: a stable, predictable bridge that carries server-provided slug data into the client where the locale switcher lives.
 
