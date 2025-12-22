@@ -1,35 +1,33 @@
 ### **Building a Cloud-Native CI/CD Pipeline with Tekton and ArgoCD on OpenShift**
 
-Delivering software quickly, safely, and consistently has become a defining challenge for modern development teams. 
-As applications evolve into distributed, containerized services, continuous integration and continuous delivery (CI/CD) pipelines must evolve as well — becoming more cloud-native, scalable, and declarative.
+Delivering software quickly, safely, and consistently has become a defining challenge for modern development teams.
+As applications evolve into distributed, containerized services, continuous integration and continuous delivery (CI/CD) pipelines must also evolve — becoming more cloud-native, scalable, and declarative.
 
-In order to overcome these challenges, modern tools are essential. If the topic is CI / CD, the most commonly used tools are GitHub Actions, GitLab CI / CD, Jenkins, CircleCI, Tekton & ArgoCD. 
+To overcome these challenges, modern tools are essential. If the topic is CI / CD, the most commonly used tools are GitHub Actions, GitLab CI / CD, Jenkins, CircleCI, Tekton & ArgoCD.
 
-Let's take a short look on the still commonly used Jenkins CI/CD Pipeline that many teams and companies consider outdated, in order to see why a usage of a more modern solution is inevitable.
+Let’s take a short look at the still commonly used Jenkins CI/CD Pipeline that many teams and companies consider outdated, in order to see why the use of a more modern solution is inevitable.
+
 #### **What is Jenkins?**
 Jenkins is one of the oldest and most widely used CI/CD automation servers.
 Originally designed for on-premise setups, Jenkins has powered automation for countless organizations over the last decade.
 It’s flexible, plugin-rich, and language-agnostic.
 
-#### **How Jenkins works?**
+#### **How does Jenkins work?**
+
 Jenkins operates on a master-agent architecture (though newer versions call these controller and agents).
 The controller manages the configuration, UI, and coordination of jobs.
 The agents (or nodes) handle the execution of build tasks.
 This distributed design makes Jenkins highly scalable — perfect for large teams running parallel builds across multiple environments.
 
-#### **Here's how a typical Jenkins Workflow looks like**
+#### **Here’s how a typical Jenkins Workflow looks like**
 
 Here’s a typical CI/CD flow automated through Jenkins:
+
 1. Code Commit → Developer pushes code to GitHub/GitLab.
-
 2. Trigger Build → Jenkins automatically detects changes via a webhook.
-
 3. Build Stage → Code is compiled, dependencies are resolved.
-
 4. Test Stage → Unit and integration tests run automatically.
-
 5. Deploy Stage → The application is deployed to a test or production server.
-
 6. Notification → Jenkins reports build status to Slack, email, or dashboards.
 
 ### **The Modern CI/CD Challenge**
@@ -39,7 +37,7 @@ However, as organizations move toward Kubernetes and microservice architectures,
 
 OpenShift addresses these challenges by offering a Kubernetes-based platform built for enterprise workloads — and by integrating powerful open-source projects such as Tekton (for CI) and ArgoCD (for CD).
 
-Let's explore how two open-source technologies — Tekton and ArgoCD — can power a fully cloud-native CI/CD pipeline on Red Hat OpenShift.
+Let’s explore how two open-source technologies — Tekton and ArgoCD — can power a fully cloud-native CI/CD pipeline on Red Hat OpenShift.
 Together, they create a robust, Kubernetes-native delivery workflow that automates everything from code build to deployment, while maintaining visibility, consistency, and control.
 
 Let’s break down what each of these tools brings to the table, and how they work together to streamline software delivery.
@@ -52,13 +50,9 @@ It provides a set of flexible, reusable building blocks that run directly on you
 #### **Here’s how a typical workflow looks on OpenShift**
 
 1. A developer pushes code to GitHub.
-
 2. A Tekton Trigger detects the push and runs the CI pipeline.
-
 3. Tekton builds the image, runs tests, and pushes the image to an OpenShift-integrated registry (like Quay.io or the internal registry).
-
 4. Tekton then updates the deployment manifests (e.g., updates the image tag) in the Git repository used by ArgoCD.
-
 5. ArgoCD detects the Git change and automatically syncs the application to OpenShift.
 
 This pattern embodies GitOps principles — Git becomes the single source of truth for both infrastructure and application state.
@@ -71,20 +65,20 @@ Tekton handles the CI process: building, testing, and pushing container images.
 
 ArgoCD handles the CD process: deploying applications based on the manifests in Git.
 
-Let's look into how they can split tasks between each other:
-Tekton is focused on building artifacts (Docker images, etc.). 
-It is Push-based - triggers pipelines via Git push or webhook and usually part of the CI.
+Let’s look into how they can split tasks between each other:
+Tekton is focused on building artifacts (Docker images, etc.).
+It is Push-based - triggers pipelines via Git push or webhook, and is usually part of the CI.
 
-ArgoCD is focused on deploying artifacts to Kubernetes. 
+ArgoCD is focused on deploying artifacts to Kubernetes.
 It is Pull-based - watches Git and syncs cluster state and handles CD.
 
-#### **How they work together?**
+#### **How do they work together?**
 
 When code is committed to a Git repo, Tekton triggers pipeline runs to build and test the application, producing container images and artifacts.
 
-These artifacts are pushed to a container registry and the Git repo is updated with the new image tags or Kubernetes manifests reflecting these changes.
+These artifacts are pushed to a container registry, and the Git repo is updated with the new image tags or Kubernetes manifests reflecting these changes.
 
-Argo CD continuously monitors the Git repo for updates and upon detecting changes, it synchronizes the Kubernetes cluster state to the Git-desired state by deploying or updating applications automatically.
+Argo CD continuously monitors the Git repo for updates, and upon detecting changes, it synchronizes the Kubernetes cluster state to the Git-desired state by deploying or updating applications automatically.
 
 This GitOps workflow ensures that deployments are consistent, auditable, and can be rolled back automatically in case of errors.
 
@@ -104,10 +98,3 @@ GitOps Automation: Argo CD’s GitOps approach promotes infrastructure as code a
 ### **Final Thoughts**
 Hopefully, this article provides some guidance for anyone looking to set up a CI/CD pipeline. 
 While Jenkins is a classic choice, Tekton’s modern, cloud-native approach makes building, scaling, and managing pipelines more straightforward and efficient.
-
-
-
-
-
-
-
