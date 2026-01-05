@@ -1,4 +1,21 @@
-### **Building a Cloud-Native CI/CD Pipeline with Tekton and ArgoCD on OpenShift**
+---
+title: Building a Cloud-Native CI/CD Pipeline with Tekton and ArgoCD on OpenShift
+description:
+  This article provides a technical overview of building a cloud-native CI/CD pipeline on Red Hat OpenShift using Tekton and Argo CD. 
+  It outlines the architectural shift from traditional automation servers like Jenkins to declarative, Kubernetes-native pipelines. 
+  The article explains how Tekton handles continuous integration through containerized build and test stages, while Argo CD manages continuous delivery via GitOps-based synchronization, ensuring scalable, secure, and consistent application deployments across clusters.
+released: '2026-01-04T09:12:35.781Z'
+cover: images/cover.png
+author: Livia Erdelyi
+tags:
+  - Tekton
+  - ArgoCD
+  - CI / CD
+  - continuous integration
+  - continuous deployment
+shortDescription: >-
+  Explores how Tekton and Argo CD enable a fully cloud-native CI/CD pipeline on OpenShift, replacing traditional Jenkins workflows with scalable, declarative, and GitOps-driven automation.
+---
 
 Delivering software quickly, safely, and consistently has become a defining challenge for modern development teams.
 As applications evolve into distributed, containerized services, continuous integration and continuous delivery (CI/CD) pipelines must also evolve — becoming more cloud-native, scalable, and declarative.
