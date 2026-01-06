@@ -10,6 +10,8 @@ import mdx from "@astrojs/mdx";
 
 import sitemap from "@astrojs/sitemap";
 
+import pagefind from "astro-pagefind";
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://thedevexchange.com',
@@ -18,7 +20,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [react(), expressiveCode(), mdx(), sitemap()],
+  integrations: [react(), expressiveCode(), mdx(), sitemap(), pagefind()],
 
   trailingSlash: 'always',
 
