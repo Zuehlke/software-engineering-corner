@@ -68,7 +68,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         </h1>
 
         <p>By {post.data.author}</p>
-        <p class="mb-16">{dateFormat(post.data.released)} • {timeToRead(post)}min read</p>
+        <p>{dateFormat(post.data.released)} • {timeToRead(post)}min read</p>
         <Prose>
             <Content/>
         </Prose>

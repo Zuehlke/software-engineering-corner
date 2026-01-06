@@ -101,4 +101,91 @@
     .prose .expressive-code {
         margin-bottom: 1.25em;
     }
+
+    /* Table of Contents Styles */
+    .toc-container {
+        border: var(--zag-stroke) solid;
+        border-color: var(--color-zag-dark-muted);
+        padding: 1rem;
+        margin: 1.5rem 0;
+        background-color: var(--color-neutral-50);
+
+        &:where(.dark, .dark *) {
+            border-color: var(--color-zag-light-muted);
+            background-color: var(--color-neutral-800);
+        }
+
+        /* Mobile: inline */
+        @media (max-width: 1279px) {
+            display: block;
+            width: 100%;
+        }
+
+        /* Desktop: sidebar on the right, positioned outside content */
+        @media (min-width: 90rem) {
+            position: fixed;
+            top: 5rem;
+            right: max(1rem, calc((100vw - 80rem) / 2 - 4rem));
+            width: 16rem;
+            margin: 0;
+            max-height: calc(100vh - 10rem);
+            overflow-y: auto;
+        }
+
+        /* Extra wide screens: position it further out */
+        @media (min-width: 96rem) {
+            right: max(2rem, calc((100vw - 90rem) / 2 - 1rem));
+            width: 18rem;
+        }
+    }
+
+    .toc-header {
+        font-weight: 600;
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.75rem;
+        color: var(--color-zag-dark-muted);
+
+        &:where(.dark, .dark *) {
+            color: var(--color-zag-light-muted);
+        }
+    }
+
+    .toc-sidebar {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+        font-size: 0.875rem;
+        line-height: 1.6;
+
+        li {
+            margin: 0.25rem 0;
+        }
+
+        ol {
+            list-style: none;
+            padding-left: 1rem;
+            margin: 0.25rem 0;
+        }
+    }
+
+    .toc-link {
+        color: var(--color-zag-dark);
+        text-decoration: none;
+        transition: color var(--zag-transition-duration) var(--zag-transition-timing-function);
+
+        &:hover {
+            color: var(--color-zag-accent-dark);
+            text-decoration: underline;
+        }
+
+        &:where(.dark, .dark *) {
+            color: var(--color-zag-light);
+
+            &:hover {
+                color: var(--color-zag-accent-light);
+            }
+        }
+    }
 }
