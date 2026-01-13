@@ -1,12 +1,11 @@
 ---
-title: >-
-  Every Prototype Is Also a Measurement Tool
+title: Every Prototype Is Also a Measurement Tool
 description: >-
   Prototypes are often built with the finished product in mind, yet their most critical role during development is frequently overlooked: enabling measurement and insight. 
   Effective development depends on access to complete, time-synchronized raw sensor data, actuator commands, and internal states to understand system behavior and debug efficiently. 
   Treating prototypes as measurement instruments from day one influences architecture, interfaces, and component choices—especially in complex or distributed systems. 
   Early investment in logging and measurability reduces risk, shortens development cycles, and turns iteration into a systematic, data-driven process.
-released: 2026-01-13
+released: '2026-01-13T10:22:39.140Z'
 cover: images/cover.jpg
 author: Markus Grün
 tags:
