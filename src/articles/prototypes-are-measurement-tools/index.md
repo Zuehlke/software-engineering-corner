@@ -1,11 +1,12 @@
 ---
-title: Every Prototype Is Also a Measurement Tool
+title: >-
+  Every Prototype Is Also a Measurement Tool
 description: >-
   Prototypes are often built with the finished product in mind, yet their most critical role during development is frequently overlooked: enabling measurement and insight. 
   Effective development depends on access to complete, time-synchronized raw sensor data, actuator commands, and internal states to understand system behavior and debug efficiently. 
   Treating prototypes as measurement instruments from day one influences architecture, interfaces, and component choices—especially in complex or distributed systems. 
   Early investment in logging and measurability reduces risk, shortens development cycles, and turns iteration into a systematic, data-driven process.
-released: '2026-01-13T10:22:39.140Z'
+released: "2026-01-13T10:22:39.140Z"
 cover: images/cover.jpg
 author: Markus Grün
 tags:
@@ -35,13 +36,13 @@ Especially in early phases, core functions of the device often need to be explor
 Proofs-of-concept usually only answer a simple question: _Does it work at all?_ How it works in detail only becomes clear over the course of the project.
 A colleague once told me:
 
-_“We’re building a tea machine, not a measurement device.”_
+> We’re building a tea machine, not a measurement device.
 
 He was right — and wrong at the same time. 
 Yes, the end user doesn’t need raw sensor data, actuator commands, or internal states. 
 The same is true for production and end-of-line testing.
 
-But for development, the opposite is true.
+**But for development, the opposite is true.**
 
 System integrators and engineers need access to all relevant signals — and since nobody knows at the beginning which signals will turn out to be relevant later, "relevant" effectively means *everything*. 
 All raw sensor data, all actuator control values, all internal states (such as state machine states), ideally at the native sampling rate. 
@@ -56,7 +57,7 @@ What matters is completeness and proper time alignment.
 Personally, I prefer streaming CSV data over UART, for a few simple reasons:
 * Almost every microcontroller has at least one UART
 * Retrieving the data is straightforward (every software developer has a USB-UART adapter lying around)
-* Logging is platform-independent (Putty, CoolTerm, etc.)
+* Logging is platform-independent (PuTTY, CoolTerm, etc.)
 * CSV is human-readable
 * CSV can be processed directly with almost any tool (Python, Excel, MATLAB, …)
 Most importantly, the output must be synchronized to the system clock, ideally by including timestamps. 
@@ -75,7 +76,7 @@ Modern microcontrollers can handle several Mbaud, though this may require DMA su
 2.	**Use a more efficient data format:**  
 Formats like protobuf or CBOR are far more efficient but no longer human readable and require more effort during analysis.
 3.	**Downsampling:**  
-If the signal characteristics allow it, transmitting only every nth sample can significantly reduce bandwidth.
+If the signal characteristics allow it, transmitting only every *n*th sample can significantly reduce bandwidth.
 4.	**Selective logging:**  
 Developers choose only the signals relevant for the current measurement. This requires more logic and user interaction.
 5.	**Event-based logging:**  
@@ -142,11 +143,11 @@ Only by logging all raw sensor data and control signals with precise time alignm
 
 ## Conclusion: Every Prototype Is a Measurement Instrument — Or Should Be
 
-A prototype that “works” is useful.\
-A prototype that is measurable is invaluable.
+> A prototype that 'works' is useful".\
+"A prototype that is measurable is invaluable.
 
 Without complete and correctly timed measurement data, debugging becomes guesswork and optimization becomes trial and error. Planning a clear developer interface early saves time, reduces frustration, and dramatically accelerates product development.
 
 Or, to put it another way:
-We’re not just building a tea machine. First, we’re building a measurement instrument.
+> We’re not just building a tea machine. First, we’re building a measurement instrument.
 
