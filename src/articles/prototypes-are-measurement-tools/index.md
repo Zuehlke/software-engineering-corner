@@ -6,7 +6,7 @@ description: >-
   Effective development depends on access to complete, time-synchronized raw sensor data, actuator commands, and internal states to understand system behavior and debug efficiently. 
   Treating prototypes as measurement instruments from day one influences architecture, interfaces, and component choices—especially in complex or distributed systems. 
   Early investment in logging and measurability reduces risk, shortens development cycles, and turns iteration into a systematic, data-driven process.
-released: TBD
+released: 2026-01-13
 cover: images/cover.jpg
 author: Markus Grün
 tags:
@@ -16,7 +16,7 @@ tags:
   - measurement & logging
 shortDescription: >-
   Designing prototypes without measurability turns development into guesswork.
-  Treating prototypes as measurement instruments from the start enables faster debugging, deeper insights, and more reliable iteration.
+  Treating them as measurement instruments from day one enables faster debugging and more reliable iteration.
 ---
 
 For more than a decade, I’ve been developing devices for a wide range of customers and applications. 
