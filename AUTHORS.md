@@ -4,3 +4,4 @@
 | madj          | Djordje Madic| djordje.madic@zuehlke.com |
 | patw          | Patrick Wilmes| patrick.wilmes@zuehlke.com |
 | tigr          | Tim Grünewald | tim.gruenewald@zuhlke.com |
+| leh           | Michael Lehmann | michael.lehmann@zuehlke.com |
