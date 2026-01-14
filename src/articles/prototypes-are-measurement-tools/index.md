@@ -54,12 +54,13 @@ For a prototype to also serve as a measurement tool, it must be able to output i
 The specific interface is largely irrelevant.
 What matters is completeness and proper time alignment.
 
-Personally, I prefer streaming CSV data over UART, for a few simple reasons:
+Personally, I prefer streaming CSV data via UART, for a few simple reasons:
 * Almost every microcontroller has at least one UART
 * Retrieving the data is straightforward (every software developer has a USB-UART adapter lying around)
 * Logging is platform-independent (PuTTY, CoolTerm, etc.)
 * CSV is human-readable
 * CSV can be processed directly with almost any tool (Python, Excel, MATLAB, …)
+
 Most importantly, the output must be synchronized to the system clock, ideally by including timestamps. 
 Without proper timing, measurement data quickly becomes ambiguous and hard to interpret.
 
@@ -76,7 +77,7 @@ Modern microcontrollers can handle several Mbaud, though this may require DMA su
 2.	**Use a more efficient data format:**  
 Formats like protobuf or CBOR are far more efficient but no longer human readable and require more effort during analysis.
 3.	**Downsampling:**  
-If the signal characteristics allow it, transmitting only every *n*th sample can significantly reduce bandwidth.
+If the signal characteristics allow it, transmitting only every *n*-th sample can significantly reduce bandwidth.
 4.	**Selective logging:**  
 Developers choose only the signals relevant for the current measurement. This requires more logic and user interaction.
 5.	**Event-based logging:**  
