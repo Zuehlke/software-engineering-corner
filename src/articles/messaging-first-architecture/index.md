@@ -1,8 +1,9 @@
 ---
 title: "Messaging-First Architectures: Resilient Systems with Azure Service Bus"
-saveAsDraft: true
-hideFromHashnodeCommunity: false
-publishAs: gayatri-potawad
+description: >-
+    This article provides a high-level overview of messaging-first architectures using Azure Service Bus. Based on experience from a large retail platform project, it outlines important concepts such as service decoupling, retries, dead-letter queues, observability, and common pitfalls when moving from synchronous APIs to asynchronous messaging—focusing on architectural insights rather than detailed code or configuration.
+released: '2026-03-09T16:20:00.243Z'
+author: Gayatri Potawad
 tags:
   - Azure
   - architecture
@@ -10,14 +11,15 @@ tags:
   - messaging
   - motivation
   - microservice
-enableToc: true
 cover: images/cover.jpg
+shortDescription: >-
+    A short overview of messaging-first architectures using Azure Service Bus, highlighting key concepts, design considerations, and practical observations from a real project.
 ---
 
 # Messaging-First Architectures: Resilient Systems with Azure Service Bus 
 
 
-In one of my recent projects, I worked on a large-scale retail platform where nearly every critical business flow from orders to inventory updates relied on Azure Service Bus. This was my first dive into a messaging-first architecture on Azure. 
+In one of my previous projects, I worked on a large-scale retail platform where nearly every critical business flow from orders to inventory updates relied on Azure Service Bus. This was my first dive into a messaging-first architecture on Azure. 
 
 This blog is my attempt to capture what I learned and design principles that shaped the system and hopefully help anyone walking a similar path, especially if you’re transitioning from synchronous REST-based APIs to asynchronous messaging. 
 
