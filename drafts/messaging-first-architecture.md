@@ -1,6 +1,5 @@
 ---
 title: "Messaging-First Architectures: Resilient Systems with Azure Service Bus"
-date: "2025-06-24"
 saveAsDraft: true
 hideFromHashnodeCommunity: false
 publishAs: gayatri-potawad
