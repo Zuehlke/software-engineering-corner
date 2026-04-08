@@ -2,7 +2,7 @@
 title: Artificial Intelligence is reshaping the Software Development Lifecycle!
 description: >-
   If you don’t change, AI will change you. Explore how AI-driven tools are reshaping the Software Development Lifecycle—from Requirements Engineering to Production Release.
-released: '2026-01-14T09:20:00.243Z'
+released: '2026-04-08T07:30:00.243Z'
 cover: images/cover.png
 author: Abishek Anthony
 tags:
