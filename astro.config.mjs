@@ -19,7 +19,10 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [react(), expressiveCode(), mdx(), sitemap(), mermaid({theme: 'neutral', autoTheme: true})],
+  integrations: [react(), expressiveCode({
+    themes: ['github-dark', 'github-light'],
+    themeCssSelector: (theme) => theme.name === 'github-dark' ? '.dark' : ':root:not(.dark)',
+  }), mdx(), sitemap(), mermaid({theme: 'neutral', autoTheme: true})],
 
   trailingSlash: 'always',
 
