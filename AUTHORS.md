@@ -5,3 +5,4 @@
 | patw          | Patrick Wilmes  | patrick.wilmes@zuehlke.com  |
 | tigr          | Tim Grünewald   | tim.gruenewald@zuhlke.com   |
 | aban          | Abishek Anthony | abishek.anthony@zuehlke.com |
+| ster          | Stephan Ernst   | stephan.ernst@zuehlke.com   |
