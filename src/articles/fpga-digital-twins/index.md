@@ -1,20 +1,25 @@
 ---
 title: Digital Twins .. or why doing things twice is sometimes more efficient
-domain: software-engineering-corner.hashnode.dev
-tags: agile-development, programming-languages, hardware, best-practices
-cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1747223913763/rWSPApSkf.avi?auto=format
-publishAs: sernst-zch
-saveAsDraft: true
-hideFromHashnodeCommunity: false
-enableToc: true
+description: >-
+    Creating a digital twin for FPGA engineering sometimes pays out, even if it seems doing things twice.
+released: '2026-04-16T00:00:00.000Z'
+cover: images/cover.png
+author: Stephan Ernst
+tags: 
+    - agile-development
+    - programming-languages
+    - hardware
+    - best-practices
+shortDescription: >-
+    Creating a digital twin for FPGA engineering sometimes pays out, even if it seems doing things twice.
 ---
 
-## Reduce risks and fail faster in the FPGA / hardware waterfall world
+## Agile development in the hardware world
 
-Hardware engineers as well as FPGA[^1] engineers have the reputation of not fitting well into agile development sprints.
-For example, how should a hardware engineer create a PCB[^2] within a week?
-Similarly for FPGA engineering, we sometimes have to work longer than a sprint duration to achieve a shippable increment.
-This is, because coding for FPGAs is often still bit-banging.
+Hardware engineering as well as field programmable gate array (FPGA) engineering have the reputation of not fitting well into agile development sprints.
+For example, how should a hardware engineer create a PCB within a week?
+Similarly for FPGA engineering, we sometimes must work longer than a sprint duration to achieve a shippable increment.
+Writing code for FPGAs is often still bit-banging.
 Both VHDL and Verilog are hardware description languages: They provide barely any abstraction from the underlying logic, so FPGA engineering is often reduced to connecting wires to flip-flops.
 By contrast, what everyone wants to know before the project even starts is:
 "How many FPGA resources will we need and how expensive is the device going to be?"
@@ -29,67 +34,66 @@ They request a new residence.
 It shall be a castle, out of solid stone.
 They are seven people and have five horses.
 
-*"Be thou quick or thy head shall tumble"* - thus a deal was struck.
+*"Be thou quick or thy head shall tumble"* — thus a deal was struck.
 
 Well, how do you proceed?
 According to most waterfall methods, we must first specify every requirement, both functional and non-functional, then build the solution, and finally test to verify that the requirements have been met.
 
 So, you begin.
 
-With an idea already in mind, you sketch a nice plan and then hastly begin to carve stones.
+With an idea already in mind, you sketch a nice plan and then hastily begin to carve stones.
 You carve and carve, carry the finished blocks over long distances from the quarry to the site.
-You put one block on top of another, build walls, roofs and interiors and polish the door handles.
-Finally, after a year  - or three - the castle is finished.
+You put one block on top of another, build walls, roofs, interiors and polish the door handles.
+Finally, after a year — or three — the castle is finished.
 
-It looks just like the one on the plan you showed them in the beginning - from the outside that is.
-The first time you walk through with the noble people, they say; "Yeah, nice and all, but where is the entrance for the horses?
-The horses?
-They will go into the stable in the backyard, we'll build them a nice shelt... THE BACKYARD?!
-No, no, no, the horses should have been *inside* the castle! We don't want to leave them unprotected outside! It's a castle after all! And where do our 14 servants live? Surely we didn't need to mention that we never take care of the horses by ourselves.
+It looks just like the one on the plan you showed them in the beginning — from the outside that is.
+The first time you walk through the castle with the nobles, they say, "Yeah, nice and all, but where is the entrance for the horses?"
+Thereupon, you reply, “The horses? They will go into the stable in the backyard — we’ll build them a nice shelt…”
+The nobles, appalled by your response, interrupt you by exclaiming: "THE BACKYARD?!"
+"No, no, no, the horses should have been *inside* the castle" they say. 
+"We don't want to leave them unprotected outside! It's a castle after all! And where do our 14 servants live? Surely, we didn't need to mention that we never take care of the horses by ourselves".
 
 Oh boy. Good thing we have Python nowadays!
 
-### A more realistic example: ICU patient supervision
+### A more realistic example: Intensive Care Unit (ICU) patient supervision
 
 You won't be surprised to learn that at Zühlke, we don't often build medieval stone castles.
-As a more realistic (though still fictional) example, consider the development of a new device to remote monitor ICU[^3] patients in a hospital.
-Besides a CPU with a webserver for remote monitoring, the device shall have an FPGA on it.
+As a more realistic (though still fictional) example, consider the development of a new device to remote monitor ICU patients in a hospital.
+Besides a CPU with a web server for remote monitoring, the device shall have an FPGA on it.
 It shall act as a sensor fusion building block and network preprocessor as a first line of defence. This way, the system's reliability and attack resilience will be increased.
-The surveillance application on the main processor-module shall only receive UDP[^4] frames which are sent to a specific destination port.
+The surveillance application on the main processor-module shall only receive UDP frames which are sent to a specific destination port.
 
 ### Still the same old game?
 
-We could now start the same way as our poor friends did a thousand years ago.
-We would start up our VHDL code machines, carve code block after code block, create a super solid foundation to receive ethernet frames, have the PLLs[^5] lock and the data passing through the device at line speed and without bit-errors.
+We could now start the same way as our poor friends did a thousand years ago, by starting up our VHDL code machines, carving out block after block of code and building a rock-solid foundation for receiving Ethernet frames.
+The Phase-Locked Loops (PLLs) would all be locked, the data stream would pass the device at line speed without any bit errors — so far so good.
 FPGA engineers know, those are time-consuming tasks, because before one can test anything, everything must be aligned with the hardware-specific properties of the target environment and the evaluation board.
 Three weeks in our fictional project, the LED is blinking on the evaluation board and the VHDL testbench features a few test cases to prove that the UDP filter works.
 
 So far so good.
 
 Now, while trying to test the device with our noble customers, we find out that not only IPv4 but also IPv6 shall be supported.
-Additionally, as soon as we hooked up our prototype to the test network in the hospital for the first field tests, random ARP frames began to pass through the filter, because the payload data matched the expected destination port by coincidence.
+Additionally, as soon as we hooked up our prototype to the test network in the hospital for the first field tests, other random IP frames began to pass through the filter, because the payload data matched the expected destination port in the UDP header by coincidence.
 As it turns out, we shouldn't just compare the UDP destination port field on a fixed offset.
-Both are learnings, that we just didn't think about in the beginning or during development.
+Both are learnings, which we just didn't think about in the beginning of the project or during development.
 
 ## A better way: building a digital twin first
 
 How can we minimize such risks?
-Long before loading the first limestone block onto our carriage, or rather, hooking our device up to the customer's network for the first time, we could create a digital model of the FPGA and its surroundings.
-By using Python and the huge ecosystem behind, we simply abstract all the time consuming hardware bring-up problems.
-Similarly, our friend a thousand years ago wouldn't need to deal with foundation and swamp problems before building the first wall.
-At the same time, a simple network capture or even synthetically generated data can replace the first walkthrough with our noblemen and spot problems before they are hard to remove.
+Long before loading the first limestone onto our carriage — or rather, connecting our device to the customer's network for the first time — we could create a digital model of the FPGA and its surroundings.
+By using Python and its extensive ecosystem behind, we can abstract away all the time-consuming hardware bring-up challenges.
+Similarly, our friend from a thousand years ago wouldn't have needed to deal with foundation or swamp-related problems before building the first wall.
+At the same time, a simple network capture or even synthetically generated data can replace the first walkthrough with our noblemen and spot problems before they become difficult and time consuming to fix.
 
 I think you start to get the concept: we are turning the waterfall upside down.
 
-Test-driven design shapes our implementation and from there we observe very quickly how the device acts in real life against our concept / requirements.
-And because we now use Python, we are much faster in adapting our implementation.
-Python is a high-level language and its ecosystem makes it very convenient to "just hack something". Not even mentioning AI GPTs that fluently speak Python but rarely VHDL.
+Test-Driven Design shapes our implementation and from there we observe very quickly how the device acts in real life against our concept / requirements.
+Since we now use Python and its vast ecosystem, we can adapt our implementation much faster, i.e., “hack something together” — not even mentioning AI GPT models that are fluent in Python but rarely in VHDL.
 The digital twin can be seen as a "dry run" before we actually start coding VHDL.
 
-### Walkthrough
-#### Creating a testbench
+### Creating a testbench
 
-Enough theory and funny words; let's walk through from A-Z for our patient supervision case.
+Enough theory and wordplay; let’s walk through the patient supervision case from A to Z.
 The filter we want to design shall only pass valid UDP frames with a specific destination port.
 
 Instead of building the filter right away, let us create a testbench and generate (synthetic) data as a first step:
@@ -170,13 +174,13 @@ wrpcap("./test_input.pcap", packet_list, linktype=1)
 
 With [scapy](https://scapy.net/), we can create headers like `Ether(dst, src, type)` or `IP(src, dst, ...)` and concatenate them with the division operator `Ether()/IP()`.
 The `raw` header lets us append or inject any length of bytes.
-Scapy's utils package provides us with `wrpcap()`. This function takes a list of packets and writes them to a PCAP[^6] file, which you can open with wireshark.
+Scapy's utils package provides us with `wrpcap()`. This function takes a list of packets and writes them to a PCAP file — a file format for packet capture used by e.g. tcpdump and wireshark.
 Similarly, `rdpcap()` will read those packets back into scapy's packetList format.
 The file `test_input.pcap` will now have around 200 packets, which we use as test data for our filter. Crucially, this testbench can later be reused together with [cocotb](https://www.cocotb.org/) to test the VHDL implementation. In effect, the digital twin becomes the golden device, also known as a test oracle.
 
 #### Creating the digital twin
 
-When designing a digital twin for an FPGA, it's very important that we don't take too many shortcuts leveraging the Python ecosystem.
+When designing a digital twin for an FPGA, it's very important that we don't take too many shortcuts.
 We want to keep the FPGA resources and capabilities in mind.
 A simple one-liner in Python might do the trick as well, but we wouldn't gain any insights into the resources needed in VHDL for this.
 
@@ -234,7 +238,7 @@ for input_frame in input_frame_list:
         dropped_frame_list.append(input_frame)
 ```
 
-The last stage consists of writing the results back into pcap files for us humans to understand and visually verify what happened.
+The last stage consists of writing the results back into PCAP files for us humans to understand and visually verify what happened.
 
 ```python
 # write results
@@ -270,12 +274,12 @@ Instead of generating our test data, we could also feed our testbench with real-
 ### Reusing the Python testbench with cocotb
 
 Once we validated our digital twin, we can write our VHDL code.
-With our digital twin, we get additional insights about intermediate results, the algorithm itself and how input and output shall look like.
+With our digital twin, we get additional insights about intermediate results, the algorithm itself and how the input and output shall look like.
 To finally test the finished VHDL implementation, we can reuse our digital twin testbench by integrating cocotb.
-There are a few examples on how to use cocotb in the github repository under (https://github.com/cocotb/cocotb/tree/master/examples).
+There are a few examples on how to use cocotb on their official github repository under (https://github.com/cocotb/cocotb/tree/master/examples).
 
-All of them have a `cocotb.test()` routine, which is executed either by the framework in Makefile based testbenches or via runner on runner based testbenches (https://docs.cocotb.org/en/stable/runner.html).
-The example below is a Makefile based testbench.
+All of them have a `cocotb.test()` routine, which is executed either by the framework in Makefile-based testbenches or via runner on runner-based testbenches (https://docs.cocotb.org/en/stable/runner.html).
+The example below is a Makefile-based testbench.
 
 Two elements are present:
 
@@ -286,7 +290,9 @@ In this example, we defined one test and several helper routines that run in par
 One is to send data over AXI-Stream and the other is to receive data over AXI-Stream while comparing it to the expected result.
 Both are launched via `cocotb.start_soon()`.
 The expected results are generated inside the `test_passthrough()` function on the line:  
-`udp_port_filter.process("./test_input.pcap", "./test_output_forward.pcap", "./test_output_drop.pcap", tb.dut.valid_udp_dst_port)`
+```python
+udp_port_filter.process("./test_input.pcap", "./test_output_forward.pcap", "./test_output_drop.pcap", tb.dut.valid_udp_dst_port)
+```
 
 This is the same line as we used before in our digital twin testbench to call the Python version of our code.
 Running this (with the right Makefile and a VHDL implementation of the udp filter) will result in something like this:
@@ -321,7 +327,7 @@ The following listing shows the full source file:
 
 ```python
 # Testbench for udp_port_filter for cocotb.
-# Testbench will setup simulation and then generate testdata and expected results by using the Python model udp_port_filter.py
+# Testbench will setup simulation and then generate test data and expected results by using the Python model udp_port_filter.py
 # Data is sent via AXI-Stream, Results as well as input data are written to PCAP Files.
 
 import logging
@@ -353,7 +359,7 @@ class TB:
         # Set the port we want to allow
         self.dut.valid_udp_dst_port.value = 1234
 
-        # Create A clock
+        # Create a clock
         cocotb.start_soon(Clock(self.clk, 10, units="ns").start())
 
         # Create and connect Source to DUT
@@ -530,16 +536,4 @@ async def test_passthrough(dut):
 
 Digital twins can help to understand the core problem(s) and risks much faster and easier than straight VHDL coding from the beginning.
 By leveraging the flexibility and popularity of Python, we can reduce the time spent on VHDL coding to a minimum.
-Using test frameworks like cocotb further ease the development cycle in a way, that we can create an extensive collection of testcases much faster and easier than using pure VHDL or Verilog based testcases.  
-
-[^1]: FPGA - field programmable gate array, a computer chip like an ASIC, but reconfigurable
-
-[^2]: PCB - Printed Circuit Board
-
-[^3]: ICU - Intensive care unit
-
-[^4]: UDP - User Datagram Protocol - a connectionless OSI-layer 4 protocol
-
-[^5]: PLL - Phase-locked loop - a circuit to synchronize or multiply clock frequencies
-
-[^6]: PCAP - a file format (and API) for packet capture, used by e.g. tcpdump and wireshark
+Using test frameworks like cocotb allows us to even reuse parts of the digital twin to create more test cases much faster and with less complexity compared to pure VHDL- or Verilog-based testbenches.
