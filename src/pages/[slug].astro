@@ -1,0 +1,76 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Prose from '../components/Prose.astro';
+import { type CollectionEntry, getCollection } from 'astro:content';
+import { render } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import { dateFormat } from '../lib/date-format.helper';
+import Header from '../components/Header.astro';
+import { BackButton } from '../components/BackButton';
+import { timeToRead } from '../lib/reading-time';
+import SocialSharingHeader from '../components/SocialSharingHeader.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: {slug: post.id},
+    props: post,
+  }));
+}
+type Props = CollectionEntry<'blog'>;
+
+const post = Astro.props;
+const {Content} = await render(post);
+
+const {title, cover, shortDescription} = post.data;
+
+const socialImage = await getImage({
+  src: cover,
+  width: 1200,
+  height: 630,
+  format: 'jpg',
+  quality: 85,
+});
+const socialImageUrl = new URL(socialImage.src, Astro.site);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<Layout>
+    <Fragment slot="head">
+        <SocialSharingHeader
+                title={title}
+                description={shortDescription}
+                imageUrl={socialImageUrl}
+                canonicalUrl={canonicalURL}/>
+    </Fragment>
+    <Fragment slot="header">
+        <Header>
+            <div class="flex font-display font-medium gap-4 flex-row px-0 mt-0">
+                <BackButton client:only="react"/>
+            </div>
+        </Header>
+    </Fragment>
+    <section class="pt-8 max-w-4xl mx-auto px-8 mb-24">
+        <div class="relative overflow-hidden hidden sm:block">
+            <Image src={cover} alt="Cover image" class="aspect-video object-cover w-full"
+                   width="800"
+                   height="450"
+            />
+            <div class="absolute bottom-0 left-0 w-full h-4/5 bg-gradient-to-t from-zag-dark to-transparent"></div>
+            <h1 class="absolute bottom-5 mx-2 text-2xl md:text-3xl leading-normal font-display scroll-m-24 text-zag-light"
+                id="_top">
+              {title}
+            </h1>
+        </div>
+        <h1 class="text-2xl block sm:hidden leading-normal font-bold scroll-m-24 dark:text-zag-light text-zag-dark mb-3"
+            id="_top">
+            {title}
+        </h1>
+
+        <p>By {post.data.author}</p>
+        <p class="mb-16">{dateFormat(post.data.released)} • {timeToRead(post)}min read</p>
+        <Prose>
+            <Content/>
+        </Prose>
+    </section>
+</Layout>

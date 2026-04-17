@@ -1,0 +1,27 @@
+---
+export type Props = {
+  title: string,
+  description: string,
+  imageUrl: URL,
+  canonicalUrl: URL
+};
+const {title, description, imageUrl, canonicalUrl} = Astro.props;
+---
+
+<title>{title}</title>
+<meta name="description" content={description}/>
+
+<meta property="og:title" content={title}/>
+<meta property="og:description" content={description}/>
+<meta property="og:image" content={imageUrl}/>
+<meta property="og:url" content={canonicalUrl}/>
+<meta property="og:type" content="article"/>
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content={title}/>
+<meta name="twitter:description" content={description}/>
+<meta name="twitter:image" content={imageUrl}/>
+
+<meta http-equiv="content-language" content="en"/>
+<meta name="language" content="English"/>
+<link rel="canonical" href={canonicalUrl}/>
