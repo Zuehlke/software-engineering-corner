@@ -31,7 +31,12 @@ In the following article I will talk about the challenges of building such a loc
 
 Further building upon our example in the introduction, consider the following folder structure in a Next.js project with folders corresponding to the text on the arrows in the diagram and the page and layout files corresponding to the boxes connected:
 
-[![Diagram of Next.js app route structure showing a shared locale layout wrapping blog list and blog article pages under dynamic locale and slug segments](https://mermaid.ink/img/pako:eNo9jctuwjAQRX_FmnWgcUoe9qJSVZaRGqldlbBwk8Gx6tjIcaAU-PealHRWvnd8zpyhsS0Ch522x6YTzpP3dW1ImAeyWJCNto3QuCUhPJFyU4qTHf3270d5Ky-f2soLqejm2XnVaBxIqQZPKiExOF4P6A4Kj1O-cxWd1IMe5XbyVskMkzV6ofRMvykjQzkv747aQATSqRa4dyNG0KPrxS3C-XahBt9hjzXw8GyF-6qhNtfA7IX5sLafMWdH2QHfCT2ENO5b4XGthHSi_28dmhbdix2NB05jlk4W4Gf4Bp7k2TLP4pzSLGMsoSyCE_A0WWZFviqKNE1ZXCTXCH6mq_Ey1CwMpUm2yh9Tdv0FyTV1Hw?type=png)](https://mermaid.live/edit#pako:eNo9jctuwjAQRX_FmnWgcUoe9qJSVZaRGqldlbBwk8Gx6tjIcaAU-PealHRWvnd8zpyhsS0Ch522x6YTzpP3dW1ImAeyWJCNto3QuCUhPJFyU4qTHf3270d5Ky-f2soLqejm2XnVaBxIqQZPKiExOF4P6A4Kj1O-cxWd1IMe5XbyVskMkzV6ofRMvykjQzkv747aQATSqRa4dyNG0KPrxS3C-XahBt9hjzXw8GyF-6qhNtfA7IX5sLafMWdH2QHfCT2ENO5b4XGthHSi_28dmhbdix2NB05jlk4W4Gf4Bp7k2TLP4pzSLGMsoSyCE_A0WWZFviqKNE1ZXCTXCH6mq_Ey1CwMpUm2yh9Tdv0FyTV1Hw)
+```mermaid
+flowchart TD
+  Root["/"] -->|[locale]| L[Layout]
+  L -->|blog| P1[Articles List Page / Overview Page]
+  P1 -->|[slug]| P2[Article Detail Page / Single Article Page]
+```
 
 Now, for those not familiar with Next.js, the folder structure in a Next.js project corresponds to the URL segments.
 Layouts and pages are placed correspondingly inside of this folder hierarchy to build compositional patterns that allow for subroutes and their pages being rendered inside of a shared layout that only gets rendered once and is then being reused for as long as navigation happens between pages that are also placed under that layout:
