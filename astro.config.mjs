@@ -9,6 +9,7 @@ import expressiveCode from "astro-expressive-code";
 import mdx from "@astrojs/mdx";
 
 import sitemap from "@astrojs/sitemap";
+import mermaid from "astro-mermaid";
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,7 +19,10 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [react(), expressiveCode(), mdx(), sitemap()],
+  integrations: [react(), expressiveCode({
+    themes: ['github-dark', 'github-light'],
+    themeCssSelector: (theme) => theme.name === 'github-dark' ? '.dark' : ':root:not(.dark)',
+  }), mdx(), sitemap(), mermaid({theme: 'neutral', autoTheme: true})],
 
   trailingSlash: 'always',
 

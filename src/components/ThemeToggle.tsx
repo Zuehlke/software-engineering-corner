@@ -4,7 +4,7 @@ const ThemeToggle = () => {
     const theme = !isDark ? 'dark' : 'light';
     localStorage.setItem('theme', theme);
     document.documentElement.classList.toggle('dark', theme === 'dark');
-    document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'github-dark' : 'github-light');
+    document.documentElement.setAttribute('data-theme', theme);
   };
 
   return (
