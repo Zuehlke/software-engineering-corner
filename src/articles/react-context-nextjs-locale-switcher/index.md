@@ -25,7 +25,8 @@ This dropdown component should always be able to serve the correct, localized UR
 Now, this would be trivial if the task at hand would be to just switch the locale with the rest of the URL staying the same, e.g. linking from a German article located under `/de/blog/gesund-essen` to the English version of it `/en/blog/gesund-essen`.
 But as [Google documents on "Google Search Central"](https://developers.google.com/search/docs/crawling-indexing/url-structure#use-your-audiences-language), the best practice when it comes to localized URLs is to use human-readable, descriptive URLs in your audience's language (e.g. in our example `/en/healthy-eating`).
 
-In the following article I will talk about the challenges of building such a locale switcher component if it requires CMS-driven data that might only be available after the component itself has already finished rendering, a problem touching a lot of different aspects and pitfalls of building projects with Next.js, and how our solution to this both leverages the inner workings of React context and integrates well with SSR (server side rendering) and the "Network Boundary".
+In the following article I will talk about the challenges of building such a locale switcher component if it requires CMS-driven data that might only be available after the component itself has already finished rendering.
+This problem touches a lot of different aspects and pitfalls of building projects with Next.js, and our solution both leverages the inner workings of React context and integrates well with SSR (server side rendering) and the "Network Boundary".
 
 ## The Challenge
 
@@ -90,8 +91,8 @@ export default async function ArticleDetailsPage({ params }: { params: Promise<{
     <div>
       <h2>{article.title}</h2>
       <p>{article.description}</p>
-      {article.sections.map((section) => (
-        <p key={section}>{section}</p>
+      {article.sections.map((section, index) => (
+        <p key={`${index}-${section}`}>{section}</p>
       ))}
     </div>
   );
