@@ -66,7 +66,7 @@ export default async function ArticleListPage({ params }: { params: Promise<{ lo
   return (
     <ul>
       {articles.map((article) => (
-        <li>
+        <li key={article.slug}>
           <Link href={`/${locale}/blog/${article.slug}`}>{article.title}</Link>
         </li>
       ))}
@@ -91,7 +91,7 @@ export default async function ArticleDetailsPage({ params }: { params: Promise<{
       <h2>{article.title}</h2>
       <p>{article.description}</p>
       {article.sections.map((section) => (
-        <p>{section}</p>
+        <p key={section}>{section}</p>
       ))}
     </div>
   );
@@ -173,7 +173,7 @@ At first glance, this looked promising. Nanostores supports server-side usage, a
 
 But in practice, several fundamental problems emerged:
 
-1. **The Store Initialises on the Server, but the Locale Switcher Needs Client-Side State**
+1. **The Store Initializes on the Server, but the Locale Switcher Needs Client-Side State**
 
 The locale switcher itself was a client component, because it used hooks like `usePathname()` and `useParams()`.
 
@@ -270,7 +270,7 @@ Logically, this simply isn't compatible with how server rendering works.
 Facing the problem with React server context, React introduced React.cache() as a safer, more predictable primitive for (some of) its use cases.
 In short:
 
-- `React.cache()` is a React API that memoises the result of an async function **per request** on the server.
+- `React.cache()` is a React API that memoizes the result of an async function **per request** on the server.
 - It ensures that when multiple Server Components call the same data-fetching function during a single render, React only runs it once and reuses the result.
 - This avoids duplicate network/database calls and provides a stable, shared value _without creating global state_.
 - Frameworks like Next.js and libraries like `next-intl` use `cache()` internally to:
@@ -315,7 +315,7 @@ So, finally, after exploring global stores, Server Context, and other dead ends,
 
 In other words:
 
-- The page already knows the translated slugs, because it fetched the article from the CMS.
+- The page already knows the localized slugs, because it fetched the article from the CMS.
 
 - The layout needs those slugs, but can’t access them during its own render.
 
@@ -325,7 +325,7 @@ In other words:
 
 This is where the pattern we'd like to call "Context Hydrator" comes in, it works like this:
 
-1. Define a client-side context (e.g. `LocalizedSlugsContext`) that will hold the translated slugs and exposes state getter and setter methods.
+1. Define a client-side context (e.g. `LocalizedSlugsContext`) that will hold the localized slugs and exposes state getter and setter methods.
 
 2. Render an empty provider in the layout, wrapping the locale switcher.
 
@@ -443,7 +443,7 @@ export function LocalizedSlugsHydrator({ paramKey, values }: { paramKey: string;
 
 The `LocalizedSlugsProvider` creates a simple React Context that stores all localized slugs, grouped by locale.
 It exposes setter functions so the client can update this data later.
-The layout initialises the provider with whatever slug information is available during the server render.
+The layout initializes the provider with whatever slug information is available during the server render.
 
 The `LocalizedSlugsHydrator` is a minimal client component that runs inside each page.
 After the page fetches localized slugs from the CMS, the hydrator injects those slugs into the React Context.
@@ -451,12 +451,12 @@ It doesn’t render anything visually; its only role is to synchronize page-leve
 
 And finally, we can use this hydrator component on the page like this:
 
-```ts
+```tsx
 // app/[locale]/blog/[slug]/page.tsx
 import { LocalizedSlugsHydrator } from "../../components/LocalizedSlugsHydrator";
 
-export default async function ProductPage({ params } : { params: { locale: string; slug: string } }) {
-  const { locale, slug } = params;
+export default async function ProductPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale, slug } = await params;
   const article = await fetchArticle({ locale, slug });
 
   // Example: { de: 'gesund-essen', fr: 'une-alimentation-saine' }
