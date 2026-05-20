@@ -34,9 +34,9 @@ Further building upon our example in the introduction, consider the following fo
 
 ```mermaid
 flowchart TD
-  Root["/"] -->|[locale]| L[Layout]
-  L -->|blog| P1[Articles List Page / Overview Page]
-  P1 -->|[slug]| P2[Article Detail Page / Single Article Page]
+    / -- [locale]  --> L[Layout]
+    L -->|blog| P1[Articles List Page / Overview Page]
+    P1 -- [slug] --> P2[Article Detail Page / Single Article Page]
 ```
 
 Now, for those not familiar with Next.js, the folder structure in a Next.js project corresponds to the URL segments.
