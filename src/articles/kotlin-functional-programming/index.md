@@ -418,6 +418,7 @@ Common monads you’ll encounter:
 - You want testability and predictability
 
 ### OOP Shines When
+
 - Modeling domain entities (User, Order, etc.)
 - Managing lifecycles or state
 - Integrating with imperative APIs (Android, JavaFX, etc.)
