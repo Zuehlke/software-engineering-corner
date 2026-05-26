@@ -63,6 +63,7 @@ This property — **referential transparency** — means you can replace a funct
 ### What Makes a Function Pure?
 
 A pure function must satisfy two requirements:
+
 1. **Deterministic** – Output depends only on inputs.
 2. **No side effects** – The function doesn’t:
     - Modify global or static state
