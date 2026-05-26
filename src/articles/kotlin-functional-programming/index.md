@@ -311,6 +311,7 @@ You can think of a **monad** as a _computation context_ — a box that carries b
 (was it successful, optional, deferred?).
 
 A monad provides three operations:
+
 1. A way to create the context (`of`, `pure`)
 2. `map` to transform the inner value
 3. `flatMap` to chain operations that return new contexts
