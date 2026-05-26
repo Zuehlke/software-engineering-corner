@@ -401,6 +401,7 @@ when (result) {
 - Maintain purity—no hidden effects
 
 Common monads you’ll encounter:
+
 - `Option` / `Maybe` – presence or absence
 - `Result` / `Either` – success or failure
 - `List` – non-deterministic results
