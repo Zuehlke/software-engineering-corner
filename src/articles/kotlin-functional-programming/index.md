@@ -410,6 +410,7 @@ Common monads you’ll encounter:
 ## When to Use Which Paradigm
 
 ### Functional Programming Shines When
+
 - You’re transforming data
 - Logic is complex but composable
 - You need thread safety
