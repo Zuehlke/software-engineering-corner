@@ -43,6 +43,7 @@ You’ll learn how to combine both paradigms in one codebase to build systems th
 ## Functional and Object-Oriented: Not Opposites, but Complements
 
 There’s no single “superior” paradigm. Paradigms are tools, each emphasizing a different aspect of design.
+
 - **OOP** models the world with _entities_ and _behavior_. It gives structure and relationships.    
 - **FP** models _data transformations_. It focuses on purity, predictability, and composition.
 
