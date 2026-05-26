@@ -98,6 +98,7 @@ fun setMandateIfBlank(
 ```
 
 This is pure because:
+
 - `DepartmentFee` (a `data class`) is immutable.
 - We don’t mutate it; we use `copy()`.
 - The logic is deterministic.
