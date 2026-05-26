@@ -394,6 +394,7 @@ when (result) {
 ```
 
 **Monads let you:**
+
 - Chain operations safely
 - Avoid nested conditionals or `try/catch` pyramids
 - Keep business logic clean
