@@ -50,6 +50,7 @@ There’s no single “superior” paradigm. Paradigms are tools, each emphasizi
 Viewed together:
 
 > **Use OOP to give your project structure, and FP to express logic clearly.**
+
 The combination yields systems that are both architecturally coherent and mathematically predictable — code that’s easier to test, reason about, and refactor.
 
 ---
