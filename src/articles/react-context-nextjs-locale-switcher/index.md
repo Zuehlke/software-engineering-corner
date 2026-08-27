@@ -2,7 +2,7 @@
 title: Leveraging React Context Across Render Boundaries in Next.js - Lessons from Building a Locale Switcher
 description: >-
   In Next.js applications, layouts often need access to data that only becomes available after a nested page has rendered - for example, localized slugs from a headless CMS that are required to build SEO-friendly, localized URLs. This article explores how to bridge that gap with React Context, why global stores and "server contexts" are usually not a good idea, and how a context-based pattern can help manage your state safely across render client/server boundaries.
-released: "2025-11-12T20:46:09.861Z"
+released: "2026-08-27T10:00:09.861Z"
 cover: images/cover.jpg
 author: Tim Grünewald
 tags:
