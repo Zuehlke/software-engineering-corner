@@ -2,7 +2,6 @@
 import { featuredArticle } from '../lib/list';
 import { dateFormat } from '../lib/date-format.helper';
 import { timeToRead } from '../lib/reading-time';
-import { Image } from "astro:assets";
 ---
 <div class="my-16 mx-auto">
     <div class="relative overflow-hidden md:hidden mb-2">
@@ -19,8 +18,10 @@ import { Image } from "astro:assets";
     <div class="grid md:grid-cols-2 gap-8 items-center">
         <div>
             <h2 class="text-base lg:text-3xl mb-6 font-display text-balance hidden md:block">{featuredArticle.data.title}</h2>
-            <div class="space-y-2 text-sm"><p>By {featuredArticle.data.author}</p>
-                <p>{dateFormat(featuredArticle.data.released)} • {timeToRead(featuredArticle)} min read</p></div>
+            <div class="space-y-2 text-sm">
+                <p>By {featuredArticle.data.author}</p>
+                <p>{dateFormat(featuredArticle.data.released)} • {timeToRead(featuredArticle)} min read</p>
+            </div>
             <div class="mt-8">
                 <a href={`${featuredArticle.id}/`}
                    class="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors
