@@ -18,9 +18,12 @@
     "astro": "^5.7.13",
     "astro-expressive-code": "^0.41.2",
     "astro-mermaid": "^1.3.1",
+    "katex": "^0.18.4",
     "mermaid": "^11.12.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
     "tailwindcss": "^4.1.8"
   },
   "devDependencies": {
